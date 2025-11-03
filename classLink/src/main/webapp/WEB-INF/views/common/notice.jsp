@@ -5,9 +5,9 @@
   <meta charset="UTF-8">
   <title>KH EduERP | 공지사항</title>
 
-  <link rel="stylesheet" href="${pageContext.request.contextPath}/styles/default.css">
-  <link rel="stylesheet" href="${pageContext.request.contextPath}/styles/style.css">
-  <link rel="stylesheet" href="${pageContext.request.contextPath}/styles/lecture.css">
+  <link rel="stylesheet" href="/styles/default.css">
+  <link rel="stylesheet" href="/styles/style.css">
+  <link rel="stylesheet" href="/styles/lecture.css">
 </head>
 <body class="lecture lecture-notice">
 <!-- 사이드바 -->
@@ -31,7 +31,7 @@
             </tr>
           </thead>
           <tbody>
-            <tr>
+            <tr onclick="location.href='${pageContext.request.contextPath}/noticeDetail.co?noticeNo=1'">
               <td>팀프로젝트 관련 공지</td>
               <td>10/19</td>
               <td>관리자</td>
@@ -65,7 +65,7 @@
 
         <!-- 글쓰기 버튼 -->
         <div class="notice-footer">
-          <button class="btn-write">글쓰기</button>
+          <button class="btn-write" onclick="location.href='${pageContext.request.contextPath}/noticeEnrollForm.co'">글쓰기</button>
         </div>
       </div>
     </section>
