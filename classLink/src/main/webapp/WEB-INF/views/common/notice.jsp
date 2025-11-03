@@ -10,15 +10,12 @@
   <link rel="stylesheet" href="${pageContext.request.contextPath}/styles/lecture.css">
 </head>
 <body class="lecture lecture-notice">
-  <!-- 사이드바 -->
-  <jsp:include page="/WEB-INF/views/common/sidBar.jsp" />
+<!-- 사이드바 -->
+<jsp:include page="/WEB-INF/views/common/sidBar.jsp" />
 
   <!-- 메인 -->
   <main class="main">
-    <header class="topbar">
-      <div class="path">강사 › 공지사항 <b>강사 페이지</b></div>
-      <div class="user-info">알림(<span>2</span>) 김강사(강사)</div>
-    </header>
+  <jsp:include page="/WEB-INF/views/common/topBar.jsp" />
 
     <section class="content">
       <div class="notice-panel">
