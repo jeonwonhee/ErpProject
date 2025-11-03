@@ -12,9 +12,9 @@
   <meta charset="UTF-8">
   <title>KH EduERP | 출결관리</title>
 
-  <link rel="stylesheet" href="/styles/default.css">
-  <link rel="stylesheet" href="/styles/style.css">
-  <link rel="stylesheet" href="/styles/lecture.css">
+  <link rel="stylesheet" href="${pageContext.request.contextPath}/styles/default.css">
+  <link rel="stylesheet" href="${pageContext.request.contextPath}/styles/style.css">
+  <link rel="stylesheet" href="${pageContext.request.contextPath}/styles/lecture.css">
 </head>
 <body class="lecture lecture-attendance">
   <!-- 사이드바 -->
