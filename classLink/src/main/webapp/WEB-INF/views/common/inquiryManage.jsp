@@ -1,3 +1,4 @@
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -10,29 +11,11 @@
 
 <body class="admin admin-inquiry-manage">
   <!-- 사이드바 -->
-  <aside class="sidebar">
-    <div>
-        <div class="logo">
-            <span>KH EduERP</span>
-        </div>
-      <ul class="menu">
-        <li>학생목록</li>
-        <li>강사목록</li>
-        <li>일정관리</li>
-        <li>출결현황</li>
-        <li>공지사항</li>
-        <li class="active">문의</li>
-      </ul>
-    </div>
-    <footer>© 2025 KH</footer>
-  </aside>
+  <jsp:include page="/WEB-INF/views/common/sidBar.jsp" />
 
   <!-- 메인 -->
   <main class="main">
-    <header class="topbar">
-      <div class="path">관리자 › 문의 <b>관리자 페이지</b></div>
-      <div class="user-info">관리자(Admin)</div>
-    </header>
+  <jsp:include page="/WEB-INF/views/common/topBar.jsp" />
 
     <section class="content inquiry-container">
       <!-- 검색창 -->
