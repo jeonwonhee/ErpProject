@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <title>KH EduERP | 강의만족도</title>
+  <link rel="stylesheet" href="/styles/default.css" />
+  <link rel="stylesheet" href="/styles/style.css" />
+  <link rel="stylesheet" href="/styles/student.css" />
+</head>
+
+<body class="student student-satisfaction">
+  <!-- 사이드바 -->
+  <aside class="sidebar">
+    <div>
+        <div class="logo">
+            <span>KH EduERP</span>
+        </div>
+      <ul class="menu">
+        <li>대시보드</li>
+        <li>일정조회</li>
+        <li>출결정정</li>
+        <li class="active">강의만족도</li>
+        <li>상담신청</li>
+        <li>성적조회</li>
+        <li>문의</li>
+      </ul>
+    </div>
+    <footer>© 2025 KH</footer>
+  </aside>
+
+  <!-- 메인 -->
+  <main class="main">
+    <header class="topbar">
+      <div class="path">학생 › 강의만족도 <b>학생페이지</b></div>
+      <div class="user-info">알림(<span>2</span>) 홍길동(학생)</div>
+    </header>
+
+    <section class="content satisfaction">
+      <div class="card">
+        <h2>만족도 조사<br><small>(AWS 클라우드 기반 DevOps 개발자 양성 과정)</small></h2>
+
+        <form>
+          <div class="form-group">
+            <label>• 강의 내용 만족도</label>
+            <select>
+              <option>5 - 매우 만족</option>
+              <option>4 - 만족</option>
+              <option>3 - 보통</option>
+              <option>2 - 불만족</option>
+              <option>1 - 매우 불만족</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label>• 강사 전달력</label>
+            <select>
+              <option>5 - 매우 만족</option>
+              <option>4 - 만족</option>
+              <option>3 - 보통</option>
+              <option>2 - 불만족</option>
+              <option>1 - 매우 불만족</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label>• 몰입도</label>
+            <select>
+              <option>5 - 매우 만족</option>
+              <option>4 - 만족</option>
+              <option>3 - 보통</option>
+              <option>2 - 불만족</option>
+              <option>1 - 매우 불만족</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label>• 자유 의견</label>
+            <textarea placeholder="좋았던 점 / 개선사항을 입력하세요."></textarea>
+          </div>
+
+          <div class="form-submit">
+            <button type="submit" class="btn-submit">제출</button>
+          </div>
+        </form>
+      </div>
+    </section>
+  </main>
+</body>
+</html>

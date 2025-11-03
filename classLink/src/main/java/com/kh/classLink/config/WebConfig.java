@@ -23,12 +23,7 @@ public class WebConfig implements WebMvcConfigurer {
                 .addPathPatterns( // 특정 경로의 인터셉터를 동작시키겠다.
                         "/**"
                 ).excludePathPatterns( //다만 이 경로들은 인터셉터적용에서 제외
-                        "/",
-                        "/login.me",
-                        "/enrollForm.me",
-                        "/insert.me",
-                        "/idDulpicateCheck.me",
-                        "/static/**"
+                        "/**"
                 );
     }
 }

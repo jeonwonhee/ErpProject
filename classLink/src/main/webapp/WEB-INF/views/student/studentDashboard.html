@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <title>KH EduERP | 학생 대시보드</title>
+  
+  <link rel="stylesheet" href="/styles/default.css">
+  <link rel="stylesheet" href="/styles/style.css">
+  <link rel="stylesheet" href="/styles/student.css">
+</head>
+<body class="student">
+  <aside class="sidebar">
+    <div>
+      <div class="logo">
+        <!-- <img src="https://upload.wikimedia.org/wikipedia/commons/5/58/Logo_kh.png" alt="KH Logo" /> -->
+        KH EduERP
+      </div>
+      <ul class="menu">
+        <li class="active">대시보드</li>
+        <li>일정 조회</li>
+        <li>휴가 신청</li>
+        <li>출결 정정</li>
+        <li>강의 만족도</li>
+        <li>상담 신청</li>
+        <li>공지사항</li>
+        <li>문의</li>
+      </ul>
+    </div>
+    <footer>© 2025 KH</footer>
+  </aside>
+
+  <main class="main">
+    <header class="topbar">
+      <div class="path">학생 > 대시보드 <b>학생페이지</b></div>
+      <div class="user-info">알림(<span>2</span>) 홍길동(학생)</div>
+    </header>
+
+    <section class="content">
+      <div class="left-section">
+        <div class="card">
+          <h2>이번달 출석률</h2>
+          <div class="attendance-wrapper">
+            <div class="donut-wrapper">
+              <svg viewBox="0 0 220 220">
+                <circle class="bg" cx="110" cy="110" r="90" />
+                <circle class="attend" cx="110" cy="110" r="90" />
+                <circle class="late" cx="110" cy="110" r="90" />
+                <circle class="absent" cx="110" cy="110" r="90" />
+              </svg>
+              <div class="chart-text">87%</div>
+            </div>
+            <div class="attendance-details">
+              <div><strong>출석</strong> 20회</div>
+              <div><strong>지각</strong> 2회</div>
+              <div><strong>결석</strong> 1회</div>
+              <div class="legend">
+                <span class="att">출석</span>
+                <span class="late">지각</span>
+                <span class="abs">결석</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card schedule">
+          <h2>이번달 일정</h2>
+          <ul>
+            <li>10/3~10/8 추석 연휴</li>
+            <li>10/24 팀 프로젝트 시작</li>
+            <li>10/31 중간 점검(멘토링)</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="card details-card">
+        <h2>상세 기록</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>날짜</th>
+              <th>출석</th>
+              <th>지각</th>
+              <th>결석</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>2025.10.24</td>
+              <td>✔️</td>
+              <td></td>
+              <td></td>
+            </tr>
+            <tr>
+              <td>2025.10.23</td>
+              <td></td>
+              <td>⚠️</td>
+              <td></td>
+            </tr>
+            <tr>
+              <td>2025.10.22</td>
+              <td></td>
+              <td></td>
+              <td>❌</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+</body>
+</html>

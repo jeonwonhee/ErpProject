@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <title>KH EduERP | 공지사항 작성</title>
+  <link rel="stylesheet" href="/styles/default.css" />
+  <link rel="stylesheet" href="/styles/style.css" />
+  <link rel="stylesheet" href="/styles/admin.css" />
+</head>
+
+<body class="admin admin-notice-write">
+  <!-- 사이드바 -->
+  <aside class="sidebar">
+    <div>
+        <div class="logo">
+            <span>KH EduERP</span>
+        </div>
+      <ul class="menu">
+        <li>학생목록</li>
+        <li>강사목록</li>
+        <li>일정관리</li>
+        <li>출결현황</li>
+        <li class="active">공지사항</li>
+        <li>문의</li>
+      </ul>
+    </div>
+    <footer>© 2025 KH</footer>
+  </aside>
+
+  <!-- 메인 -->
+  <main class="main">
+    <header class="topbar">
+      <div class="path">관리자 › 공지사항 <b>관리자 페이지</b></div>
+      <div class="user-info">관리자(Admin)</div>
+    </header>
+
+    <section class="content notice-write-container">
+      <h2>공지사항 작성</h2>
+
+      <form class="notice-form">
+        <!-- 제목 -->
+        <div class="form-group">
+          <label for="notice-title">제목</label>
+          <input type="text" id="notice-title" placeholder="제목을 입력하세요." />
+        </div>
+
+        <!-- 첨부파일 -->
+        <div class="form-group">
+          <label for="notice-file">첨부파일</label>
+          <input type="file" id="notice-file" />
+        </div>
+
+        <!-- 내용 -->
+        <div class="form-group">
+          <label for="notice-content">작성 내용</label>
+          <textarea id="notice-content" placeholder="내용을 입력하세요."></textarea>
+        </div>
+
+        <!-- 등록 버튼 -->
+        <div class="form-actions">
+          <button type="button" class="btn-submit">등록하기</button>
+        </div>
+      </form>
+    </section>
+  </main>
+
+  <!-- JS: 임시 알림 -->
+  <script>
+    document.querySelector(".btn-submit").addEventListener("click", () => {
+      const title = document.getElementById("notice-title").value.trim();
+      const content = document.getElementById("notice-content").value.trim();
+
+      if (!title || !content) {
+        alert("제목과 내용을 모두 입력해주세요.");
+        return;
+      }
+      alert("공지사항이 등록되었습니다!");
+    });
+  </script>
+</body>
+</html>

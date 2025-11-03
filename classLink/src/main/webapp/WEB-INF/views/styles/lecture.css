@@ -1,0 +1,1709 @@
+/* ===================================
+   KH EduERP - 강사 대시보드 전용 스타일
+   (Lecture Dashboard)
+   =================================== */
+
+/* ===================================
+   공통 레이아웃 
+   =================================== */
+.lecture .content {
+  padding: 80px 40px 40px;
+  background: #f8f9fc;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+/* ===================================
+   강사 대시보드(lecture-dashboard)
+   =================================== */
+.lecture-dashboard .calendar-box {
+  background: #fff;
+  border: 1px solid #e2e4ef;
+  border-radius: 16px;
+  padding: 20px;
+}
+
+.lecture-dashboard .calendar-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.lecture-dashboard .month-control {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.lecture-dashboard .month-btn {
+  width: 28px;
+  height: 28px;
+  border: 1px solid #dcdde5;
+  border-radius: 999px;
+  background: #fff;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 14px;
+}
+
+.lecture-dashboard .month-title {
+  background: #fff;
+  border: 1px solid #dcdde5;
+  border-radius: 999px;
+  padding: 6px 16px 7px;
+  font-weight: 600;
+  font-size: 14px;
+}
+
+.lecture-dashboard .legend {
+  display: flex;
+  gap: 18px;
+  font-size: 14px;
+  color: #555;
+}
+
+.lecture-dashboard .legend span {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.lecture-dashboard .dot {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.lecture-dashboard .dot.blue { background: #4b5dff; }
+.lecture-dashboard .dot.orange { background: #ff9f43; }
+.lecture-dashboard .dot.red { background: #ff6b6b; }
+
+/* ===== 달력 그리드 ===== */
+.lecture-dashboard .calendar-grid {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(90px, 1fr));
+  gap: 10px;
+  background: #fff;
+  border-radius: 16px;
+}
+
+.lecture-dashboard .day-cell {
+  background: #fff;
+  border: 1px solid #e1e2f0;
+  border-radius: 14px;
+  height: 80px;
+  padding: 7px 9px;
+  font-size: 13px;
+  color: #333;
+  position: relative;
+  transition: 0.12s ease;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.lecture-dashboard .day-cell:hover {
+  background: #f3f4ff;
+  border-color: #cdd2ff;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.05);
+  cursor: pointer;
+}
+
+.lecture-dashboard .day-num {
+  font-weight: 600;
+  font-size: 13px;
+}
+
+/* ===== 일정 점 표시 ===== */
+.lecture-dashboard .event-dots {
+  display: flex;
+  gap: 4px;
+  margin-top: auto;
+}
+
+.lecture-dashboard .event-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+}
+
+.lecture-dashboard .event-dot.blue { background: #4b5dff; }
+.lecture-dashboard .event-dot.orange { background: #ff9f43; }
+.lecture-dashboard .event-dot.red { background: #ff6b6b; }
+
+/* ===== 툴팁 (Hover Tooltip) ===== */
+.lecture-dashboard .tooltip {
+  display: none;
+  position: absolute;
+  bottom: 100%;
+  left: 0;
+  transform: translateY(-8px);
+  background: #fff;
+  border: 1px solid #ccc;
+  padding: 6px 10px;
+  font-size: 12px;
+  border-radius: 8px;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.1);
+  white-space: nowrap;
+  z-index: 10;
+}
+
+.lecture-dashboard .day-cell:hover .tooltip {
+  display: block;
+}
+
+/* ====== 정보 카드 (Info Section) ===== */
+.lecture-dashboard .info-section {
+  display: flex;
+  gap: 20px;
+}
+
+.lecture-dashboard .card h3 {
+  font-size: 16px;
+  font-weight: 600;
+  margin-bottom: 12px;
+}
+
+.lecture-dashboard table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+}
+
+.lecture-dashboard th,
+.lecture-dashboard td {
+  border: 1px solid #ddd;
+  padding: 8px 10px;
+  text-align: center;
+}
+
+.lecture-dashboard th {
+  background: #f3f4ff;
+  font-weight: 600;
+}
+
+/* ===================================
+   출결정정 처리 (lecture-attendance-correction) | 상담관리 (lecture-consult-correction)
+   =================================== */
+
+.lecture-attendance-correction .card h2 {
+    font-size: 20px;
+    font-weight: 700;
+    margin-bottom: 24px;
+}
+
+.lecture-attendance-correction .form-group,
+.lecture-consult-correction .form-group {
+  margin-bottom: 25px;
+}
+
+.lecture-attendance-correction .form-group label,
+.lecture-consult-correction .form-group label {
+  display: block;
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+
+.lecture-attendance-correction .form-input,
+.lecture-attendance-correction .form-textarea,
+.lecture-consult-correction .form-input,
+.lecture-consult-correction .form-textarea {
+  width: 100%;
+  padding: 10px 14px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 14px;
+  background: #fafbff;
+}
+
+.lecture-attendance-correction .form-textarea,
+.lecture-consult-correction .form-textarea {
+  height: 80px;
+  resize: none;
+}
+
+.lecture-attendance-correction .file-box {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.lecture-attendance-correction .file-box input[type="file"] {
+  display: none;
+}
+
+.lecture-attendance-correction .file-label {
+  background: #6b5bff;
+  color: white;
+  padding: 6px 12px;
+  border-radius: 6px;
+  font-size: 13px;
+  cursor: pointer;
+}
+
+.lecture-attendance-correction .radio-group,
+.lecture-consult-correction .radio-group {
+  display: flex;
+  align-items: center;
+  gap: 30px;
+  margin-top: 8px;
+}
+
+.lecture-attendance-correction .radio-group label,
+.lecture-consult-correction .radio-group label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+}
+
+.lecture-attendance-correction .radio-group input[type="radio"],
+.lecture-consult-correction .radio-group input[type="radio"] {
+  accent-color: #6b5bff;
+  width: 18px;
+  height: 18px;
+}
+
+.lecture-attendance-correction .btn-submit,
+.lecture-consult-correction .btn-submit {
+  display: block;
+  margin: 30px auto 0;
+  background: #6b5bff;
+  color: white;
+  font-weight: 600;
+  border: none;
+  border-radius: 10px;
+  padding: 10px 28px;
+  font-size: 15px;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.lecture-attendance-correction .btn-submit:hover,
+.lecture-consult-correction .btn-submit:hover {
+  background: #5a4ae3;
+}
+
+/* ===================================
+   출결정정 리스트 (lecture-attendance-list)
+   =================================== */
+
+.lecture-attendance-list .kh-card h2 {
+      font-size: 18px;
+      font-weight: 700;
+      margin-bottom: 20px;
+}
+
+.lecture-attendance-list .lecture-request-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.lecture-attendance-list .lecture-request-card {
+  border: 1px solid #e0e0e0;
+  border-radius: 10px;
+  padding: 20px 24px;
+  background: #fafbff;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transition: 0.25s;
+  cursor: pointer;
+}
+
+.lecture-attendance-list .lecture-request-card:hover {
+  background: #f1f3ff;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+  transform: translateY(-2px);
+}
+
+.lecture-attendance-list .lecture-request-info {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 15px;
+  line-height: 1.6;
+  color: #333;
+}
+
+.lecture-attendance-list .lecture-request-info strong {
+  font-size: 16px;
+  color: #222;
+  font-weight: 600;
+}
+
+.lecture-attendance-list .lecture-request-details {
+  color: #555;
+  font-size: 14px;
+}
+
+.lecture-attendance-list .status-tag {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: #fff2cc;
+  color: #a36a00;
+  font-size: 13px;
+  font-weight: 600;
+  border-radius: 12px;
+  padding: 6px 14px;
+  min-width: 80px;
+  text-align: center;
+  margin-left: 10px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+}
+
+.lecture-attendance-list .lecture-request-main {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+/* ===================================
+   일정관리2 (lecture-schedule)
+   =================================== */
+
+.schedule-add,
+.upcoming-schedule {
+  background: #fff;
+  border: 1px solid #e2e4ef;
+  border-radius: 16px;
+  padding: 28px 32px;
+  margin-bottom: 30px;
+}
+
+.schedule-add h3,
+.upcoming-schedule h3 {
+  font-size: 18px;
+  font-weight: 700;
+  margin-bottom: 24px;
+}
+
+.form-row {
+  display: flex;
+  gap: 20px;
+  margin-bottom: 18px;
+}
+
+.form-group {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.form-group label {
+  font-weight: 600;
+  font-size: 14px;
+}
+
+.form-input,
+.form-select,
+.form-textarea {
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 10px 14px;
+  font-size: 14px;
+  background: #fafbff;
+}
+
+.form-select {
+  appearance: none;
+  background: url('data:image/svg+xml;charset=UTF-8,<svg xmlns="http://www.w3.org/2000/svg" fill="%23333" viewBox="0 0 24 24"><path d="M7 10l5 5 5-5z"/></svg>') no-repeat right 10px center/16px;
+}
+
+.form-textarea {
+  resize: none;
+  height: 80px;
+}
+
+.btn-submit {
+  background: #2a4cff;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 10px 26px;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  float: right;
+  transition: 0.2s;
+}
+
+.btn-submit:hover {
+  background: #223ce0;
+}
+
+/* ===== 다가오는 일정 테이블 ===== */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+}
+
+th,
+td {
+  padding: 12px 14px;
+  border: 1px solid #ddd;
+  text-align: center;
+}
+
+th {
+  background: #f3f4ff;
+  font-weight: 600;
+}
+
+.status-pending {
+  color: #e67e22;
+  font-weight: 600;
+}
+
+.status-approved {
+  color: #27ae60;
+  font-weight: 600;
+}
+
+/* ===================================
+   출결관리 (lecture-attendance)
+   =================================== */
+
+.lecture-attendance .attendance-panel {
+  background: #fff;
+  border: 1px solid #dcdde5;
+  border-radius: 18px;
+  padding: 32px 34px 40px;
+  min-height: 480px;
+}
+
+/* 상단 정보 + 일괄처리 */
+.lecture-attendance .attendance-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 20px;
+  margin-bottom: 20px;
+}
+
+.lecture-attendance .attendance-info p {
+  font-size: 14px;
+  line-height: 1.7;
+}
+
+.lecture-attendance .attendance-info b {
+  font-weight: 600;
+}
+
+.lecture-attendance .attendance-bulk {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.lecture-attendance .bulk-title {
+  font-size: 13px;
+  color: #444;
+  white-space: nowrap;
+}
+
+.lecture-attendance .bulk-btns {
+  display: flex;
+  gap: 8px;
+}
+
+/* 공통 버튼 */
+.lecture-attendance .att-btn {
+  height: 34px;
+  min-width: 56px;
+  padding: 5px 14px 6px;
+  border: 1px solid #888;
+  background: #fff;
+  border-radius: 999px;
+  font-size: 13px;
+  cursor: pointer;
+  transition: 0.15s;
+}
+
+.lecture-attendance .att-btn:hover {
+  background: #f0f2ff;
+  border-color: #5c6cff;
+}
+
+/* 학생 리스트 영역 */
+.lecture-attendance .attendance-list {
+  border: 1px solid #d2d4de;
+  border-radius: 14px;
+  overflow: hidden;
+}
+
+/* 한 줄 */
+.lecture-attendance .attendance-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  padding: 16px 20px;
+  background: #fff;
+}
+
+.lecture-attendance .attendance-row + .attendance-row {
+  border-top: 1px solid #d2d4de;
+}
+
+.lecture-attendance .attendance-stu {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  font-size: 15px;
+}
+
+.lecture-attendance .stu-name {
+  font-weight: 600;
+}
+
+.lecture-attendance .stu-class {
+  color: #555;
+}
+
+.lecture-attendance .attendance-actions {
+  display: flex;
+  gap: 10px;
+}
+
+/* 하단 적용 버튼 */
+.lecture-attendance .attendance-footer {
+  margin-top: 26px;
+}
+
+.lecture-attendance .apply-btn {
+  background: #2a4cff;
+  color: #fff;
+  border: none;
+  border-radius: 10px;
+  padding: 10px 40px 11px;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.15s;
+}
+
+.lecture-attendance .apply-btn:hover {
+  background: #223ce0;
+}
+
+/* ===================================
+   상담관리 (lecture-consult)
+   =================================== */
+
+.lecture-consult .consult-panel {
+  background: #fff;
+  border: 1px solid #dcdde5;
+  border-radius: 18px;
+  padding: 32px 36px 40px;
+}
+
+.lecture-consult h3 {
+  font-size: 18px;
+  font-weight: 700;
+  margin-bottom: 24px;
+}
+
+.lecture-consult .consult-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 24px;
+}
+
+.lecture-consult .consult-card {
+  border: 1px solid #e0e0e0;
+  border-radius: 10px;
+  background: #fafbff;
+  padding: 18px 24px;
+  display: flex;
+  flex-direction: column;
+  transition: 0.25s;
+}
+
+.lecture-consult .consult-card:hover {
+  background: #f3f5ff;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+}
+
+.lecture-consult .consult-main {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.lecture-consult .consult-info p {
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.lecture-consult .consult-info b {
+  font-weight: 600;
+  margin-right: 4px;
+}
+
+.lecture-consult .consult-status {
+  font-size: 14px;
+  font-weight: 600;
+  border-radius: 999px;
+  padding: 6px 14px;
+  min-width: 80px;
+  text-align: center;
+}
+
+.lecture-consult .consult-status.pending {
+  background: #fff4e0;
+  color: #b06c00;
+}
+
+.lecture-consult .consult-status.approved {
+  background: #e7f9ef;
+  color: #2a9449;
+}
+
+/* ===== 페이지네이션 ===== */
+.lecture-consult .pagination {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 16px;
+}
+
+.lecture-consult .page-btn {
+  width: 32px;
+  height: 32px;
+  border: 1px solid #ccc;
+  background: #fff;
+  border-radius: 999px;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.lecture-consult .page-btn:hover {
+  background: #eef1ff;
+  border-color: #6b5bff;
+}
+
+.lecture-consult .page-btn.active {
+  background: #6b5bff;
+  color: white;
+  border-color: #6b5bff;
+}
+
+/* ===================================
+   공지사항 (lecture-notice)
+   =================================== */
+
+.lecture-notice .notice-panel {
+  background: #fff;
+  border: 1px solid #dcdde5;
+  border-radius: 18px;
+  padding: 32px 36px 40px;
+}
+
+.lecture-notice h3 {
+  font-size: 18px;
+  font-weight: 700;
+  margin-bottom: 24px;
+}
+
+.lecture-notice .notice-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.lecture-notice .notice-table th,
+.lecture-notice .notice-table td {
+  padding: 12px 14px;
+  border: 1px solid #ddd;
+  text-align: center;
+}
+
+.lecture-notice .notice-table th {
+  background: #f3f4ff;
+  font-weight: 600;
+}
+
+.lecture-notice .notice-table tr:hover {
+  background: #f9faff;
+  transition: 0.2s;
+}
+
+/* ===== 페이지네이션 ===== */
+.lecture-notice .pagination {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 22px;
+}
+
+.lecture-notice .page-btn {
+  width: 32px;
+  height: 32px;
+  border: 1px solid #ccc;
+  background: #fff;
+  border-radius: 999px;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.lecture-notice .page-btn:hover {
+  background: #eef1ff;
+  border-color: #6b5bff;
+}
+
+.lecture-notice .page-btn.active {
+  background: #6b5bff;
+  color: #fff;
+  border-color: #6b5bff;
+}
+
+/* ===== 글쓰기 버튼 ===== */
+.lecture-notice .notice-footer {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 28px;
+}
+
+.lecture-notice .btn-write {
+  background: #fff;
+  border: 1px solid #999;
+  border-radius: 999px;
+  padding: 8px 22px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.lecture-notice .btn-write:hover {
+  background: #f5f6ff;
+  border-color: #6b5bff;
+  color: #2a4cff;
+}
+
+/* ===================================
+   공지사항 상세보기 (lecture-notice-detail)
+   =================================== */
+
+.lecture-notice-detail .notice-detail-panel {
+  background: #fff;
+  border: 1px solid #dcdde5;
+  border-radius: 18px;
+  padding: 40px 46px 50px;
+}
+
+.lecture-notice-detail .notice-header {
+  border-bottom: 1px solid #e2e4ef;
+  padding-bottom: 16px;
+  margin-bottom: 28px;
+}
+
+.lecture-notice-detail .notice-title {
+  font-size: 20px;
+  font-weight: 700;
+  margin-bottom: 12px;
+  color: #222;
+}
+
+.lecture-notice-detail .notice-meta {
+  display: flex;
+  gap: 24px;
+  font-size: 14px;
+  color: #666;
+}
+
+.lecture-notice-detail .notice-meta b {
+  font-weight: 600;
+  color: #333;
+}
+
+.lecture-notice-detail .notice-body {
+  font-size: 15px;
+  line-height: 1.8;
+  color: #333;
+  padding: 10px 2px 30px;
+  white-space: pre-line;
+}
+
+.lecture-notice-detail .notice-detail-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-top: 1px solid #e2e4ef;
+  padding-top: 24px;
+  margin-top: 10px;
+}
+
+.lecture-notice-detail .btn-list {
+  background: #fff;
+  border: 1px solid #aaa;
+  border-radius: 999px;
+  padding: 8px 26px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.lecture-notice-detail .btn-list:hover {
+  background: #f5f6ff;
+  border-color: #6b5bff;
+  color: #2a4cff;
+}
+
+.lecture-notice-detail .right-btns {
+  display: flex;
+  gap: 8px;
+}
+
+.lecture-notice-detail .btn-edit,
+.lecture-notice-detail .btn-delete {
+  border-radius: 999px;
+  font-size: 14px;
+  padding: 8px 20px;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.lecture-notice-detail .btn-edit {
+  background: #2a4cff;
+  color: white;
+  border: 1px solid #2a4cff;
+}
+
+.lecture-notice-detail .btn-edit:hover {
+  background: #223ce0;
+}
+
+.lecture-notice-detail .btn-delete {
+  background: #fff;
+  border: 1px solid #ff4444;
+  color: #ff4444;
+}
+
+.lecture-notice-detail .btn-delete:hover {
+  background: #fff3f3;
+}
+
+/* ===================================
+   공지사항 작성 (lecture-notice-write)
+   =================================== */
+.lecture-notice-write .notice-write {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.lecture-notice-write .card {
+  background: #fff;
+  border: 1px solid #ddd;
+  border-radius: 16px;
+  padding: 32px 40px;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.lecture-notice-write .card h2 {
+  font-size: 20px;
+  font-weight: 700;
+  margin-bottom: 24px;
+}
+
+/* ===== 입력 폼 ===== */
+.notice-form .form-group {
+  margin-bottom: 24px;
+}
+
+.notice-form label {
+  display: block;
+  font-weight: 600;
+  margin-bottom: 10px;
+}
+
+.notice-form input[type="text"],
+.notice-form textarea {
+  width: 100%;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  padding: 10px 14px;
+  font-size: 14px;
+  background: #fafbff;
+}
+
+.notice-form textarea {
+  height: 240px;
+  resize: none;
+}
+
+/* ===== 파일 업로드 ===== */
+.notice-form .file-box {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.notice-form input[type="file"] {
+  display: none;
+}
+
+.notice-form .file-label {
+  background: #4b5dff;
+  color: #fff;
+  padding: 6px 14px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.notice-form .file-name {
+  color: #555;
+  font-size: 14px;
+}
+
+/* ===== 등록 버튼 ===== */
+.notice-form .btn-submit {
+  display: block;
+  margin: 40px auto 0;
+  background: #4b5dff;
+  color: #fff;
+  border: none;
+  border-radius: 10px;
+  padding: 10px 32px;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.notice-form .btn-submit:hover {
+  background: #3848e6;
+}
+
+/* ===================================
+   공지사항 작성 (lecture-notice-write)
+   =================================== */
+.lecture-notice-write .content {
+  display: flex;
+  justify-content: center;   /* ✅ 중앙 정렬 */
+  align-items: flex-start;
+  padding: 60px 0;           /* 세로 여백 확보 */
+}
+
+.lecture-notice-write .card {
+  background: #fff;
+  border: 1px solid #ddd;
+  border-radius: 16px;
+  padding: 50px 60px;        /* 내부 여백 확대 */
+  width: 90%;                /* 화면 비율 기반으로 넓게 */
+  max-width: 1100px;         /* 최대 크기 제한 */
+  min-width: 850px;          /* 최소 크기 확보 */
+  box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+}
+
+.lecture-notice-write .card h2 {
+  font-size: 22px;
+  font-weight: 700;
+  margin-bottom: 36px;       /* 제목 아래 공간 확대 */
+}
+
+/* ===== 입력 폼 ===== */
+.notice-form .form-group {
+  margin-bottom: 36px;       /* 각 항목 간 간격 확대 */
+}
+
+.notice-form label {
+  display: block;
+  font-weight: 600;
+  margin-bottom: 12px;
+  font-size: 15px;
+}
+
+.notice-form input[type="text"],
+.notice-form textarea {
+  width: 100%;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  padding: 14px 18px;        /* 입력칸 여백 확대 */
+  font-size: 15px;
+  background: #fafbff;
+}
+
+/* 🔹 textarea 세로 길이 확장 */
+.notice-form textarea {
+  height: 340px;
+  resize: none;
+}
+
+/* ===== 파일 업로드 ===== */
+.notice-form .file-box {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.notice-form input[type="file"] {
+  display: none;
+}
+
+.notice-form .file-label {
+  background: #4b5dff;
+  color: #fff;
+  padding: 8px 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.notice-form .file-name {
+  color: #555;
+  font-size: 14px;
+}
+
+/* ===== 등록 버튼 ===== */
+.notice-form .btn-submit {
+  display: block;
+  margin: 60px auto 0;
+  background: #4b5dff;
+  color: #fff;
+  border: none;
+  border-radius: 12px;
+  padding: 14px 38px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.notice-form .btn-submit:hover {
+  background: #3848e6;
+}
+
+/* ===================================
+   문의 상세보기 (lecture-inquiry-detail)
+   =================================== */
+
+.lecture-inquiry-detail .inquiry-detail-card {
+  background: #fff;
+  border: 1px solid #dcdde5;
+  border-radius: 16px;
+  padding: 36px 40px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+  max-width: 800px;
+}
+
+.lecture-inquiry-detail .inquiry-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 22px;
+}
+
+.lecture-inquiry-detail .inquiry-header input[type="text"] {
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 8px 12px;
+  font-size: 14px;
+  width: 48%;
+  background: #fff;
+}
+
+.lecture-inquiry-detail .inquiry-header .align-right {
+  text-align: right;
+}
+
+/* 본문 영역 */
+.lecture-inquiry-detail .inquiry-body {
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  padding: 22px 24px;
+  background: #fafbff;
+}
+
+.lecture-inquiry-detail .inquiry-body .meta {
+  font-weight: 600;
+  color: #555;
+  margin-bottom: 10px;
+}
+
+.lecture-inquiry-detail .inquiry-body .text {
+  font-size: 14px;
+  color: #333;
+  line-height: 1.7;
+}
+
+/* 답변 영역 */
+.lecture-inquiry-detail .answer-box {
+  display: none;
+  background: #f4f5ff;
+  border-radius: 8px;
+  padding: 16px 18px;
+  margin-top: 18px;
+  border: 1px solid #e0e1f0;
+}
+
+.lecture-inquiry-detail .inquiry-detail-card.has-answer .answer-box {
+  display: block;
+}
+
+.lecture-inquiry-detail .answer-box .meta {
+  color: #555;
+  font-weight: 500;
+  margin-bottom: 8px;
+}
+
+.lecture-inquiry-detail .answer-box .meta span {
+  margin-left: 8px;
+  color: #777;
+  font-size: 13px;
+}
+
+.lecture-inquiry-detail .answer-box .text {
+  font-size: 14px;
+  color: #333;
+  line-height: 1.6;
+}
+
+/* 버튼 */
+.lecture-inquiry-detail .inquiry-footer {
+  margin-top: 24px;
+  text-align: right;
+}
+
+.lecture-inquiry-detail .btn-back {
+  background: #2a4cff;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 10px 24px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.lecture-inquiry-detail .btn-back:hover {
+  background: #223ce0;
+}
+
+/* ===================================
+   문의 팝업 (lecture-inquiry-popup)
+   =================================== */
+
+/* ====== 기본 테이블 ====== */
+.lecture-inquiry-popup .inquiry-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+}
+
+.lecture-inquiry-popup .inquiry-table th,
+.lecture-inquiry-popup .inquiry-table td {
+  border: 1px solid #ddd;
+  padding: 10px 12px;
+  text-align: center;
+}
+
+.lecture-inquiry-popup .inquiry-table th {
+  background: #f3f4ff;
+  font-weight: 600;
+}
+
+.lecture-inquiry-popup .inquiry-table tr:hover {
+  background: #f9faff;
+  cursor: pointer;
+}
+
+/* 상태 배지 */
+.lecture-inquiry-popup .status {
+  display: inline-block;
+  border-radius: 12px;
+  padding: 4px 10px;
+  font-size: 13px;
+  font-weight: 600;
+  color: #fff;
+}
+
+.lecture-inquiry-popup .status.received {
+  background: #4b5dff;
+}
+
+.lecture-inquiry-popup .status.processing {
+  background: #d9f365;
+  color: #333;
+}
+
+/* ===================================
+   모달 (Popup)
+   =================================== */
+.inquiry-modal {
+  position: fixed;          /* 스크롤 영향 X */
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;            /* 뷰포트 전체 영역 */
+  display: flex;
+  justify-content: center;  /* 수평 중앙 */
+  align-items: center;      /* 수직 중앙 */
+  background: rgba(0, 0, 0, 0.4);
+  z-index: 100;
+}
+
+.inquiry-modal .modal-content {
+  background: #fff;
+  border-radius: 16px;
+  width: 520px;
+  max-height: 80vh;
+  overflow-y: auto;
+  padding: 28px 30px 36px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+  position: relative;
+  animation: modal-fade 0.25s ease;
+}
+
+@keyframes modal-fade {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.inquiry-modal .modal-close {
+  position: absolute;
+  top: 14px;
+  right: 16px;
+  background: transparent;
+  border: none;
+  font-size: 20px;
+  cursor: pointer;
+  color: #555;
+}
+
+.inquiry-modal .modal-title {
+  font-size: 18px;
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+
+.inquiry-modal .modal-meta {
+  font-size: 13px;
+  color: #666;
+  margin-bottom: 20px;
+}
+
+.inquiry-modal .modal-message {
+  background: #f3f3f3;
+  border-radius: 8px;
+  padding: 14px;
+  font-size: 14px;
+  color: #333;
+  margin-bottom: 24px;
+}
+
+/* ===== 답변 작성 영역 ===== */
+.inquiry-modal .modal-answer h4 {
+  font-size: 15px;
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+
+.inquiry-modal .modal-answer textarea {
+  width: 100%;
+  height: 100px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 10px;
+  font-size: 14px;
+  resize: none;
+  margin-bottom: 14px;
+}
+
+.inquiry-modal .status-change {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.inquiry-modal .status-change select {
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 6px 10px;
+  font-size: 14px;
+}
+
+/* ===== 버튼 ===== */
+.inquiry-modal .btn-group {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+.inquiry-modal .btn-delete {
+  background: #ddd;
+  border: none;
+  border-radius: 8px;
+  padding: 8px 18px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.inquiry-modal .btn-submit {
+  background: #4b5dff;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 8px 18px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.inquiry-modal .btn-submit:hover {
+  background: #3848e6;
+}
+
+/* ===============================
+   강사 일정관리 (lecture-calendar)
+   =============================== */
+
+/* 메인 콘텐츠 영역 */
+.lecture-calendar .content {
+  flex: 1;
+  padding: 28px 32px 32px;
+  position: relative;
+  background: #fff;
+}
+
+/* 상단 월 컨트롤 영역 */
+.lecture-calendar .calendar-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.lecture-calendar .month-control {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.lecture-calendar .month-btn {
+  width: 28px;
+  height: 28px;
+  border: 1px solid #dcdde5;
+  border-radius: 50%;
+  background: #fff;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 14px;
+  transition: 0.15s;
+}
+
+.lecture-calendar .month-btn:hover {
+  background: #f3f4ff;
+}
+
+.lecture-calendar .month-title {
+  background: #fff;
+  border: 1px solid #dcdde5;
+  border-radius: 999px;
+  padding: 6px 16px 7px;
+  font-weight: 600;
+  font-size: 14px;
+}
+
+.lecture-calendar .legend {
+  display: flex;
+  gap: 18px;
+  font-size: 14px;
+  color: #555;
+}
+
+.lecture-calendar .legend span {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.lecture-calendar .dot {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.lecture-calendar .dot.blue { background: #4b5dff; }
+.lecture-calendar .dot.orange { background: #ff9f43; }
+.lecture-calendar .dot.red { background: #ff6b6b; }
+
+/* ===============================
+   달력 (calendar grid)
+   =============================== */
+.lecture-calendar .calendar-grid {
+  background: #fff;
+  border-radius: 16px;
+  display: grid;
+  grid-template-columns: repeat(7, minmax(90px, 1fr));
+  gap: 10px;
+}
+
+.lecture-calendar .day-cell {
+  background: #fff;
+  border: 1px solid #e1e2f0;
+  border-radius: 14px;
+  height: 90px;
+  padding: 7px 9px;
+  font-size: 13px;
+  color: #333;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  position: relative;
+  transition: 0.12s ease;
+}
+
+.lecture-calendar .day-cell:hover {
+  background: #f3f4ff;
+  border-color: #cdd2ff;
+  box-shadow: 0 3px 8px rgba(0,0,0,0.05);
+  cursor: pointer;
+}
+
+.lecture-calendar .day-num {
+  font-weight: 600;
+  font-size: 13px;
+}
+
+.lecture-calendar .event-dots {
+  display: flex;
+  gap: 4px;
+  margin-top: auto;
+}
+
+.lecture-calendar .event-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+}
+
+.lecture-calendar .event-dot.blue { background: #4b5dff; }
+.lecture-calendar .event-dot.orange { background: #ff9f43; }
+.lecture-calendar .event-dot.red { background: #ff6b6b; }
+
+/* ===============================
+   툴팁
+   =============================== */
+.lecture-calendar .tooltip {
+  display: none;
+  position: absolute;
+  bottom: 100%;
+  left: 0;
+  transform: translateY(-8px);
+  background: #fff;
+  border: 1px solid #ccc;
+  padding: 6px 10px;
+  font-size: 12px;
+  border-radius: 8px;
+  box-shadow: 0 3px 8px rgba(0,0,0,0.1);
+  white-space: nowrap;
+  z-index: 10;
+}
+
+.lecture-calendar .day-cell:hover .tooltip {
+  display: block;
+}
+
+/* ===============================
+   일정 추가 버튼
+   =============================== */
+.lecture-calendar .add-btn {
+  position: fixed;
+  right: 45px;
+  bottom: 45px;
+  background: #4b45ff;
+  color: #fff;
+  border: none;
+  border-radius: 12px;
+  padding: 10px 20px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 6px 16px rgba(75,69,255,0.28);
+  transition: 0.12s;
+}
+
+.lecture-calendar .add-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 18px rgba(75,69,255,0.35);
+}
+
+/* ===============================
+   모달
+   =============================== */
+.lecture-calendar .modal {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.4);
+  justify-content: center;
+  align-items: center;
+  z-index: 100;
+}
+
+.lecture-calendar .modal-content {
+  background: #fff;
+  padding: 24px 30px;
+  border-radius: 14px;
+  min-width: 320px;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.2);
+}
+
+.lecture-calendar .modal h3 {
+  margin-bottom: 10px;
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.lecture-calendar .modal-close {
+  margin-top: 15px;
+  background: #4b45ff;
+  color: #fff;
+  border: none;
+  padding: 6px 14px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 500;
+}
+
+/* ===============================
+   학생 성적 입력 (lecture-grade)
+   =============================== */
+
+.lecture-grade .content {
+  flex: 1;
+  padding: 48px 60px;
+  background: #fff;
+  text-align: center;
+}
+
+.lecture-grade h2 {
+  font-size: 18px;
+  font-weight: 700;
+  margin-bottom: 26px;
+}
+
+/* 검색 영역 */
+.lecture-grade .search-area {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 24px;
+}
+
+.lecture-grade .search-box {
+  display: flex;
+  align-items: center;
+  width: 360px;
+  border: 1px solid #ccc;
+  border-radius: 999px;
+  overflow: hidden;
+  background: #fff;
+}
+
+.lecture-grade .search-box input {
+  border: none;
+  outline: none;
+  flex: 1;
+  padding: 8px 12px;
+  font-size: 14px;
+}
+
+.lecture-grade .search-box .btn-search {
+  background: none;
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
+  padding-right: 12px;
+  color: #1d9b40;
+}
+
+.lecture-grade .exam-name {
+  width: 360px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  padding: 8px 12px;
+  font-size: 14px;
+  outline: none;
+}
+
+/* 테이블 */
+.lecture-grade .grade-table {
+  width: 70%;
+  margin: 0 auto 30px;
+  border-collapse: collapse;
+  background: #fff;
+  font-size: 14px;
+}
+
+.lecture-grade .grade-table th {
+  background: #f6f7fb;
+  padding: 10px;
+  border-bottom: 1px solid #ccc;
+  font-weight: 600;
+}
+
+.lecture-grade .grade-table td {
+  border-bottom: 1px solid #eee;
+  padding: 10px;
+}
+
+.lecture-grade .grade-table input {
+  width: 100%;
+  padding: 6px 8px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  text-align: center;
+}
+
+/* 저장 버튼 */
+.lecture-grade .btn-area {
+  text-align: center;
+  margin-top: 24px;
+}
+
+.lecture-grade .btn-save {
+  border: 1px solid #ccc;
+  border-radius: 12px;
+  background: #fff;
+  font-size: 15px;
+  padding: 8px 30px;
+  cursor: pointer;
+  transition: 0.2s;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+}
+
+.lecture-grade .btn-save:hover {
+  background: #f3f4ff;
+  border-color: #bfc4ff;
+}

@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <title>KH EduERP | 성적조회</title>
+  <link rel="stylesheet" href="/styles/default.css" />
+  <link rel="stylesheet" href="/styles/style.css" />
+  <link rel="stylesheet" href="/styles/student.css" />
+</head>
+
+<body class="student student-score">
+  <!-- 사이드바 -->
+  <aside class="sidebar">
+    <div>
+        <div class="logo">
+            <span>KH EduERP</span>
+        </div>
+      <ul class="menu">
+        <li>대시보드</li>
+        <li>일정조회</li>
+        <li>출결정정</li>
+        <li>강의만족도</li>
+        <li>상담신청</li>
+        <li class="active">성적조회</li>
+        <li>문의</li>
+      </ul>
+    </div>
+    <footer>© 2025 KH</footer>
+  </aside>
+
+  <!-- 메인 -->
+  <main class="main">
+    <header class="topbar">
+      <div class="path">학생 › 성적조회 <b>학생페이지</b></div>
+      <div class="user-info">알림(<span>2</span>) 홍길동(학생)</div>
+    </header>
+
+    <section class="content score">
+      <div class="card score-card">
+        <h2>학생 성적 조회</h2>
+
+        <div class="student-info">
+          <p><b>이름</b> 김정훈</p>
+          <div class="subject-select">
+            <label for="subject"><b>과목 선택</b></label>
+            <select id="subject">
+              <option>Java</option>
+              <option>SQL</option>
+              <option>HTML/CSS</option>
+              <option>Spring</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="score-result">
+          <p class="subject-title">SQL 성적</p>
+          <p class="score-value">점수 : <span>80점</span></p>
+        </div>
+      </div>
+    </section>
+  </main>
+</body>
+</html>

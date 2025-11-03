@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>KH EduERP | 문의 리스트</title>
+
+  <link rel="stylesheet" href="/styles/default.css">
+  <link rel="stylesheet" href="/styles/style.css">
+  <link rel="stylesheet" href="/styles/lecture.css">
+</head>
+
+<body class="lecture lecture-inquiry-popup">
+    <!-- 사이드바 -->
+    <aside class="sidebar">
+        <div>
+            <div class="logo">
+              <span>KH EduERP</span>
+            </div>
+            <ul class="menu">
+                <li>학생조회</li>
+                <li>출결관리</li>
+                <li>일정관리</li>
+                <li>상담관리</li>
+                <li>출결정정 처리</li>
+                <li>만족도 결과</li>
+                <li>공지사항</li>
+                <li class="active">문의</li>
+            </ul>
+        </div>
+        <footer>© 2025 KH</footer>
+    </aside>
+
+    <!-- 팝업 (Modal) -->
+  <div class="inquiry-modal" id="inquiryModal" style="display:block;">
+    <div class="modal-content">
+      <button class="modal-close">×</button>
+      <h3 class="modal-title">수강 신청이 안돼요.</h3>
+      <p class="modal-meta">작성자: <b>홍길동</b> | 작성일: 2025-10-28</p>
+      <div class="modal-message">
+        수강 신청을 눌러도 반응이 없습니다.
+      </div>
+
+      <div class="modal-answer">
+        <h4>답변 작성</h4>
+        <textarea placeholder="답변 내용을 입력하세요."></textarea>
+
+        <div class="status-change">
+          <label for="status">상태 변경</label>
+          <select id="status">
+            <option>처리 중</option>
+            <option>처리 완료</option>
+          </select>
+        </div>
+
+        <div class="btn-group">
+          <button class="btn-delete">삭제</button>
+          <button class="btn-submit">등록</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 메인 -->
+  <main class="main">
+    <header class="topbar">
+      <div class="path">강사 › 문의 <b>강사 페이지</b></div>
+      <div class="user-info">알림(<span>2</span>) 김강사(강사)</div>
+    </header>
+
+    <section class="content inquiry-container">
+      <!-- 검색창 -->
+      <div class="search-box">
+        <input type="text" placeholder="검색" />
+        <button class="btn-search">검색</button>
+      </div>
+
+      <!-- 문의 리스트 테이블 -->
+      <div class="inquiry-table-section">
+        <table class="inquiry-table">
+          <thead>
+            <tr>
+              <th>문의번호</th>
+              <th>제목</th>
+              <th>작성자</th>
+              <th>등록일</th>
+              <th>상태</th>
+              <th>답변여부</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="clickable">
+              <td>101</td>
+              <td>수강 신청 정정 문의</td>
+              <td>홍길동</td>
+              <td>2025-10-25</td>
+              <td><span class="status received">접수</span></td>
+              <td>미답변</td>
+            </tr>
+            <tr class="clickable">
+              <td>102</td>
+              <td>오류 문의</td>
+              <td>김길동</td>
+              <td>2025-10-28</td>
+              <td><span class="status processing">처리중</span></td>
+              <td>답변완료</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+
+</body>
+</html>

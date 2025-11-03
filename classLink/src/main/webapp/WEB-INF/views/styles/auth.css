@@ -1,0 +1,259 @@
+/* ===============================
+   auth.css
+   로그인 / 회원가입 / 비밀번호 찾기 / 비밀번호 변경 공통 스타일
+================================ */
+
+/* 기본 설정 */
+body {
+    background: #f8f9fc;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+/* 공통 카드 */
+.card {
+    background: #fff;
+    border-radius: 14px;
+    border: 1px solid #ddd;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+}
+
+/* 공통 제목 */
+.title {
+    text-align: center;
+    font-size: 28px;
+    font-weight: 700;
+    margin-bottom: 34px;
+}
+
+/* 공통 버튼 */
+.button {
+    background: #4b45ff;
+    color: #fff;
+    border: none;
+    border-radius: 10px;
+    padding: 12px;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.25s ease;
+}
+.button:hover {
+    background: #3832d0;
+}
+
+/* 공통 입력 필드 */
+input,
+select {
+    width: 100%;
+    padding: 12px 15px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    font-size: 14px;
+    margin-bottom: 14px;
+    transition: all 0.2s ease;
+}
+
+input:focus,
+select:focus {
+    outline: none;
+    border-color: #4b45ff;
+    box-shadow: 0 0 0 3px rgba(75, 69, 255, 0.15);
+}
+
+/* 탭 버튼 (학생/강사/관리자 공통) */
+.role-tabs {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 25px;
+    gap: 10px;
+}
+
+.role-tabs button {
+    flex: 1;
+    padding: 10px 0;
+    border: none;
+    border-radius: 20px;
+    background: #d5d9ff;
+    color: #333;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    opacity: 0.7;
+}
+
+.role-tabs button:hover { opacity: 1; }
+
+.role-tabs button.active {
+    background: #4b45ff;
+    color: #fff;
+    opacity: 1;
+    font-weight: 600;
+}
+
+/* ===== 로그인 ===== */
+.login {
+  flex-direction: column;
+}
+
+.login body {
+    height: 100vh;
+}
+
+.login h1 {
+    font-size: 28px;
+    font-weight: 700;
+    margin-bottom: 12px;
+    color: #222;
+}
+
+.login h1 span {
+    color: #4b45ff;
+}
+
+.login p {
+    color: #555;
+    font-size: 15px;
+    text-align: center;
+    line-height: 1.5;
+    margin-bottom: 40px;
+}
+
+.login-card {
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 14px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+    width: 380px;
+    padding: 40px 50px;
+    text-align: center;
+}
+
+.login .links {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 14px;
+    font-size: 13px;
+    color: #555;
+}
+
+.login .login-btn {
+    background: #4b45ff;
+    color: #fff;
+    border: none;
+    width: 100%;
+    padding: 12px 0;
+    border-radius: 10px;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.25s ease;
+}
+
+.login .links a {
+    text-decoration: none;
+    color: #4b45ff;
+    font-weight: 500;
+}
+
+.login .links a:hover {
+    text-decoration: underline;
+}
+
+/* ===== 회원가입 ===== */
+.register-page .auth-card {
+  width: 520px;
+}
+.user-type {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 25px;
+}
+.user-type label {
+  flex: 1;
+  background: #f4f4ff;
+  border-radius: 12px;
+  padding: 20px 0;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+.user-type label:hover { background: #ececff; }
+.user-type input[type="radio"] { display: none; }
+.user-type label:has(input[type="radio"]:checked) {
+  background: linear-gradient(145deg, #4540e6, #5f58ff);
+  border: 2px solid #4b45ff;
+  color: #fff;
+}
+.birth-selects {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+}
+.birth-selects select {
+  flex: 1;
+}
+
+/* ===== 비밀번호 찾기 ===== */
+.findpw-page .pw-wrapper,
+.changepw-page .pw-wrapper {
+  width: min(970px, 100% - 40px);
+  background: #f3f4fb;
+  border: 1px solid #d3d3da;
+  border-radius: 18px;
+  padding: 44px 0 110px;
+  position: relative;
+}
+.findpw-page .pw-card,
+.changepw-page .pw-card {
+  width: 520px;
+  margin: 0 auto;
+  background: #fff;
+  border: 1px solid #161616;
+  border-radius: 14px;
+  padding: 32px 34px 48px;
+}
+.findpw-page .form-input,
+.changepw-page .form-input {
+  height: 50px;
+  border-radius: 12px;
+}
+.btn-inline {
+  position: absolute;
+  right: 8px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: #fff;
+  border: 1px solid #bbb;
+  border-radius: 10px;
+  padding: 6px 12px;
+  font-size: 13px;
+  cursor: pointer;
+  color: #444;
+  transition: 0.15s;
+}
+.btn-inline:hover {
+  border-color: #5b55ff;
+  color: #5b55ff;
+}
+
+/* ===== 하단 버튼 ===== */
+.pw-submit {
+  position: absolute;
+  bottom: 30px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #5b55ff;
+  color: white;
+  border: none;
+  border-radius: 14px;
+  width: 110px;
+  height: 42px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.15s;
+}
+.pw-submit:hover { background: #4a45e6; }
