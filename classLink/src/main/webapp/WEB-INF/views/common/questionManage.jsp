@@ -73,60 +73,6 @@
       </div>
     </section>
 
-    <!-- 우측 패널 -->
-    <aside class="detail-panel" id="detailPanel">
-      <h3 id="panel-title">-</h3>
-      <p>작성자: <b id="panel-writer">-</b></p>
-      <p>작성일: <span id="panel-date">-</span></p>
-
-      <div class="detail-box">
-        <textarea id="panel-content" readonly placeholder="문의 내용을 불러오는 중..."></textarea>
-      </div>
-
-      <div class="reply-section">
-        <label>답변 작성</label>
-        <textarea id="panel-reply" placeholder="답변 내용을 입력하세요."></textarea>
-      </div>
-
-      <div class="status-change">
-        <label>상태 변경</label>
-        <select id="panel-status">
-          <option value="접수">접수</option>
-          <option value="처리중">처리 중</option>
-          <option value="처리완료">처리 완료</option>
-        </select>
-      </div>
-
-      <div class="btn-group">
-        <button class="btn-delete">삭제</button>
-        <button class="btn-submit">등록</button>
-      </div>
-    </aside>
   </main>
-
-  <!-- ✅ JS: 테이블 클릭 이벤트 -->
-  <script>
-    const rows = document.querySelectorAll('.inquiry-table .clickable');
-    const title = document.getElementById('panel-title');
-    const writer = document.getElementById('panel-writer');
-    const date = document.getElementById('panel-date');
-    const content = document.getElementById('panel-content');
-    const reply = document.getElementById('panel-reply');
-    const statusSelect = document.getElementById('panel-status');
-
-    rows.forEach(row => {
-      row.addEventListener('click', () => {
-        title.textContent = row.dataset.title;
-        writer.textContent = row.dataset.writer;
-        date.textContent = row.dataset.date;
-        content.value = row.dataset.content;
-        reply.value = row.dataset.reply;
-        statusSelect.value = row.dataset.status;
-
-        rows.forEach(r => r.classList.remove('selected'));
-        row.classList.add('selected');
-      });
-    });
-  </script>
 </body>
 </html>
