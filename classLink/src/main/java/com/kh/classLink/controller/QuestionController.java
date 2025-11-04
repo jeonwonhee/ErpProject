@@ -4,7 +4,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
-public class InquiryController {
+public class QuestionController {
 
 
     /**
@@ -20,18 +20,18 @@ public class InquiryController {
      * 문의 관리
      * @return
      */
-    @GetMapping("/inquiryManage.co")
+    @GetMapping("/questionManage.co")
     public String inquiryManage(){
-        return "common/inquiryManage";
+        return "questionManage";
     }
 
     /**
      * 문의 상세보기
      * @return
      */
-    @GetMapping("/inquiryDetail.co")
+    @GetMapping("/questionDetail.co")
     public String inquiryDetail(){
-        return "common/inquiryDetail";
+        return "questionDetail";
     }
 
 
@@ -39,9 +39,9 @@ public class InquiryController {
      * 문의 답변
      * @return
      */
-    @GetMapping("/inquiryEnrollForm.co")
+    @GetMapping("/questionEnrollForm.co")
     public String inquiryEnrollForm(){
-        return "common/inquiryEnrollForm";
+        return "questionEnrollForm";
     }
 
 }
