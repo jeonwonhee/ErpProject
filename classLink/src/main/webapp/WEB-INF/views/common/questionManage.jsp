@@ -47,11 +47,11 @@
                 data-reply=""
                 data-stage="미답변">
               <td>101</td>
-              <td>수강 신청 정정 문의</td>
+              <td onClick = "location.href='${pageContext.request.contextPath}/questionDetail.co'">수강 신청 정정 문의</td>
               <td>홍길동</td>
               <td>2025-10-25</td>
               <td><span class="status received">접수</span></td>
-              <td>미답변</td>
+              <td onClick = "location.href='${pageContext.request.contextPath}/questionEnrollForm.co'">미답변</td>
             </tr>
             <tr class="clickable"
                 data-title="오류 문의"
