@@ -20,12 +20,6 @@ public class StudentController {
         return "student/studentMain";
     }
 
-    @GetMapping("/studentDashboard.co")
-    public String studentDashBoard() {
-        //학생 대시보드
-        return "student/studentDashboard";
-    }
-
     @GetMapping("/studentMyPage.co")
     public String studentMyPage() {
         //학생 마이페이지
