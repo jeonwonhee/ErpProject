@@ -38,7 +38,7 @@
                                 </tr>
                             </thead>
                         <tbody>
-                            <tr class="clickable">
+                            <tr class="clickable" onclick="location.href='${pageContext.request.contextPath}/adminCalenderDetail.co'" >
                                 <td>18</td>
                                 <td>휴강</td>
                                 <td>김강사</td>
@@ -66,33 +66,6 @@
                     </table>
                 </div>
             </section>
-
-            <!-- 우측 패널 -->
-            <aside class="detail-panel">
-                <h3>휴강신청</h3>
-                <p>작성자: <b>김강사</b></p>
-                <p>작성일: <span>2025-10-28</span></p>
-
-                <div class="detail-box">
-                    <label>휴강사유</label>
-                    <textarea readonly>~~~ 이유로 휴강 신청합니다.</textarea>
-                </div>
-
-                <div class="approval-radio">
-                    <label><input type="radio" name="approval" /> 승인</label>
-                    <label><input type="radio" name="approval" /> 반려</label>
-                </div>
-
-                <div class="reject-box">
-                    <label>반려사유</label>
-                    <textarea placeholder="사유를 입력하세요.">연차를 모두 소진하셨습니다.</textarea>
-                </div>
-
-                <div class="btn-group">
-                    <button class="btn-delete">삭제</button>
-                    <button class="btn-submit">등록</button>
-                </div>
-            </aside>
         </main>
     </body>
 </html>
