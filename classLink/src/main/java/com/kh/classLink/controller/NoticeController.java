@@ -10,6 +10,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 @Controller
 public class NoticeController {
+
     /**
      * 공지사항 이동
      * @return

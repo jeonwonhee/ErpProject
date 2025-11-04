@@ -25,12 +25,13 @@
             <li>문의</li>
             <li><a href="${pageContext.request.contextPath}/notice.co">공지사항</a></li>
            강사
-            <li>대시보드</li>
-            <li>학생관리</li>
-            <li>휴가승인</li>
-            <li>출결 정정 관리</li>
-            <li>상담관리</li>
-            <li>만족도 결과</li>
+            <li><a href="${pageContext.request.contextPath}/lectureDashboard.co">대시보드</li>
+            <li><a href="${pageContext.request.contextPath}/lectureGrade.co">성적관리</li>
+            <li><a href="${pageContext.request.contextPath}/lectureAttendance.co">출결관리</li>
+            <li><a href="${pageContext.request.contextPath}/lectureCalender.co">일정관리</li>
+            <li><a href="${pageContext.request.contextPath}/lectureConsult.co"">상담관리</li>
+            <li><a href="${pageContext.request.contextPath}/lectureAttendanceList.co">출결정정 처리</li>
+            <li><a href="${pageContext.request.contextPath}/lectureFeedback.co">만족도 결과</li>
             <li><a href="${pageContext.request.contextPath}/notice.co">공지사항</a></li>
             <li>문의</li>
             관리자
