@@ -1,7 +1,5 @@
 package com.kh.classLink.controller;
 
-import com.kh.classLink.model.vo.Notice;
-import com.kh.classLink.service.NoticeService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -12,15 +10,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 @Controller
 public class NoticeController {
-
-    private final NoticeService noticeService;
-
-    @Autowired
-    public NoticeController(NoticeService noticeService) {
-        this.noticeService = noticeService;
-    }
-
-
     /**
      * 공지사항 이동
      * @return

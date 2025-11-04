@@ -34,10 +34,11 @@
             <li><a href="${pageContext.request.contextPath}/notice.co">공지사항</a></li>
             <li>문의</li>
             관리자
-            <li class="active">대시보드</li>
-            <li>학생관리</li>
-            <li>직원관리</li>
-            <li>출결현황</li>
+            <li><a href="${pageContext.request.contextPath}/adminDashboard.co">대시보드</li>
+            <li><a href="${pageContext.request.contextPath}/adminStudentList.co">학생관리</li>
+            <li><a href="${pageContext.request.contextPath}/adminLectureList.co">직원관리</li>
+            <li><a href="${pageContext.request.contextPath}/adminCalenderManage.co">일정관리<li>
+            <li><a href="${pageContext.request.contextPath}/adminAttendanceDashboard.co">출결현황</li>
             <li><a href="${pageContext.request.contextPath}/notice.co">공지사항</a></li>
             <li>문의</li>
         </ul>
