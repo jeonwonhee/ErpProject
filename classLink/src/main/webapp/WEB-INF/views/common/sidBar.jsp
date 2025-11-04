@@ -16,13 +16,14 @@
         <div class="logo"><span>KH EduERP</span></div>
         <ul class="menu">
             학생
-            <li>대시보드</li>
-            <li>일정조회</li>
-            <li>출결정정신청</li>
-            <li>강의만족도조사</li>
-            <li>상담신청</li>
-            <li>성적조회</li>
-            <li>문의</li>
+            <li><a href="${pageContext.request.contextPath}/studentMain.co">대시보드1</a></li>
+            <li><a href="${pageContext.request.contextPath}/studentDashboard.co">대시보드2</a></li>
+            <li><a href="${pageContext.request.contextPath}/stLectureDate.co">일정조회</a></li>
+            <li><a href="${pageContext.request.contextPath}/studentAtt.co">출석정정신청</a></li>
+            <li><a href="${pageContext.request.contextPath}/studentSatisfication.co">강의만족도조사</a></li>
+            <li><a href="${pageContext.request.contextPath}/stConsult.co">상담신청</a></li>
+            <li><a href="${pageContext.request.contextPath}/studentScore.co">성적조회</a></li>
+            <li><a href="${pageContext.request.contextPath}/studentInquiry.co">문의</a></li>
             <li><a href="${pageContext.request.contextPath}/notice.co">공지사항</a></li>
            강사
             <li>대시보드</li>
