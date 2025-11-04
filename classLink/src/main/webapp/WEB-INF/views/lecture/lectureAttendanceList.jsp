@@ -1,4 +1,5 @@
 <!-- === 강사 출결정정 페이지 (상태 오른쪽으로 이동 및 크기 확장) === -->
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -12,24 +13,8 @@
 </head>
 <body class="lecture lecture-attendance-list">
   <div class="teacher-attendance-page kh-container">
-    <aside class="sidebar">
-      <div>
-        <div class="logo">
-          <span>KH EduERP</span>
-        </div>
-        <ul class="menu">
-         <li>학생조회</li>
-        <li>출결관리</li>
-        <li>일정관리</li>
-        <li>상담관리</li>
-        <li class="active">출결정정 처리</li>
-        <li>만족도 결과</li>
-        <li>공지사항</li>
-        <li>문의</li>
-        </ul>
-      </div>
-      <footer>© 2025 KH</footer>
-    </aside>
+      <!-- 사이드바 -->
+      <jsp:include page="/WEB-INF/views/common/sidBar.jsp" />
 
     <main class="main">
       <header class="topbar">
