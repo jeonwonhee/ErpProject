@@ -225,77 +225,140 @@
   font-weight: 600;
 }
 
-/* ===== 우측 패널 ===== */
-.admin-calendar-manage .detail-panel {
-  position: absolute;
-  top: 90px;
-  right: 40px;
-  width: 280px;
-  background: #fff;
-  border: 1px solid #ddd;
-  border-radius: 12px;
-  padding: 20px 22px;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+/* ===============================
+   휴강 승인/반려 페이지
+   =============================== */
+/* ===== Calendar Manage – Absence Request ===== */
+:root {
+    --border: #e7eaf0;
+    --text: #2a2f3a;
+    --muted: #7c8595;
+    --bg: #f7f8fb;
+    --card: #ffffff;
+    --primary: #6c63ff;
+    --primary-600: #5b53f2;
+    --primary-700: #4a44e2;
+    --ring: rgba(108, 99, 255, .25);
+    --shadow: 0 6px 18px rgba(20, 24, 40, .06);
+    --radius-lg: 14px;
+    --radius-md: 12px;
 }
 
-.admin-calendar-manage .detail-panel h3 {
-  font-size: 16px;
-  font-weight: 700;
-  margin-bottom: 10px;
+/* 페이지 배경 */
+body.admin.admin-calendar-manage {
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.45;
 }
 
-.admin-calendar-manage .detail-panel p {
-  font-size: 13px;
-  color: #555;
-  margin-bottom: 4px;
+/* 메인 영역 */
+.admin-calendar-manage .main {
+    padding: 28px 32px 48px;
 }
 
-.admin-calendar-manage .detail-panel label {
-  font-size: 14px;
-  font-weight: 600;
+/* 카드 */
+.admin-calendar-manage .card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow);
+    padding: 22px 24px;
+    max-width: 1060px;
 }
 
-.admin-calendar-manage .detail-panel textarea {
-  width: 100%;
-  height: 80px;
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  margin-top: 6px;
-  margin-bottom: 16px;
-  resize: none;
-  padding: 8px;
+/* 제목 */
+.admin-calendar-manage .card > h2 {
+    font-size: 22px;
+    font-weight: 700;
+    margin: 6px 0 18px;
 }
 
-.admin-calendar-manage .approval-radio {
-  display: flex;
-  justify-content: space-around;
-  margin-bottom: 16px;
+/* 폼 그룹 */
+.admin-calendar-manage .form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin: 18px 0;
 }
 
-.admin-calendar-manage .btn-group {
-  display: flex;
-  justify-content: space-between;
+.admin-calendar-manage .form-group label {
+    font-size: 14px;
+    color: var(--muted);
 }
 
-.admin-calendar-manage .btn-delete {
-  background: #ddd;
-  border: none;
-  border-radius: 8px;
-  padding: 8px 18px;
-  font-weight: 600;
-  cursor: pointer;
+/* 인풋 & 텍스트박스 */
+.admin-calendar-manage .form-input,
+.admin-calendar-manage .form-textarea {
+    width: 100%;
+    background: #fbfcff;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    padding: 14px 16px;
+    font-size: 15px;
+    transition: .15s ease;
+    outline: none;
 }
 
+.admin-calendar-manage .form-textarea {
+    min-height: 110px;
+    resize: vertical;
+}
+
+.admin-calendar-manage .form-input:focus,
+.admin-calendar-manage .form-textarea:focus {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 4px var(--ring);
+    background: #f9f9ff;
+}
+
+/* 라디오 */
+.admin-calendar-manage .radio-group {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+}
+
+.admin-calendar-manage .radio-group input[type="radio"] {
+    accent-color: var(--primary);
+}
+
+/* 버튼 */
 .admin-calendar-manage .btn-submit {
-  background: #4b5dff;
-  color: #fff;
-  border: none;
-  border-radius: 8px;
-  padding: 8px 18px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: 0.2s;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 8px;
+    margin-left: auto;
+    min-width: 140px;
+    height: 44px;
+    padding: 0 18px;
+    border: none;
+    border-radius: 12px;
+    background: var(--primary);
+    color: #fff;
+    font-weight: 700;
+    cursor: pointer;
+    box-shadow: 0 10px 20px rgba(108, 99, 255, .22);
+    transition: .15s ease;
 }
+
+.admin-calendar-manage .btn-submit:hover {
+    background: var(--primary-600);
+    box-shadow: 0 12px 24px rgba(108, 99, 255, .28);
+}
+
+.admin-calendar-manage .btn-submit:active {
+    transform: translateY(1px);
+    background: var(--primary-700);
+}
+
+/* 반응형 */
+@media (max-width: 1024px) {
+    .admin-calendar-manage .main { padding: 20px; }
+    .admin-calendar-manage .card { padding: 18px; }
+}
+
+
 
 /* ===============================
    관리자 문의 관리 (admin-inquiry-manage)
