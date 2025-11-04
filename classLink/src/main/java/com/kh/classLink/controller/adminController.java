@@ -50,4 +50,13 @@ public class adminController {
     public String adminLectureList(){
         return "admin/adminLectureList";
     }
+
+    /**
+     *
+     * @return
+     */
+    @GetMapping("/adminCalenderDetail.co")
+    public String adminCalenderDetail(){
+        return "admin/adminCalenderDetail";
+    }
 }
