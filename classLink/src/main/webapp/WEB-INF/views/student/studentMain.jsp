@@ -1,3 +1,4 @@
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -257,28 +258,10 @@
   </style>
 </head>
 <body>
-  <aside class="sidebar">
-    <div>
-      <div class="logo">KH EduERP</div>
-      <ul class="menu">
-        <li class="active">대시보드</li>
-        <li>일정 조회</li>
-        <li>휴가 신청</li>
-        <li>출결 정정</li>
-        <li>강의 만족도</li>
-        <li>상담 신청</li>
-        <li>공지사항</li>
-        <li>문의</li>
-      </ul>
-    </div>
-    <footer>© 2025 KH</footer>
-  </aside>
+<jsp:include page="/WEB-INF/views/common/sidBar.jsp" />
 
   <main class="main">
-    <header class="topbar">
-      <div class="path">학생 > 대시보드 <b>학생페이지</b></div>
-      <div class="user-info">알림(<span>2</span>) 홍길동(학생)</div>
-    </header>
+      <jsp:include page="/WEB-INF/views/common/topBar.jsp" />
 
     <section class="content">
       <div class="left-section">
