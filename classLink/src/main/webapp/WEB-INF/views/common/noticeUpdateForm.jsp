@@ -8,11 +8,6 @@
   <link rel="stylesheet" href="/styles/default.css">
   <link rel="stylesheet" href="/styles/style.css">
   <link rel="stylesheet" href="/styles/lecture.css">
-    <style>
-        .classNoList {
-            display: none;
-        }
-    </style>
 </head>
 
 <body class="lecture lecture-notice-write">
@@ -44,12 +39,12 @@
             </div>
             <div class="classNoList">
                 <label for="classNoList">반 명</label>
-                <select name="classNoList">
-                    <option value="1">1반</option>
-                    <option value="2">2반</option>
-                    <option value="3">3반</option>
-                    <option value="4">4반</option>
-                </select>
+                <div class="checkbox-group">
+                    <input type="checkbox" name="classNoList" value="1"> a반
+                    <input type="checkbox" name="classNoList" value="2"> b반
+                    <input type="checkbox" name="classNoList" value="3"> c반
+                    <input type="checkbox" name="classNoList" value="4"> d반
+                </div>
             </div>
 
           <div class="form-group file-group">
