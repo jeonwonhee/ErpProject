@@ -43,4 +43,10 @@ public class StudentController {
         //학생 회원가입
         return "student/studentRegister";
     }
+
+    @GetMapping("/studentFacility.co")
+    public String studentFacility() {
+        //학생 회원가입
+        return "student/studentFacility";
+    }
 }

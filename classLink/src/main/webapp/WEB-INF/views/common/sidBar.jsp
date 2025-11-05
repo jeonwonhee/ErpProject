@@ -24,6 +24,7 @@
             <li><a href="${pageContext.request.contextPath}/studentScore.co">성적조회</a></li>
             <li><a href="${pageContext.request.contextPath}/studentInquiry.co">문의</a></li>
             <li><a href="${pageContext.request.contextPath}/notice.co">공지사항</a></li>
+            <li><a href="${pageContext.request.contextPath}/studentFacility.co">기자재신청</a></li>
            강사
             <li><a href="${pageContext.request.contextPath}/lectureDashboard.co">대시보드</a></li>
             <li><a href="${pageContext.request.contextPath}/lectureGrade.co">성적관리</a></li>
