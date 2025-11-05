@@ -8,6 +8,17 @@
   <link rel="stylesheet" href="styles/default.css">
   <link rel="stylesheet" href="styles/style.css">
   <link rel="stylesheet" href="styles/lecture.css">
+
+    <style>
+        .class-select select {
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            padding: 10px 12px;
+            font-size: 14px;
+            background: #fff;
+            width: 30%;
+        }
+    </style>
 </head>
 
 <body class="lecture lecture-attendance">
@@ -21,6 +32,15 @@
       <div class="user-info">알림(<span>2</span>) 김강사(강사)</div>
     </header>
 
+      <div class="class-select">
+          <label for="classSelect">반 : </label>
+          <select name="classSelect" onchange="changeClass()" id="selectClass">
+              <option value="1">A반</option>
+              <option value="2">B반</option>
+              <option value="3">C반</option>
+              <option value="4">D반</option>
+          </select>
+      </div>
     <section class="content">
       <!-- 출결 박스 -->
       <div class="attendance-panel">

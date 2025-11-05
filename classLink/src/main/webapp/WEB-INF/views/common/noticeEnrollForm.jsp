@@ -11,6 +11,37 @@
     <style>
         .classNoList {
             display: none;
+            flex-direction: column;  /* 세로 배치 */
+            align-items: flex-start; /* label은 왼쪽 정렬 */
+            gap: 8px; /* label과 체크박스 그룹 사이 여백 */
+            width: 100%;
+        }
+
+        .classNoList > label {
+            font-weight: bold;
+            margin-left: 5px;
+        }
+
+        .checkbox-group {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 20px;
+            width: 100%;
+        }
+
+        .checkbox-group label {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+        .subject-select select {
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            padding: 10px 12px;
+            font-size: 14px;
+            background: #fff;
+            width: 100%;
         }
     </style>
 </head>
@@ -33,7 +64,7 @@
             <label for="title">제목</label>
             <input type="text" id="title" placeholder="제목을 입력하세요">
           </div>
-            <div>
+            <div class="subject-select">
                 <label for="noticeType">공지 타입</label>
                 <select name="noticeType" onchange="changeNoticeType()" id="noticeType">
                     <option value="ALL">전체</option>
@@ -42,16 +73,17 @@
                     <option value="CLASS">반 별 공지</option>
                 </select>
             </div>
+            <br>
             <div class="classNoList">
                 <label for="classNoList">반 명</label>
-                <select name="classNoList">
-                    <option value="1">1반</option>
-                    <option value="2">2반</option>
-                    <option value="3">3반</option>
-                    <option value="4">4반</option>
-                </select>
+                <div class="checkbox-group">
+                    <input type="checkbox" name="classNoList" value="1"> a반
+                    <input type="checkbox" name="classNoList" value="2"> b반
+                    <input type="checkbox" name="classNoList" value="3"> c반
+                    <input type="checkbox" sname="classNoList" value="4"> d반
+                </div>
             </div>
-
+            <br>
           <div class="form-group file-group">
             <label for="file">첨부파일</label>
             <div class="file-box">
@@ -85,7 +117,7 @@
         }
         if (selectNoticeType === "CLASS") {
 
-            classNoList.style.display = 'block';
+            classNoList.style.display = 'flex';
         } else {
             classNoList.style.display = 'none';
         }
