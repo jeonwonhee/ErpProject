@@ -111,7 +111,7 @@
 
     <section class="content">
       <div class="card">
-        <h2>강의별 만족도 (%)</h2>
+        <h2>강의별 만족도 (5점 만점 기준)</h2>
         <small>JAVA/SPRING - 강사명</small>
 
         <div class="chart-container">

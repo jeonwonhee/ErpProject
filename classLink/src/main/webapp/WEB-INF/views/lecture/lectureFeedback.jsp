@@ -67,7 +67,7 @@
       border-radius: 12px;
       padding: 30px 35px;
       box-shadow: 0 1px 3px rgba(0,0,0,0.05);
-      max-width: 900px;
+      max-width: 100%;
     }
 
     .card h2 { font-size: 18px; font-weight: 700; margin-bottom: 10px; }
@@ -125,10 +125,10 @@
 
     <section class="content">
       <div class="card">
-        <h2>강의별 만족도 (%)</h2>
+        <h2>강의별 만족도 (5점 만점 기준)</h2>
         <div class="course-list">
           <div class="course-card">
-            <div class="course-info">
+            <div class="course-info" onclick="location.href='${pageContext.request.contextPath}/lectureGraph.co?lectureGraphNo=1'">
               <h3>JAVA/SPRING - 강사명</h3>
               <p>강의 평점: <strong>4.2</strong> / 강사 평점: <strong>4.3</strong></p>
             </div>
