@@ -7,6 +7,21 @@
         <link rel="stylesheet" href="${pageContext.request.contextPath}/styles/default.css">
         <link rel="stylesheet" href="${pageContext.request.contextPath}/styles/style.css">
         <link rel="stylesheet" href="${pageContext.request.contextPath}/styles/admin.css">
+
+        <style>
+            .create-btn {
+                border: 1px solid #ccc;
+                border-radius: 10px;
+                background: #fff;
+                padding: 8px 18px;
+                font-size: 14px;
+                font-weight: 600;
+                cursor: pointer;
+                box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+                transition: 0.15s;
+                float: right;
+            }
+        </style>
     </head>
 
     <body class="admin admin-lecture-list">
@@ -19,7 +34,9 @@
 
             <section class="content lecture-list">
                 <h2>강사목록</h2>
-
+                <div class="inquiry-write">
+                    <button type="button" class="btn-write create-btn">강사/관리자 생성</button>
+                </div>
                 <table class="lecture-table">
                     <thead>
                         <tr>
