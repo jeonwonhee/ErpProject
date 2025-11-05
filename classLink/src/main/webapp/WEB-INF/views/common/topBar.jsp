@@ -13,7 +13,7 @@
 <body>
 <header class="topbar">
     <div class="path">강사 › 공지사항 <b>강사 페이지</b></div>
-    <div class="user-info" onclick="location.href='${pageContext.request.contextPath}/studentMyPage.co'">알림(<span>2</span>) 김강사(강사)</div>
+    <div class="user-info" onclick="location.href='${pageContext.request.contextPath}/stMyPage.co'">알림(<span>2</span>) 김강사(강사)</div>
 </header>
 </body>
 </html>
