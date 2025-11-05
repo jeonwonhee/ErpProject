@@ -666,17 +666,17 @@ body.admin.admin-calendar-manage {
 }
 
 /* ===============================
-   관리자 기자재 관리 (Equipment Section)
+   관리자 기자재 관리 (Admin Facility)
    =============================== */
 
 /* ===== 기자재 목록 (카드형 리스트) ===== */
-.content .equipment-list {
+.content .facility-list {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
   gap: 16px;
 }
 
-.content .equipment-card {
+.content .facility-card {
   background: #f9f9ff;
   border: 1px solid #e1e2f0;
   border-radius: 12px;
@@ -687,7 +687,7 @@ body.admin.admin-calendar-manage {
   cursor: pointer;
 }
 
-.content .equipment-card:hover {
+.content .facility-card:hover {
   background: #eef0ff;
   transform: scaleY(1.1);
   transform-origin: top;
@@ -695,7 +695,7 @@ body.admin.admin-calendar-manage {
   z-index: 2;
 }
 
-.content .equipment-card.expanded {
+.content .facility-card.expanded {
   background: #eef0ff;
   transform: scaleY(1.15);
   transform-origin: top;
@@ -705,26 +705,26 @@ body.admin.admin-calendar-manage {
 }
 
 /* ===== 기자재 카드 타이틀 / 정보 ===== */
-.content .equip-title {
+.content .facility-title {
   display: flex;
   justify-content: space-between;
   align-items: center;
   margin-bottom: 8px;
 }
 
-.content .equip-title h3 {
+.content .facility-title h3 {
   font-size: 15px;
   font-weight: 600;
   color: #222;
 }
 
-.content .equip-meta {
+.content .facility-meta {
   font-size: 13px;
   color: #555;
   margin-bottom: 6px;
 }
 
-.content .equip-meta strong {
+.content .facility-meta strong {
   color: #4b45ff;
 }
 
@@ -777,7 +777,7 @@ body.admin.admin-calendar-manage {
   padding: 0 12px;
 }
 
-.content .equipment-card:hover .action-buttons {
+.content .facility-card:hover .action-buttons {
   opacity: 1;
   transform: translateY(0);
 }
@@ -811,6 +811,13 @@ body.admin.admin-calendar-manage {
 }
 
 /* ===== 기자재 추가 버튼 ===== */
+.section-title {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
 .section-title .add-btn {
   background: #4b45ff;
   color: #fff;
@@ -891,5 +898,80 @@ body.admin.admin-calendar-manage {
 .content .status-lost {
   color: #666;
   font-weight: 600;
+}
+
+/* ===================================
+   KH EduERP - 기자재 추가 페이지
+   (Admin Facility Detail)
+   =================================== */
+
+/* ===== 카드 컨테이너 ===== */
+.facility-detail-card {
+  width: 640px;
+  background: #fff;
+  border: 1px solid #d5d5e0;
+  border-radius: 14px;
+  padding: 48px 54px 64px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
+}
+
+.facility-detail-card h2 {
+  font-size: 20px;
+  font-weight: 700;
+  margin-bottom: 32px;
+  color: #111;
+}
+
+/* ===== 폼 ===== */
+.facility-detail-card form {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.facility-detail-card label {
+  font-weight: 600;
+  font-size: 15px;
+  margin-bottom: 8px;
+  color: #222;
+  display: block;
+}
+
+.facility-detail-card input {
+  width: 100%;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  padding: 12px 14px;
+  font-size: 14px;
+  transition: 0.2s;
+  background: #fff;
+}
+
+.facility-detail-card input:focus {
+  border-color: #4b5dff;
+  box-shadow: 0 0 0 3px rgba(75, 93, 255, 0.15);
+  outline: none;
+}
+
+/* ===== 버튼 ===== */
+.facility-detail-card .form-submit {
+  text-align: right;
+  margin-top: 10px;
+}
+
+.facility-detail-card .btn-submit {
+  background: #6b63ff;
+  color: #fff;
+  border: none;
+  border-radius: 10px;
+  padding: 10px 26px;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.facility-detail-card .btn-submit:hover {
+  background: #534bff;
 }
 
