@@ -52,7 +52,7 @@
 
           <div class="form-buttons">
             <button type="button" class="btn-edit">수정하기</button>
-            <button type="button" class="btn-cancel">탈퇴하기</button>
+            <button type="button" class="btn-delete">탈퇴하기</button>
           </div>
         </form>
       </div>

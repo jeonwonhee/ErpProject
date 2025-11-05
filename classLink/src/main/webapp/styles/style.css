@@ -116,7 +116,7 @@ body {
 
 .content {
   flex: 1;
-  padding: 32px 40px;
+  padding: 80px 40px 40px;
   background: #f8f9fc;
   display: flex;
   flex-direction: column;
@@ -132,4 +132,85 @@ body {
   border-radius: 16px;
   padding: 20px;
   box-shadow: 0 1px 4px rgba(0, 0, 0, 0.04);
+}
+
+/* ===== Table ===== */
+th {
+	background: #f3f4ff;
+	padding: 12px;
+  	text-align: center;
+	border-bottom: 1px solid #e0e1e9;
+	font-weight: 600;
+	color: #333;
+}
+
+td {
+	padding: 12px;
+  	text-align: center;
+	border-bottom: 1px solid #f0f1f6;
+	color: #333;
+}
+
+tr:hover {
+	background: #f9faff;
+	transition: 0.15s;
+	cursor: pointer;
+}
+
+/* ===== Button ===== */
+button {
+    border: none;
+    border-radius: 8px;
+    padding: 8px 20px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.btn-submit {
+    background: #4b5dff;
+    color: #fff;
+    border: none;
+    transition: 0.2s;
+}
+
+.btn-submit:hover {
+    background: #3848e6;
+}
+
+.btn-edit {
+    background: #4b5dff;
+    color: #fff;
+}
+
+.btn-edit:hover {
+    background: #3848e6;
+}
+
+.btn-delete {
+    background: #ff6b6b;
+    border: 1px solid #ff4444;
+    color: #fff;
+}
+
+.btn-delete:hover {
+    background: #fff3f3;
+}
+
+.btn-write,
+.btn-back,
+.btn-save,
+.create-btn,
+.btn-list {
+    background: #fff;
+    border: 1px solid #ccc;
+}
+
+.btn-write:hover,
+.btn-back:hover,
+.btn-save:hover,
+.create-btn:hover,
+.btn-list:hover {
+  background: #f3f4ff;
+  border-color: #bfc4ff;
 }

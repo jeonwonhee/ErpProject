@@ -6,14 +6,6 @@
 /* ===================================
    공통 레이아웃 
    =================================== */
-.lecture .content {
-  padding: 80px 40px 40px;
-  background: #f8f9fc;
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  gap: 24px;
-}
 
 /* ===================================
    강사 대시보드(lecture-dashboard)
@@ -270,26 +262,6 @@
   height: 18px;
 }
 
-.lecture-attendance-correction .btn-submit,
-.lecture-consult-correction .btn-submit {
-  display: block;
-  margin: 30px auto 0;
-  background: #6b5bff;
-  color: white;
-  font-weight: 600;
-  border: none;
-  border-radius: 10px;
-  padding: 10px 28px;
-  font-size: 15px;
-  cursor: pointer;
-  transition: 0.2s;
-}
-
-.lecture-attendance-correction .btn-submit:hover,
-.lecture-consult-correction .btn-submit:hover {
-  background: #5a4ae3;
-}
-
 /* ===================================
    출결정정 리스트 (lecture-attendance-list)
    =================================== */
@@ -425,23 +397,6 @@
   height: 80px;
 }
 
-.btn-submit {
-  background: #2a4cff;
-  color: #fff;
-  border: none;
-  border-radius: 8px;
-  padding: 10px 26px;
-  font-size: 15px;
-  font-weight: 600;
-  cursor: pointer;
-  float: right;
-  transition: 0.2s;
-}
-
-.btn-submit:hover {
-  background: #223ce0;
-}
-
 /* ===== 다가오는 일정 테이블 ===== */
 table {
   width: 100%;
@@ -525,9 +480,7 @@ th {
   padding: 5px 14px 6px;
   border: 1px solid #888;
   background: #fff;
-  border-radius: 999px;
   font-size: 13px;
-  cursor: pointer;
   transition: 0.15s;
 }
 
@@ -580,22 +533,6 @@ th {
 /* 하단 적용 버튼 */
 .lecture-attendance .attendance-footer {
   margin-top: 26px;
-}
-
-.lecture-attendance .apply-btn {
-  background: #2a4cff;
-  color: #fff;
-  border: none;
-  border-radius: 10px;
-  padding: 10px 40px 11px;
-  font-size: 15px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: 0.15s;
-}
-
-.lecture-attendance .apply-btn:hover {
-  background: #223ce0;
 }
 
 .class-select select {
@@ -788,21 +725,6 @@ th {
   margin-top: 28px;
 }
 
-.lecture-notice .btn-write {
-  background: #fff;
-  border: 1px solid #999;
-  border-radius: 999px;
-  padding: 8px 22px;
-  font-size: 14px;
-  cursor: pointer;
-  transition: 0.2s;
-}
-
-.lecture-notice .btn-write:hover {
-  background: #f5f6ff;
-  border-color: #6b5bff;
-  color: #2a4cff;
-}
 /* 공지사항 타입, 반별 공지 */
 .classNoList {
     display: none;
@@ -892,54 +814,9 @@ th {
   margin-top: 10px;
 }
 
-.lecture-notice-detail .btn-list {
-  background: #fff;
-  border: 1px solid #aaa;
-  border-radius: 999px;
-  padding: 8px 26px;
-  font-size: 14px;
-  cursor: pointer;
-  transition: 0.2s;
-}
-
-.lecture-notice-detail .btn-list:hover {
-  background: #f5f6ff;
-  border-color: #6b5bff;
-  color: #2a4cff;
-}
-
 .lecture-notice-detail .right-btns {
   display: flex;
   gap: 8px;
-}
-
-.lecture-notice-detail .btn-edit,
-.lecture-notice-detail .btn-delete {
-  border-radius: 999px;
-  font-size: 14px;
-  padding: 8px 20px;
-  cursor: pointer;
-  transition: 0.2s;
-}
-
-.lecture-notice-detail .btn-edit {
-  background: #2a4cff;
-  color: white;
-  border: 1px solid #2a4cff;
-}
-
-.lecture-notice-detail .btn-edit:hover {
-  background: #223ce0;
-}
-
-.lecture-notice-detail .btn-delete {
-  background: #fff;
-  border: 1px solid #ff4444;
-  color: #ff4444;
-}
-
-.lecture-notice-detail .btn-delete:hover {
-  background: #fff3f3;
 }
 
 /* ===================================
@@ -952,9 +829,6 @@ th {
 }
 
 .lecture-notice-write .card {
-  background: #fff;
-  border: 1px solid #ddd;
-  border-radius: 16px;
   padding: 32px 40px;
   max-width: 800px;
   margin: 0 auto;
@@ -1019,23 +893,6 @@ th {
 }
 
 /* ===== 등록 버튼 ===== */
-.notice-form .btn-submit {
-  display: block;
-  margin: 40px auto 0;
-  background: #4b5dff;
-  color: #fff;
-  border: none;
-  border-radius: 10px;
-  padding: 10px 32px;
-  font-size: 15px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: 0.2s;
-}
-
-.notice-form .btn-submit:hover {
-  background: #3848e6;
-}
 
 /* ===================================
    공지사항 작성 (lecture-notice-write)
@@ -1048,14 +905,11 @@ th {
 }
 
 .lecture-notice-write .card {
-  background: #fff;
-  border: 1px solid #ddd;
-  border-radius: 16px;
   padding: 50px 60px;        /* 내부 여백 확대 */
   width: 90%;                /* 화면 비율 기반으로 넓게 */
   max-width: 1100px;         /* 최대 크기 제한 */
   min-width: 850px;          /* 최소 크기 확보 */
-  box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+  /*box-shadow: 0 2px 6px rgba(0,0,0,0.05);*/
 }
 
 .lecture-notice-write .card h2 {
@@ -1119,35 +973,20 @@ th {
 }
 
 /* ===== 등록 버튼 ===== */
-.notice-form .btn-submit {
-  display: block;
-  margin: 60px auto 0;
-  background: #4b5dff;
-  color: #fff;
-  border: none;
-  border-radius: 12px;
-  padding: 14px 38px;
-  font-size: 16px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: 0.2s;
-}
 
-.notice-form .btn-submit:hover {
-  background: #3848e6;
-}
 
 /* ===================================
    문의 상세보기 (lecture-inquiry-detail)
    =================================== */
 
 .lecture-inquiry-detail .inquiry-detail-card {
-  background: #fff;
-  border: 1px solid #dcdde5;
-  border-radius: 16px;
-  padding: 36px 40px;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.04);
-  max-width: 800px;
+    background: #fff;
+    border: 1px solid #dcdde5;
+    border-radius: 16px;
+    padding: 36px 40px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+    max-width: 850px;
+    margin-left: 180px;
 }
 
 .lecture-inquiry-detail .inquiry-header {
@@ -1227,22 +1066,6 @@ th {
 .lecture-inquiry-detail .inquiry-footer {
   margin-top: 24px;
   text-align: right;
-}
-
-.lecture-inquiry-detail .btn-back {
-  background: #2a4cff;
-  color: #fff;
-  border: none;
-  border-radius: 8px;
-  padding: 10px 24px;
-  font-size: 14px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: 0.2s;
-}
-
-.lecture-inquiry-detail .btn-back:hover {
-  background: #223ce0;
 }
 
 /* ===================================
@@ -1394,30 +1217,6 @@ th {
   display: flex;
   justify-content: flex-end;
   gap: 10px;
-}
-
-.inquiry-modal .btn-delete {
-  background: #ddd;
-  border: none;
-  border-radius: 8px;
-  padding: 8px 18px;
-  font-weight: 600;
-  cursor: pointer;
-}
-
-.inquiry-modal .btn-submit {
-  background: #4b5dff;
-  color: #fff;
-  border: none;
-  border-radius: 8px;
-  padding: 8px 18px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: 0.2s;
-}
-
-.inquiry-modal .btn-submit:hover {
-  background: #3848e6;
 }
 
 /* ===============================
@@ -1683,15 +1482,6 @@ th {
   font-size: 14px;
 }
 
-.lecture-grade .search-box .btn-search {
-  background: none;
-  border: none;
-  font-size: 16px;
-  cursor: pointer;
-  padding-right: 12px;
-  color: #1d9b40;
-}
-
 .lecture-grade .exam-name {
   width: 360px;
   border: 1px solid #ccc;
@@ -1736,18 +1526,3 @@ th {
   margin-top: 24px;
 }
 
-.lecture-grade .btn-save {
-  border: 1px solid #ccc;
-  border-radius: 12px;
-  background: #fff;
-  font-size: 15px;
-  padding: 8px 30px;
-  cursor: pointer;
-  transition: 0.2s;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.05);
-}
-
-.lecture-grade .btn-save:hover {
-  background: #f3f4ff;
-  border-color: #bfc4ff;
-}

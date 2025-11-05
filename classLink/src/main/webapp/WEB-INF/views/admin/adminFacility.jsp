@@ -20,7 +20,7 @@
 
             <section class="content">
                 <!-- 기자재 현황 -->
-                <h2 class="section-title">기자재 현황 <button class="add-btn" onclick="location.href='${pageContext.request.contextPath}/adminFacilityDetail.co'">+ 기자재 추가</button></h2>
+                <h2 class="section-title">기자재 현황 <button class="btn-submit" onclick="location.href='${pageContext.request.contextPath}/adminFacilityDetail.co'">+ 기자재 추가</button></h2>
                 <div class="card">
                     <div class="facility-list">
                         <div class="facility-card expanded">
@@ -31,8 +31,8 @@
                             <p class="facility-meta">카테고리 : <strong>기기</strong></p>
                             <span class="location-pill">Q반</span>
                             <div class="action-buttons">
-                                <button class="edit-btn">수정</button>
-                                <button class="delete-btn">삭제</button>
+                                <button class="btn-edit">수정</button>
+                                <button class="btn-delete">삭제</button>
                             </div>
                         </div>
 
@@ -44,8 +44,8 @@
                             <p class="facility-meta">카테고리 : <strong>기기</strong></p>
                             <span class="location-pill">H반</span>
                             <div class="action-buttons">
-                                <button class="edit-btn">수정</button>
-                                <button class="delete-btn">삭제</button>
+                                <button class="btn-edit">수정</button>
+                                <button class="btn-delete">삭제</button>
                             </div>
                         </div>
 
@@ -57,8 +57,8 @@
                             <p class="facility-meta">카테고리 : <strong>주변기기</strong></p>
                             <span class="location-pill">A반</span>
                             <div class="action-buttons">
-                                <button class="edit-btn">수정</button>
-                                <button class="delete-btn">삭제</button>
+                                <button class="btn-edit">수정</button>
+                                <button class="btn-delete">삭제</button>
                             </div>
                         </div>
                     </div>

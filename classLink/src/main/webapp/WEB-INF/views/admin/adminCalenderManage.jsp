@@ -21,7 +21,7 @@
                 <!-- 검색창 -->
                 <div class="search-box">
                     <input type="text" placeholder="검색" />
-                    <button class="btn-search">검색</button>
+                    <button class="btn-submit">검색</button>
                 </div>
 
                 <!-- 일정 테이블 -->
