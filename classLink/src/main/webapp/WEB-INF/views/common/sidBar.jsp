@@ -42,6 +42,7 @@
             <li><a href="${pageContext.request.contextPath}/adminAttendanceDashboard.co">출결현황</a></li>
             <li><a href="${pageContext.request.contextPath}/notice.co">공지사항</a></li>
             <li><a href="${pageContext.request.contextPath}/questionManage.co">문의</a></li>
+            <li><a href="${pageContext.request.contextPath}/adminFacility.co">기자재관리</a></li>
         </ul>
     </div>
     <footer>© 2025 KH</footer>

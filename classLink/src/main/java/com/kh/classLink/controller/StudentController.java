@@ -37,4 +37,10 @@ public class StudentController {
         //강의 만족도
         return "student/studentScore";
     }
+
+    @GetMapping("/studentRegister.co")
+    public String studentRegister() {
+        //학생 회원가입
+        return "student/studentRegister";
+    }
 }
