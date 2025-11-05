@@ -1,12 +1,7 @@
 package com.kh.classLink.controller;
 
-import jakarta.servlet.http.HttpSession;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.multipart.MultipartFile;
 
 @Controller
 /**
@@ -14,39 +9,39 @@ import org.springframework.web.multipart.MultipartFile;
  */
 public class StudentController {
 
-    @GetMapping("/studentMain.co")
-    public String studentMain() {
+    @GetMapping("/stMain.co")
+    public String stMain() {
         //학생 대시보드
-        return "student/studentMain";
+        return "student/stMain";
     }
 
-    @GetMapping("/studentMyPage.co")
-    public String studentMyPage() {
+    @GetMapping("/stMyPage.co")
+    public String stMyPage() {
         //학생 마이페이지
-        return "student/studentMyPage";
+        return "student/stMyPage";
     }
 
-    @GetMapping("/studentSatisfication.co")
-    public String studentSatisfication() {
+    @GetMapping("/stSatisfication.co")
+    public String stSatisfication() {
         //강의 만족도
-        return "student/studentSatisfication";
+        return "student/stSatisfication";
     }
 
-    @GetMapping("/studentScore.co")
-    public String studentScore() {
-        //강의 만족도
-        return "student/studentScore";
+    @GetMapping("/stScore.co")
+    public String stScore() {
+        //학생 성적 조회
+        return "student/stScore";
     }
 
-    @GetMapping("/studentRegister.co")
-    public String studentRegister() {
+    @GetMapping("/stRegister.co")
+    public String stRegister() {
         //학생 회원가입
-        return "student/studentRegister";
+        return "student/stRegister";
     }
 
-    @GetMapping("/studentFacility.co")
-    public String studentFacility() {
-        //학생 회원가입
-        return "student/studentFacility";
+    @GetMapping("/stFacility.co")
+    public String stFacility() {
+        //학생 기자재
+        return "student/stFacility";
     }
 }
