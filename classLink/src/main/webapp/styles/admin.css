@@ -142,6 +142,19 @@
   font-weight: 600;
   color: #2c6e49;
 }
+/* 강사/관리자 추가 버튼 */
+.create-btn {
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    background: #fff;
+    padding: 8px 18px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+    transition: 0.15s;
+    float: right;
+}
 
 /* ===============================
    관리자 일정관리 (admin-calendar-manage)
@@ -652,6 +665,8 @@ body.admin.admin-calendar-manage {
   font-weight: 500;
 }
 
+
+=======
 /* ===============================
    관리자 기자재 관리 (Equipment Section)
    =============================== */
@@ -879,3 +894,4 @@ body.admin.admin-calendar-manage {
   color: #666;
   font-weight: 600;
 }
+
