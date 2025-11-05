@@ -2,6 +2,14 @@
    KH EduERP - 학생 대시보드 스타일
    (Student Dashboard)
    =================================== */
+/* ===== 메인 ===== */
+.student {
+  margin-left: 230px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  background: #fff;
+}
 
 /* ===== 콘텐츠 영역 레이아웃 ===== */
 .student .content {
@@ -1162,4 +1170,142 @@
 
 .student-inquiry-write .btn-submit:hover {
   background: #2e2ee0;
+}
+
+/* ===================================
+   KH EduERP - 학생 기자재 신청
+   (Student Facility)
+   =================================== */
+
+/* ===== 페이지 전체 레이아웃 ===== */
+.student-facility .content {
+  display: flex;
+  flex-direction: row;
+  gap: 28px;
+  background: #f8f9fc;
+  padding: 80px 40px 40px;
+}
+
+.student-facility .facility-container {
+  display: grid;
+  grid-template-columns: 1.2fr 1.8fr;
+  gap: 28px;
+  width: 100%;
+}
+
+/* ===== 기자재 신청 폼 ===== */
+.facility-form-card form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.facility-form-card label {
+  font-weight: 600;
+  font-size: 14px;
+  color: #222;
+  margin-bottom: 6px;
+  display: block;
+}
+
+.facility-form-card select,
+.facility-form-card input,
+.facility-form-card textarea {
+  width: 100%;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  padding: 10px 12px;
+  font-size: 14px;
+  background: #fff;
+  transition: 0.2s;
+}
+
+.facility-form-card select:focus,
+.facility-form-card input:focus,
+.facility-form-card textarea:focus {
+  border-color: #4b5dff;
+  box-shadow: 0 0 0 3px rgba(75, 93, 255, 0.1);
+  outline: none;
+}
+
+.facility-form-card textarea {
+  resize: none;
+  height: 80px;
+}
+
+.facility-form-card .btn-submit {
+  background: #4b5dff;
+  color: #fff;
+  border: none;
+  border-radius: 10px;
+  padding: 10px 22px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.facility-form-card .btn-submit:hover {
+  background: #3848e6;
+}
+
+/* ===== 신청 내역 테이블 ===== */
+.facility-history-card table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+  margin-top: 10px;
+}
+
+.facility-history-card th,
+.facility-history-card td {
+  text-align: center;
+  padding: 12px 10px;
+  border-top: 1px solid #ddd;
+}
+
+.facility-history-card thead th {
+  background: #f3f3ff;
+  font-weight: 600;
+  border-top: none;
+  color: #333;
+}
+
+.facility-history-card tbody tr:nth-child(even) {
+  background: #fafbff;
+}
+
+.facility-history-card tbody tr:hover {
+  background: #eef0ff;
+  transition: 0.15s;
+}
+
+/* ===== 상태 배지 색상 ===== */
+.status {
+  display: inline-block;
+  padding: 4px 10px;
+  border-radius: 10px;
+  font-weight: 600;
+  font-size: 13px;
+}
+
+.status.pending {
+  background: #fff5d9;
+  color: #d87d00;
+}
+
+.status.approved {
+  background: #e9fff0;
+  color: #1c9a4c;
+}
+
+.status.rejected {
+  background: #ffe9e9;
+  color: #d93c3c;
+}
+
+/* ===== 반응형 조정 ===== */
+@media (max-width: 900px) {
+  .student-facility .facility-container {
+    grid-template-columns: 1fr;
+  }
 }
