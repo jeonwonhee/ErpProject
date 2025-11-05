@@ -68,4 +68,13 @@ public class adminController {
     public String adminFacility(){
         return "admin/adminFacility";
     }
+
+    /**
+     * 관리자 기자재추가
+     * @return
+     */
+    @GetMapping("/adminFacilityDetail.co")
+    public String adminFacilityDetail(){
+        return "admin/adminFacilityDetail";
+    }
 }

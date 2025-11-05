@@ -10,7 +10,7 @@
         <link rel="stylesheet" href="${pageContext.request.contextPath}/styles/admin.css">
     </head>
 
-    <body>
+    <body class="admin admin-facility">
         <!-- 사이드바 -->
         <jsp:include page="/WEB-INF/views/common/sidBar.jsp" />
 
@@ -20,15 +20,15 @@
 
             <section class="content">
                 <!-- 기자재 현황 -->
-                <h2 class="section-title">기자재 현황 <button class="add-btn">+ 기자재 추가</button></h2>
+                <h2 class="section-title">기자재 현황 <button class="add-btn" onclick="location.href='${pageContext.request.contextPath}/adminFacilityDetail.co'">+ 기자재 추가</button></h2>
                 <div class="card">
-                    <div class="equipment-list">
-                        <div class="equipment-card expanded">
-                            <div class="equip-title">
+                    <div class="facility-list">
+                        <div class="facility-card expanded">
+                            <div class="facility-title">
                                 <h3>컴퓨터</h3>
                                 <span class="badge ok">정상</span>
                             </div>
-                            <p class="equip-meta">카테고리 : <strong>기기</strong></p>
+                            <p class="facility-meta">카테고리 : <strong>기기</strong></p>
                             <span class="location-pill">Q반</span>
                             <div class="action-buttons">
                                 <button class="edit-btn">수정</button>
@@ -36,12 +36,12 @@
                             </div>
                         </div>
 
-                        <div class="equipment-card">
-                            <div class="equip-title">
+                        <div class="facility-card">
+                            <div class="facility-title">
                                 <h3>빔 프로젝터</h3>
                                 <span class="badge repair">수리중</span>
                             </div>
-                            <p class="equip-meta">카테고리 : <strong>기기</strong></p>
+                            <p class="facility-meta">카테고리 : <strong>기기</strong></p>
                             <span class="location-pill">H반</span>
                             <div class="action-buttons">
                                 <button class="edit-btn">수정</button>
@@ -49,12 +49,12 @@
                             </div>
                         </div>
 
-                        <div class="equipment-card">
+                        <div class="facility-card">
                             <div class="equip-title">
                                 <h3>마우스</h3>
                                 <span class="badge lost">분실</span>
                             </div>
-                            <p class="equip-meta">카테고리 : <strong>주변기기</strong></p>
+                            <p class="facility-meta">카테고리 : <strong>주변기기</strong></p>
                             <span class="location-pill">A반</span>
                             <div class="action-buttons">
                                 <button class="edit-btn">수정</button>
