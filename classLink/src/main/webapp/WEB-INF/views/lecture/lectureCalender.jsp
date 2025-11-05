@@ -44,7 +44,7 @@
       <div class="calendar-grid" id="calendar"></div>
 
       <!-- 일정 추가 버튼 -->
-      <button class="add-btn" onclick="location.href='${pageContext.request.contextPath}/leCalenderAdd.co'">일정추가</button>
+      <button class="add-btn">일정추가</button>
     </section>
   </main>
 

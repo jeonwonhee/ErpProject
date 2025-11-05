@@ -27,7 +27,7 @@
 
             <div class="links">
                 <a href="${pageContext.request.contextPath}/findPassword.co">비밀번호 찾기</a>
-                <a href="${pageContext.request.contextPath}/stRegister.co">회원가입</a>
+                <a href="${pageContext.request.contextPath}/studentRegister.co">회원가입</a>
             </div>
         </div>
 

@@ -1,7 +1,12 @@
 package com.kh.classLink.controller;
 
+import jakarta.servlet.http.HttpSession;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 @Controller
 public class OrderController {
@@ -10,10 +15,10 @@ public class OrderController {
      * 신청 컨트롤러
      */
 
-    @GetMapping("/stAtt.co")
-    public String stAtt() {
+    @GetMapping("/studentAtt.co")
+    public String studentAtt() {
         //츨석 정정
-        return "student/stAtt";
+        return "student/studentAtt";
     }
 
     @GetMapping("/stConsult.co")
@@ -22,21 +27,21 @@ public class OrderController {
         return "student/stConsult";
     }
 
-    @GetMapping("/stQuestion.co")
-    public String stQuestion() {
+    @GetMapping("/studentInquiry.co")
+    public String studentInquiry() {
         //문의 신청
-        return "student/stQuestion";
+        return "student/studentInquiry";
     }
 
-    @GetMapping("/stQuestionDetail.co")
-    public String stQuestionDetail() {
+    @GetMapping("/studentInquiryDetail.co")
+    public String studentInquiryDetail() {
         //문의 신청
-        return "student/stQuestionDetail";
+        return "student/studentInquiryDetail";
     }
 
-    @GetMapping("/stQuestionWrite.co")
-    public String stQuestionWrite() {
+    @GetMapping("/studentInquiryWrite.co")
+    public String studentInquiryWrite() {
         //문의 신청
-        return "student/stQuestionWrite";
+        return "student/studentInquiryWrite";
     }
 }

@@ -1,7 +1,12 @@
 package com.kh.classLink.controller;
 
+import jakarta.servlet.http.HttpSession;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 @Controller
 /**
@@ -9,39 +14,39 @@ import org.springframework.web.bind.annotation.GetMapping;
  */
 public class StudentController {
 
-    @GetMapping("/stMain.co")
-    public String stMain() {
+    @GetMapping("/studentMain.co")
+    public String studentMain() {
         //학생 대시보드
-        return "student/stMain";
+        return "student/studentMain";
     }
 
-    @GetMapping("/stMyPage.co")
-    public String stMyPage() {
+    @GetMapping("/studentMyPage.co")
+    public String studentMyPage() {
         //학생 마이페이지
-        return "student/stMyPage";
+        return "student/studentMyPage";
     }
 
-    @GetMapping("/stSatisfication.co")
-    public String stSatisfication() {
+    @GetMapping("/studentSatisfication.co")
+    public String studentSatisfication() {
         //강의 만족도
-        return "student/stSatisfication";
+        return "student/studentSatisfication";
     }
 
-    @GetMapping("/stScore.co")
-    public String stScore() {
-        //학생 성적 조회
-        return "student/stScore";
+    @GetMapping("/studentScore.co")
+    public String studentScore() {
+        //강의 만족도
+        return "student/studentScore";
     }
 
-    @GetMapping("/stRegister.co")
-    public String stRegister() {
+    @GetMapping("/studentRegister.co")
+    public String studentRegister() {
         //학생 회원가입
-        return "student/stRegister";
+        return "student/studentRegister";
     }
 
-    @GetMapping("/stFacility.co")
-    public String stFacility() {
-        //학생 기자재
-        return "student/stFacility";
+    @GetMapping("/studentFacility.co")
+    public String studentFacility() {
+        //학생 회원가입
+        return "student/studentFacility";
     }
 }

@@ -9,79 +9,79 @@ public class LectureController {
      /** 강사 출결관리
      * @return
      */
-    @GetMapping("/leAttendance.co")
+    @GetMapping("/lectureAttendance.co")
     public String lectureAttendance() {
-        return "lecture/leAttendance";
+        return "lecture/lectureAttendance";
     }
 
     /** 강사 출결정정 승인/반려 여부 페이지
      * @return
      */
-    @GetMapping("/leAttendanceCorrection.co")
+    @GetMapping("/lectureAttendanceCorrection.co")
     public String lectureAttendanceCorrection() {
-        return "lecture/leAttendanceCorrection";
+        return "lecture/lectureAttendanceCorrection";
     }
 
     /** 강사 출결정정목록 페이지
      * @return
      */
-    @GetMapping("/leAttendanceList.co")
+    @GetMapping("/lectureAttendanceList.co")
     public String lectureAttendanceList() {
-        return "lecture/leAttendanceList";
+        return "lecture/lectureAttendanceList";
     }
 
     /** 강사 일정목록 페이지
      * @return
      */
-    @GetMapping("/leCalender.co")
+    @GetMapping("/lectureCalender.co")
     public String lectureCalender() {
-        return "lecture/leCalender";
+        return "lecture/lectureCalender";
     }
 
     /** 강사 일정추가 페이지
      * @return
      */
-    @GetMapping("/leCalenderPlus.co")
+    @GetMapping("/lectureCalenderPlus.co")
     public String lectureCalenderPlus() {
-        return "lecture/leCalenderAdd";
+        return "lecture/lectureCalender2";
     }
 
     /** 강사 상담신청목록 페이지
      * @return
      */
-    @GetMapping("/leConsult.co")
+    @GetMapping("/lectureConsult.co")
     public String lectureConsult() {
-        return "lecture/leConsult";
+        return "lecture/lectureConsult";
     }
 
     /** 강사 상담신청 승인/반려 페이지
      * @return
      */
-    @GetMapping("/leConsultCorrection.co")
-    public String lectureConsultCorrection() {return "lecture/leConsultCorrection";}
+    @GetMapping("/lectureConsultCorrection.co")
+    public String lectureConsultCorrection() {return "lecture/lectureConsultCorrection";}
 
     /** 강사 대시보드
      * @return
      */
-    @GetMapping("/leDashboard.co")
-    public String lectureDashboard() {return "lecture/leDashboard";}
+    @GetMapping("/lectureDashboard.co")
+    public String lectureDashboard() {return "lecture/lectureDashboard";}
 
     /** 강사 성적입력 페이지
      * @return
      */
-    @GetMapping("/leGrade.co")
-    public String lectureGradeCheck() {return "lecture/leGradeCheck";}
+    @GetMapping("/lectureGrade.co")
+    public String lectureGradeCheck() {return "lecture/lectureGradeCheck";}
 
     /** 강사 강의만족도 결과 확인 페이지
      * @return
      */
-    @GetMapping("/leGraph.co")
-    public String lectureGraph() {return "lecture/leGraph";}
+    @GetMapping("/lectureGraph.co")
+    public String lectureGraph() {return "lecture/lectureGraph";}
 
     /** 강사 강의만족도 결과 확인 페이지
      * @return
      */
-    @GetMapping("/leFeedback.co")
-    public String lectureFeedback() {return "lecture/leFeedback";}
+    @GetMapping("/lectureFeedback.co")
+    public String lectureFeedback() {return "lecture/lectureFeedback";}
 
 }

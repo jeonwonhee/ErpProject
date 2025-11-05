@@ -21,7 +21,7 @@ public class QuestionController {
      * @return
      */
     @GetMapping("/questionManage.co")
-    public String questionManage(){
+    public String inquiryManage(){
         return "common/questionManage";
     }
 
@@ -30,7 +30,7 @@ public class QuestionController {
      * @return
      */
     @GetMapping("/questionDetail.co")
-    public String questionDetail(){
+    public String inquiryDetail(){
         return "common/questionDetail";
     }
 
@@ -40,7 +40,7 @@ public class QuestionController {
      * @return
      */
     @GetMapping("/questionEnrollForm.co")
-    public String questionEnrollForm(){
+    public String inquiryEnrollForm(){
         return "common/questionEnrollForm";
     }
 
