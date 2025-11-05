@@ -197,9 +197,9 @@ select:focus {
   flex: 1;
 }
 
-/* ===== 비밀번호 찾기 ===== */
-.findpw-page .pw-wrapper,
-.changepw-page .pw-wrapper {
+/* ===== 비밀번호 찾기 | 비밀번호 수정 ===== */
+.find-pw .pw-wrapper,
+.change-pw .pw-wrapper {
   width: min(970px, 100% - 40px);
   background: #f3f4fb;
   border: 1px solid #d3d3da;
@@ -207,8 +207,8 @@ select:focus {
   padding: 44px 0 110px;
   position: relative;
 }
-.findpw-page .pw-card,
-.changepw-page .pw-card {
+.find-pw .pw-card,
+.change-pw .pw-card {
   width: 520px;
   margin: 0 auto;
   background: #fff;
@@ -216,8 +216,8 @@ select:focus {
   border-radius: 14px;
   padding: 32px 34px 48px;
 }
-.findpw-page .form-input,
-.changepw-page .form-input {
+.find-pw .form-input,
+.change-pw .form-input {
   height: 50px;
   border-radius: 12px;
 }
@@ -240,6 +240,48 @@ select:focus {
   color: #5b55ff;
 }
 
+/* 입력 박스 1 (placeholder만 있는) */
+.change-pw .input-line {
+  width: 100%;
+  height: 50px;
+  border: 1px solid #ddd;
+  border-radius: 12px;
+  padding: 0 14px;
+  display: flex;
+  align-items: center;
+  font-size: 13px;
+  color: #999;
+  margin-bottom: 24px;
+}
+
+/* 비밀번호 확인 레이블 */
+.change-pw .field-label {
+  font-weight: 600;
+  margin-bottom: 8px;
+  font-size: 14px;
+  color: #222;
+}
+
+/* 입력 박스 2 (아래 있는 긴 거) */
+.change-pw .input-line.confirm {
+  position: relative; /* 버튼 기준점 */
+}
+
+.change-pw .confirm-button {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: #fff;
+  border: 1px solid #bbb;
+  border-radius: 10px;
+  padding: 6px 12px;
+  font-size: 13px;
+  cursor: pointer;
+  color: #444;
+  transition: 0.15s;
+}
+
 /* ===== 하단 버튼 ===== */
 .pw-submit {
   position: absolute;
@@ -257,3 +299,106 @@ select:focus {
   transition: 0.15s;
 }
 .pw-submit:hover { background: #4a45e6; }
+
+/* ===============================
+   회원가입 페이지 (register-page)
+=============================== */
+
+.register .card {
+  width: 520px;
+  border-radius: 16px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
+  padding: 40px 50px 50px;
+  text-align: center;
+}
+
+/* 제목 및 설명 */
+.register .title {
+  font-size: 24px;
+  font-weight: 700;
+  color: #4b45ff;
+  margin-bottom: 8px;
+}
+
+.register .desc {
+  font-size: 14px;
+  color: #555;
+  margin-bottom: 28px;
+}
+
+/* 회원 유형 선택 */
+.user-type {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 25px;
+}
+.user-type input[type="radio"] { display: none; }
+.user-type label {
+  flex: 1;
+  background: #f4f4ff;
+  border-radius: 12px;
+  padding: 20px 0;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  height: 110px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.user-type label:hover { background: #ececff; }
+.user-type label:has(input[type="radio"]:checked) {
+  background: linear-gradient(145deg, #4540e6, #5f58ff);
+  border: 2px solid #4b45ff;
+  color: #fff;
+  box-shadow: inset 0 6px 10px rgba(0,0,0,0.3), 0 4px 8px rgba(0,0,0,0.2);
+}
+
+/* 카드 내 내용 */
+.user-type .emoji { font-size: 34px; margin-bottom: 4px; }
+.user-type .role-name { font-weight: 600; font-size: 15px; }
+
+/* 입력 필드 그룹 */
+.form-group {
+  margin-bottom: 18px;
+  text-align: left;
+}
+.form-group label {
+  display: block;
+  font-weight: 600;
+  font-size: 14px;
+  margin-bottom: 6px;
+  color: #222;
+}
+
+/* 아이디 입력 + 중복확인 버튼 */
+.input-with-btn {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.input-with-btn input { flex: 1; }
+.input-with-btn .button {
+  padding: 10px 14px;
+  font-size: 13px;
+  width: auto;
+}
+
+/* 생년월일 선택 */
+.birth-selects {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+}
+.birth-selects select { flex: 1; }
+
+/* 회원가입 버튼 */
+.register-page .button {
+  width: 100%;
+  margin-top: 28px;
+  padding: 12px;
+  font-size: 15px;
+  font-weight: 600;
+}
