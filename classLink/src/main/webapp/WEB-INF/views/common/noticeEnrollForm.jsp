@@ -8,42 +8,6 @@
   <link rel="stylesheet" href="/styles/default.css">
   <link rel="stylesheet" href="/styles/style.css">
   <link rel="stylesheet" href="/styles/lecture.css">
-    <style>
-        .classNoList {
-            display: none;
-            flex-direction: column;  /* 세로 배치 */
-            align-items: flex-start; /* label은 왼쪽 정렬 */
-            gap: 8px; /* label과 체크박스 그룹 사이 여백 */
-            width: 100%;
-        }
-
-        .classNoList > label {
-            font-weight: bold;
-            margin-left: 5px;
-        }
-
-        .checkbox-group {
-            display: flex;
-            justify-content: center;
-            flex-wrap: wrap;
-            gap: 20px;
-            width: 100%;
-        }
-
-        .checkbox-group label {
-            display: flex;
-            align-items: center;
-            gap: 4px;
-        }
-        .subject-select select {
-            border: 1px solid #ccc;
-            border-radius: 8px;
-            padding: 10px 12px;
-            font-size: 14px;
-            background: #fff;
-            width: 100%;
-        }
-    </style>
 </head>
 
 <body class="lecture lecture-notice-write">

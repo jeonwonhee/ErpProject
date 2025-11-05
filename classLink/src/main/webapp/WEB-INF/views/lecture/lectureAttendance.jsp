@@ -8,17 +8,6 @@
   <link rel="stylesheet" href="styles/default.css">
   <link rel="stylesheet" href="styles/style.css">
   <link rel="stylesheet" href="styles/lecture.css">
-
-    <style>
-        .class-select select {
-            border: 1px solid #ccc;
-            border-radius: 8px;
-            padding: 10px 12px;
-            font-size: 14px;
-            background: #fff;
-            width: 30%;
-        }
-    </style>
 </head>
 
 <body class="lecture lecture-attendance">
