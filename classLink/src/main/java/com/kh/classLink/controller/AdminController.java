@@ -4,7 +4,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
-public class adminController {
+public class AdminController {
 
     /**
      * 관리자 대시보드
@@ -28,9 +28,9 @@ public class adminController {
      * 관리자 출결현황
      * @return
      */
-    @GetMapping("/adminAttendanceDashboard.co")
+    @GetMapping("/adminAttendDashboard.co")
     public String adminAttendanceDashboard(){
-        return "admin/adminAttendanceDashboard";
+        return "admin/adminAttendDashboard";
     }
 
     /**

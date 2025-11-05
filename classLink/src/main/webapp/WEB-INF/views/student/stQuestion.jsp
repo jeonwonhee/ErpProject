@@ -30,7 +30,7 @@
             </tr>
           </thead>
           <tbody>
-          <tr onclick="location.href='${pageContext.request.contextPath}/studentInquiryDetail.co?studentInquiryDetailNo=1'">
+          <tr onclick="location.href='${pageContext.request.contextPath}/stQuestionDetail.co?studentInquiryDetailNo=1'">
               <td>휴가 승인 지연 문의</td>
               <td>10/19</td>
               <td><span class="status pending">대기</span></td>
