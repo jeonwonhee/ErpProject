@@ -48,21 +48,6 @@
                         <input id="name" type="text" placeholder="이름을 입력하세요">
                     </div>
 
-            <div class="form-card">
-                <div class="form-group">
-                    <label for="course">수강과정</label>
-                    <select id="course">
-                        <option>선택하세요</option>
-                        <option>JAVA / SPRING</option>
-                        <option>웹프론트</option>
-                        <option>DB / SQL</option>
-                    </select>
-                </div>
-
-                <div class="form-group">
-                    <label for="name">이름</label>
-                    <input id="name" type="text" placeholder="이름을 입력하세요">
-                </div>
 
                 <div class="form-group">
                     <label for="id">아이디</label>

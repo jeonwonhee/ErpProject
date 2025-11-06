@@ -182,6 +182,13 @@ select:focus {
   border: 2px solid #4b45ff;
   color: #fff;
 }
+/* ✅ 카드 안의 글자와 이모지가 사라지지 않도록 명시적으로 색상 지정 */
+.user-type label:has(input[type="radio"]:checked) .emoji,
+.user-type label:has(input[type="radio"]:checked) .role-name {
+    color: black; /* 흰색 유지 (또는 다른 색 지정 가능) */
+    opacity: 1;
+    visibility: visible;
+}
 .birth-selects {
   display: flex;
   justify-content: space-between;
