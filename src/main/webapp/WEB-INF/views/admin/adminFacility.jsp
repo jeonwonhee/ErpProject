@@ -50,7 +50,7 @@
                         </div>
 
                         <div class="card facility-card">
-                            <div class="equip-title">
+                            <div class="facility-title">
                                 <h3>마우스</h3>
                                 <span class="badge lost">분실</span>
                             </div>

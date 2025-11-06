@@ -42,7 +42,7 @@
 
         <!-- 하단 -->
         <div class="question-footer">
-          <button class="btn-back">뒤로가기</button>
+          <button class="btn-back" onClick = "location.href='${pageContext.request.contextPath}/questionManage.co'">뒤로가기</button>
         </div>
       </div>
     </section>

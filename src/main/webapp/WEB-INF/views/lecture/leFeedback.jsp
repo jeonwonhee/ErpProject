@@ -29,8 +29,8 @@
                 <div class="card">
                     <h2>강의별 만족도 (5점 만점 기준)</h2>
                     <div class="course-list">
-                        <div class="card course-card">
-                            <div class="course-info" onclick="location.href='${pageContext.request.contextPath}/leGraph.co?lectureGraphNo=1'">
+                        <div class="card course-card" onclick="location.href='${pageContext.request.contextPath}/leGraph.co?lectureGraphNo=1'">
+                            <div class="course-info" >
                                 <h3>JAVA/SPRING - 강사명</h3>
                                 <p>강의 평점: <strong>4.2</strong> / 강사 평점: <strong>4.3</strong></p>
                             </div>
