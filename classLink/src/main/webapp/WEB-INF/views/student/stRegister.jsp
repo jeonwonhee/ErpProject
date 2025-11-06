@@ -47,7 +47,7 @@
                         <input id="id" type="text" placeholder="아이디 입력 (6~20자)">
                         <span class="check-icon success">✅</span>
                         <span class="check-icon fail">❌</span>
-                        <button class="check-btn">중복확인</button>
+                        <button class="btn-submit">중복확인</button>
                     </div>
                 </div>
 
@@ -76,7 +76,7 @@
                 </div>
             </div>
 
-            <button class="submit-btn">회원가입</button>
+            <button class="btn-submit">회원가입</button>
         </div>
     </body>
 </html>

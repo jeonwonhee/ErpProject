@@ -21,17 +21,17 @@
       <div class="user-info">알림(<span>2</span>) 김강사(강사)</div>
     </header>
 
-      <div class="class-select">
-          <label for="classSelect">반 : </label>
-          <select name="classSelect" onchange="changeClass()" id="selectClass">
-              <option value="1">A반</option>
-              <option value="2">B반</option>
-              <option value="3">C반</option>
-              <option value="4">D반</option>
-          </select>
-      </div>
     <section class="content">
       <!-- 출결 박스 -->
+      <div class="class-select">
+                <label for="classSelect">반 : </label>
+                <select name="classSelect" onchange="changeClass()" id="selectClass">
+                    <option value="1">A반</option>
+                    <option value="2">B반</option>
+                    <option value="3">C반</option>
+                    <option value="4">D반</option>
+                </select>
+            </div>
       <div class="attendance-panel">
         <div class="attendance-head">
           <div class="attendance-info">
@@ -68,7 +68,7 @@
         </div>
 
         <div class="attendance-footer">
-          <button type="button" class="apply-btn">적용</button>
+          <button type="button" class="btn-submit">적용</button>
         </div>
       </div>
     </section>

@@ -9,10 +9,10 @@
         <link rel="stylesheet" href="/styles/style.css">
         <link rel="stylesheet" href="/styles/student.css">
     </head>
-    <body>
+    <body class="student student-facility" >
         <jsp:include page="/WEB-INF/views/common/sidBar.jsp" />
 
-        <main class="student student-facility">
+        <main class="main">
             <jsp:include page="/WEB-INF/views/common/topBar.jsp" />
 
             <section class="content">

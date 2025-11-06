@@ -4,20 +4,10 @@
    =================================== */
 /* ===== 메인 ===== */
 .student {
-  margin-left: 230px;
   flex: 1;
   display: flex;
   flex-direction: column;
-  background: #fff;
-}
-
-/* ===== 콘텐츠 영역 레이아웃 ===== */
-.student .content {
-  display: flex;
-    flex-direction: column;
-  gap: 24px;
   background: #f8f9fc;
-  padding: 80px 40px 40px;
 }
 
 /* ===== 카드 기본 ===== */
@@ -146,54 +136,40 @@
   font-size: 14px;
 }
 
-.student .details-card th,
-.student .details-card td {
-  border: 1px solid #ddd;
-  text-align: center;
-  padding: 10px;
-}
 
-.student .details-card th {
-  background: #f3f3ff;
-  font-weight: 600;
-  color: #333;
-}
 
-.student .details-card tbody tr:hover {
-  background: #eef0ff;
-  transition: 0.15s;
-}
+
+
 
 /* ===============================
-   학생 일정조회 (student-calendar)
+   학생 일정조회 (student-calender)
    =============================== */
 
-.student-calendar .content {
-  flex: 1;
-  padding: 28px 32px 32px;
-  position: relative;
+.student-calender .calender-box {
   background: #fff;
+  border: 1px solid #e2e4ef;
+  border-radius: 16px;
+  padding: 20px;
 }
 
-/* ===== 상단 컨트롤 ===== */
-.student-calendar .calendar-header {
+.student-calender .calender-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
   margin-bottom: 16px;
 }
 
-.student-calendar .month-control {
+.student-calender .month-control {
   display: flex;
   align-items: center;
   gap: 10px;
 }
 
-.student-calendar .month-btn {
+.student-calender .month-btn {
   width: 28px;
   height: 28px;
   border: 1px solid #dcdde5;
-  border-radius: 50%;
+  border-radius: 999px;
   background: #fff;
   cursor: pointer;
   display: flex;
@@ -202,18 +178,7 @@
   font-size: 14px;
 }
 
-.student-calendar .today-btn {
-  background: #f3f4ff;
-  border: 1px solid #d0d2f9;
-  border-radius: 999px;
-  padding: 4px 10px;
-  font-size: 13px;
-  font-weight: 600;
-  color: #2a4cff;
-  cursor: pointer;
-}
-
-.student-calendar .month-title {
+.student-calender .month-title {
   background: #fff;
   border: 1px solid #dcdde5;
   border-radius: 999px;
@@ -222,83 +187,106 @@
   font-size: 14px;
 }
 
-.student-calendar .legend {
+.student-calender .legend {
   display: flex;
-  gap: 16px;
+  gap: 18px;
   font-size: 14px;
   color: #555;
 }
 
-.student-calendar .legend span {
+.student-calender .legend span {
   display: flex;
   align-items: center;
   gap: 5px;
 }
 
-.student-calendar .dot {
+.student-calender .dot {
   width: 9px;
   height: 9px;
   border-radius: 50%;
   display: inline-block;
 }
-.student-calendar .dot.blue { background: #4b5dff; }
-.student-calendar .dot.orange { background: #ff9f43; }
-.student-calendar .dot.green { background: #4bd37b; }
 
-/* ===== 달력 ===== */
-.student-calendar .calendar-grid {
+.student-calender .dot.blue { background: #4b5dff; }
+.student-calender .dot.orange { background: #ff9f43; }
+.student-calender .dot.red { background: #ff6b6b; }
+
+/* ===== 달력 그리드 ===== */
+.student-calender .calender-grid {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(90px, 1fr));
+  gap: 10px;
   background: #fff;
   border-radius: 16px;
-  display: grid;
-  grid-template-columns: repeat(7, 1fr);
-  gap: 8px;
-  padding: 20px;
 }
 
-.student-calendar .day-cell {
+.student-calender .day-cell {
   background: #fff;
-  border: 1px solid #e2e4ef;
-  border-radius: 12px;
-  height: 110px;
-  padding: 8px 10px;
-  display: flex;
-  flex-direction: column;
+  border: 1px solid #e1e2f0;
+  border-radius: 14px;
+  height: 80px;
+  padding: 7px 9px;
   font-size: 13px;
-  transition: 0.15s;
-}
-
-.student-calendar .day-cell:hover {
-  background: #f5f6ff;
-  border-color: #ccd0ff;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-}
-
-.student-calendar .day-num {
-  font-weight: 600;
-  margin-bottom: 4px;
-}
-
-.student-calendar .event-list {
-  list-style: none;
-  margin-top: auto;
+  color: #333;
+  position: relative;
+  transition: 0.12s ease;
   display: flex;
   flex-direction: column;
-  gap: 3px;
+  gap: 6px;
 }
 
-.student-calendar .event-list li {
-  background: #f5f6ff;
-  color: #333;
+.student-calender .day-cell:hover {
+  background: #f3f4ff;
+  border-color: #cdd2ff;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.05);
+  cursor: pointer;
+}
+
+.student-calender .day-num {
+  font-weight: 600;
+  font-size: 13px;
+}
+
+/* ===== 일정 점 표시 ===== */
+.student-calender .event-dots {
+  display: flex;
+  gap: 4px;
+  margin-top: auto;
+}
+
+.student-calender .event-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+}
+
+.student-calender .event-dot.blue { background: #4b5dff; }
+.student-calender .event-dot.orange { background: #ff9f43; }
+.student-calender .event-dot.red { background: #ff6b6b; }
+
+/* ===== 툴팁 (Hover Tooltip) ===== */
+.student-calender .tooltip {
+  display: none;
+  position: absolute;
+  bottom: 100%;
+  left: 0;
+  transform: translateY(-8px);
+  background: #fff;
+  border: 1px solid #ccc;
+  padding: 6px 10px;
   font-size: 12px;
-  border-radius: 6px;
-  padding: 2px 6px;
+  border-radius: 8px;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.1);
   white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  z-index: 10;
+}
+
+.student-calender .day-cell:hover .tooltip {
+  display: block;
 }
 
 /* ===== 하단 안내문 ===== */
-.student-calendar .calendar-note {
+.student-calender .calender-note {
   font-size: 12px;
   color: #777;
   text-align: center;
@@ -320,11 +308,7 @@
 
 /* 카드 공통 */
 .student-attendance .card {
-  background: #fff;
-  border: 1px solid #e1e2ef;
-  border-radius: 12px;
   padding: 24px 28px 28px;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.03);
 }
 
 .student-attendance .card h2 {
@@ -380,39 +364,13 @@
   text-align: right;
 }
 
-.student-attendance .btn-submit {
-  background: #4b5dff;
-  color: #fff;
-  border: none;
-  border-radius: 8px;
-  padding: 8px 20px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: 0.2s;
-}
 
-.student-attendance .btn-submit:hover {
-  background: #3848e6;
-}
 
 /* ===== 처리 현황 ===== */
 .student-attendance table {
   width: 100%;
   border-collapse: collapse;
   font-size: 14px;
-}
-
-.student-attendance th,
-.student-attendance td {
-  text-align: center;
-  padding: 12px 8px;
-  border-top: 1px solid #ddd;
-}
-
-.student-attendance thead th {
-  background: #f7f8ff;
-  font-weight: 600;
-  border-top: none;
 }
 
 .student-attendance tbody tr:nth-child(even) {
@@ -448,12 +406,8 @@
 }
 
 .student-satisfaction .card {
-  background: #fff;
-  border: 1px solid #e1e2ef;
-  border-radius: 12px;
   padding: 36px 48px;
   width: 640px;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.03);
 }
 
 .student-satisfaction .card h2 {
@@ -510,20 +464,6 @@
   margin-top: 20px;
 }
 
-.student-satisfaction .btn-submit {
-  background: #6b63ff;
-  color: #fff;
-  border: none;
-  border-radius: 8px;
-  padding: 8px 22px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: 0.2s;
-}
-
-.student-satisfaction .btn-submit:hover {
-  background: #5347ff;
-}
 
 /* ===============================
    상담신청 (student-consult)
@@ -540,11 +480,7 @@
 
 /* 카드 공통 */
 .student-consult .card {
-  background: #fff;
-  border: 1px solid #e1e2ef;
-  border-radius: 12px;
   padding: 28px 32px 32px;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.03);
 }
 
 .student-consult .card h2 {
@@ -601,20 +537,6 @@
   margin-top: 6px;
 }
 
-.student-consult .btn-submit {
-  background: #4b5dff;
-  color: #fff;
-  border: none;
-  border-radius: 8px;
-  padding: 8px 20px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: 0.2s;
-}
-
-.student-consult .btn-submit:hover {
-  background: #3848e6;
-}
 
 /* ===== 신청 내역 ===== */
 .student-consult table {
@@ -623,18 +545,9 @@
   font-size: 14px;
 }
 
-.student-consult th,
-.student-consult td {
-  text-align: center;
-  padding: 12px 8px;
-  border-top: 1px solid #ddd;
-}
 
-.student-consult thead th {
-  background: #f7f8ff;
-  font-weight: 600;
-  border-top: none;
-}
+
+
 
 .student-consult tbody tr:nth-child(even) {
   background: #fafbff;
@@ -823,25 +736,6 @@
   transition: 0.2s;
 }
 
-.student-mypage .btn-edit {
-  background: #4b5dff;
-  color: #fff;
-}
-
-.student-mypage .btn-edit:hover {
-  background: #3a4be0;
-}
-
-.student-mypage .btn-cancel {
-  background: #fff;
-  color: #333;
-  border: 1px solid #ccc;
-}
-
-.student-mypage .btn-cancel:hover {
-  background: #f3f4ff;
-}
-
 /* ===============================
    문의 목록 (student-inquiry)
    =============================== */
@@ -876,23 +770,11 @@
   font-size: 14px;
 }
 
-.student-inquiry .inquiry-table th,
-.student-inquiry .inquiry-table td {
-  text-align: center;
-  padding: 12px 8px;
-  border-top: 1px solid #ddd;
-}
 
-.student-inquiry .inquiry-table thead th {
-  background: #f7f8ff;
-  font-weight: 600;
-  border-top: none;
-}
 
-.student-inquiry .inquiry-table tbody tr:hover {
-  background: #f3f4ff;
-  cursor: pointer;
-}
+
+
+
 
 /* 상태 색상 */
 .student-inquiry .status {
@@ -934,23 +816,6 @@
 /* ===== 글쓰기 버튼 ===== */
 .student-inquiry .inquiry-write {
   text-align: right;
-}
-
-.student-inquiry .btn-write {
-  border: 1px solid #ccc;
-  border-radius: 10px;
-  background: #fff;
-  padding: 8px 18px;
-  font-size: 14px;
-  font-weight: 600;
-  cursor: pointer;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.05);
-  transition: 0.15s;
-}
-
-.student-inquiry .btn-write:hover {
-  background: #f3f4ff;
-  border-color: #bfc4ff;
 }
 
 /* ===============================
@@ -1061,23 +926,6 @@
   margin-top: 32px;
 }
 
-.student-inquiry-detail .btn-list {
-  border: 1px solid #ccc;
-  border-radius: 10px;
-  background: #fff;
-  padding: 8px 20px;
-  font-size: 14px;
-  font-weight: 600;
-  cursor: pointer;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.05);
-  transition: 0.15s;
-}
-
-.student-inquiry-detail .btn-list:hover {
-  background: #f3f4ff;
-  border-color: #bfc4ff;
-}
-
 /* ===============================
    문의 작성 페이지 (student-inquiry-write)
    =============================== */
@@ -1155,23 +1003,6 @@
   margin-top: 24px;
 }
 
-.student-inquiry-write .btn-submit {
-  background: #3b3bff;
-  color: #fff;
-  border: none;
-  border-radius: 10px;
-  padding: 10px 28px;
-  font-size: 15px;
-  font-weight: 600;
-  cursor: pointer;
-  box-shadow: 0 3px 10px rgba(59, 59, 255, 0.25);
-  transition: 0.15s;
-}
-
-.student-inquiry-write .btn-submit:hover {
-  background: #2e2ee0;
-}
-
 /* ===================================
    KH EduERP - 학생 기자재 신청
    (Student Facility)
@@ -1233,21 +1064,6 @@
   height: 80px;
 }
 
-.facility-form-card .btn-submit {
-  background: #4b5dff;
-  color: #fff;
-  border: none;
-  border-radius: 10px;
-  padding: 10px 22px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: 0.2s;
-}
-
-.facility-form-card .btn-submit:hover {
-  background: #3848e6;
-}
-
 /* ===== 신청 내역 테이블 ===== */
 .facility-history-card table {
   width: 100%;
@@ -1256,27 +1072,14 @@
   margin-top: 10px;
 }
 
-.facility-history-card th,
-.facility-history-card td {
-  text-align: center;
-  padding: 12px 10px;
-  border-top: 1px solid #ddd;
-}
+
 
 .facility-history-card thead th {
-  background: #f3f3ff;
-  font-weight: 600;
   border-top: none;
-  color: #333;
 }
 
 .facility-history-card tbody tr:nth-child(even) {
   background: #fafbff;
-}
-
-.facility-history-card tbody tr:hover {
-  background: #eef0ff;
-  transition: 0.15s;
 }
 
 /* ===== 상태 배지 색상 ===== */

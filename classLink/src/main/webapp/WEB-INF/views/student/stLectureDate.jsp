@@ -10,7 +10,7 @@
   <link rel="stylesheet" href="/styles/student.css">
 </head>
 
-<body class="student student-calendar">
+<body class="student student-calender">
   <!-- ===== 사이드바 ===== -->
   <jsp:include page="/WEB-INF/views/common/sidBar.jsp" />
 
@@ -19,13 +19,14 @@
       <jsp:include page="/WEB-INF/views/common/topBar.jsp" />
 
     <section class="content">
-      <div class="calendar-header">
-        <div class="month-control">
-          <button class="month-btn">◀</button>
-          <div class="month-title">2025년 11월</div>
-          <button class="month-btn">▶</button>
-          <button class="today-btn">오늘</button>
-        </div>
+    <!-- Calendar Section -->
+        <div class="calender-box">
+            <div class="calender-header">
+                <div class="month-control">
+                  <button class="month-btn">◀</button>
+                  <div class="month-title">2025년 10월</div>
+                  <button class="today-btn">오늘</button>
+                </div>
 
         <div class="legend">
           <span><span class="dot blue"></span>수업</span>
@@ -34,16 +35,16 @@
         </div>
       </div>
 
-      <div class="calendar-grid" id="calendar"></div>
+      <div class="calender-grid" id="calender"></div>
 
-      <p class="calendar-note">
+      <p class="calender-note">
         ※ 일정이 많은 날은 셀 하단의 +N 표시를 눌러 세부 내용을 확인할 수 있습니다.
       </p>
     </section>
   </main>
 
   <script>
-    const calendar = document.getElementById("calendar");
+    const calendar = document.getElementById("calender");
 
     const events = {
       3: ["웹 프로젝트 수업", "프론트 퀴즈"],

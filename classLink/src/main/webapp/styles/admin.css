@@ -3,16 +3,6 @@
    (Admin Dashboard)
    =================================== */
 
-/* ===== 콘텐츠 레이아웃 ===== */
-.admin .content {
-  padding: 80px 40px 40px;
-  background: #f8f9fc;
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  gap: 24px;
-}
-
 /* ===================================
    통계 요약 (Stats Row)
    =================================== */
@@ -81,9 +71,7 @@
 
 .admin-student-list .content,
 .admin-lecture-list .content {
-  flex: 1;
-  padding: 48px 60px;
-  background: #fff;
+
 }
 
 .admin-student-list h2,
@@ -106,24 +94,8 @@
 }
 
 /* 헤더 */
-.admin-student-list .student-table th,
-.admin-lecture-list .lecture-table th {
-  background: #f3f4fb;
-  padding: 12px;
-  text-align: center;
-  border-bottom: 1px solid #e0e1e9;
-  font-weight: 700;
-  color: #333;
-}
 
 /* 셀 */
-.admin-student-list .student-table td,
-.admin-lecture-list .lecture-table td {
-  padding: 12px;
-  text-align: center;
-  border-bottom: 1px solid #f0f1f6;
-  color: #333;
-}
 
 .admin-student-list .student-table tr:last-child td,
 .admin-lecture-list .lecture-table tr:last-child td {
@@ -131,10 +103,6 @@
 }
 
 /* 행 hover 효과 */
-.admin-student-list .student-table tr:hover,
-.admin-lecture-list .lecture-table tr:hover {
-  background: #f9f9ff;
-}
 
 /* 상태 컬러 */
 .admin-student-list td:nth-child(5),
@@ -144,15 +112,6 @@
 }
 /* 강사/관리자 추가 버튼 */
 .create-btn {
-    border: 1px solid #ccc;
-    border-radius: 10px;
-    background: #fff;
-    padding: 8px 18px;
-    font-size: 14px;
-    font-weight: 600;
-    cursor: pointer;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
-    transition: 0.15s;
     float: right;
 }
 
@@ -175,15 +134,7 @@
   border-radius: 8px;
 }
 
-.admin-calendar-manage .btn-search {
-  background: #4b5dff;
-  color: #fff;
-  border: none;
-  border-radius: 8px;
-  padding: 8px 14px;
-  cursor: pointer;
-  font-weight: 600;
-}
+
 
 /* 테이블 */
 .admin-calendar-manage .calendar-table {
@@ -192,22 +143,11 @@
   font-size: 14px;
 }
 
-.admin-calendar-manage .calendar-table th,
-.admin-calendar-manage .calendar-table td {
-  border: 1px solid #ccc;
-  padding: 10px 12px;
-  text-align: center;
-}
 
-.admin-calendar-manage .calendar-table th {
-  background: #f3f4ff;
-  font-weight: 600;
-}
 
-.admin-calendar-manage .calendar-table tr:hover {
-  background: #f9faff;
-  cursor: pointer;
-}
+
+
+
 
 /* 상태 배지 */
 .admin-calendar-manage .status {
@@ -271,10 +211,6 @@ body.admin.admin-calendar-manage {
 
 /* 카드 */
 .admin-calendar-manage .card {
-    background: var(--card);
-    border: 1px solid var(--border);
-    border-radius: var(--radius-lg);
-    box-shadow: var(--shadow);
     padding: 22px 24px;
     max-width: 1060px;
 }
@@ -336,42 +272,11 @@ body.admin.admin-calendar-manage {
 }
 
 /* 버튼 */
-.admin-calendar-manage .btn-submit {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    margin-top: 8px;
-    margin-left: auto;
-    min-width: 140px;
-    height: 44px;
-    padding: 0 18px;
-    border: none;
-    border-radius: 12px;
-    background: var(--primary);
-    color: #fff;
-    font-weight: 700;
-    cursor: pointer;
-    box-shadow: 0 10px 20px rgba(108, 99, 255, .22);
-    transition: .15s ease;
-}
-
-.admin-calendar-manage .btn-submit:hover {
-    background: var(--primary-600);
-    box-shadow: 0 12px 24px rgba(108, 99, 255, .28);
-}
 
 .admin-calendar-manage .btn-submit:active {
     transform: translateY(1px);
     background: var(--primary-700);
 }
-
-/* 반응형 */
-@media (max-width: 1024px) {
-    .admin-calendar-manage .main { padding: 20px; }
-    .admin-calendar-manage .card { padding: 18px; }
-}
-
-
 
 /* ===============================
    관리자 문의 관리 (admin-inquiry-manage)
@@ -392,38 +297,11 @@ body.admin.admin-calendar-manage {
   border-radius: 8px;
 }
 
-.admin-inquiry-manage .btn-search {
-  background: #4b5dff;
-  color: #fff;
-  border: none;
-  border-radius: 8px;
-  padding: 8px 14px;
-  cursor: pointer;
-  font-weight: 600;
-}
-
 /* 테이블 */
 .admin-inquiry-manage .inquiry-table {
   width: 100%;
   border-collapse: collapse;
   font-size: 14px;
-}
-
-.admin-inquiry-manage .inquiry-table th,
-.admin-inquiry-manage .inquiry-table td {
-  border: 1px solid #ccc;
-  padding: 10px 12px;
-  text-align: center;
-}
-
-.admin-inquiry-manage .inquiry-table th {
-  background: #f3f4ff;
-  font-weight: 600;
-}
-
-.admin-inquiry-manage .inquiry-table tr:hover {
-  background: #f9faff;
-  cursor: pointer;
 }
 
 .admin-inquiry-manage .inquiry-table tr.selected {
@@ -515,30 +393,6 @@ body.admin.admin-calendar-manage {
   justify-content: space-between;
 }
 
-.admin-inquiry-manage .btn-delete {
-  background: #ddd;
-  border: none;
-  border-radius: 8px;
-  padding: 8px 18px;
-  font-weight: 600;
-  cursor: pointer;
-}
-
-.admin-inquiry-manage .btn-submit {
-  background: #4b5dff;
-  color: #fff;
-  border: none;
-  border-radius: 8px;
-  padding: 8px 18px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: 0.2s;
-}
-
-.admin-inquiry-manage .btn-submit:hover {
-  background: #3848e6;
-}
-
 /* ===============================
    관리자 공지사항 작성 (admin-notice-write)
    =============================== */
@@ -589,23 +443,6 @@ body.admin.admin-calendar-manage {
   display: flex;
   justify-content: center;
   margin-top: 30px;
-}
-
-.admin-notice-write .btn-submit {
-  background: #4b5dff;
-  color: #fff;
-  border: none;
-  border-radius: 8px;
-  padding: 10px 28px;
-  font-weight: 600;
-  font-size: 15px;
-  cursor: pointer;
-  transition: 0.2s;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-}
-
-.admin-notice-write .btn-submit:hover {
-  background: #3848e6;
 }
 
 /* ===============================
@@ -782,33 +619,6 @@ body.admin.admin-calendar-manage {
   transform: translateY(0);
 }
 
-.content .edit-btn,
-.content .delete-btn {
-  border: none;
-  border-radius: 8px;
-  font-size: 13px;
-  padding: 6px 12px;
-  cursor: pointer;
-  font-weight: 600;
-}
-
-.content .edit-btn {
-  background: #4b45ff;
-  color: #fff;
-}
-
-.content .edit-btn:hover {
-  background: #3730d9;
-}
-
-.content .delete-btn {
-  background: #ff6b6b;
-  color: #fff;
-}
-
-.content .delete-btn:hover {
-  background: #e05656;
-}
 
 /* ===== 기자재 추가 버튼 ===== */
 .section-title {
@@ -866,23 +676,10 @@ body.admin.admin-calendar-manage {
   background: #f3f3ff;
 }
 
-.content th,
-.content td {
-  border: 1px solid #ddd;
-  text-align: center;
-  padding: 10px;
-  font-size: 14px;
-}
 
-.content th {
-  font-weight: 600;
-  color: #333;
-}
 
-.content tbody tr:hover {
-  background: #eef0ff;
-  transition: 0.15s;
-}
+
+
 
 /* ===== 상태 텍스트 컬러 ===== */
 .content .status-ok {
@@ -959,19 +756,4 @@ body.admin.admin-calendar-manage {
   margin-top: 10px;
 }
 
-.facility-detail-card .btn-submit {
-  background: #6b63ff;
-  color: #fff;
-  border: none;
-  border-radius: 10px;
-  padding: 10px 26px;
-  font-size: 15px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: 0.2s;
-}
-
-.facility-detail-card .btn-submit:hover {
-  background: #534bff;
-}
 
