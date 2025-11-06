@@ -3,14 +3,14 @@
 <html lang="ko">
 <head>
   <meta charset="UTF-8">
-  <title>KH EduERP | 공지사항 작성</title>
+  <title>KH EduERP | 공지사항 수정</title>
 
   <link rel="stylesheet" href="/styles/default.css">
   <link rel="stylesheet" href="/styles/style.css">
   <link rel="stylesheet" href="/styles/common.css">
 </head>
 
-<body class="common notice-enroll-form ">
+<body class="lecture notice-update-form">
 
   <!-- 사이드바 -->
   <jsp:include page="/WEB-INF/views/common/sidBar.jsp" />
@@ -81,7 +81,7 @@
         }
         if (selectNoticeType === "CLASS") {
 
-            classNoList.style.display = 'flex';
+            classNoList.style.display = 'block';
         } else {
             classNoList.style.display = 'none';
         }

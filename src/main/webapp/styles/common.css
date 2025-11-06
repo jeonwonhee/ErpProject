@@ -289,33 +289,38 @@ question-detail .question-header .align-right,
    공지사항 작성 (notice-enroll-form)
    =================================== */
 
-.notice-enroll-form .content {
+.notice-enroll-form .content,
+.notice-update-form .content {
   justify-content: center;   /* ✅ 중앙 정렬 */
   align-items: flex-start;
   padding: 60px 0;           /* 세로 여백 확보 */
 }
 
-.notice-enroll-form .card {
+.notice-enroll-form .card,
+.notice-update-form .card {
   padding: 50px 60px;        /* 내부 여백 확대 */
   width: 90%;                /* 화면 비율 기반으로 넓게 */
   max-width: 1100px;         /* 최대 크기 제한 */
   min-width: 850px;          /* 최소 크기 확보 */
 }
 
-.notice-enroll-form .card h2 {
+.notice-enroll-form .card h2,
+.notice-update-form .card h2 {
   font-size: 22px;
   font-weight: 700;
   margin-bottom: 36px;       /* 제목 아래 공간 확대 */
 }
 
-.notice-enroll-form .notice-write {
+.notice-enroll-form .notice-write,
+.notice-update-form .notice-write {
   display: flex;
   flex-direction: column;
   gap: 20px;
 }
 
 /* 공지사항 타입, 반별 공지 */
-.classNoList {
+.notice-enroll-form .classNoList,
+.notice-update-form .classNoList {
     display: none;
     flex-direction: column;  /* 세로 배치 */
     align-items: flex-start; /* label은 왼쪽 정렬 */
@@ -323,12 +328,14 @@ question-detail .question-header .align-right,
     width: 100%;
 }
 
-.classNoList > label {
+.notice-enroll-form .classNoList > label,
+.notice-update-form .classNoList > label {
     font-weight: bold;
     margin-left: 5px;
 }
 
-.checkbox-group {
+.notice-enroll-form .checkbox-group,
+.notice-update-form .checkbox-group {
     display: flex;
     justify-content: center;
     flex-wrap: wrap;
@@ -336,18 +343,22 @@ question-detail .question-header .align-right,
     width: 100%;
 }
 
-.checkbox-group label {
+.notice-enroll-form .checkbox-group label,
+.notice-update-form .checkbox-group label {
     display: flex;
     align-items: center;
     gap: 4px;
 }
 
-.checkbox-group label {
+.notice-enroll-form .checkbox-group label,
+.notice-update-form .checkbox-group label {
     display: flex;
     align-items: center;
     gap: 4px;
 }
-.subject-select select {
+
+.notice-enroll-form .subject-select select,
+.notice-update-form .subject-select select {
     border: 1px solid #ccc;
     border-radius: 8px;
     padding: 10px 12px;
@@ -357,19 +368,23 @@ question-detail .question-header .align-right,
 }
 
 /* ===== 입력 폼 ===== */
-.notice-form .form-group {
+.notice-enroll-form  .notice-form .form-group,
+.notice-update-form  .notice-form .form-group {
   margin-bottom: 36px;       /* 각 항목 간 간격 확대 */
 }
 
-.notice-form label {
+.notice-enroll-form  .notice-form label,
+.notice-update-form  .notice-form label {
   display: block;
   font-weight: 600;
   margin-bottom: 12px;
   font-size: 15px;
 }
 
-.notice-form input[type="text"],
-.notice-form textarea {
+.notice-enroll-form .notice-form input[type="text"],
+.notice-enroll-form .notice-form textarea,
+.notice-update-form .notice-form input[type="text"],
+.notice-update-form .notice-form textarea {
   width: 100%;
   border: 1px solid #ccc;
   border-radius: 10px;
@@ -379,23 +394,27 @@ question-detail .question-header .align-right,
 }
 
 /* 🔹 textarea 세로 길이 확장 */
-.notice-form textarea {
+.notice-enroll-form .notice-form textarea,
+.notice-update-form .notice-form textarea {
   height: 340px;
   resize: none;
 }
 
 /* ===== 파일 업로드 ===== */
-.notice-form .file-box {
+.notice-enroll-form .notice-form .file-box,
+.notice-update-form .notice-form .file-box {
   display: flex;
   align-items: center;
   gap: 12px;
 }
 
-.notice-form input[type="file"] {
+.notice-enroll-form .notice-form input[type="file"],
+.notice-update-form .notice-form input[type="file"] {
   display: none;
 }
 
-.notice-form .file-label {
+.notice-enroll-form .notice-form .file-label,
+.notice-update-form .notice-form .file-label {
   background: #4b5dff;
   color: #fff;
   padding: 8px 16px;
@@ -405,7 +424,8 @@ question-detail .question-header .align-right,
   font-weight: 500;
 }
 
-.notice-form .file-name {
+.notice-enroll-form .notice-form .file-name,
+.notice-update-form .notice-form .file-name {
   color: #555;
   font-size: 14px;
 }
