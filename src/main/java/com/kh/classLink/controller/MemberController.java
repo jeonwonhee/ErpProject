@@ -32,4 +32,19 @@ public class MemberController {
     public String changePassword() {
         return "common/changePassword";
     }
+
+    /** 관리자/강사 생성
+     * @return
+             */
+    @GetMapping("/adminRegister.co")
+    public String adminRegister(){
+        return "common/adminRegister";
+    }
+
+    @GetMapping("/stRegister.co")
+    public String stRegister() {
+        //학생 회원가입
+        return "student/stRegister";
+    }
+
 }
