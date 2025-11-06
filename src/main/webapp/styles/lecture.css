@@ -11,36 +11,36 @@
    강사 대시보드(lecture-dashboard)
    =================================== */
 .lecture-dashboard .calendar-box {
-  background: #fff;
-  border: 1px solid #e2e4ef;
-  border-radius: 16px;
-  padding: 20px;
+    background: #fff;
+    border: 1px solid #e2e4ef;
+    border-radius: 16px;
+    padding: 20px;
 }
 
 .lecture-dashboard .calendar-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
 }
 
 .lecture-dashboard .month-control {
-  display: flex;
-  align-items: center;
-  gap: 10px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
 }
 
 .lecture-dashboard .month-btn {
-  width: 28px;
-  height: 28px;
-  border: 1px solid #dcdde5;
-  border-radius: 999px;
-  background: #fff;
-  cursor: pointer;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-size: 14px;
+    width: 28px;
+    height: 28px;
+    border: 1px solid #dcdde5;
+    border-radius: 999px;
+    background: #fff;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 14px;
 }
 
 .lecture-dashboard .month-title {
@@ -185,8 +185,8 @@
    =================================== */
 
 .lecture-attendance-correction .card h2 {
-    font-size: 20px;
-    font-weight: 700;
+    font-size: 16px;
+    font-weight: 600;
     margin-bottom: 24px;
 }
 
@@ -266,9 +266,9 @@
    출결정정 리스트 (lecture-attendance-list)
    =================================== */
 
-.lecture-attendance-list .kh-card h2 {
-      font-size: 18px;
-      font-weight: 700;
+.lecture-attendance-list .card h2 {
+      font-size: 16px;
+      font-weight: 600;
       margin-bottom: 20px;
 }
 
@@ -279,9 +279,6 @@
 }
 
 .lecture-attendance-list .lecture-request-card {
-  border: 1px solid #e0e0e0;
-  border-radius: 10px;
-  padding: 20px 24px;
   background: #fafbff;
   display: flex;
   justify-content: space-between;
@@ -569,10 +566,7 @@ th {
 }
 
 .lecture-consult .consult-card {
-  border: 1px solid #e0e0e0;
-  border-radius: 10px;
   background: #fafbff;
-  padding: 18px 24px;
   display: flex;
   flex-direction: column;
   transition: 0.25s;
@@ -647,588 +641,13 @@ th {
   border-color: #6b5bff;
 }
 
-/* ===================================
-   공지사항 (lecture-notice)
-   =================================== */
-
-.lecture-notice .notice-panel {
-  background: #fff;
-  border: 1px solid #dcdde5;
-  border-radius: 18px;
-  padding: 32px 36px 40px;
-}
-
-.lecture-notice h3 {
-  font-size: 18px;
-  font-weight: 700;
-  margin-bottom: 24px;
-}
-
-.lecture-notice .notice-table {
-  width: 100%;
-  border-collapse: collapse;
-  font-size: 14px;
-  border-radius: 10px;
-  overflow: hidden;
-}
-
-.lecture-notice .notice-table th,
-.lecture-notice .notice-table td {
-  padding: 12px 14px;
-  border: 1px solid #ddd;
-  text-align: center;
-}
-
-.lecture-notice .notice-table th {
-  background: #f3f4ff;
-  font-weight: 600;
-}
-
-.lecture-notice .notice-table tr:hover {
-  background: #f9faff;
-  transition: 0.2s;
-}
-
-/* ===== 페이지네이션 ===== */
-.lecture-notice .pagination {
-  display: flex;
-  justify-content: center;
-  gap: 8px;
-  margin-top: 22px;
-}
-
-.lecture-notice .page-btn {
-  width: 32px;
-  height: 32px;
-  border: 1px solid #ccc;
-  background: #fff;
-  border-radius: 999px;
-  cursor: pointer;
-  transition: 0.2s;
-}
-
-.lecture-notice .page-btn:hover {
-  background: #eef1ff;
-  border-color: #6b5bff;
-}
-
-.lecture-notice .page-btn.active {
-  background: #6b5bff;
-  color: #fff;
-  border-color: #6b5bff;
-}
-
-/* ===== 글쓰기 버튼 ===== */
-.lecture-notice .notice-footer {
-  display: flex;
-  justify-content: flex-end;
-  margin-top: 28px;
-}
-
-/* 공지사항 타입, 반별 공지 */
-.classNoList {
-    display: none;
-    flex-direction: column;  /* 세로 배치 */
-    align-items: flex-start; /* label은 왼쪽 정렬 */
-    gap: 8px; /* label과 체크박스 그룹 사이 여백 */
-    width: 100%;
-}
-
-.classNoList > label {
-    font-weight: bold;
-    margin-left: 5px;
-}
-
-.checkbox-group {
-    display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
-    gap: 20px;
-    width: 100%;
-}
-
-.checkbox-group label {
-    display: flex;
-    align-items: center;
-    gap: 4px;
-}
-.subject-select select {
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    padding: 10px 12px;
-    font-size: 14px;
-    background: #fff;
-    width: 100%;
-}
-
-/* ===================================
-   공지사항 상세보기 (lecture-notice-detail)
-   =================================== */
-
-.lecture-notice-detail .notice-detail-panel {
-  background: #fff;
-  border: 1px solid #dcdde5;
-  border-radius: 18px;
-  padding: 40px 46px 50px;
-}
-
-.lecture-notice-detail .notice-header {
-  border-bottom: 1px solid #e2e4ef;
-  padding-bottom: 16px;
-  margin-bottom: 28px;
-}
-
-.lecture-notice-detail .notice-title {
-  font-size: 20px;
-  font-weight: 700;
-  margin-bottom: 12px;
-  color: #222;
-}
-
-.lecture-notice-detail .notice-meta {
-  display: flex;
-  gap: 24px;
-  font-size: 14px;
-  color: #666;
-}
-
-.lecture-notice-detail .notice-meta b {
-  font-weight: 600;
-  color: #333;
-}
-
-.lecture-notice-detail .notice-body {
-  font-size: 15px;
-  line-height: 1.8;
-  color: #333;
-  padding: 10px 2px 30px;
-  white-space: pre-line;
-}
-
-.lecture-notice-detail .notice-detail-footer {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  border-top: 1px solid #e2e4ef;
-  padding-top: 24px;
-  margin-top: 10px;
-}
-
-.lecture-notice-detail .right-btns {
-  display: flex;
-  gap: 8px;
-}
-
-/* ===================================
-   공지사항 작성 (lecture-notice-write)
-   =================================== */
-.lecture-notice-write .notice-write {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-}
-
-.lecture-notice-write .card {
-  padding: 32px 40px;
-  max-width: 800px;
-  margin: 0 auto;
-}
-
-.lecture-notice-write .card h2 {
-  font-size: 20px;
-  font-weight: 700;
-  margin-bottom: 24px;
-}
-
-/* ===== 입력 폼 ===== */
-.notice-form .form-group {
-  margin-bottom: 24px;
-}
-
-.notice-form label {
-  display: block;
-  font-weight: 600;
-  margin-bottom: 10px;
-}
-
-.notice-form input[type="text"],
-.notice-form textarea {
-  width: 100%;
-  border: 1px solid #ccc;
-  border-radius: 10px;
-  padding: 10px 14px;
-  font-size: 14px;
-  background: #fafbff;
-}
-
-.notice-form textarea {
-  height: 240px;
-  resize: none;
-}
-
-/* ===== 파일 업로드 ===== */
-.notice-form .file-box {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
-.notice-form input[type="file"] {
-  display: none;
-}
-
-.notice-form .file-label {
-  background: #4b5dff;
-  color: #fff;
-  padding: 6px 14px;
-  border-radius: 6px;
-  cursor: pointer;
-  font-size: 14px;
-  font-weight: 500;
-}
-
-.notice-form .file-name {
-  color: #555;
-  font-size: 14px;
-}
-
-/* ===== 등록 버튼 ===== */
-
-/* ===================================
-   공지사항 작성 (lecture-notice-write)
-   =================================== */
-.lecture-notice-write .content {
-  display: flex;
-  justify-content: center;   /* ✅ 중앙 정렬 */
-  align-items: flex-start;
-  padding: 60px 0;           /* 세로 여백 확보 */
-}
-
-.lecture-notice-write .card {
-  padding: 50px 60px;        /* 내부 여백 확대 */
-  width: 90%;                /* 화면 비율 기반으로 넓게 */
-  max-width: 1100px;         /* 최대 크기 제한 */
-  min-width: 850px;          /* 최소 크기 확보 */
-  /*box-shadow: 0 2px 6px rgba(0,0,0,0.05);*/
-}
-
-.lecture-notice-write .card h2 {
-  font-size: 22px;
-  font-weight: 700;
-  margin-bottom: 36px;       /* 제목 아래 공간 확대 */
-}
-
-/* ===== 입력 폼 ===== */
-.notice-form .form-group {
-  margin-bottom: 36px;       /* 각 항목 간 간격 확대 */
-}
-
-.notice-form label {
-  display: block;
-  font-weight: 600;
-  margin-bottom: 12px;
-  font-size: 15px;
-}
-
-.notice-form input[type="text"],
-.notice-form textarea {
-  width: 100%;
-  border: 1px solid #ccc;
-  border-radius: 10px;
-  padding: 14px 18px;        /* 입력칸 여백 확대 */
-  font-size: 15px;
-  background: #fafbff;
-}
-
-/* 🔹 textarea 세로 길이 확장 */
-.notice-form textarea {
-  height: 340px;
-  resize: none;
-}
-
-/* ===== 파일 업로드 ===== */
-.notice-form .file-box {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-}
-
-.notice-form input[type="file"] {
-  display: none;
-}
-
-.notice-form .file-label {
-  background: #4b5dff;
-  color: #fff;
-  padding: 8px 16px;
-  border-radius: 8px;
-  cursor: pointer;
-  font-size: 14px;
-  font-weight: 500;
-}
-
-.notice-form .file-name {
-  color: #555;
-  font-size: 14px;
-}
-
-/* ===== 등록 버튼 ===== */
-
-
-/* ===================================
-   문의 상세보기 (lecture-inquiry-detail)
-   =================================== */
-
-.lecture-inquiry-detail .inquiry-detail-card {
-    background: #fff;
-    border: 1px solid #dcdde5;
-    border-radius: 16px;
-    padding: 36px 40px;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.04);
-    max-width: 850px;
-    margin-left: 180px;
-}
-
-.lecture-inquiry-detail .inquiry-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 10px;
-  margin-bottom: 22px;
-}
-
-.lecture-inquiry-detail .inquiry-header input[type="text"] {
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  padding: 8px 12px;
-  font-size: 14px;
-  width: 48%;
-  background: #fff;
-}
-
-.lecture-inquiry-detail .inquiry-header .align-right {
-  text-align: right;
-}
-
-/* 본문 영역 */
-.lecture-inquiry-detail .inquiry-body {
-  border: 1px solid #ddd;
-  border-radius: 10px;
-  padding: 22px 24px;
-  background: #fafbff;
-}
-
-.lecture-inquiry-detail .inquiry-body .meta {
-  font-weight: 600;
-  color: #555;
-  margin-bottom: 10px;
-}
-
-.lecture-inquiry-detail .inquiry-body .text {
-  font-size: 14px;
-  color: #333;
-  line-height: 1.7;
-}
-
-/* 답변 영역 */
-.lecture-inquiry-detail .answer-box {
-  display: none;
-  background: #f4f5ff;
-  border-radius: 8px;
-  padding: 16px 18px;
-  margin-top: 18px;
-  border: 1px solid #e0e1f0;
-}
-
-.lecture-inquiry-detail .inquiry-detail-card.has-answer .answer-box {
-  display: block;
-}
-
-.lecture-inquiry-detail .answer-box .meta {
-  color: #555;
-  font-weight: 500;
-  margin-bottom: 8px;
-}
-
-.lecture-inquiry-detail .answer-box .meta span {
-  margin-left: 8px;
-  color: #777;
-  font-size: 13px;
-}
-
-.lecture-inquiry-detail .answer-box .text {
-  font-size: 14px;
-  color: #333;
-  line-height: 1.6;
-}
-
-/* 버튼 */
-.lecture-inquiry-detail .inquiry-footer {
-  margin-top: 24px;
-  text-align: right;
-}
-
-/* ===================================
-   문의 팝업 (lecture-inquiry-popup)
-   =================================== */
-
-/* ====== 기본 테이블 ====== */
-.lecture-inquiry-popup .inquiry-table {
-  width: 100%;
-  border-collapse: collapse;
-  font-size: 14px;
-}
-
-.lecture-inquiry-popup .inquiry-table th,
-.lecture-inquiry-popup .inquiry-table td {
-  border: 1px solid #ddd;
-  padding: 10px 12px;
-  text-align: center;
-}
-
-.lecture-inquiry-popup .inquiry-table th {
-  background: #f3f4ff;
-  font-weight: 600;
-}
-
-.lecture-inquiry-popup .inquiry-table tr:hover {
-  background: #f9faff;
-  cursor: pointer;
-}
-
-/* 상태 배지 */
-.lecture-inquiry-popup .status {
-  display: inline-block;
-  border-radius: 12px;
-  padding: 4px 10px;
-  font-size: 13px;
-  font-weight: 600;
-  color: #fff;
-}
-
-.lecture-inquiry-popup .status.received {
-  background: #4b5dff;
-}
-
-.lecture-inquiry-popup .status.processing {
-  background: #d9f365;
-  color: #333;
-}
-
-/* ===================================
-   모달 (Popup)
-   =================================== */
-.inquiry-modal {
-  position: fixed;          /* 스크롤 영향 X */
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;            /* 뷰포트 전체 영역 */
-  display: flex;
-  justify-content: center;  /* 수평 중앙 */
-  align-items: center;      /* 수직 중앙 */
-  background: rgba(0, 0, 0, 0.4);
-  z-index: 100;
-}
-
-.inquiry-modal .modal-content {
-  background: #fff;
-  border-radius: 16px;
-  width: 520px;
-  max-height: 80vh;
-  overflow-y: auto;
-  padding: 28px 30px 36px;
-  box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-  position: relative;
-  animation: modal-fade 0.25s ease;
-}
-
-@keyframes modal-fade {
-  from { opacity: 0; transform: translateY(-10px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-.inquiry-modal .modal-close {
-  position: absolute;
-  top: 14px;
-  right: 16px;
-  background: transparent;
-  border: none;
-  font-size: 20px;
-  cursor: pointer;
-  color: #555;
-}
-
-.inquiry-modal .modal-title {
-  font-size: 18px;
-  font-weight: 700;
-  margin-bottom: 8px;
-}
-
-.inquiry-modal .modal-meta {
-  font-size: 13px;
-  color: #666;
-  margin-bottom: 20px;
-}
-
-.inquiry-modal .modal-message {
-  background: #f3f3f3;
-  border-radius: 8px;
-  padding: 14px;
-  font-size: 14px;
-  color: #333;
-  margin-bottom: 24px;
-}
-
-/* ===== 답변 작성 영역 ===== */
-.inquiry-modal .modal-answer h4 {
-  font-size: 15px;
-  font-weight: 700;
-  margin-bottom: 10px;
-}
-
-.inquiry-modal .modal-answer textarea {
-  width: 100%;
-  height: 100px;
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  padding: 10px;
-  font-size: 14px;
-  resize: none;
-  margin-bottom: 14px;
-}
-
-.inquiry-modal .status-change {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  margin-bottom: 20px;
-}
-
-.inquiry-modal .status-change select {
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  padding: 6px 10px;
-  font-size: 14px;
-}
-
-/* ===== 버튼 ===== */
-.inquiry-modal .btn-group {
-  display: flex;
-  justify-content: flex-end;
-  gap: 10px;
-}
-
 /* ===============================
    강사 일정관리 (lecture-calendar)
    =============================== */
 
 /* 메인 콘텐츠 영역 */
 .lecture-calendar .content {
-  flex: 1;
-  padding: 28px 32px 32px;
   position: relative;
-  background: #fff;
 }
 
 /* 상단 월 컨트롤 영역 */
@@ -1443,9 +862,6 @@ th {
    =============================== */
 
 .lecture-grade .content {
-  flex: 1;
-  padding: 48px 60px;
-  background: #fff;
   text-align: center;
 }
 
@@ -1526,3 +942,114 @@ th {
   margin-top: 24px;
 }
 
+/* ===============================
+   강의별 만족도 그래프 (lecture-graph)
+   =============================== */
+
+.lecture-graph .card h2 {
+    font-size: 16px;
+    font-weight: 600;
+    margin-bottom: 10px;
+}
+
+.lecture-graph .card small {
+    color: #777;
+}
+
+.lecture-graph .chart-container {
+    display: flex;
+    gap: 30px;
+    margin-top: 20px;
+}
+
+.lecture-graph .chart-box {
+    flex: 1;
+    text-align: center;
+}
+
+.lecture-graph canvas {
+    background: #fafbff;
+    border-radius: 8px;
+    padding: 10px;
+}
+
+.lecture-graph .feedback-section {
+    margin-top: 30px;
+}
+
+.lecture-graph .feedback-list {
+    display: grid;
+    gap: 12px;
+    margin-top: 10px;
+}
+
+.lecture-graph .feedback-card {
+      background: #f9f9ff;
+}
+
+.lecture-graph .student-name {
+    font-size: 14px;
+    color: #4b45ff;
+    font-weight: 600;
+    margin-bottom: 6px;
+}
+
+.lecture-graph .feedback-text {
+    font-size: 16px;
+    color: #333;
+}
+
+/* ===============================
+   강의별 만족도 리스트 (lecture-feedback)
+   =============================== */
+
+.lecture-feedback .card {
+    max-width: 100%;
+}
+
+.lecture-feedback .card h2 {
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 10px;
+}
+
+/* Course cards */
+.lecture-feedback .course-list {
+    display: grid;
+    gap: 16px;
+    margin-top: 20px;
+}
+
+.lecture-feedback .course-card {
+    background: #f9f9ff;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: 0.2s;
+    cursor: pointer;
+}
+
+.lecture-feedback  .course-card:hover {
+    background: #eef0ff;
+    transform: translateY(-2px);
+}
+
+.lecture-feedback .course-info h3 {
+    font-size: 16px;
+    color: #222;
+    margin-bottom: 6px;
+}
+
+.lecture-feedback .course-info p {
+    font-size: 14px;
+    color: #555;
+}
+
+.lecture-feedback .course-info strong {
+    color: #4b45ff;
+}
+
+.lecture-feedback .response {
+    font-size: 13px;
+    color: #777;
+}

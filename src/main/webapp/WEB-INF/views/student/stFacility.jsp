@@ -18,7 +18,7 @@
             <section class="content">
                 <div class="facility-container">
                     <!-- 기자재 신청 폼 -->
-                    <div class="card facility-form-card">
+                    <div class="card">
                         <h2>기자재 신청</h2>
                         <form>
                             <div class="form-group">
@@ -49,7 +49,7 @@
                     </div>
 
                     <!-- 기자재 신청 내역 -->
-                    <div class="card facility-history-card">
+                    <div class="card facility-history">
                         <h2>신청 내역</h2>
                         <table>
                             <thead>

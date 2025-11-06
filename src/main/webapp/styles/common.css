@@ -1,0 +1,489 @@
+/* ===================================
+   KH EduERP - 공용 페이지 전용 스타일
+   (common)
+   =================================== */
+
+/* ===================================
+   문의 리스트 (question-detail) | 문의 상세보기 (question-enroll-form)
+   =================================== */
+
+.question-detail .card,
+.question-enroll-form .card {
+    max-width: 850px;
+    margin-left: 180px;
+}
+
+.question-detail .question-header,
+.question-enroll-form .question-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 22px;
+}
+
+.question-detail .question-header input[type="text"],
+.question-enroll-form .question-header input[type="text"] {
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 8px 12px;
+  font-size: 14px;
+  width: 48%;
+  background: #fff;
+}
+
+question-detail .question-header .align-right,
+.question-enroll-form .question-header .align-right {
+  text-align: right;
+}
+
+/* 본문 영역 */
+.question-detail .question-body,
+.question-enroll-form .question-body {
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  padding: 22px 24px;
+  background: #fafbff;
+}
+
+.question-detail .question-body .meta,
+.question-enroll-form .question-body .meta {
+  font-weight: 600;
+  color: #555;
+  margin-bottom: 10px;
+}
+
+.question-detail .question-body .text,
+.question-enroll-form .question-body .text {
+  font-size: 14px;
+  color: #333;
+  line-height: 1.7;
+}
+
+/* 답변 영역 */
+.question-detail .answer-box,
+.question-enroll-form .answer-box {
+  display: none;
+  background: #f4f5ff;
+  border-radius: 8px;
+  padding: 16px 18px;
+  margin-top: 18px;
+  border: 1px solid #e0e1f0;
+}
+
+.question-detail .card.has-answer .answer-box,
+.question-enroll-form .card.has-answer .answer-box {
+  display: block;
+}
+
+.question-detail .answer-box .meta,
+.question-enroll-form .answer-box .meta {
+  color: #555;
+  font-weight: 500;
+  margin-bottom: 8px;
+}
+
+.question-detail .answer-box .meta span,
+.question-enroll-form .answer-box .meta span {
+  margin-left: 8px;
+  color: #777;
+  font-size: 13px;
+}
+
+.question-detail .answer-box .text,
+.question-enroll-form .answer-box .text {
+  font-size: 14px;
+  color: #333;
+  line-height: 1.6;
+}
+
+/* 버튼 */
+.question-detail .question-footer,
+.question-enroll-form .question-footer {
+  margin-top: 24px;
+  text-align: right;
+}
+
+/* ===== 입력 폼 ===== */
+.question-detail .notice-form .form-group,
+.question-enroll-form  .notice-form .form-group {
+  margin-bottom: 36px;       /* 각 항목 간 간격 확대 */
+}
+
+.question-detail .notice-form label,
+.question-enroll-form  .notice-form label {
+  display: block;
+  font-weight: 600;
+  margin-bottom: 12px;
+  font-size: 15px;
+}
+
+.question-detail .notice-form input[type="text"],
+.question-detail .notice-form input[type="text"],
+.question-enroll-form  .notice-form input[type="text"],
+.question-enroll-form  .notice-form textarea {
+  width: 100%;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  padding: 14px 18px;        /* 입력칸 여백 확대 */
+  font-size: 15px;
+  background: #fafbff;
+}
+
+/* 🔹 textarea 세로 길이 확장 */
+.question-detail .notice-from textarea,
+.question-enroll-form .notice-form textarea {
+  height: 340px;
+  resize: none;
+}
+
+/* ===================================
+   공지사항 상세보기 (notice-detail)
+   =================================== */
+
+.notice-detail .notice-detail-panel {
+  background: #fff;
+  border: 1px solid #dcdde5;
+  border-radius: 18px;
+  padding: 40px 46px 50px;
+}
+
+.notice-detail .notice-header {
+  border-bottom: 1px solid #e2e4ef;
+  padding-bottom: 16px;
+  margin-bottom: 28px;
+}
+
+.notice-detail .notice-title {
+  font-size: 20px;
+  font-weight: 700;
+  margin-bottom: 12px;
+  color: #222;
+}
+
+.notice-detail .notice-meta {
+  display: flex;
+  gap: 24px;
+  font-size: 14px;
+  color: #666;
+}
+
+.notice-detail .notice-meta b {
+  font-weight: 600;
+  color: #333;
+}
+
+.notice-detail .notice-body {
+  font-size: 15px;
+  line-height: 1.8;
+  color: #333;
+  padding: 10px 2px 30px;
+  white-space: pre-line;
+}
+
+.notice-detail .notice-detail-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-top: 1px solid #e2e4ef;
+  padding-top: 24px;
+  margin-top: 10px;
+}
+
+.notice-detail .right-btns {
+  display: flex;
+  gap: 8px;
+}
+
+/* ===================================
+   공지사항 (notice)
+   =================================== */
+
+.notice h3 {
+  font-size: 16px;
+  font-weight: 600;
+  margin-bottom: 24px;
+}
+
+.notice .notice-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+/* ===== 페이지네이션 ===== */
+.notice .pagination {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 22px;
+}
+
+.notice .page-btn {
+  width: 32px;
+  height: 32px;
+  border: 1px solid #ccc;
+  background: #fff;
+  border-radius: 999px;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.notice .page-btn:hover {
+  background: #eef1ff;
+  border-color: #6b5bff;
+}
+
+.notice .page-btn.active {
+  background: #6b5bff;
+  color: #fff;
+  border-color: #6b5bff;
+}
+
+/* ===== 글쓰기 버튼 ===== */
+.notice .notice-footer {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 28px;
+}
+
+/* ===== 페이지네이션 ===== */
+.notice .pagination {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 22px;
+}
+
+.notice .page-btn {
+  width: 32px;
+  height: 32px;
+  border: 1px solid #ccc;
+  background: #fff;
+  border-radius: 999px;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.notice .page-btn:hover {
+  background: #eef1ff;
+  border-color: #6b5bff;
+}
+
+.notice .page-btn.active {
+  background: #6b5bff;
+  color: #fff;
+  border-color: #6b5bff;
+}
+
+/* ===== 글쓰기 버튼 ===== */
+.notice .notice-footer {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 28px;
+}
+
+/* ===================================
+   공지사항 작성 (notice-enroll-form)
+   =================================== */
+
+.notice-enroll-form .content {
+  justify-content: center;   /* ✅ 중앙 정렬 */
+  align-items: flex-start;
+  padding: 60px 0;           /* 세로 여백 확보 */
+}
+
+.notice-enroll-form .card {
+  padding: 50px 60px;        /* 내부 여백 확대 */
+  width: 90%;                /* 화면 비율 기반으로 넓게 */
+  max-width: 1100px;         /* 최대 크기 제한 */
+  min-width: 850px;          /* 최소 크기 확보 */
+}
+
+.notice-enroll-form .card h2 {
+  font-size: 22px;
+  font-weight: 700;
+  margin-bottom: 36px;       /* 제목 아래 공간 확대 */
+}
+
+.notice-enroll-form .notice-write {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* 공지사항 타입, 반별 공지 */
+.classNoList {
+    display: none;
+    flex-direction: column;  /* 세로 배치 */
+    align-items: flex-start; /* label은 왼쪽 정렬 */
+    gap: 8px; /* label과 체크박스 그룹 사이 여백 */
+    width: 100%;
+}
+
+.classNoList > label {
+    font-weight: bold;
+    margin-left: 5px;
+}
+
+.checkbox-group {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 20px;
+    width: 100%;
+}
+
+.checkbox-group label {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.checkbox-group label {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+.subject-select select {
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 10px 12px;
+    font-size: 14px;
+    background: #fff;
+    width: 100%;
+}
+
+/* ===== 입력 폼 ===== */
+.notice-form .form-group {
+  margin-bottom: 36px;       /* 각 항목 간 간격 확대 */
+}
+
+.notice-form label {
+  display: block;
+  font-weight: 600;
+  margin-bottom: 12px;
+  font-size: 15px;
+}
+
+.notice-form input[type="text"],
+.notice-form textarea {
+  width: 100%;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  padding: 14px 18px;        /* 입력칸 여백 확대 */
+  font-size: 15px;
+  background: #fafbff;
+}
+
+/* 🔹 textarea 세로 길이 확장 */
+.notice-form textarea {
+  height: 340px;
+  resize: none;
+}
+
+/* ===== 파일 업로드 ===== */
+.notice-form .file-box {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.notice-form input[type="file"] {
+  display: none;
+}
+
+.notice-form .file-label {
+  background: #4b5dff;
+  color: #fff;
+  padding: 8px 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.notice-form .file-name {
+  color: #555;
+  font-size: 14px;
+}
+
+/* ===============================
+   관리자 문의 관리 (question-manage)
+   =============================== */
+
+/* 검색창 */
+.question-manage .search-box {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 20px;
+}
+
+.question-manage .search-box input {
+  width: 200px;
+  padding: 8px 12px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+}
+
+/* 테이블 */
+.question-manage .inquiry-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+}
+
+.question-manage .inquiry-table tr.selected {
+  background: #eef2ff;
+  border-left: 3px solid #4b5dff;
+}
+
+/* 상태 배지 */
+.question-manage .status {
+  display: inline-block;
+  border-radius: 12px;
+  padding: 4px 10px;
+  font-size: 13px;
+  font-weight: 600;
+  color: #fff;
+}
+
+.question-manage .status.received {
+  background: #4b5dff;
+}
+
+.question-manage .status.processing {
+  background: #d9f365;
+  color: #333;
+}
+
+.question-manage textarea {
+  width: 100%;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 8px;
+  font-size: 13px;
+  resize: none;
+}
+
+/* 상태 변경 */
+.question-manage .status-change {
+  margin-bottom: 20px;
+}
+
+.question-manage .status-change select {
+  width: 100%;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 8px;
+  font-size: 13px;
+}
+
+/* 버튼 그룹 */
+.question-manage .btn-group {
+  display: flex;
+  justify-content: space-between;
+}

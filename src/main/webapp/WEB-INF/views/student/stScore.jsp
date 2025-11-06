@@ -18,7 +18,7 @@
       <jsp:include page="/WEB-INF/views/common/topBar.jsp" />
 
     <section class="content score">
-      <div class="card score-card">
+      <div class="card">
         <h2>학생 성적 조회</h2>
 
         <div class="student-info">

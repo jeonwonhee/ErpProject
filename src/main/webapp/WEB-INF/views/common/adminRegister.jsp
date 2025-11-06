@@ -48,14 +48,29 @@
                         <input id="name" type="text" placeholder="이름을 입력하세요">
                     </div>
 
-                    <div class="form-group">
-                        <label for="id">아이디</label>
-                        <div class="input-with-btn">
-                            <input id="id" type="text" placeholder="아이디 입력 (6~20자)">
-                            <span class="check-icon success">✅</span>
-                            <span class="check-icon fail">❌</span>
-                            <button class="check-btn">중복확인</button>
-                        </div>
+            <div class="form-card">
+                <div class="form-group">
+                    <label for="course">수강과정</label>
+                    <select id="course">
+                        <option>선택하세요</option>
+                        <option>JAVA / SPRING</option>
+                        <option>웹프론트</option>
+                        <option>DB / SQL</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="name">이름</label>
+                    <input id="name" type="text" placeholder="이름을 입력하세요">
+                </div>
+
+                <div class="form-group">
+                    <label for="id">아이디</label>
+                    <div class="input-with-btn">
+                        <input id="id" type="text" placeholder="아이디 입력 (6~20자)">
+                        <span class="check-icon success">✅</span>
+                        <span class="check-icon fail">❌</span>
+                        <button class="btn-submit">중복확인</button>
                     </div>
 
                     <div class="form-group">
@@ -88,9 +103,7 @@
                     </div>
                 </div>
 
-                <button class="submit-btn">회원가입</button>
-            </form>
-
+            <button class="btn-submit">회원가입</button>
         </div>
     </body>
 </html>

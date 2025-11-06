@@ -7,9 +7,9 @@
 
   <link rel="stylesheet" href="/styles/default.css">
   <link rel="stylesheet" href="/styles/style.css">
-  <link rel="stylesheet" href="/styles/lecture.css">
+  <link rel="stylesheet" href="/styles/common.css">
 </head>
-<body class="lecture lecture-notice-detail">
+<body class="common notice-detail">
   <!-- 사이드바 -->
   <jsp:include page="/WEB-INF/views/common/sidBar.jsp" />
 

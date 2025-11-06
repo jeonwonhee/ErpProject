@@ -16,7 +16,7 @@
   <jsp:include page="/WEB-INF/views/common/topBar.jsp" />
 
   <section class="content">
-    <div class="card facility-detail-card">
+    <div class="card">
       <h2>기자재 추가</h2>
 
       <form>

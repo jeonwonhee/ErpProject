@@ -6,16 +6,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Controller
 public class QuestionController {
 
-
-    /**
-     *
-     * @return
-     */
-    @GetMapping("/inquiryPopUp.co")
-    public String inquiryPopUp(){
-        return "common/inquiryPopUp";
-    }
-
     /**
      * 문의 관리
      * @return

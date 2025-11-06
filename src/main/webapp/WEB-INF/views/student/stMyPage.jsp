@@ -18,7 +18,7 @@
       <jsp:include page="/WEB-INF/views/common/topBar.jsp" />
 
     <section class="content mypage">
-      <div class="card mypage-card">
+      <div class="card">
         <h2>마이페이지</h2>
 
         <form>

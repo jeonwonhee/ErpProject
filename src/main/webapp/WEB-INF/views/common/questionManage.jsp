@@ -6,10 +6,10 @@
   <title>KH EduERP | 문의관리</title>
   <link rel="stylesheet" href="/styles/default.css" />
   <link rel="stylesheet" href="/styles/style.css" />
-  <link rel="stylesheet" href="/styles/admin.css" />
+  <link rel="stylesheet" href="/styles/common.css" />
 </head>
 
-<body class="admin admin-inquiry-manage">
+<body class="common question-manage">
   <!-- 사이드바 -->
   <jsp:include page="/WEB-INF/views/common/sidBar.jsp" />
 

@@ -23,7 +23,7 @@
                 <h2 class="section-title">기자재 현황 <button class="btn-submit" onclick="location.href='${pageContext.request.contextPath}/adminFacilityDetail.co'">+ 기자재 추가</button></h2>
                 <div class="card">
                     <div class="facility-list">
-                        <div class="facility-card expanded">
+                        <div class="card facility-card expanded">
                             <div class="facility-title">
                                 <h3>컴퓨터</h3>
                                 <span class="badge ok">정상</span>
@@ -36,7 +36,7 @@
                             </div>
                         </div>
 
-                        <div class="facility-card">
+                        <div class="card facility-card">
                             <div class="facility-title">
                                 <h3>빔 프로젝터</h3>
                                 <span class="badge repair">수리중</span>
@@ -49,8 +49,8 @@
                             </div>
                         </div>
 
-                        <div class="facility-card">
-                            <div class="facility-title">
+                        <div class="card facility-card">
+                            <div class="equip-title">
                                 <h3>마우스</h3>
                                 <span class="badge lost">분실</span>
                             </div>

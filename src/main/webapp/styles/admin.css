@@ -42,7 +42,6 @@
 
 .admin .card h3 {
   font-size: 16px;
-  font-weight: 600;
   margin-bottom: 12px;
 }
 
@@ -68,11 +67,6 @@
 /* ===============================
    관리자 - 학생목록 (admin-student-list) | 강사목록 공통 스타일 (admin-lecture-list)
    =============================== */
-
-.admin-student-list .content,
-.admin-lecture-list .content {
-
-}
 
 .admin-student-list h2,
 .admin-lecture-list h2 {
@@ -133,8 +127,6 @@
   border: 1px solid #ccc;
   border-radius: 8px;
 }
-
-
 
 /* 테이블 */
 .admin-calendar-manage .calendar-table {
@@ -279,121 +271,6 @@ body.admin.admin-calendar-manage {
 }
 
 /* ===============================
-   관리자 문의 관리 (admin-inquiry-manage)
-   =============================== */
-
-/* 검색창 */
-.admin-inquiry-manage .search-box {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  margin-bottom: 20px;
-}
-
-.admin-inquiry-manage .search-box input {
-  width: 200px;
-  padding: 8px 12px;
-  border: 1px solid #ccc;
-  border-radius: 8px;
-}
-
-/* 테이블 */
-.admin-inquiry-manage .inquiry-table {
-  width: 100%;
-  border-collapse: collapse;
-  font-size: 14px;
-}
-
-.admin-inquiry-manage .inquiry-table tr.selected {
-  background: #eef2ff;
-  border-left: 3px solid #4b5dff;
-}
-
-/* 상태 배지 */
-.admin-inquiry-manage .status {
-  display: inline-block;
-  border-radius: 12px;
-  padding: 4px 10px;
-  font-size: 13px;
-  font-weight: 600;
-  color: #fff;
-}
-
-.admin-inquiry-manage .status.received {
-  background: #4b5dff;
-}
-
-.admin-inquiry-manage .status.processing {
-  background: #d9f365;
-  color: #333;
-}
-
-/* ===== 우측 패널 ===== */
-.admin-inquiry-manage .detail-panel {
-  position: absolute;
-  top: 90px;
-  right: 40px;
-  width: 300px;
-  background: #fff;
-  border: 1px solid #ddd;
-  border-radius: 12px;
-  padding: 20px 22px;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.05);
-}
-
-.admin-inquiry-manage .detail-panel h3 {
-  font-size: 16px;
-  font-weight: 700;
-  margin-bottom: 10px;
-}
-
-.admin-inquiry-manage .detail-panel p {
-  font-size: 13px;
-  color: #555;
-  margin-bottom: 4px;
-}
-
-.admin-inquiry-manage textarea {
-  width: 100%;
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  padding: 8px;
-  font-size: 13px;
-  resize: none;
-}
-
-.admin-inquiry-manage #panel-content {
-  background: #f3f3f3;
-  height: 70px;
-  margin-bottom: 12px;
-}
-
-.admin-inquiry-manage #panel-reply {
-  height: 80px;
-  margin-top: 6px;
-  margin-bottom: 12px;
-}
-
-/* 상태 변경 */
-.admin-inquiry-manage .status-change {
-  margin-bottom: 20px;
-}
-
-.admin-inquiry-manage .status-change select {
-  width: 100%;
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  padding: 8px;
-  font-size: 13px;
-}
-
-/* 버튼 그룹 */
-.admin-inquiry-manage .btn-group {
-  display: flex;
-  justify-content: space-between;
-}
-
-/* ===============================
    관리자 공지사항 작성 (admin-notice-write)
    =============================== */
 
@@ -507,24 +384,21 @@ body.admin.admin-calendar-manage {
    =============================== */
 
 /* ===== 기자재 목록 (카드형 리스트) ===== */
-.content .facility-list {
+.admin-facility .facility-list {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
   gap: 16px;
 }
 
-.content .facility-card {
+.admin-facility .facility-card {
   background: #f9f9ff;
-  border: 1px solid #e1e2f0;
-  border-radius: 12px;
-  padding: 16px;
   position: relative;
   overflow: hidden;
   transition: transform 0.25s ease, box-shadow 0.25s ease, height 0.25s ease;
   cursor: pointer;
 }
 
-.content .facility-card:hover {
+.admin-facility .facility-card:hover {
   background: #eef0ff;
   transform: scaleY(1.1);
   transform-origin: top;
@@ -532,7 +406,7 @@ body.admin.admin-calendar-manage {
   z-index: 2;
 }
 
-.content .facility-card.expanded {
+.admin-facility .facility-card.expanded {
   background: #eef0ff;
   transform: scaleY(1.15);
   transform-origin: top;
@@ -542,30 +416,30 @@ body.admin.admin-calendar-manage {
 }
 
 /* ===== 기자재 카드 타이틀 / 정보 ===== */
-.content .facility-title {
+.admin-facility .facility-title {
   display: flex;
   justify-content: space-between;
   align-items: center;
   margin-bottom: 8px;
 }
 
-.content .facility-title h3 {
+.admin-facility .facility-title h3 {
   font-size: 15px;
   font-weight: 600;
   color: #222;
 }
 
-.content .facility-meta {
+.admin-facility .facility-meta {
   font-size: 13px;
   color: #555;
   margin-bottom: 6px;
 }
 
-.content .facility-meta strong {
+.admin-facility .facility-meta strong {
   color: #4b45ff;
 }
 
-.content .location-pill {
+.admin-facility .location-pill {
   display: inline-block;
   background: #fff;
   border: 1px solid #dbe0ff;
@@ -578,7 +452,7 @@ body.admin.admin-calendar-manage {
 }
 
 /* ===== 상태 배지 (Badge) ===== */
-.content .badge {
+.admin-facility .badge {
   padding: 3px 10px 4px;
   border-radius: 999px;
   font-size: 12px;
@@ -586,22 +460,22 @@ body.admin.admin-calendar-manage {
   color: #fff;
 }
 
-.content .badge.ok {
+.admin-facility .badge.ok {
   background: #1ba94c;
 }
 
-.content .badge.repair {
+.admin-facility .badge.repair {
   background: #ffe66d;
   color: #654c00;
 }
 
-.content .badge.lost {
+.admin-facility .badge.lost {
   background: #ccc;
   color: #333;
 }
 
 /* ===== 카드 내 버튼 그룹 (수정/삭제) ===== */
-.content .action-buttons {
+.admin-facility .action-buttons {
   position: absolute;
   bottom: 10px;
   left: 0;
@@ -614,7 +488,7 @@ body.admin.admin-calendar-manage {
   padding: 0 12px;
 }
 
-.content .facility-card:hover .action-buttons {
+.admin-facility .facility-card:hover .action-buttons {
   opacity: 1;
   transform: translateY(0);
 }
@@ -645,54 +519,49 @@ body.admin.admin-calendar-manage {
 }
 
 /* ===== 기자재 상태 테이블 ===== */
-.content .filter-bar {
+.admin-facility .filter-bar {
   display: flex;
   align-items: center;
   justify-content: flex-end;
   margin-bottom: 10px;
 }
 
-.content .filter-bar label {
+.admin-facility .filter-bar label {
   margin-right: 8px;
   font-size: 14px;
   color: #333;
   font-weight: 500;
 }
 
-.content .filter-bar select {
+.admin-facility .filter-bar select {
   padding: 6px 10px;
   border-radius: 8px;
   border: 1px solid #ccc;
   font-size: 14px;
 }
 
-.content table {
+.admin-facility table {
   width: 100%;
   border-collapse: collapse;
   margin-top: 10px;
 }
 
-.content thead {
+.admin-facility thead {
   background: #f3f3ff;
 }
 
-
-
-
-
-
 /* ===== 상태 텍스트 컬러 ===== */
-.content .status-ok {
+.admin-facility .status-ok {
   color: #1ba94c;
   font-weight: 600;
 }
 
-.content .status-repair {
+.admin-facility .status-repair {
   color: #b38b00;
   font-weight: 600;
 }
 
-.content .status-lost {
+.admin-facility .status-lost {
   color: #666;
   font-weight: 600;
 }
@@ -703,30 +572,24 @@ body.admin.admin-calendar-manage {
    =================================== */
 
 /* ===== 카드 컨테이너 ===== */
-.facility-detail-card {
+.admin-facility-detail .card {
   width: 640px;
-  background: #fff;
-  border: 1px solid #d5d5e0;
-  border-radius: 14px;
-  padding: 48px 54px 64px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
 }
 
-.facility-detail-card h2 {
-  font-size: 20px;
-  font-weight: 700;
+.admin-facility-detail .card h2 {
+  font-size: 26px;
   margin-bottom: 32px;
   color: #111;
 }
 
 /* ===== 폼 ===== */
-.facility-detail-card form {
+.admin-facility-detail form {
   display: flex;
   flex-direction: column;
   gap: 24px;
 }
 
-.facility-detail-card label {
+.admin-facility-detail label {
   font-weight: 600;
   font-size: 15px;
   margin-bottom: 8px;
@@ -734,7 +597,7 @@ body.admin.admin-calendar-manage {
   display: block;
 }
 
-.facility-detail-card input {
+.admin-facility-detail input {
   width: 100%;
   border: 1px solid #ccc;
   border-radius: 10px;
@@ -744,14 +607,14 @@ body.admin.admin-calendar-manage {
   background: #fff;
 }
 
-.facility-detail-card input:focus {
+.admin-facility-detail input:focus {
   border-color: #4b5dff;
   box-shadow: 0 0 0 3px rgba(75, 93, 255, 0.15);
   outline: none;
 }
 
 /* ===== 버튼 ===== */
-.facility-detail-card .form-submit {
+.admin-facility-detail .form-submit {
   text-align: right;
   margin-top: 10px;
 }
