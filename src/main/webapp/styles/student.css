@@ -406,8 +406,9 @@
 }
 
 .student-satisfaction .card {
-  padding: 36px 48px;
-  width: 640px;
+    padding: 36px 48px;
+    width: 640px;
+    margin-left: 230px;
 }
 
 .student-satisfaction .card h2 {
@@ -582,12 +583,13 @@
 }
 
 .student-score .score-card {
-  background: #fff;
-  border: 1px solid #e1e2ef;
-  border-radius: 12px;
-  padding: 36px 48px;
-  width: 640px;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.03);
+    background: #fff;
+    border: 1px solid #e1e2ef;
+    border-radius: 12px;
+    padding: 36px 48px;
+    width: 640px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.03);
+    margin-left: 230px;
 }
 
 .student-score .score-card h2 {
@@ -664,12 +666,13 @@
 }
 
 .student-mypage .mypage-card {
-  background: #fff;
-  border: 1px solid #e1e2ef;
-  border-radius: 16px;
-  padding: 36px 48px 50px;
-  width: 700px;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.03);
+    background: #fff;
+    border: 1px solid #e1e2ef;
+    border-radius: 16px;
+    padding: 36px 48px 50px;
+    width: 700px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.03);
+    margin-left: 230px;
 }
 
 .student-mypage .mypage-card h2 {
@@ -753,7 +756,7 @@
   border: 1px solid #e1e2ef;
   border-radius: 12px;
   padding: 32px 36px 40px;
-  width: 760px;
+  width: 100%;
   box-shadow: 0 2px 6px rgba(0,0,0,0.03);
 }
 
@@ -831,12 +834,13 @@
 }
 
 .student-inquiry-detail .inquiry-card {
-  background: #fff;
-  border: 1px solid #e1e2ef;
-  border-radius: 12px;
-  padding: 32px 40px 48px;
-  width: 720px;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.03);
+    background: #fff;
+    border: 1px solid #e1e2ef;
+    border-radius: 12px;
+    padding: 32px 40px 48px;
+    width: 720px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.03);
+    margin-left: 230px;
 }
 
 .student-inquiry-detail .inquiry-card h2 {
@@ -939,12 +943,13 @@
 }
 
 .student-inquiry-write .write-card {
-  background: #fff;
-  border: 1px solid #e1e2ef;
-  border-radius: 12px;
-  padding: 36px 40px 50px;
-  width: 680px;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.03);
+    background: #fff;
+    border: 1px solid #e1e2ef;
+    border-radius: 12px;
+    padding: 36px 40px 50px;
+    width: 680px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.03);
+    margin-left: 230px;
 }
 
 .student-inquiry-write .write-card h2 {
