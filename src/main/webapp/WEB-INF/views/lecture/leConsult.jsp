@@ -26,7 +26,7 @@
 
         <div class="consult-list">
           <!-- 카드 예시 -->
-          <div class="card consult-card" onclick="location.href='${pageContext.request.contextPath}/leConsultCorrection.co'">
+          <div class="card consult-card" onclick="location.href='${pageContext.request.contextPath}/lectureConsultCorrection.co'">
             <div class="consult-main">
               <div class="consult-info">
                 <p><b>학생:</b> 이새봄</p>
@@ -37,7 +37,7 @@
             </div>
           </div>
 
-          <div class="card consult-card" onclick="location.href='${pageContext.request.contextPath}/leConsultCorrection.co'">
+          <div class="card consult-card" onclick="location.href='${pageContext.request.contextPath}/lectureConsultCorrection.co'">
             <div class="consult-main">
               <div class="consult-info">
                 <p><b>학생:</b> 김하늘</p>

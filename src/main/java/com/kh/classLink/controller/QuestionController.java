@@ -7,12 +7,25 @@ import org.springframework.web.bind.annotation.GetMapping;
 public class QuestionController {
 
     /**
-     * 문의 관리
+     * 문의 목록
      * @return
      */
     @GetMapping("/questionManage.co")
     public String questionManage(){
         return "common/questionManage";
+    }
+    
+
+    @GetMapping("/stQuestion.co")
+    public String stQuestion() {
+        //학생 문의 신청
+        return "student/stQuestion";
+    }
+
+    @GetMapping("/stQuestionDetail.co")
+    public String stQuestionDetail() {
+        //문의 신청 디테일
+        return "student/stQuestionDetail";
     }
 
     /**
@@ -24,6 +37,11 @@ public class QuestionController {
         return "common/questionDetail";
     }
 
+    @GetMapping("/stQuestionWrite.co")
+    public String stQuestionWrite() {
+        //문의 신청 글쓰기
+        return "student/stQuestionWrite";
+    }
 
     /**
      * 문의 답변
@@ -33,5 +51,6 @@ public class QuestionController {
     public String questionEnrollForm(){
         return "common/questionEnrollForm";
     }
+
 
 }

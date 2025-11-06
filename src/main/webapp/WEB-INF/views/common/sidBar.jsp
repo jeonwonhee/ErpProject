@@ -27,12 +27,12 @@
             <li><a href="${pageContext.request.contextPath}/notice.co">공지사항</a></li>
             <li><a href="${pageContext.request.contextPath}/stFacility.co">기자재신청</a></li>
            강사
-            <li><a href="${pageContext.request.contextPath}/leDashboard.co">대시보드</a></li>
+            <li><a href="${pageContext.request.contextPath}/lectureDashboard">대시보드</a></li>
             <li><a href="${pageContext.request.contextPath}/leGrade.co">성적관리</a></li>
-            <li><a href="${pageContext.request.contextPath}/leAttendance.co">출결관리</a></li>
+            <li><a href="${pageContext.request.contextPath}/lectureAttendance.co">출결관리</a></li>
             <li><a href="${pageContext.request.contextPath}/leCalender.co">일정관리</a></li>
-            <li><a href="${pageContext.request.contextPath}/leConsult.co">상담관리</a></li>
-            <li><a href="${pageContext.request.contextPath}/leAttendanceList.co">출결정정 처리</a></li>
+            <li><a href="${pageContext.request.contextPath}/lectureConsult.co">상담관리</a></li>
+            <li><a href="${pageContext.request.contextPath}/lectureAttendanceList.co">출결정정 처리</a></li>
             <li><a href="${pageContext.request.contextPath}/leFeedback.co">만족도 결과</a></li>
             <li><a href="${pageContext.request.contextPath}/notice.co">공지사항</a></li>
             <li><a href="${pageContext.request.contextPath}/questionManage.co">문의</a></li>
@@ -41,7 +41,7 @@
             <li><a href="${pageContext.request.contextPath}/adminStudentList.co">학생관리</a></li>
             <li><a href="${pageContext.request.contextPath}/adminLectureList.co">직원관리</a></li>
             <li><a href="${pageContext.request.contextPath}/adminCalenderManage.co">일정관리</a></li>
-            <li><a href="${pageContext.request.contextPath}/adminAttendDashboard.co">출결현황</a></li>
+            <li><a href="${pageContext.request.contextPath}/AttendanceDashboard.co">출결현황</a></li>
             <li><a href="${pageContext.request.contextPath}/notice.co">공지사항</a></li>
             <li><a href="${pageContext.request.contextPath}/questionManage.co">문의</a></li>
             <li><a href="${pageContext.request.contextPath}/adminFacility.co">기자재관리</a></li>
