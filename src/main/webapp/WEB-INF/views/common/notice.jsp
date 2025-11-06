@@ -7,9 +7,9 @@
 
   <link rel="stylesheet" href="/styles/default.css">
   <link rel="stylesheet" href="/styles/style.css">
-  <link rel="stylesheet" href="/styles/lecture.css">
+  <link rel="stylesheet" href="/styles/common.css">
 </head>
-<body class="lecture lecture-notice">
+<body class="common notice">
 <!-- 사이드바 -->
 <jsp:include page="/WEB-INF/views/common/sidBar.jsp" />
 
@@ -18,7 +18,7 @@
   <jsp:include page="/WEB-INF/views/common/topBar.jsp" />
 
     <section class="content">
-      <div class="notice-panel">
+      <div class="card">
         <h3>공지사항</h3>
 
         <!-- 공지사항 테이블 -->

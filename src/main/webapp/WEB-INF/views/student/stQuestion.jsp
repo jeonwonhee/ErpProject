@@ -18,7 +18,7 @@
       <jsp:include page="/WEB-INF/views/common/topBar.jsp" />
 
     <section class="content inquiry">
-      <div class="card inquiry-card">
+      <div class="card">
         <h2>문의 목록</h2>
 
         <table class="inquiry-table">

@@ -12,8 +12,8 @@
 
 /* ===== 카드 기본 ===== */
 .student .card h2 {
-  font-size: 17px;
-  font-weight: 700;
+  font-size: 16px;
+  font-weight: 600;
   margin-bottom: 16px;
   color: #222;
 }
@@ -94,7 +94,7 @@
 }
 
 .student .legend span::before {
-  content: '';
+  content: '';          /* dot 만들기용 가상 데이터 */
   display: inline-block;
   width: 10px;
   height: 10px;
@@ -297,23 +297,9 @@
    출결정정 (student-attendance)
    =============================== */
 
-.student-attendance .content {
-  flex: 1;
-  padding: 28px 36px 40px;
-  background: #f8f9fc;
-  display: flex;
-  flex-direction: column;
-  gap: 32px;
-}
-
-/* 카드 공통 */
-.student-attendance .card {
-  padding: 24px 28px 28px;
-}
-
 .student-attendance .card h2 {
-  font-size: 18px;
-  font-weight: 700;
+  font-size: 16px;
+  font-weight: 600;
   margin-bottom: 20px;
 }
 
@@ -398,28 +384,22 @@
    =============================== */
 
 .student-satisfaction .content {
-  flex: 1;
-  padding: 40px 36px;
-  background: #f8f9fc;
-  display: flex;
   justify-content: center;
 }
 
 .student-satisfaction .card {
-    padding: 36px 48px;
-    width: 640px;
-    margin-left: 230px;
+  width: 640px;
 }
 
 .student-satisfaction .card h2 {
-  font-size: 18px;
-  font-weight: 700;
+  font-size: 16px;
+  font-weight: 600;
   margin-bottom: 24px;
   line-height: 1.4;
 }
 
 .student-satisfaction .card h2 small {
-  font-size: 14px;
+  font-size: 12px;
   color: #666;
   font-weight: 500;
 }
@@ -470,23 +450,9 @@
    상담신청 (student-consult)
    =============================== */
 
-.student-consult .content {
-  flex: 1;
-  padding: 36px 40px;
-  background: #f8f9fc;
-  display: flex;
-  flex-direction: column;
-  gap: 32px;
-}
-
-/* 카드 공통 */
-.student-consult .card {
-  padding: 28px 32px 32px;
-}
-
 .student-consult .card h2 {
-  font-size: 18px;
-  font-weight: 700;
+  font-size: 16px;
+  font-weight: 600;
   margin-bottom: 22px;
 }
 
@@ -575,26 +541,16 @@
    =============================== */
 
 .student-score .content {
-  flex: 1;
-  padding: 40px 48px;
-  background: #f8f9fc;
-  display: flex;
   justify-content: center;
 }
 
-.student-score .score-card {
-    background: #fff;
-    border: 1px solid #e1e2ef;
-    border-radius: 12px;
-    padding: 36px 48px;
-    width: 640px;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.03);
-    margin-left: 230px;
+.student-score .card {
+  width: 640px;
 }
 
-.student-score .score-card h2 {
-  font-size: 18px;
-  font-weight: 700;
+.student-score .card h2 {
+  font-size: 16px;
+  font-weight: 600;
   text-align: center;
   margin-bottom: 30px;
 }
@@ -658,26 +614,16 @@
    =============================== */
 
 .student-mypage .content {
-  flex: 1;
-  padding: 40px 48px;
-  background: #f8f9fc;
-  display: flex;
   justify-content: center;
 }
 
-.student-mypage .mypage-card {
-    background: #fff;
-    border: 1px solid #e1e2ef;
-    border-radius: 16px;
-    padding: 36px 48px 50px;
-    width: 700px;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.03);
-    margin-left: 230px;
+.student-mypage .card {
+  width: 700px;
 }
 
-.student-mypage .mypage-card h2 {
-  font-size: 20px;
-  font-weight: 700;
+.student-mypage .card h2 {
+  font-size: 16px;
+  font-weight: 600;
   margin-bottom: 32px;
   text-align: left;
 }
@@ -744,25 +690,16 @@
    =============================== */
 
 .student-inquiry .content {
-  flex: 1;
-  padding: 40px 48px;
-  background: #f8f9fc;
-  display: flex;
   justify-content: center;
 }
 
-.student-inquiry .inquiry-card {
-  background: #fff;
-  border: 1px solid #e1e2ef;
-  border-radius: 12px;
-  padding: 32px 36px 40px;
-  width: 100%;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.03);
+.student-inquiry .card {
+  width: 760px;
 }
 
-.student-inquiry .inquiry-card h2 {
-  font-size: 18px;
-  font-weight: 700;
+.student-inquiry .card h2 {
+  font-size: 16px;
+  font-weight: 600;
   margin-bottom: 20px;
 }
 
@@ -826,26 +763,16 @@
    =============================== */
 
 .student-inquiry-detail .content {
-  flex: 1;
-  padding: 40px 48px;
-  background: #f8f9fc;
-  display: flex;
   justify-content: center;
 }
 
-.student-inquiry-detail .inquiry-card {
-    background: #fff;
-    border: 1px solid #e1e2ef;
-    border-radius: 12px;
-    padding: 32px 40px 48px;
-    width: 720px;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.03);
-    margin-left: 230px;
+.student-inquiry-detail .card {
+  width: 720px;
 }
 
-.student-inquiry-detail .inquiry-card h2 {
-  font-size: 18px;
-  font-weight: 700;
+.student-inquiry-detail .card h2 {
+  font-size: 16px;
+  font-weight: 600;
   margin-bottom: 24px;
 }
 
@@ -942,19 +869,13 @@
   justify-content: center;
 }
 
-.student-inquiry-write .write-card {
-    background: #fff;
-    border: 1px solid #e1e2ef;
-    border-radius: 12px;
-    padding: 36px 40px 50px;
-    width: 680px;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.03);
-    margin-left: 230px;
+.student-inquiry-write .card {
+  width: 680px;
 }
 
-.student-inquiry-write .write-card h2 {
-  font-size: 18px;
-  font-weight: 700;
+.student-inquiry-write .card h2 {
+  font-size: 16px;
+  font-weight: 600;
   margin-bottom: 28px;
 }
 
@@ -1015,11 +936,7 @@
 
 /* ===== 페이지 전체 레이아웃 ===== */
 .student-facility .content {
-  display: flex;
   flex-direction: row;
-  gap: 28px;
-  background: #f8f9fc;
-  padding: 80px 40px 40px;
 }
 
 .student-facility .facility-container {
@@ -1030,13 +947,13 @@
 }
 
 /* ===== 기자재 신청 폼 ===== */
-.facility-form-card form {
+.student-facility form {
   display: flex;
   flex-direction: column;
   gap: 20px;
 }
 
-.facility-form-card label {
+.student-facility label {
   font-weight: 600;
   font-size: 14px;
   color: #222;
@@ -1044,9 +961,9 @@
   display: block;
 }
 
-.facility-form-card select,
-.facility-form-card input,
-.facility-form-card textarea {
+.student-facility select,
+.student-facility input,
+.student-facility textarea {
   width: 100%;
   border: 1px solid #ccc;
   border-radius: 10px;
@@ -1056,21 +973,21 @@
   transition: 0.2s;
 }
 
-.facility-form-card select:focus,
-.facility-form-card input:focus,
-.facility-form-card textarea:focus {
+.student-facility select:focus,
+.student-facility input:focus,
+.student-facility textarea:focus {
   border-color: #4b5dff;
   box-shadow: 0 0 0 3px rgba(75, 93, 255, 0.1);
   outline: none;
 }
 
-.facility-form-card textarea {
+.student-facility textarea {
   resize: none;
   height: 80px;
 }
 
 /* ===== 신청 내역 테이블 ===== */
-.facility-history-card table {
+.facility-history table {
   width: 100%;
   border-collapse: collapse;
   font-size: 14px;
@@ -1079,11 +996,11 @@
 
 
 
-.facility-history-card thead th {
+.facility-history thead th {
   border-top: none;
 }
 
-.facility-history-card tbody tr:nth-child(even) {
+.facility-history tbody tr:nth-child(even) {
   background: #fafbff;
 }
 

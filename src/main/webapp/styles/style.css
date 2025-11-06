@@ -137,6 +137,7 @@ body {
 /* ===== Card ===== */
 .card {
   flex: 1;
+  font-weight: 600;
   background: #fff;
   border: 1px solid #e2e4ef;
   border-radius: 16px;
