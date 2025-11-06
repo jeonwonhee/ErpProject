@@ -30,7 +30,7 @@
           <h2>정정 요청 목록</h2>
           <div class="lecture-request-list">
 
-            <div class="lecture-request-card">
+            <div class="lecture-request-card" onclick="location.href='${pageContext.request.contextPath}/leAttendanceCorrection.co'">
               <div class="lecture-request-main">
                 <div class="lecture-request-info">
                   <strong>이새봄</strong>
