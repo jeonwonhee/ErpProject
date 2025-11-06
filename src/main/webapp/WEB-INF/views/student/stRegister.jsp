@@ -67,6 +67,11 @@
                 </div>
 
                 <div class="form-group">
+                    <label for="email">이메일</label>
+                    <input id="email" type="email" placeholder="이메일 입력">
+                </div>
+
+                <div class="form-group">
                     <label>생년월일</label>
                     <div class="birth-selects">
                             <select><option>년도</option></select>
