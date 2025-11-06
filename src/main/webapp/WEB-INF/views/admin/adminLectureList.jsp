@@ -21,7 +21,7 @@
             <section class="content lecture-list">
                 <h2>강사목록</h2>
                 <div class="inquiry-write">
-                    <button type="button" class="btn-write create-btn">강사/관리자 생성</button>
+                    <button type="button" class="btn-write create-btn" onclick="location.href='${pageContext.request.contextPath}/adminRegister.co'">강사/관리자 생성</button>
                 </div>
                 <table class="lecture-table">
                     <thead>

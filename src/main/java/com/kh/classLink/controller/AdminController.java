@@ -77,4 +77,13 @@ public class AdminController {
     public String adminFacilityDetail(){
         return "admin/adminFacilityDetail";
     }
+
+    /**
+     * 관리자/강사 생성
+     * @return
+     */
+    @GetMapping("/adminRegister.co")
+    public String adminRegister(){
+        return "common/adminRegister";
+    }
 }

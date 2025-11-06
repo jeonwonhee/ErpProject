@@ -14,76 +14,83 @@
         <div class="card">
             <h1>회원가입 페이지</h1>
             <p class="desc">해당하는 회원가입 유형을 선택하세요</p>
+            <form action="">
+                <div class="user-type">
+                    <label>
+                        <input type="radio" name="userType" value="lecture">
+                        <div class="card">
+                            <div class="emoji">👨‍🏫</div>
+                            <div class="role-name">강사</div>
+                        </div>
+                    </label>
+                    <label>
+                        <input type="radio" name="userType" value="admin">
+                        <div class="card">
+                            <div class="emoji">🛠</div>
+                            <div class="role-name">관리자</div>
+                        </div>
+                    </label>
+                </div>
 
-            <div class="user-type">
-                <label>
-                    <input type="radio" name="userType">
-                    <div class="card">
-                        <div class="emoji">👨‍🏫</div>
-                        <div class="role-name">강사</div>
+                <div class="form-card">
+                    <div class="form-group">
+                        <label for="course">수강과정</label>
+                        <select id="course">
+                            <option>선택하세요</option>
+                            <option>JAVA / SPRING</option>
+                            <option>웹프론트</option>
+                            <option>DB / SQL</option>
+                        </select>
                     </div>
-                </label>
-                <label>
-                    <input type="radio" name="userType">
-                    <div class="card">
-                        <div class="emoji">🛠</div>
-                        <div class="role-name">관리자</div>
+
+                    <div class="form-group">
+                        <label for="name">이름</label>
+                        <input id="name" type="text" placeholder="이름을 입력하세요">
                     </div>
-                </label>
-            </div>
 
-            <div class="form-card">
-                <div class="form-group">
-                    <label for="course">수강과정</label>
-                    <select id="course">
-                        <option>선택하세요</option>
-                        <option>JAVA / SPRING</option>
-                        <option>웹프론트</option>
-                        <option>DB / SQL</option>
-                    </select>
-                </div>
-
-                <div class="form-group">
-                    <label for="name">이름</label>
-                    <input id="name" type="text" placeholder="이름을 입력하세요">
-                </div>
-
-                <div class="form-group">
-                    <label for="id">아이디</label>
-                    <div class="input-with-btn">
-                        <input id="id" type="text" placeholder="아이디 입력 (6~20자)">
-                        <span class="check-icon success">✅</span>
-                        <span class="check-icon fail">❌</span>
-                        <button class="check-btn">중복확인</button>
+                    <div class="form-group">
+                        <label for="id">아이디</label>
+                        <div class="input-with-btn">
+                            <input id="id" type="text" placeholder="아이디 입력 (6~20자)">
+                            <span class="check-icon success">✅</span>
+                            <span class="check-icon fail">❌</span>
+                            <button class="check-btn">중복확인</button>
+                        </div>
                     </div>
-                </div>
 
-                <div class="form-group">
-                    <label for="pw">비밀번호</label>
-                    <input id="pw" type="password" placeholder="문자, 특수문자, 숫자 포함 8~20자">
-                </div>
+                    <div class="form-group">
+                        <label for="pw">비밀번호</label>
+                        <input id="pw" type="password" placeholder="문자, 특수문자, 숫자 포함 8~20자">
+                    </div>
 
-                <div class="form-group">
-                    <label for="pw2">비밀번호 확인</label>
-                    <input id="pw2" type="password" placeholder="비밀번호 재입력">
-                </div>
+                    <div class="form-group">
+                        <label for="pw2">비밀번호 확인</label>
+                        <input id="pw2" type="password" placeholder="비밀번호 재입력">
+                    </div>
 
-                <div class="form-group">
-                    <label for="phone">전화번호</label>
-                    <input id="phone" type="tel" placeholder="휴대폰 번호 입력 ('-'제외 11자리)">
-                </div>
+                    <div class="form-group">
+                        <label for="phone">전화번호</label>
+                        <input id="phone" type="tel" placeholder="휴대폰 번호 입력 ('-'제외 11자리)">
+                    </div>
 
-                <div class="form-group">
-                    <label>생년월일</label>
-                    <div class="birth-selects">
+                    <div class="form-group">
+                        <label for="email">이메일</label>
+                        <input id="email" type="email" placeholder="이메일 입력">
+                    </div>
+
+                    <div class="form-group">
+                        <label>생년월일</label>
+                        <div class="birth-selects">
                             <select><option>년도</option></select>
                             <select><option>월</option></select>
                             <select><option>일</option></select>
+                        </div>
                     </div>
                 </div>
-            </div>
 
-            <button class="submit-btn">회원가입</button>
+                <button class="submit-btn">회원가입</button>
+            </form>
+
         </div>
     </body>
 </html>
