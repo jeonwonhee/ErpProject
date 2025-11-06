@@ -136,11 +136,6 @@
   font-size: 14px;
 }
 
-
-
-
-
-
 /* ===============================
    학생 일정조회 (student-calender)
    =============================== */
@@ -388,7 +383,6 @@
 }
 
 .student-satisfaction .card {
-  width: 640px;
 }
 
 .student-satisfaction .card h2 {
@@ -504,17 +498,12 @@
   margin-top: 6px;
 }
 
-
 /* ===== 신청 내역 ===== */
 .student-consult table {
   width: 100%;
   border-collapse: collapse;
   font-size: 14px;
 }
-
-
-
-
 
 .student-consult tbody tr:nth-child(even) {
   background: #fafbff;
@@ -542,10 +531,6 @@
 
 .student-score .content {
   justify-content: center;
-}
-
-.student-score .card {
-  width: 640px;
 }
 
 .student-score .card h2 {
@@ -615,10 +600,6 @@
 
 .student-mypage .content {
   justify-content: center;
-}
-
-.student-mypage .card {
-  width: 700px;
 }
 
 .student-mypage .card h2 {
@@ -693,10 +674,6 @@
   justify-content: center;
 }
 
-.student-inquiry .card {
-  width: 760px;
-}
-
 .student-inquiry .card h2 {
   font-size: 16px;
   font-weight: 600;
@@ -764,10 +741,6 @@
 
 .student-inquiry-detail .content {
   justify-content: center;
-}
-
-.student-inquiry-detail .card {
-  width: 720px;
 }
 
 .student-inquiry-detail .card h2 {
@@ -867,10 +840,6 @@
   background: #f8f9fc;
   display: flex;
   justify-content: center;
-}
-
-.student-inquiry-write .card {
-  width: 680px;
 }
 
 .student-inquiry-write .card h2 {
