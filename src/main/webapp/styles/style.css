@@ -48,11 +48,21 @@ body {
 .menu li {
   padding: 10px 12px;
   border-radius: 8px;
-  margin-bottom: 8px;
+  margin-bottom: 6px;
   font-size: 15px;
   cursor: pointer;
   color: #333;
   transition: 0.15s;
+}
+/* a 태그가 li 전체를 차지하도록 변경 */
+.menu li a {
+    display: block;               /* a를 블록화해서 전체 영역 클릭 가능 */
+    width: 100%;                  /* li 전체 크기 차지 */
+    padding: 8px 10px;
+    border-radius: 8px;
+    color: #333;
+    text-decoration: none;
+    transition: background 0.15s, font-weight 0.15s;
 }
 
 .menu li.active,
