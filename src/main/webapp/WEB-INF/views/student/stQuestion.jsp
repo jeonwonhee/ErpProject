@@ -64,7 +64,7 @@
 
         <!-- 글쓰기 버튼 -->
         <div class="inquiry-write">
-          <button class="btn-write" onclick="location.href='${pageContext.request.contextPath}/studentInquiryWrite.co'">글쓰기</button>
+          <button class="btn-write" onclick="location.href='${pageContext.request.contextPath}/stQuestionWrite.co'">글쓰기</button>
         </div>
       </div>
     </section>
