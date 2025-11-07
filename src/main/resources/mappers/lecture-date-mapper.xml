@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.kh.classLink.model.mapper.LectureDateMapper">
+
+    <!-- ===============================
+         ResultMap
+         =============================== -->
+    <resultMap id="lectureDateResultMap" type="LectureDate">
+        <id column="LECTURE_DATE_NO" property="lectureDateNo"/>
+        <result column="START_DATE" property="startDate"/>
+        <result column="END_DATE" property="endDate"/>
+        <result column="TITLE" property="title"/>
+        <result column="CONTENT" property="content"/>
+        <result column="CLASS_LECTURE_NO" property="classLectureNo"/>
+        <result column="DATE_TYPE" property="dateType"/>
+    </resultMap>
+
+    <!-- ===============================
+         1) 전체 일정 조회
+         =============================== -->
+    <select id="selectLectureDateList" resultMap="lectureDateResultMap">
+        SELECT
+        LECTURE_DATE_NO,
+        TO_CHAR(START_DATE, 'YYYY-MM-DD') AS START_DATE,
+        TO_CHAR(END_DATE, 'YYYY-MM-DD') AS END_DATE,
+        TITLE,
+        CONTENT,
+        CLASS_LECTURE_NO,
+        DATE_TYPE
+        FROM LECTURE_DATE
+        ORDER BY START_DATE DESC
+    </select>
+
+    <!-- ===============================
+         2) 특정 반(CLASS_LECTURE_NO)의 일정 조회
+         =============================== -->
+    <select id="selectLectureDateByClass" resultMap="lectureDateResultMap" parameterType="int">
+        SELECT
+        LECTURE_DATE_NO,
+        TO_CHAR(START_DATE, 'YYYY-MM-DD') AS START_DATE,
+        TO_CHAR(END_DATE, 'YYYY-MM-DD') AS END_DATE,
+        TITLE,
+        CONTENT,
+        CLASS_LECTURE_NO,
+        DATE_TYPE
+        FROM LECTURE_DATE
+        WHERE CLASS_LECTURE_NO = #{classLectureNo}
+        ORDER BY START_DATE DESC
+    </select>
+
+    <!-- ===============================
+         3) 일정 추가 (수업일정 / 휴강)
+         =============================== -->
+    <insert id="insertLectureDate" parameterType="LectureDate">
+        <selectKey keyProperty="lectureDateNo" resultType="_int" order="BEFORE">
+            SELECT SEQ_LDNO.NEXTVAL FROM DUAL
+        </selectKey>
+        INSERT INTO LECTURE_DATE (
+        LECTURE_DATE_NO,
+        START_DATE,
+        END_DATE,
+        TITLE,
+        CONTENT,
+        CLASS_LECTURE_NO,
+        DATE_TYPE
+        ) VALUES (
+        #{lectureDateNo},
+        #{startDate},
+        #{endDate},
+        #{title},
+        #{content},
+        #{classLectureNo},
+        #{dateType}
+        )
+    </insert>
+
+    <!-- ===============================
+         4) 일정 수정
+         =============================== -->
+    <update id="updateLectureDate" parameterType="LectureDate">
+        UPDATE LECTURE_DATE
+        SET START_DATE = #{startDate},
+        END_DATE = #{endDate},
+        TITLE = #{title},
+        CONTENT = #{content},
+        DATE_TYPE = #{dateType}
+        WHERE LECTURE_DATE_NO = #{lectureDateNo}
+    </update>
+
+    <!-- ===============================
+         5) 일정 삭제
+         =============================== -->
+    <delete id="deleteLectureDate" parameterType="int">
+        DELETE FROM LECTURE_DATE
+        WHERE LECTURE_DATE_NO = #{lectureDateNo}
+    </delete>
+
+    <!-- 로그인한 강사의 담당 반번호 조회 -->
+    <select id="selectClassLectureNoByMemberNo" parameterType="int" resultType="int">
+        SELECT CL.CLASS_LECTURE_NO
+        FROM CLASS_LECTURE CL
+        JOIN LECTURE L ON CL.LECTURE_NO = L.LECTURE_NO
+        WHERE L.MEMBER_NO = #{memberNo}
+    </select>
+
+</mapper>
