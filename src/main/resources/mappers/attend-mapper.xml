@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kh.classLink.model.mapper.AttendMapper">
+    <!--member-->
+    <resultMap id="memberResultMap" type="Member">
+        <result column="MEMBER_NO" property="memberNo"/>
+        <result column="MEMBER_ID" property="memberId"/>
+        <result column="MEMBER_NAME" property="memberName"/>
+        <result column="MEMBER_PASSWORD" property="memberPassword"/>
+        <result column="CREATE_DATE" property="createDate"/>
+        <result column="UPDATE_DATE" property="updateDate"/>
+        <result column="STATUS" property="status"/>
+        <result column="EMAIL" property="email"/>
+        <result column="PHONE" property="phone"/>
+        <result column="ADDRESS" property="address"/>
+        <result column="ROLE" property="role"/>
+        <result column="BIRTH_DATE" property="birthDate"/>
+        <result column="LECTURE_NAME" property="lectureName"/>
+        <result column="COMMUTE_RATE" property="commuteRate"/>
+        <result column="COMMUTE_MONTH" property="commuteMonth"/>
+    </resultMap>
+
+    <resultMap id="commuteResultMap" type="Commute">
+        <result column="COMMUTE_NO" property="commuteNo"/>
+        <result column="COMMUTE_STATUS" property="commuteStatus"/>
+        <result column="COMMUTE_DATE" property="commuteDate"/>
+        <result column="CREATE_DATE" property="createDate"/>
+        <result column="UPDATE_DATE" property="updateDate"/>
+        <result column="MEMBER_NO" property="memberNo"/>
+    </resultMap>
+
+    <!--직원수 체크-->
+    <select id="selectEmpCount" resultType="int">
+        SELECT COUNT(*)
+        FROM MEMBER
+        WHERE ROLE NOT IN ('STUDENT')
+    </select>
+
+    <!--직원 관리 조회--><!--추후 개발하면서 계속 확인-->
+    <select id="selectEmpList" resultMap="memberResultMap">
+        SELECT M.MEMBER_NAME,
+            NVL(L.LECTURE_NAME, '수업X') AS LECTURE_NAME,
+            M.PHONE,
+            NVL(
+                ROUND(
+                    (SUM(CASE
+                        WHEN C.COMMUTE_STATUS IN ('출근', '퇴근', '지각', '반차') THEN 1
+                        ELSE 0
+                        END) / NULLIF(COUNT(C.COMMUTE_NO), 0)) * 100,
+                    2),
+                0) AS COMMUTE_RATE,
+            CASE WHEN M.ROLE = 'ADMIN' THEN '관리자' ELSE '강사' END AS ROLE,
+            CASE WHEN M.STATUS = 'Y' THEN '재직' ELSE '퇴사' END AS STATUS,
+            TO_CHAR(SYSDATE, 'YYYY-MM') AS COMMUTE_MONTH
+        FROM MEMBER M
+        LEFT JOIN LECTURE L
+        ON M.MEMBER_NO = L.MEMBER_NO
+        LEFT JOIN COMMUTE C
+        ON M.MEMBER_NO = C.MEMBER_NO
+        AND TRUNC(C.COMMUTE_DATE, 'MM') = TRUNC(SYSDATE, 'MM')
+        WHERE M.ROLE NOT IN ('STUDENT')
+        GROUP BY
+            M.MEMBER_NO,
+            M.MEMBER_NAME,
+            L.LECTURE_NAME,
+            M.PHONE,
+            M.ROLE,
+            M.STATUS
+        ORDER BY M.MEMBER_NAME
+
+    </select>
+
+</mapper>

@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kh.classLink.model.mapper.MemberMapper">
+    <!--notice-->
+    <resultMap id="memberResultMap" type="Member">
+        <result column="MEMBER_NO" property="memberNo"/>
+        <result column="MEMBER_ID" property="memberId"/>
+        <result column="MEMBER_NAME" property="memberName"/>
+        <result column="MEMBER_PASSWORD" property="memberPassword"/>
+        <result column="CREATE_DATE" property="createDate"/>
+        <result column="UPDATE_DATE" property="updateDate"/>
+        <result column="STATUS" property="status"/>
+        <result column="EMAIL" property="email"/>
+        <result column="PHONE" property="phone"/>
+        <result column="ADDRESS" property="address"/>
+        <result column="ROLE" property="role"/>
+        <result column="BIRTH_DATE" property="birthDate"/>
+    </resultMap>
+
+    <!--유저 아이디 중복 체크-->
+    <select id="getMemberCountById" parameterType="string" resultType="int">
+        SELECT COUNT(*)
+        FROM MEMBER
+        WHERE MEMBER_ID = #{memberId}
+    </select>
+
+    <!--회원가입-->
+    <insert id="insertMember" parameterType="Member">
+        <selectKey keyProperty="memberNo" resultType="int" order="BEFORE">
+            SELECT SEQ_MNO.NEXTVAL FROM DUAL
+        </selectKey>
+        INSERT INTO MEMBER (
+            MEMBER_NO,
+            MEMBER_ID,
+            MEMBER_NAME,
+            MEMBER_PASSWORD,
+            EMAIL,
+            PHONE,
+            ADDRESS,
+            ROLE,
+            BIRTH_DATE
+        ) VALUES (
+            #{memberNo},
+            #{memberId},
+            #{memberName},
+            #{memberPassword},
+            #{email},
+            #{phone},
+            #{address},
+            UPPER(#{role}),
+            #{birthDate}
+        )
+    </insert>
+
+    <insert id="insertLecture" parameterType="Member">
+        INSERT INTO LECTURE(
+            LECTURE_NO,
+            LECTURE_NAME,
+            MEMBER_NO
+        ) VALUES (
+            SEQ_LNO.NEXTVAL,
+            #{lectureName},
+            #{memberNo}
+        )
+    </insert>
+
+</mapper>

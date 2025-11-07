@@ -1,4 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="ko">
     <head>
@@ -35,43 +36,36 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td>김이서</td>
-                                <td>Java/Spring</td>
-                                <td>010-1111-2222</td>
-                                <td>99%</td>
-                                <td>재직</td>
-                            </tr>
-                             <tr>
-                                <td>유한정</td>
-                                <td>AI/데이터분석</td>
-                                <td>010-3333-4444</td>
-                                <td>83%</td>
-                                <td>재직</td>
-                            </tr>
-                            <tr>
-                                <td>신윤주</td>
-                                <td>데이터분석</td>
-                                <td>010-5555-6666</td>
-                                <td>79%</td>
-                                <td>재직</td>
-                            </tr>
-                             <tr>
-                                <td>김기수</td>
-                                <td>Java/Spring</td>
-                                <td>010-7777-8888</td>
-                                <td>59%</td>
-                                <td>재직</td>
-                             </tr>
-                             <tr>
-                                <td>유부은</td>
-                                <td>Java/Spring</td>
-                                <td>010-8888-9999</td>
-                                <td>99%</td>
-                                <td>재직</td>
-                            </tr>
+                            <c:forEach var="emp" items="${empList}">
+                                <tr>
+                                    <td>${emp.memberName}</td>
+                                    <td>${emp.lectureName}</td>
+                                    <td>${emp.phone}</td>
+                                    <td>${emp.commuteRate}</td>
+                                    <td>${emp.status}</td>
+                                </tr>
+                            </c:forEach>
                         </tbody>
                     </table>
+                    <div class="pagination">
+
+                        <c:forEach var="i" begin="${pi.startPage}" end="${pi.endPage}">
+                            <c:choose>
+                                <c:when test="${i == pi.currentPage}">
+                                    <button class="page-btn" disabled>
+                                            ${i}
+                                    </button>
+                                </c:when>
+                                <c:otherwise>
+                                    <button class="page-btn"
+                                            onclick="location.href='${pageContext.request.contextPath}/adminLectureList.co?currentPage=${i}'">
+                                            ${i}
+                                    </button>
+                                </c:otherwise>
+                            </c:choose>
+                        </c:forEach>
+
+                    </div>
                 </div>
             </section>
         </main>
