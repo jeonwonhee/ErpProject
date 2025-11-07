@@ -1,0 +1,82 @@
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>KH EduERP | 일정관리</title>
+
+  <link rel="stylesheet" href="/styles/default.css">
+  <link rel="stylesheet" href="/styles/style.css">
+  <link rel="stylesheet" href="/styles/lecture.css">
+</head>
+<body>
+<!-- 사이드바 -->
+<jsp:include page="/WEB-INF/views/common/sidBar.jsp" />
+
+  <main class="main">
+    <header class="topbar">
+      <div class="path">강사 › 일정관리 <b>강사 페이지</b></div>
+      <div class="user-info">알림(<span>2</span>) 김강사(강사)</div>
+    </header>
+
+    <section class="content">
+      <!-- 일정 추가 -->
+      <div class="schedule-add">
+        <h3>일정 추가</h3>
+        <div class="form-row">
+          <div class="form-group">
+            <label>제목</label>
+            <input type="text" class="form-input" placeholder="제목을 입력하세요">
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label>일정유형</label>
+            <select class="form-select">
+              <option>수업일정 / 휴강 중 선택</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>희망 날짜</label>
+            <input type="date" class="form-input">
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>상세 내용</label>
+          <textarea class="form-textarea" placeholder="내용을 입력하세요"></textarea>
+        </div>
+
+        <button class="btn-submit">추가</button>
+      </div>
+
+      <!-- 다가오는 일정 -->
+      <div class="upcoming-schedule">
+        <h3>다가오는 일정</h3>
+        <table>
+          <thead>
+            <tr>
+              <th>기간</th>
+              <th>제목</th>
+              <th>승인상태</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>11/14</td>
+              <td>프로젝트 개발</td>
+              <td class="status-pending">대기</td>
+            </tr>
+            <tr>
+              <td>11/19</td>
+              <td>프로젝트 발표</td>
+              <td class="status-approved">승인</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+</body>
+</html>

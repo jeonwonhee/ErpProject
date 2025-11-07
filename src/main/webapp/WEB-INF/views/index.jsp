@@ -1,0 +1,72 @@
+<%--
+  Created by IntelliJ IDEA.
+  User: awake
+  Date: 25. 11. 3.
+  Time: 오후 3:54
+  To change this template use File | Settings | File Templates.
+--%>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>KH EduERP | 출결관리</title>
+
+  <link rel="stylesheet" href="${pageContext.request.contextPath}/styles/default.css">
+  <link rel="stylesheet" href="${pageContext.request.contextPath}/styles/style.css">
+  <link rel="stylesheet" href="${pageContext.request.contextPath}/styles/lecture.css">
+</head>
+<body class="lecture lecture-attendance">
+  <!-- 사이드바 -->
+  <jsp:include page="/WEB-INF/views/common/sidBar.jsp" />
+
+  <!-- 메인 -->
+  <main class="main">
+  <jsp:include page="/WEB-INF/views/common/topBar.jsp" />
+
+    <section class="content">
+      <!-- 출결 박스 -->
+      <div class="attendance-panel">
+        <div class="attendance-head">
+          <div class="attendance-info">
+            <p>출결 날짜 : <b>2025-10-05</b></p>
+            <p>과목 : <b>AWS</b></p>
+            <p>인원 수 : <b>25</b></p>
+          </div>
+          <div class="attendance-bulk">
+            <span class="bulk-title">(일괄처리)</span>
+            <div class="bulk-btns">
+              <button type="button" class="att-btn">출석</button>
+              <button type="button" class="att-btn">지각</button>
+              <button type="button" class="att-btn">결석</button>
+              <button type="button" class="att-btn">조회</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="attendance-list">
+          <!-- 한 줄 -->
+          <div class="attendance-row">
+            <div class="attendance-stu">
+              <span class="stu-name">유학생</span>
+              <span class="stu-class">AWS</span>
+            </div>
+            <div class="attendance-actions">
+              <button type="button" class="att-btn">출석</button>
+              <button type="button" class="att-btn">지각</button>
+              <button type="button" class="att-btn">결석</button>
+              <button type="button" class="att-btn">조회</button>
+            </div>
+          </div>
+          <!-- 필요한 만큼 반복 -->
+        </div>
+
+        <div class="attendance-footer">
+          <button type="button" class="apply-btn">적용</button>
+        </div>
+      </div>
+    </section>
+  </main>
+</body>
+</html>
+
