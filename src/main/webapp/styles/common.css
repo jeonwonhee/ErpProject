@@ -285,6 +285,16 @@ question-detail .question-header .align-right,
   margin-top: 28px;
 }
 
+/* 검색창 */
+.notice .select-notice select {
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 10px 12px;
+    font-size: 14px;
+    background: #fff;
+    width: 30%;
+}
+
 /* ===================================
    공지사항 작성 (notice-enroll-form)
    =================================== */
@@ -319,17 +329,28 @@ question-detail .question-header .align-right,
 }
 
 /* 공지사항 타입, 반별 공지 */
-.notice-enroll-form .classNoList,
-.notice-update-form .classNoList {
+.notice-enroll-form .class-no-list {
     display: none;
     flex-direction: column;  /* 세로 배치 */
     align-items: flex-start; /* label은 왼쪽 정렬 */
     gap: 8px; /* label과 체크박스 그룹 사이 여백 */
     width: 100%;
 }
+.notice-update-form .class-no-list {
+    flex-direction: column;  /* 세로 배치 */
+    align-items: flex-start; /* label은 왼쪽 정렬 */
+    gap: 8px; /* label과 체크박스 그룹 사이 여백 */
+    width: 100%;
+}
+.notice-update-form .class-true {
+    display: block;
+}
+.notice-update-form .class-false {
+    display: none;
+}
 
-.notice-enroll-form .classNoList > label,
-.notice-update-form .classNoList > label {
+.notice-enroll-form .class-no-list > label,
+.notice-update-form .class-no-list > label {
     font-weight: bold;
     margin-left: 5px;
 }
@@ -410,7 +431,7 @@ question-detail .question-header .align-right,
 
 .notice-enroll-form .notice-form input[type="file"],
 .notice-update-form .notice-form input[type="file"] {
-  display: none;
+  display: block;
 }
 
 .notice-enroll-form .notice-form .file-label,
