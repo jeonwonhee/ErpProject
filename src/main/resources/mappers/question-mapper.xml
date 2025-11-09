@@ -27,6 +27,21 @@
         WHERE QUESTION_MEMBER = #{questionMember}
     </select>
 
+    <!--답변 필요 문의 갯수 조회-->
+    <!--관리자의 경우 강사의 질문도 조회 하므로 분기 필요-->
+    <select id="selectAnswerCount" resultType="int">
+        SELECT COUNT(*)
+        FROM QUESTION
+        <choose>
+            <when test="listType eq 'QUESTION'">
+                WHERE QUESTION_MEMBER = #{questionMember}
+            </when>
+            <otherwise>
+                WHERE QUESTION_MEMBER IN (SELECT MEMBER_NO FROM MEMBER WHERE ROLE = 'STUDENT')
+            </otherwise>
+        </choose>
+    </select>
+
     <!--문의 조회 / 수정필요할수도. /-->
     <select id="selectQuestionList" parameterType="Question" resultMap="questionResultMap">
         SELECT A.QUESTION_NO,
@@ -46,7 +61,37 @@
         ON A.QUESTION_MEMBER = B.MEMBER_NO
         LEFT OUTER JOIN MEMBER C
         ON A.ANSWER_MEMBER = C.MEMBER_NO
+        WHERE A.QUESTION_MEMBER = #{questionMember}
     </select>
+
+    <select id="selectAnswerList" parameterType="Question" resultMap="questionResultMap">
+        SELECT A.QUESTION_NO,
+            A.QUESTION_TYPE,
+            A.QUESTION_CONTENT,
+            A.QUESTION_TITLE,
+            A.ANSWER,
+            A.QUESTION_MEMBER,
+            A.ANSWER_MEMBER,
+            A.CREATE_DATE,
+            A.UPDATE_DATE,
+            B.MEMBER_NAME AS QUESTION_MEMBER_NAME,
+            C.MEMBER_NAME AS ANSWER_MEMBER_NAME,
+            CASE WHEN A.ANSWER IS NULL THEN '대기' ELSE '답변' END AS QUESTION_STATUS
+        FROM QUESTION A
+        JOIN MEMBER B
+        ON A.QUESTION_MEMBER = B.MEMBER_NO
+        LEFT OUTER JOIN MEMBER C
+        ON A.ANSWER_MEMBER = C.MEMBER_NO
+        <choose>
+            <when test="listType eq 'QUESTION'">
+                WHERE QUESTION_MEMBER = #{questionMember}
+            </when>
+            <otherwise>
+                WHERE QUESTION_MEMBER IN (SELECT MEMBER_NO FROM MEMBER WHERE ROLE = 'STUDENT')
+            </otherwise>
+        </choose>
+    </select>
+
 
     <!--문의 상세조회-->
     <select id="selectQuestionByNo" parameterType="int" resultMap="questionResultMap">

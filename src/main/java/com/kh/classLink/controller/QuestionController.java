@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.util.HashMap;
 import java.util.Map;
 
 @Controller
@@ -27,7 +28,20 @@ public class QuestionController {
      * @return
      */
     @GetMapping("/questionManage.co")
-    public String questionManage(){
+    public String questionManage(@RequestParam(value="currentPage" , defaultValue = "1") int currentPage,
+                                @RequestParam(value="listType", defaultValue = "QUESTION")String listType,
+                                 Model model) {
+        Map<String,Object> map = new HashMap<>();
+
+        int memberNo = 6;
+        map = questionService.selectAnswerList(currentPage,memberNo,listType);
+        System.out.println(map.get("list"));
+        model.addAttribute("questionList",map.get("list"));
+        model.addAttribute("pi",map.get("pi"));
+        model.addAttribute("listType",listType);
+
+
+
         return "common/questionManage";
     }
 
@@ -41,6 +55,7 @@ public class QuestionController {
     @GetMapping("/stQuestion.co")
     public String stQuestion(@RequestParam(value = "currentPage",defaultValue = "1") int currentPage,Model model) {
         int memberNo = 6;
+
         Map<String, Object> map = questionService.selectQuestionList(currentPage,memberNo);
 
         model.addAttribute("questionList",map.get("list"));
@@ -90,8 +105,19 @@ public class QuestionController {
      * @return
      */
     @GetMapping("/questionEnrollForm.co")
-    public String questionEnrollForm(){
-        return "common/questionEnrollForm";
+    public String questionEnrollForm(@RequestParam(value="questionNo") int questionNo,Model model){
+        Question question = questionService.selectQuestionByNo(questionNo);
+
+        if (question != null) {
+            model.addAttribute("question",question);
+            return "common/questionEnrollForm";
+        } else {
+
+            return "common/questionEnrollForm";
+        }
+
+
+
     }
 
 
@@ -116,6 +142,26 @@ public class QuestionController {
             return "redirect:/stQuestion.co";
         }
 
+    }
+
+    /**
+     * 문의 답변
+     * @param question
+     * @param session
+     * @param model
+     * @return
+     */
+    @PostMapping("/questionAnswer.qu")
+    public String questionAnswer(Question question , HttpSession session, Model model){
+        question.setAnswerMember(7);
+        int reuslt = questionService.updateQuestion(question);
+        if (reuslt > 0) {
+            session.setAttribute("alertMsg", "문의 답변에 성공하였습니다.");
+            return "common/questionManage";
+        } else {
+
+            return "common/questionManage";
+        }
     }
 
 }

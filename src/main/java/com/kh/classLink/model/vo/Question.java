@@ -21,4 +21,8 @@ public class Question {
     private Date updateDate;
 
     private String questionStatus;
+    private String questionMemberName;
+    private String answerMemberName;
+
+    private String listType;
 }

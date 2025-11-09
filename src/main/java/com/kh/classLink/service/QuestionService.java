@@ -19,6 +19,14 @@ public interface QuestionService {
     public Map<String,Object> selectQuestionList(int currentPage, int questionMember);
 
     /**
+     * 답변 필요 문의 조회
+     * @param currentPage
+     * @param questionMember
+     * @return
+     */
+    public Map<String,Object> selectAnswerList(int currentPage, int questionMember,String listType);
+    
+    /**
      * 문의 상세조회
      * @param questionNo
      * @return
