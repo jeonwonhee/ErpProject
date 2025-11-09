@@ -49,7 +49,7 @@ public class ScheduleController {
     /** 강사 일정목록 페이지
      * @return
      */
-    @GetMapping("/lecture/leCalender.co")
+    @GetMapping("/leCalender.co")
     public String lectureCalender() {
         return "lecture/leCalender";
     }
