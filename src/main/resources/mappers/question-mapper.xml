@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kh.classLink.model.mapper.QuestionMapper">
+    <!--notice-->
+    <resultMap id="questionResultMap" type="Question">
+        <result column="QUESTION_NO" property="questionNo"/>
+        <result column="QUESTION_TYPE" property="questionType"/>
+        <result column="QUESTION_CONTENT" property="questionContent"/>
+        <result column="QUESTION_TITLE" property="questionTitle"/>
+        <result column="ANSWER" property="answer"/>
+        <result column="QUESTION_MEMBER" property="questionMember"/>
+        <result column="ANSWER_MEMBER" property="answerMember"/>
+        <result column="CREATE_DATE" property="createDate"/>
+        <result column="UPDATE_DATE" property="updateDate"/>
+        <result column="QUESTION_MEMBER_NAME" property="questionMemberName"/>
+        <result column="ANSWER_MEMBER_NAME" property="answerMemberName"/>
+        <result column="QUESTION_STATUS" property="questionStatus"/>
+    </resultMap>
+
+    <!--문의 갯수 조회-->
+    <!--추후 권한 별 where 분기 필요-->
+    <select id="selectQuestionCount" parameterType="Question" resultType="int">
+        SELECT COUNT(*)
+        FROM QUESTION
+        WHERE QUESTION_MEMBER = #{questionMember}
+    </select>
+
+    <!--문의 조회 / 수정필요할수도. /-->
+    <select id="selectQuestionList" parameterType="Question" resultMap="questionResultMap">
+        SELECT A.QUESTION_NO,
+                A.QUESTION_TYPE,
+                A.QUESTION_CONTENT,
+                A.QUESTION_TITLE,
+                A.ANSWER,
+                A.QUESTION_MEMBER,
+                A.ANSWER_MEMBER,
+                A.CREATE_DATE,
+                A.UPDATE_DATE,
+                B.MEMBER_NAME,
+                C.MEMBER_NAME,
+                CASE WHEN A.ANSWER IS NULL THEN '대기' ELSE '답변' END AS QUESTION_STATUS
+        FROM QUESTION A
+        JOIN MEMBER B
+        ON A.QUESTION_MEMBER = B.MEMBER_NO
+        LEFT OUTER JOIN MEMBER C
+        ON A.ANSWER_MEMBER = C.MEMBER_NO
+    </select>
+
+    <!--문의 상세조회-->
+    <select id="selectQuestionByNo" parameterType="int" resultMap="questionResultMap">
+        SELECT QUESTION_TITLE,
+                QUESTION_CONTENT,
+                CREATE_DATE,
+                UPDATE_DATE,
+                CASE WHEN ANSWER IS NULL THEN '대기' ELSE '답변' END AS QUESTION_STATUS,
+                ANSWER
+        FROM QUESTION
+        WHERE QUESTION_NO = #{questionNo}
+    </select>
+
+    <!--문의 등록-->
+    <insert id="insertQuestion" parameterType="Question">
+        INSERT INTO QUESTION (
+            QUESTION_NO,
+            QUESTION_TYPE,
+            QUESTION_TITLE,
+            QUESTION_CONTENT,
+            QUESTION_MEMBER
+        ) VALUES (
+            SEQ_QNO.NEXTVAL,
+            #{questionType},
+            #{questionTitle},
+            #{questionContent},
+            #{questionMember}
+        )
+    </insert>
+
+    <!--문의 답변-->
+    <update id="updateQuestion" parameterType="Question">
+        UPDATE QUESTION
+        SET
+            ANSWER = #{answer},
+            ANSWER_MEMBER = #{answerMember},
+            UPDATE_DATE = SYSDATE
+        WHERE QUESTION_NO = #{questionNo}
+    </update>
+
+
+</mapper>
