@@ -1,6 +1,8 @@
 package com.kh.classLink.service;
 
 import com.kh.classLink.model.vo.Member;
+import org.springframework.stereotype.Service;
+
 
 public interface MemberService {
 
@@ -17,6 +19,7 @@ public interface MemberService {
      * @return
      */
     public int insertMember(Member member);
+
 
 
     /**

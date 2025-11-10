@@ -3,6 +3,7 @@ package com.kh.classLink.controller;
 import com.kh.classLink.model.vo.Member;
 import com.kh.classLink.service.MemberService;
 import jakarta.servlet.http.HttpSession;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,9 +13,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
 @Controller
 public class MemberController {
 
+    @Autowired
     private final MemberService memberService;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
@@ -31,6 +35,7 @@ public class MemberController {
     public String login() {
         return "common/login";
     }
+
 
     /**
      * 로그인 처리 (역할별 분기)
@@ -110,6 +115,8 @@ public class MemberController {
         return "common/changePassword";
     }
 
+
+
     /** 관리자/강사 생성
      * @return
              */
@@ -118,25 +125,33 @@ public class MemberController {
         return "common/adminRegister";
     }
 
-    @GetMapping("/stRegister.co")
-    public String stRegister() {
-        //학생 회원가입
-        return "student/stRegister";
-    }
 
-    /**
-     * 아이디 중복 체크
-     * @param memberId
-     * @return
-     */
-    @GetMapping("/idDupiCheck.co")
-    @ResponseBody
-    public String idDupiCheck(@RequestParam String memberId) {
-        System.out.println("memberId:"+memberId);
-        int count = memberService.getMemberCountById(memberId);
+        /** 회원가입 페이지 이동 */
+        @GetMapping("/stRegister.co")
+        public String stRegister() {
+            return "student/stRegister"; // JSP 보여주기
+        }
 
-        return count > 0 ? "NNNNN" : "NNNNY";
-    }
+        /** 회원가입 실제 처리 */
+        @PostMapping("/stRegister.co")
+        public String insertStudent(Member member, HttpSession session, Model model) {
+
+            // 기본값 설정 (role/status)
+            if (member.getRole() == null || member.getRole().isBlank()) {
+                member.setRole("STUDENT");
+            }
+            if (member.getStatus() == null || member.getStatus().isBlank()) {
+                member.setStatus("Y");
+            }
+            int result = memberService.insertMember(member);
+            if (result > 0) {
+                session.setAttribute("alertMsg", "회원가입에 성공하였습니다.");
+                return "redirect:/";
+            } else {
+                model.addAttribute("errorMsg", "회원가입에 실패하였습니다.");
+                return "redirect:/";
+            }
+        }
 
     /**
      * 회원 가입
@@ -162,6 +177,22 @@ public class MemberController {
         }
 
     }
+
+    /**
+     * 아이디 중복 체크
+     * @param memberId
+     * @return
+     */
+    @GetMapping("/idDuplicateCheck.co")
+    @ResponseBody
+    public String idDuplicateCheck(@RequestParam String memberId) {
+        System.out.println("memberId:"+memberId);
+        int count = memberService.getMemberCountById(memberId);
+
+        return count > 0 ? "NNNNN" : "NNNNY";
+    }
+
+
 
 
 }

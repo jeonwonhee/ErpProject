@@ -26,11 +26,18 @@ public interface MemberMapper {
     int getMemberCountById(String memberId);
 
     /**
-     * 회원가입
+     * 강사, 관리자 회원가입
      * @param member
      * @return
      */
     int insertMember(Member member);
+
+    /**
+     * 학생 회원가입
+     * @param member
+     * @return
+     */
+    int insertStudent(Member member);
 
     /**
      * 수업 등록

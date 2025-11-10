@@ -69,7 +69,7 @@
         WHERE MEMBER_ID = #{memberId}
     </select>
 
-    <!-- 회원가입 -->
+    <!--회원가입-->
     <insert id="insertMember" parameterType="Member">
         <selectKey keyProperty="memberNo" resultType="int" order="BEFORE">
             SELECT SEQ_MNO.NEXTVAL FROM DUAL
@@ -82,8 +82,7 @@
         EMAIL,
         PHONE,
         ROLE,
-        BIRTH_DATE,
-        STATUS
+        BIRTH_DATE
         ) VALUES (
         #{memberNo},
         #{memberId},
@@ -92,8 +91,7 @@
         #{email},
         #{phone},
         UPPER(#{role}),
-        #{birthDate},
-        'Y'
+        #{birthDate}
         )
     </insert>
 

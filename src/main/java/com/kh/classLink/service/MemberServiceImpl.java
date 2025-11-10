@@ -2,6 +2,7 @@ package com.kh.classLink.service;
 
 import com.kh.classLink.model.mapper.MemberMapper;
 import com.kh.classLink.model.vo.Member;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -9,6 +10,8 @@ import org.springframework.transaction.annotation.Transactional;
 public class MemberServiceImpl implements MemberService {
 
     private final MemberMapper memberMapper;
+
+    @Autowired
 
     public MemberServiceImpl(MemberMapper memberMapper) {
         this.memberMapper = memberMapper;
