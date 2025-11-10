@@ -462,6 +462,14 @@ question-detail .question-header .align-right,
   gap: 8px;
   margin-bottom: 20px;
 }
+.question-select {
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 10px 12px;
+    font-size: 14px;
+    background: #fff;
+    width: 20%;
+}
 
 .question-manage .search-box input {
   width: 200px;
