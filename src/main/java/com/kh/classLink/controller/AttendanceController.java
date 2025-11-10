@@ -49,7 +49,7 @@ public class AttendanceController {
         model.addAttribute("empList", map.get("empList"));
         model.addAttribute("pi", map.get("pi"));
 
-        System.out.println("map"+map.get("empList"));
+
 
         return "admin/adminLectureList";
     }

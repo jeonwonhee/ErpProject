@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kh.classLink.model.mapper.NoticeMapper">
+    <!--notice-->
+    <resultMap id="noticeResultMap" type="Notice">
+        <result column="NOTICE_NO" property="noticeNo"/>
+        <result column="NOTICE_TITLE" property="noticeTitle"/>
+        <result column="NOTICE_CONTENTS" property="noticeContents"/>
+        <result column="CREATE_DATE" property="createDate"/>
+        <result column="UPDATE_DATE" property="updateDate"/>
+        <result column="MEMBER_NO" property="memberNo"/>
+        <result column="CLASS_NO" property="classNo"/>
+        <result column="NOTICE_TYPE" property="noticeType"/>
+        <result column="CLASS_NAME" property="className"/>
+        <result column="MEMBER_NAME" property="memberName"/>
+    </resultMap>
+    <!--noticeFile-->
+    <resultMap id="noticeFileResultMap" type="NoticeFile">
+        <result column="NOTICE_FILE_NO" property="noticeFileNo"/>
+        <result column="NOTICE_FILE_ORI_NAME" property="noticeFileOriName"/>
+        <result column="NOTICE_FILE_NAME" property="noticeFileName"/>
+        <result column="FILE_PATH" property="filePath"/>
+        <result column="CREATE_DATE" property="createDate"/>
+        <result column="UPDATE_DATE" property="updateDate"/>
+        <result column="NOTICE_NO" property="noticeNo"/>
+    </resultMap>
+
+    <!--class-->
+    <resultMap id="classResultMap" type="Class">
+        <result column="CLASS_NO" property="classNo"/>
+        <result column="CLASS_NAME" property="className"/>
+        <result column="MEMBER_COUNT" property="memberCount"/>
+        <result column="START_DATE" property="startDate"/>
+        <result column="END_DATE" property="endDate"/>
+    </resultMap>
+<!--공지사항 갯수-->
+    <select id="selectNoticeCnt" resultType="int">
+        SELECT COUNT(*)
+        FROM NOTICE
+        <if test="noticeType != '' and noticeType != null">
+            WHERE NOTICE_TYPE = #{noticeType}
+        </if>
+    </select>
+<!--공지 사항 조회-->
+    <select id="selectNoticeList" parameterType="Notice" resultMap="noticeResultMap">
+        SELECT N.NOTICE_NO,
+                N.NOTICE_TITLE,
+                N.NOTICE_CONTENTS,
+                N.CREATE_DATE,
+                N.UPDATE_DATE,
+                N.MEMBER_NO,
+                M.MEMBER_NAME,
+                N.CLASS_NO,
+                CASE WHEN N.NOTICE_TYPE = 'CLASS' THEN C.CLASS_NAME
+                    WHEN N.NOTICE_TYPE = 'ALL' THEN '전체'
+                    WHEN N.NOTICE_TYPE = 'SYSTEM' THEN '시스템'
+                    ELSE '이벤트' END AS NOTICE_TYPE
+        FROM NOTICE N
+        JOIN MEMBER M
+        ON N.MEMBER_NO = M.MEMBER_NO
+        LEFT OUTER JOIN CLASS C
+        ON N.CLASS_NO = C.CLASS_NO
+        <if test="noticeType != '' and noticeType != null">
+            WHERE NOTICE_TYPE = #{noticeType}
+        </if>
+        ORDER BY N.NOTICE_NO DESC
+    </select>
+
+    <!-- 반별 공지사항 selectBox용   -->
+    <select id="selectClassName" resultMap="noticeResultMap">
+        SELECT CLASS_NAME,
+        CLASS_NO
+        FROM CLASS
+    </select>
+
+
+    <!-- 공지사항 등록   -->
+    <insert id="insertNotice" parameterType="Notice">
+        <selectKey keyProperty="noticeNo" resultType="int" order="BEFORE">
+            SELECT SEQ_NNO.NEXTVAL FROM DUAL
+        </selectKey>
+        INSERT INTO NOTICE (
+            NOTICE_NO,
+            NOTICE_TITLE,
+            NOTICE_CONTENTS,
+            MEMBER_NO,
+            <if test="noticeType == 'CLASS' ">
+                CLASS_NO,
+            </if>
+            NOTICE_TYPE
+        ) VALUES (
+            #{noticeNo},
+            #{noticeTitle},
+            #{noticeContents},
+            #{memberNo},
+            <if test="noticeType == 'CLASS' ">
+                #{classNo},
+            </if>
+            #{noticeType}
+        )
+    </insert>
+
+    <!--반별 공지사항-->
+    <select id="selectNoticeClassList" resultMap="classResultMap">
+        SELECT CLASS_NO,
+                CLASS_NAME
+        FROM CLASS
+        WHERE END_DATE > SYSDATE
+    </select>
+
+    <!--공지사항 상세 조회-->
+    <select id="selectNoticeByNoticeNo" parameterType="int" resultMap="noticeResultMap">
+        SELECT N.NOTICE_NO,
+                N.NOTICE_TITLE,
+                N.NOTICE_CONTENTS,
+                N.CREATE_DATE,
+                N.UPDATE_DATE,
+                N.MEMBER_NO,
+                M.MEMBER_NAME,
+                N.CLASS_NO,
+                N.NOTICE_TYPE
+        FROM NOTICE N
+        JOIN MEMBER M
+        ON N.MEMBER_NO = M.MEMBER_NO
+        WHERE N.NOTICE_NO = #{noticeNo}
+    </select>
+
+<!--  공지사항 파일 첨분  -->
+    <insert id="insertNoticeFile" parameterType="NoticeFile">
+        INSERT INTO NOTICE_FILE(
+            NOTICE_FILE_NO,
+            NOTICE_FILE_ORI_NAME,
+            NOTICE_FILE_NAME,
+            FILE_PATH,
+            NOTICE_NO
+        ) VALUES (
+            SEQ_NFNO.NEXTVAL,
+            #{noticeFileOriName},
+            #{noticeFileName},
+            #{filePath},
+            #{noticeNo}
+        )
+
+    </insert>
+<!--  공지사항 수정  -->
+    <update id="updateNotice" parameterType="Notice">
+        UPDATE NOTICE
+        SET
+            NOTICE_TITLE = #{noticeTitle},
+            NOTICE_CONTENTS = #{noticeContents},
+            UPDATE_DATE = SYSDATE,
+            <choose>
+                <when test="noticeType == 'CLASS'">
+                    CLASS_NO = #{classNo},
+                </when>
+                <otherwise>
+                    CLASS_NO = NULL,
+                </otherwise>
+            </choose>
+            NOTICE_TYPE = #{noticeType}
+        WHERE NOTICE_NO = #{noticeNo}
+    </update>
+
+<!--공지사항 파일 수정-->
+    <update id="updateNoticeFile" parameterType="NoticeFile">
+        UPDATE NOTICE_FILE
+        SET
+            NOTICE_FILE_ORI_NAME = #{noticeFileOriName},
+            NOTICE_FILE_NAME = #{noticeFileName},
+            FILE_PATH = #{filePath},
+            UPDATE_DATE = SYSDATE
+        WHERE NOTICE_NO = #{noticeNo}
+    </update>
+
+<!--공지사항 첨부 파일 조회-->
+    <select id="selectNoticeFileList" parameterType="Notice" resultMap="noticeFileResultMap">
+        SELECT NOTICE_FILE_NO,
+                NOTICE_FILE_ORI_NAME,
+                NOTICE_FILE_NAME,
+                FILE_PATH
+        FROM NOTICE_FILE
+        WHERE NOTICE_NO = #{noticeNo}
+    </select>
+
+    <!--공지사항 첨부파일 삭제-->
+    <delete id="deleteNoticeFile" parameterType="NoticeFile">
+        DELETE FROM NOTICE_FILE
+        WHERE NOTICE_NO = #{noticeNo}
+        AND NOTICE_FILE_NO = #{noticeFileNo}
+    </delete>
+
+    <!--공지사항 삭제-->
+    <delete id="deleteNotice" parameterType="Notice">
+        DELETE FROM NOTICE
+        WHERE NOTICE_NO = #{noticeNo}
+    </delete>
+
+</mapper>
