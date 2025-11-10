@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 public class MemberController {
@@ -29,6 +30,66 @@ public class MemberController {
     @GetMapping("/login.co")
     public String login() {
         return "common/login";
+    }
+
+    /**
+     * 로그인 처리 (역할별 분기)
+     */
+    @PostMapping("/login.co")
+    public ModelAndView login(@RequestParam("memberId") String memberId,
+                              @RequestParam("memberPassword") String memberPassword,
+                              @RequestParam("role") String role,
+                              HttpSession session,
+                              ModelAndView mv) {
+
+        // 1. ID와 역할로 회원 조회
+        Member loginMember = memberService.getMemberByIdAndRole(memberId, role);
+
+        // 2. ID 또는 역할이 잘못된 경우
+        if (loginMember == null) {
+            mv.addObject("errorMsg", "아이디 또는 역할이 일치하지 않습니다.");
+            mv.setViewName("common/login");
+            return mv;
+        }
+
+        // 3. 비밀번호 검증
+        // if (!bCryptPasswordEncoder.matches(memberPassword, loginMember.getMemberPassword())) {
+        if (!memberPassword.equals(loginMember.getMemberPassword())) {
+            mv.addObject("errorMsg", "비밀번호를 확인해 주세요.");
+            mv.setViewName("common/login");
+            return mv;
+        }
+
+        // 4. 로그인 성공 - 세션 저장
+        session.setAttribute("loginMember", loginMember);
+        session.setAttribute("role", role);
+
+        // 5. 역할별 대시보드로 이동
+        switch (role.toUpperCase()) {
+            case "STUDENT":
+                mv.setViewName("redirect:/stMain.co");
+                break;
+            case "TEACHER":
+                mv.setViewName("redirect:/lectureDashboard");
+                break;
+            case "ADMIN":
+                mv.setViewName("redirect:/adminDashboard.co");
+                break;
+            default:
+                mv.addObject("errorMsg", "잘못된 역할입니다.");
+                mv.setViewName("common/login");
+        }
+
+        return mv;
+    }
+
+    /**
+     * 로그아웃
+     */
+    @GetMapping("/logout.co")
+    public String logout(HttpSession session) {
+        session.invalidate();
+        return "redirect:/login.co";
     }
 
     /**

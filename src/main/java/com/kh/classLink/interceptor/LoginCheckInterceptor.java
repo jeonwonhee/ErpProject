@@ -6,32 +6,38 @@ import jakarta.servlet.http.HttpSession;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.servlet.HandlerInterceptor;
 
-/*
-    HandlerInterceptor 인터페이스의 메서드는  :
-    1. preHandle() : 컨트롤러 실행전 수행(가장 기본적으로 사용되는 메서드)
-    2.postHandle() : 컨트롤러 실행 후 , 뷰가 렌더링 되기 전 실행
-    3.afterCompletion() : 뷰 렌더링 후에 실행된다.
- */
 @Slf4j
 public class LoginCheckInterceptor implements HandlerInterceptor {
 
-    //handler 요청의 목적지인 컨트롤러 정보
-    //return type -> boolean : true(계속 진행) / false(처리 중단)
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-        //로그인 정보 가져오기
         HttpSession session = request.getSession(false);
+        String uri = request.getRequestURI();
 
-        
+        // ✅ 로그인 관련 페이지, 정적 리소스는 검사 제외
+        if (uri.contains("/login.co") ||
+                uri.contains("/logout.co") ||
+                uri.contains("/insertMember.co") ||
+                uri.contains("/stRegister.co") ||
+                uri.contains("/findPassword.co") ||
+                uri.contains("/changePassword.co") ||
+                uri.contains("/error") ||
+                uri.contains("/css/") ||
+                uri.contains("/js/") ||
+                uri.contains("/styles/") ||
+                uri.contains("/images/")) {
+            log.info("✅ 로그인 체크 제외 경로: {}", uri);
+            return true;
+        }
+
+        // ✅ 세션 확인
         if (session == null || session.getAttribute("loginMember") == null) {
-            log.warn("미인증 사용자 요청 : {}", request.getRequestURI());
-
-            response.sendRedirect(request.getContextPath());
-
+            log.warn("⚠️ 미인증 사용자 요청: {}", uri);
+            response.sendRedirect(request.getContextPath() + "/login.co");
             return false;
         }
-        log.info("인증된 사용자 요청 : {}", request.getRequestURI());
+
+        log.info("🔐 인증된 사용자 요청 - URL: {}", uri);
         return true;
     }
-
 }
