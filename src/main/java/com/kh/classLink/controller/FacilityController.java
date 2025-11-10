@@ -1,6 +1,7 @@
 package com.kh.classLink.controller;
 
 import com.kh.classLink.model.vo.Member;
+import com.kh.classLink.service.FacilityService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
