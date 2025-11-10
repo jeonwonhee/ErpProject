@@ -109,6 +109,34 @@
     float: right;
 }
 
+.admin-lecture-list .pagination {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 22px;
+}
+
+.admin-lecture-list .page-btn {
+    width: 32px;
+    height: 32px;
+    border: 1px solid #ccc;
+    background: #fff;
+    border-radius: 999px;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.admin-lecture-list .page-btn:hover {
+    background: #eef1ff;
+    border-color: #6b5bff;
+}
+
+.admin-lecture-list .page-btn.active {
+    background: #6b5bff;
+    color: #fff;
+    border-color: #6b5bff;
+}
+
 /* ===============================
    관리자 일정관리 (admin-calendar-manage)
    =============================== */

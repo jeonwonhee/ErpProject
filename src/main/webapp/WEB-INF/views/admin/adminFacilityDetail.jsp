@@ -19,15 +19,15 @@
     <div class="card">
       <h2>기자재 추가</h2>
 
-      <form>
+      <form action="${pageContext.request.contextPath}/insert.di" method="post">
         <div class="form-group">
           <label for="deviceName">기자재 명</label>
-          <input type="text" id="deviceName" placeholder="기자재 명을 입력하세요">
+          <input type="text" id="deviceName" name="deviceName" placeholder="기자재 명을 입력하세요">
         </div>
 
         <div class="form-group">
           <label for="deviceCount">수량</label>
-          <input type="number" id="deviceCount" placeholder="수량을 입력하세요" min="1">
+          <input type="number" id="deviceCount" name="amount" placeholder="수량을 입력하세요" min="1">
         </div>
 
         <div class="form-submit">

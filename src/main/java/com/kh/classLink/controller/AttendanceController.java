@@ -1,10 +1,24 @@
 package com.kh.classLink.controller;
 
+import com.kh.classLink.service.AttendService;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
+import java.util.HashMap;
+import java.util.Map;
 
 @Controller
 public class AttendanceController {
+
+    private AttendService attendService;
+
+    public AttendanceController(AttendService attendService) {
+        this.attendService = attendService;
+    }
+
+
     /**
      * 관리자 출결현황
      * @return
@@ -28,7 +42,15 @@ public class AttendanceController {
      * @return
      */
     @GetMapping("/adminLectureList.co")
-    public String adminLectureList(){
+    public String adminLectureList(@RequestParam(value="currentPage", defaultValue = "1") int currentPage, Model model){
+
+        Map<String,Object> map = attendService.selectEmpList(currentPage);
+
+        model.addAttribute("empList", map.get("empList"));
+        model.addAttribute("pi", map.get("pi"));
+
+        System.out.println("map"+map.get("empList"));
+
         return "admin/adminLectureList";
     }
 

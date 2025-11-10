@@ -6,10 +6,13 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+
 <link rel="stylesheet" href="/styles/style.css">
 <html>
 <head>
     <title>Title</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+
 </head>
 <body>
 <aside class="sidebar" style="overflow-x: scroll;">
