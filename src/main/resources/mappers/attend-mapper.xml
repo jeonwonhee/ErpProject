@@ -31,6 +31,29 @@
         <result column="MEMBER_NO" property="memberNo"/>
     </resultMap>
 
+    <!--class-->
+    <resultMap id="classResultMap" type="Class">
+        <result column="CLASS_NO" property="classNo"/>
+        <result column="CLASS_NAME" property="className"/>
+        <result column="MEMBER_COUNT" property="memberCount"/>
+        <result column="START_DATE" property="startDate"/>
+        <result column="END_DATE" property="endDate"/>
+        <result column="CONTROLL_NO" property="controllNo"/>
+
+    </resultMap>
+    <!--attend-->
+    <resultMap id="attendResultMap" type="Attend">
+        <result column="ATTEND_NO" property="attendNo"/>
+        <result column="ATTEND_STATUS" property="attendStatus"/>
+        <result column="ATTEND_DATE" property="attendDate"/>
+        <result column="CREATE_DATE" property="createDate"/>
+        <result column="UPDATE_DATE" property="updateDate"/>
+        <result column="SESSION_NO" property="sessionNo"/>
+        <result column="STUDENT_NO" property="studentNo"/>
+        <result column="MEMBER_NAME" property="memberName"/>
+        <result column="CLASS_NAME" property="className"/>
+        <result column="CLASS_NO" property="classNo"/>
+    </resultMap>
     <!--직원수 체크-->
     <select id="selectEmpCount" resultType="int">
         SELECT COUNT(*)
@@ -72,4 +95,82 @@
 
     </select>
 
+
+    <!--금일 본인 수업을 듣는 반 리스트-->
+    <select id="selectTodayLectureClass" parameterType="int" resultMap="classResultMap">
+        SELECT C.CLASS_NAME,
+            C.CLASS_NO
+        FROM CLASS C
+        JOIN CLASS_LECTURE CL
+        ON C.CLASS_NO = CL.CLASS_NO
+        JOIN LECTURE L
+        ON CL.LECTURE_NO = L.LECTURE_NO
+        JOIN LECTURE_CONTROL LC
+        ON CL.CLASS_LECTURE_NO = LC.CLASS_LECTURE_NO
+        WHERE TO_CHAR(LC.PLAN_DATE,'YYYY-MM-DD') = TO_CHAR(SYSDATE,'YYYY-MM-DD')
+        AND L.MEMBER_NO = #{memberNo}
+    </select>
+
+    <!--선택한 반 정보-->
+    <select id="selectClassInfo" parameterType="int" resultMap="classResultMap">
+        SELECT C.CLASS_NAME,
+                C.CLASS_NO,
+                C.MEMBER_COUNT,
+                LC.CONTROLL_NO
+        FROM CLASS C
+        JOIN CLASS_LECTURE CL
+        ON C.CLASS_NO = CL.CLASS_NO
+        JOIN LECTURE_CONTROL LC
+        ON CL.CLASS_LECTURE_NO = LC.CLASS_LECTURE_NO
+        WHERE C.CLASS_NO = #{classNo}
+    </select>
+
+    <!--선택한 반의 소속 학생-->
+    <select id="selectAttendStudentList" resultType="int" resultMap="attendResultMap">
+        SELECT M.MEMBER_NAME,
+                CS.STUDENT_NO,
+                C.CLASS_NAME,
+                A.ATTEND_STATUS
+        FROM MEMBER M
+        JOIN CLASS_STUDENT CS
+        ON M.MEMBER_NO = CS.MEMBER_NO
+        JOIN CLASS C
+        ON CS.CLASS_NO = C.CLASS_NO
+        LEFT OUTER JOIN ATTEND A
+        ON A.STUDENT_NO = CS.STUDENT_NO
+        AND TO_CHAR(A.CREATE_DATE,'YYYY-MM-DD') = TO_CHAR(SYSDATE,'YYYY-MM-DD')
+        WHERE C.CLASS_NO = #{classNo}
+    </select>
+
+    <!--학생 출석 처리-->
+    <insert id="studentAttendMan" parameterType="Attend">
+        INSERT INTO ATTEND(
+            ATTEND_NO,
+            ATTEND_STATUS,
+            SESSION_NO,
+            STUDENT_NO
+        ) VALUES (
+            SEQ_ANO.NEXTVAL,
+            #{attendStatus},
+            #{sessionNo},
+            #{studentNo}
+        )
+    </insert>
+
+    <insert id="attendClassAll" parameterType="java.util.List">
+        INSERT INTO ATTEND (ATTEND_NO, ATTEND_STATUS, SESSION_NO, STUDENT_NO)
+        SELECT SEQ_ANO.NEXTVAL,
+            t.attend_status,
+            t.session_no,
+            t.student_no
+        FROM (
+        <foreach collection="list" item="attendMap" separator="UNION ALL">
+            SELECT
+                #{attendMap.attend.attendStatus} AS attend_status,
+                #{attendMap.attend.sessionNo} AS session_no,
+                #{attendMap.attend.studentNo} AS student_no
+            FROM DUAL
+        </foreach>
+        ) t
+    </insert>
 </mapper>

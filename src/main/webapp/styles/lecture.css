@@ -481,6 +481,18 @@ th {
   transition: 0.15s;
 }
 
+.lecture-attendance .att-status {
+    background: #4caf50;
+}
+
+.lecture-attendance .late-status {
+    background: #ff9800;
+}
+
+.lecture-attendance .abs-status {
+    background: #f44336;
+}
+
 .lecture-attendance .att-btn:hover {
   background: #f0f2ff;
   border-color: #5c6cff;
