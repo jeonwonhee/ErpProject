@@ -17,4 +17,5 @@ public class Class {
     private Date startDate;
     private Date endDate;
 
+    private int controllNo;
 }
