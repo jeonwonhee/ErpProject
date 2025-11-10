@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.kh.classLink.model.mapper.DeviceMapper">
+    <resultMap id="deviceResultMap" type="Device">
+        <result column="DEVICE_ID" property="deviceId"/>
+        <result column="DEVICE_KIND" property="deviceName"/>
+        <result column="DEVICE_COUNT" property="amount"/>
+        <result column="STATUS" property="status"/>
+        <result column="BOARD_CONTENT" property="memo"/>
+    </resultMap>
+
+    <resultMap id="deviceLogResultMap" type="DeviceLog">
+        <result column="DEVICE_LOG_NO" property="DeviceLogId"/>
+        <result column="DEVICE_CNT" property="DeviceGiveCount"/>
+        <result column="CREATE_DATE" property="CreateTime"/>
+        <result column="RETURN_DATE" property="ReturnTime"/>
+        <result column="MEMBER_NO" property="MemberId"/>
+        <result column="CLASS_NO" property="ClassId"/>
+        <result column="RENT_ATT_NO" property="RentDeviceId"/>
+    </resultMap>
+
+
+
+    <resultMap id="deviceRentAttResultMap" type="DeviceRentAtt">
+        <result column="RENT_ATT_NO" property="DeviceRentAttId"/>
+        <result column="CREATE_DATE" property="CreateTime"/>
+        <result column="START_DATE" property="StartTime"/>
+        <result column="END_DATE" property="EndTime"/>
+        <result column="UPDATE_DATE" property="UpdateTime"/>
+        <result column="ATTEND_COUNT" property="AttendAmount"/>
+        <result column="DEVICE_ID" property="DeviceId"/>
+        <result column="MEMBER_NO" property="MemberId"/>
+    </resultMap>
+
+    <select id="selectDeviceCategories" resultType="String">
+        SELECT DEVICE_KIND
+        FROM DEVICE
+        ORDER BY DEVICE_ID
+    </select>
+<!--    <select id="selectBoardListCount" resultType="_int">-->
+<!--        SELECT COUNT(*)-->
+<!--        FROM BOARD-->
+<!--        WHERE STATUS = 'Y'-->
+<!--        AND BOARD_TYPE = 1-->
+<!--    </select>-->
+<!--    <select id="selectBoardList" resultMap="boardResultMap">-->
+<!--        SELECT  BOARD_NO,-->
+<!--        CATEGORY_NAME,-->
+<!--        BOARD_TITLE,-->
+<!--        MEMBER_ID,-->
+<!--        COUNT,-->
+<!--        TO_CHAR(CREATE_DATE, 'YYYY-MM-DD') AS "CREATE_DATE"-->
+<!--        FROM BOARD B-->
+<!--        JOIN CATEGORY C USING(CATEGORY_NO)-->
+<!--        JOIN MEMBER M ON(BOARD_WRITER = MEMBER_NO)-->
+<!--        WHERE B.STATUS = 'Y'-->
+<!--        AND BOARD_TYPE = 1-->
+<!--        ORDER BY BOARD_NO DESC-->
+<!--    </select>-->
+
+<!--    &lt;!&ndash;selectKey : insert하기 전또는 후에, 어떤 sql 을 실행해서 생성된 키 값을 자바 객체에 담아주는 기능 &ndash;&gt;-->
+<!--    <insert id="insertBoard" parameterType="Board">-->
+<!--        <selectKey keyProperty="boardNo" resultType="_int" order="BEFORE">-->
+<!--            SELECT SEQ_BNO.NEXTVAL FROM DUAL-->
+<!--        </selectKey>-->
+<!--        INSERT INTO BOARD(-->
+<!--        BOARD_NO,-->
+<!--        BOARD_TYPE,-->
+<!--        CATEGORY_NO,-->
+<!--        BOARD_TITLE,-->
+<!--        BOARD_CONTENT,-->
+<!--        BOARD_WRITER-->
+<!--        ) VALUES(-->
+<!--        #{boardNo},-->
+<!--        1,-->
+<!--        #{categoryNo},-->
+<!--        #{boardTitle},-->
+<!--        #{boardContent},-->
+<!--        #{boardWriter}-->
+<!--        )-->
+<!--    </insert>-->
+
+
+<!--    <insert id="insertAttachment" parameterType="Attachment">-->
+<!--        INSERT INTO ATTACHMENT-->
+<!--        (-->
+<!--        FILE_NO,-->
+<!--        REF_BNO,-->
+<!--        ORIGIN_NAME,-->
+<!--        CHANGE_NAME,-->
+<!--        FILE_PATH,-->
+<!--        FILE_LEVEL-->
+<!--        ) VALUES (-->
+<!--        SEQ_FNO.NEXTVAL,-->
+<!--        #{refBoardNo},-->
+<!--        #{originName},-->
+<!--        #{changeName},-->
+<!--        #{filePath},-->
+<!--        #{fileLevel}-->
+<!--        )-->
+<!--    </insert>-->
+<!--    &lt;!&ndash; 조회수 증가 &ndash;&gt;-->
+<!--    <update id="increaseCount" parameterType="_int">-->
+<!--        UPDATE BOARD-->
+<!--        SET COUNT = COUNT + 1-->
+<!--        WHERE BOARD_NO = #{boardNo}-->
+<!--    </update>-->
+<!--    <select id="selectBoardByNo" parameterType="_int" resultMap="boardResultMap">-->
+<!--        SELECT B.BOARD_NO,-->
+<!--        B.CATEGORY_NO,-->
+<!--        C.CATEGORY_NAME,-->
+<!--        B.BOARD_TITLE,-->
+<!--        B.BOARD_CONTENT,-->
+<!--        B.BOARD_WRITER,-->
+<!--        M.MEMBER_ID,-->
+<!--        B.COUNT,-->
+<!--        TO_CHAR(B.CREATE_DATE, 'YYYY-MM-DD') AS CREATE_DATE-->
+<!--        FROM BOARD B-->
+<!--        JOIN CATEGORY C on B.CATEGORY_NO = C.CATEGORY_NO-->
+<!--        JOIN MEMBER M ON B.BOARD_WRITER = M.MEMBER_NO-->
+<!--        WHERE BOARD_NO = #{boardNo}-->
+<!--        AND B.STATUS = 'Y'-->
+<!--    </select>-->
+
+<!--    <select id="selectAttachmentByBoardNo" parameterType="_int" resultMap="attachmentResultMap">-->
+<!--        SELECT FILE_NO,-->
+<!--        REF_BNO,-->
+<!--        ORIGIN_NAME,-->
+<!--        CHANGE_NAME,-->
+<!--        FILE_PATH-->
+<!--        FROM ATTACHMENT-->
+<!--        WHERE REF_BNO = #{boardNo}-->
+<!--        AND STATUS = 'Y'-->
+<!--    </select>-->
+
+<!--    &lt;!&ndash; 게시글 수정 &ndash;&gt;-->
+<!--    <update id="updateBoard" parameterType="Board">-->
+<!--        UPDATE BOARD-->
+<!--        SET CATEGORY_NO = #{categoryNo},-->
+<!--        BOARD_TITLE = #{boardTitle},-->
+<!--        BOARD_CONTENT = #{boardContent}-->
+<!--        WHERE BOARD_NO = #{boardNo}-->
+<!--    </update>-->
+
+<!--    &lt;!&ndash; 첨부파일 삭제 &ndash;&gt;-->
+<!--    <update id="deleteAttachment" parameterType="_int">-->
+<!--        UPDATE ATTACHMENT-->
+<!--        SET STATUS = 'N'-->
+<!--        WHERE FILE_NO = #{fileNo}-->
+<!--    </update>-->
+
+<!--    &lt;!&ndash; 댓글추가 &ndash;&gt;-->
+<!--    <insert id="insertReply" parameterType="Reply">-->
+<!--        INSERT INTO REPLY-->
+<!--        (-->
+<!--        REPLY_NO,-->
+<!--        REPLY_CONTENT,-->
+<!--        REF_BNO,-->
+<!--        REPLY_WRITER-->
+<!--        ) VALUES (-->
+<!--        SEQ_RNO.NEXTVAL,-->
+<!--        #{replyContent},-->
+<!--        #{refBoardNo},-->
+<!--        #{replyWriter}-->
+<!--        )-->
+<!--    </insert>-->
+
+<!--    &lt;!&ndash; 댓글 조회 &ndash;&gt;-->
+<!--    <select id="selectReplyListByBoardNo" parameterType="_int" resultMap="replyResultMap">-->
+<!--        SELECT REPLY_NO,-->
+<!--        R.REPLY_CONTENT,-->
+<!--        R.REF_BNO,-->
+<!--        R.REPLY_WRITER,-->
+<!--        TO_CHAR(R.CREATE_DATE, 'YYYY-MM-DD HH24:MI:SS') AS CREATE_DATE,-->
+<!--        M.MEMBER_ID,-->
+<!--        R.STATUS-->
+<!--        FROM REPLY R-->
+<!--        JOIN MEMBER M ON(MEMBER_NO = REPLY_WRITER)-->
+<!--        WHERE REF_BNO = #{boardNo}-->
+<!--        AND R.STATUS = 'Y'-->
+<!--        ORDER BY R.REPLY_NO DESC-->
+<!--    </select>-->
+
+<!--    &lt;!&ndash; 댓글 삭제 &ndash;&gt;-->
+<!--    <update id="deleteReply" parameterType="_int">-->
+<!--        UPDATE REPLY-->
+<!--        SET STATUS = 'N'-->
+<!--        WHERE REPLY_NO = #{replyNo}-->
+<!--    </update>-->
+</mapper>

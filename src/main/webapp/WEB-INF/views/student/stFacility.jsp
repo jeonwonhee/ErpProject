@@ -23,7 +23,7 @@
                         <form>
                             <div class="form-group">
                                 <label for="deviceType">기자재 종류</label>
-                                <select id="deviceType">
+                                <select id="deviceType" name="deviceName">
                                     <option value="">선택하세요</option>
                                     <option>노트북</option>
                                     <option>빔프로젝터</option>
