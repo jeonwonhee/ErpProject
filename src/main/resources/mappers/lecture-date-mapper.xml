@@ -23,13 +23,13 @@
          =============================== -->
     <select id="selectLectureDateList" resultMap="lectureDateResultMap">
         SELECT
-        LECTURE_DATE_NO,
-        TO_CHAR(START_DATE, 'YYYY-MM-DD') AS START_DATE,
-        TO_CHAR(END_DATE, 'YYYY-MM-DD') AS END_DATE,
-        TITLE,
-        CONTENT,
-        CLASS_LECTURE_NO,
-        DATE_TYPE
+            LECTURE_DATE_NO,
+            TO_CHAR(START_DATE, 'YYYY-MM-DD') AS START_DATE,
+            TO_CHAR(END_DATE, 'YYYY-MM-DD') AS END_DATE,
+            TITLE,
+            CONTENT,
+            CLASS_LECTURE_NO,
+            DATE_TYPE
         FROM LECTURE_DATE
         ORDER BY START_DATE DESC
     </select>
@@ -39,13 +39,13 @@
          =============================== -->
     <select id="selectLectureDateByClass" resultMap="lectureDateResultMap" parameterType="int">
         SELECT
-        LECTURE_DATE_NO,
-        TO_CHAR(START_DATE, 'YYYY-MM-DD') AS START_DATE,
-        TO_CHAR(END_DATE, 'YYYY-MM-DD') AS END_DATE,
-        TITLE,
-        CONTENT,
-        CLASS_LECTURE_NO,
-        DATE_TYPE
+            LECTURE_DATE_NO,
+            TO_CHAR(START_DATE, 'YYYY-MM-DD') AS START_DATE,
+            TO_CHAR(END_DATE, 'YYYY-MM-DD') AS END_DATE,
+            TITLE,
+            CONTENT,
+            CLASS_LECTURE_NO,
+            DATE_TYPE
         FROM LECTURE_DATE
         WHERE CLASS_LECTURE_NO = #{classLectureNo}
         ORDER BY START_DATE DESC
@@ -59,21 +59,21 @@
             SELECT SEQ_LDNO.NEXTVAL FROM DUAL
         </selectKey>
         INSERT INTO LECTURE_DATE (
-        LECTURE_DATE_NO,
-        START_DATE,
-        END_DATE,
-        TITLE,
-        CONTENT,
-        CLASS_LECTURE_NO,
-        DATE_TYPE
+            LECTURE_DATE_NO,
+            START_DATE,
+            END_DATE,
+            TITLE,
+            CONTENT,
+            CLASS_LECTURE_NO,
+            DATE_TYPE
         ) VALUES (
-        #{lectureDateNo},
-        #{startDate},
-        #{endDate},
-        #{title},
-        #{content},
-        #{classLectureNo},
-        #{dateType}
+            #{lectureDateNo},
+            #{startDate},
+            #{endDate},
+            #{title},
+            #{content},
+            #{classLectureNo},
+            #{dateType}
         )
     </insert>
 
@@ -83,10 +83,10 @@
     <update id="updateLectureDate" parameterType="LectureDate">
         UPDATE LECTURE_DATE
         SET START_DATE = #{startDate},
-        END_DATE = #{endDate},
-        TITLE = #{title},
-        CONTENT = #{content},
-        DATE_TYPE = #{dateType}
+            END_DATE = #{endDate},
+            TITLE = #{title},
+            CONTENT = #{content},
+            DATE_TYPE = #{dateType}
         WHERE LECTURE_DATE_NO = #{lectureDateNo}
     </update>
 

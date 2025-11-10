@@ -10,6 +10,10 @@
         <link rel="stylesheet" href="/styles/style.css">
         <link rel="stylesheet" href="/styles/lecture.css">
         <link rel="stylesheet" href="/styles/common.css">
+
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+
+        <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
     </head>
 
     <body class="lecture calender">
@@ -27,32 +31,32 @@
             <!-- 콘텐츠 영역 -->
             <section class="content">
                 <!-- Calender Section -->
-                    <div class="calender-box">
-                        <div class="calender-header">
-                            <div class="month-control">
-                                <button class="month-btn" id="prevBtn">◀</button>
-                                <div class="month-title" id="monthTitle">2025년 10월</div>
-                                <button class="month-btn" id="nextBtn">▶</button>
-                                <button class="today-btn" id="todayBtn">오늘</button>
-                            </div>
+                <div class="calender-box">
+                    <div class="calender-header">
+                        <div class="month-control">
+                            <button class="month-btn" id="prevBtn">◀</button>
+                            <div class="month-title" id="monthTitle">2025년 10월</div>
+                            <button class="month-btn" id="nextBtn">▶</button>
+                            <button class="today-btn" id="todayBtn">오늘</button>
+                        </div>
 
-                    <div class="legend">
-                        <span><span class="dot blue"></span>수업</span>
-                        <span><span class="dot orange"></span>시험</span>
-                        <span><span class="dot red"></span>휴일/행사</span>
+                        <div class="legend">
+                            <span><span class="dot blue"></span>수업</span>
+                            <span><span class="dot orange"></span>시험</span>
+                            <span><span class="dot red"></span>휴일/행사</span>
+                        </div>
                     </div>
-                  </div>
 
-                <!-- 달력 -->
-                <div class="calender-grid" id="calender"></div>
+                    <!-- 달력 -->
+                    <div class="calender-grid" id="calender"></div>
 
-                <!-- 일정 추가 버튼 -->
-                <button class="add-btn" onclick="location.href='${pageContext.request.contextPath}/leCalenderPlus.co'">일정추가</button>
+                    <!-- 일정 추가 버튼 -->
+                    <button class="add-btn" onclick="location.href='${pageContext.request.contextPath}/leCalenderPlus.co'">일정추가</button>
 
-                <br><br>
-                <!-- 다가오는 일정 -->
-                <div class="upcoming-schedule">
-                    <h3>다가오는 일정</h3>
+                    <br><br>
+                    <!-- 다가오는 일정 -->
+                    <div class="upcoming-schedule">
+                        <h3>다가오는 일정</h3>
                         <table>
                             <thead>
                                 <tr>
@@ -74,6 +78,7 @@
                                 </tr>
                             </tbody>
                         </table>
+                    </div>
                 </div>
             </section>
         </main>
@@ -89,144 +94,172 @@
 
         <!-- ===== JavaScript ===== -->
         <script>
-            window.onload = function() {
+            $(document).ready(function () {
 
-                const calender = document.getElementById("calender");
-                const monthTitle = document.getElementById("monthTitle");
+                const $calendar = $("#calender");
+                const $monthTitle = $("#monthTitle");
                 const daysOfWeek = ["일", "월", "화", "수", "목", "금", "토"];
                 let current = new Date();
 
-                const events = {
-                    "2025-10-03": ["웹 프로젝트 수업", "프론트 퀴즈"],
-                    "2025-10-12": ["중간평가"],
-                    "2025-10-15": ["학원 휴무"],
-                    "2025-10-19": ["팀 프로젝트 발표", "프로젝트 미팅"],
-                    "2025-10-27": ["버프 리허설"]
-                };
+                const events = [];
+                <c:if test="${not empty events}">
+                    <c:forEach var="e" items="${events}">
+                        events.push({
+                            startDate: "${e.startDate}",
+                            endDate: "${e.endDate}",
+                            title: "${e.title}",
+                            content: "${e.content}",
+                            type: "${e.dateType}"
+                        });
+                    </c:forEach>
+                </c:if>
 
-                function renderCalender(date) {
-                    calender.innerHTML = "";
+                console.log("📅 전달된 events 데이터:", events);
+
+                // ===== 달력 렌더링 =====
+                function renderCalendar(date) {
+                    $calendar.empty();
 
                     const year = date.getFullYear();
                     const month = date.getMonth();
                     const firstDay = new Date(year, month, 1).getDay();
                     const lastDate = new Date(year, month + 1, 0).getDate();
 
-                    monthTitle.textContent = year + "년 " + (month + 1) + "월";
+                    $monthTitle.text(year + "년 " + (month + 1) + "월");
 
-
-                    // 요일 헤더 추가
+                    // 요일 헤더
                     daysOfWeek.forEach(day => {
-                      const header = document.createElement("div");
-                      header.classList.add("day-header");
-                      header.textContent = day;
-                      calender.appendChild(header);
+                        $("<div>").addClass("day-header").text(day).appendTo($calendar);
                     });
 
                     // 첫 주 공백
                     for (let i = 0; i < firstDay; i++) {
-                      const empty = document.createElement("div");
-                      empty.classList.add("day-cell");
-                      calender.appendChild(empty);
+                        $("<div>").addClass("day-cell").appendTo($calendar);
                     }
 
                     // 날짜 셀 생성
                     for (let i = 1; i <= lastDate; i++) {
-                        const day = document.createElement("div");
-                        day.classList.add("day-cell");
+                        const $day = $("<div>").addClass("day-cell");
+                        $("<span>").addClass("day-num").text(i).appendTo($day);
 
-                        const span = document.createElement("span");
-                        span.classList.add("day-num");
-                        span.textContent = i;
-                        day.appendChild(span);
+                        const key = year + "-" +
+                                    (String(month + 1).length === 1 ? "0" + String(month + 1) : String(month + 1)) +
+                                    "-" + (String(i).length === 1 ? "0" + String(i) : String(i));
 
-                        // 날짜 key (예: 2025-10-03)
-                        const key = year + "-" + String(month + 1).padStart(2, "0") + "-" + String(i).padStart(2, "0");
+                        const matchEvent = events.find(ev => {
+                            const start = new Date(ev.startDate);
+                            const end = new Date(ev.endDate);
+                            const currentDate = new Date(key);
+                            return start <= currentDate && currentDate <= end;
+                        });
 
-                        if (events[key]) {
-                            const ul = document.createElement("ul");
-                            ul.classList.add("event-list");
-                            events[key].forEach(e => {
-                                const li = document.createElement("li");
-                                li.textContent = e;
-                                ul.appendChild(li);
-                            });
-                            day.appendChild(ul);
+                        if (matchEvent) {
+                            const $dot = $("<span>").addClass("dot");
+                            if (matchEvent.type === "CLASS") $dot.addClass("blue");
+                            else if (matchEvent.type === "OFF") $dot.addClass("red");
+                            else if (matchEvent.type === "EXAM") $dot.addClass("orange");
+
+                            const $content = $("<div>").addClass("event-content").text(matchEvent.content);
+                            $day.append($dot, $content);
                         }
 
-                        calender.appendChild(day);
+                        $calendar.append($day);
                     }
 
                     // 오늘 날짜 강조
                     const today = new Date();
                     const todayDate = today.getDate();
+                    const todayMonth = today.getMonth();
+                    const todayYear = today.getFullYear();
 
-                    document.querySelectorAll(".day-cell").forEach(cell => {
-                        const num = cell.querySelector(".day-num");
-                        if (num && parseInt(num.textContent) === todayDate) {
-                            cell.classList.add("today");
+                    $(".day-cell").each(function () {
+                        const $num = $(this).find(".day-num");
+                        if (year === todayYear && month === todayMonth && parseInt($num.text()) === todayDate) {
+                            $(this).addClass("today");
                         }
-                        console.log(num && parseInt(num.textContent) === todayDate);
                     });
 
                     attachModalEvents();
                 }
 
-                // 초기 렌더
-                renderCalender(current);
+                // ===== 모달 =====
+                const $modal = $("#eventModal");
+                const $modalTitle = $("#modalTitle");
+                const $modalBody = $("#modalBody");
 
-                // 버튼 이벤트
-                document.getElementById("prevBtn").addEventListener("click", () => {
-                    current.setMonth(current.getMonth() - 1);
-                    renderCalender(current);
-                });
-                document.getElementById("nextBtn").addEventListener("click", () => {
-                    current.setMonth(current.getMonth() + 1);
-                    renderCalender(current);
-                });
-                document.getElementById("todayBtn").addEventListener("click", () => {
-                    current = new Date();
-                    renderCalender(current);
-                });
-
-                const modal = document.getElementById("eventModal");
-                const modalTitle = document.getElementById("modalTitle");
-                const modalBody = document.getElementById("modalBody");
-
-                // 모달 열기
                 function openModal(dateKey) {
-                    const eventList = events[dateKey];
+                    console.log("🟦 클릭된 날짜:", dateKey);
 
-                    if (eventList && eventList.length > 0) {
-                        const [year, month, day] = dateKey.split("-");
-                        modalTitle.innerHTML = parseInt(month) + "월 " + parseInt(day) + "일 일정";
-                        modalBody.innerHTML = eventList.map(e => `<li>${e}</li>`).join("");
+                    const matchEvent = events.find(ev => ev.startDate <= dateKey && dateKey <= ev.endDate);
+                    console.log("🧠 매칭된 이벤트:", matchEvent);
+
+                    const parts = dateKey.split("-");
+                    const month = parseInt(parts[1]);
+                    const day = parseInt(parts[2]);
+                    $modalTitle.html(month + "월 " + day + "일 일정");
+
+                    if (matchEvent) {
+                        let typeLabel, dotColor;
+                        switch (matchEvent.type) {
+                            case "CLASS":
+                                typeLabel = "수업"; dotColor = "blue"; break;
+                            case "OFF":
+                                typeLabel = "휴일/행사"; dotColor = "red"; break;
+                            case "EXAM":
+                                typeLabel = "시험"; dotColor = "orange"; break;
+                            default:
+                                typeLabel = "미정"; dotColor = "gray";
+                        }
+
+                        $modalBody.html(
+                            '<p><strong>제목:</strong> ' + matchEvent.title + '</p>' +
+                            '<p><strong>구분:</strong> <span class="dot ' + dotColor + '"></span> ' + typeLabel + '</p>' +
+                            '<p><strong>내용:</strong><br>' + matchEvent.content + '</p>'
+                        );
                     } else {
-                        modalTitle.innerHTML = "일정 없음";
-                        modalBody.innerHTML = "등록된 일정이 없습니다.";
+                        $modalBody.text("등록된 일정이 없습니다.");
                     }
-                    modal.style.display = "flex";
+
+                    $modal.css("display", "flex");
                 }
 
-                // 모달 닫기
-                window.closeModal = function() {
-                    modal.style.display = "none";
-                }
+                window.closeModal = function () {
+                    $modal.hide();
+                };
 
                 function attachModalEvents() {
-                    document.querySelectorAll(".day-cell").forEach(cell => {
-                        const num = cell.querySelector(".day-num");
-                        if (num) {
-                            const dayNum = parseInt(num.textContent);
+                    $(".day-cell").each(function () {
+                        const $num = $(this).find(".day-num");
+                        if ($num.length) {
+                            const dayNum = parseInt($num.text());
                             const key = current.getFullYear() + "-" +
-                                        String(current.getMonth() + 1).padStart(2, "0") + "-" +
-                                        String(dayNum).padStart(2, "0");
-                            cell.addEventListener("click", () => openModal(key));
+                                        (String(current.getMonth() + 1).length === 1 ? "0" + String(current.getMonth() + 1) : String(current.getMonth() + 1)) +
+                                        "-" + (String(dayNum).length === 1 ? "0" + String(dayNum) : String(dayNum));
+                            $(this).off("click").on("click", () => openModal(key));
                         }
                     });
                 }
 
-            };
+                // ===== 버튼 이벤트 =====
+                $("#prevBtn").on("click", () => {
+                    current.setMonth(current.getMonth() - 1);
+                    renderCalendar(current);
+                });
+
+                $("#nextBtn").on("click", () => {
+                    current.setMonth(current.getMonth() + 1);
+                    renderCalendar(current);
+                });
+
+                $("#todayBtn").on("click", () => {
+                    current = new Date();
+                    renderCalendar(current);
+                });
+
+                // 초기 렌더
+                renderCalendar(current);
+            });
         </script>
+
     </body>
 </html>
