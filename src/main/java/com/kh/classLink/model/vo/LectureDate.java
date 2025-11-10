@@ -9,12 +9,14 @@ import java.sql.Date;
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
-public class Class {
+public class LectureDate {
 
-    private int classNo;
-    private String className;
-    private int memberCount;
+    private int lectureDateNo;
     private Date startDate;
     private Date endDate;
+    private String title;
+    private String content;
+    private int classLectureNo;
+    private String dateType;
 
 }

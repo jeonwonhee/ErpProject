@@ -21,7 +21,8 @@ public class Member {
     private String phone;
     private String address;
     private String role;
-    private Date BirthDate;
+    private Date birthDate;
+    private int vacCnt;
 
 
     private String lectureName;
