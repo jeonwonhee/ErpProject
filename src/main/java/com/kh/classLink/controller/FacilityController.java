@@ -30,6 +30,7 @@ public class FacilityController {
         return "admin/adminFacilityDetail";
     }
 
+    /*
     @GetMapping("/stFacility.co")
     public String stFacility() {
         //학생 기자재
@@ -37,6 +38,7 @@ public class FacilityController {
     }
     @PostMapping("/insert.di")
     public String insertFacility(
+
             @RequestParam("deviceName") String deviceName,
             @RequestParam("amount") int amount, HttpSession session, Model model){
 
@@ -51,5 +53,5 @@ public class FacilityController {
            }
         }
     }
-
+*/
 }
