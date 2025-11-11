@@ -125,9 +125,12 @@
         </div>
 
         <!-- 글쓰기 버튼 -->
-        <div class="notice-footer">
-          <button class="btn-write" onclick="location.href='${pageContext.request.contextPath}/noticeEnrollForm.co'">글쓰기</button>
-        </div>
+          <c:if test="${loginMember.role != 'STUDENT'}">
+              <div class="notice-footer">
+                  <button class="btn-write" onclick="location.href='${pageContext.request.contextPath}/noticeEnrollForm.co'">글쓰기</button>
+              </div>
+          </c:if>
+
       </div>
     </section>
   </main>

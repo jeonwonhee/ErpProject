@@ -15,7 +15,7 @@ public interface NoticeService {
      * 공지사항 리스트
      * @return
      */
-    public Map<String,Object> selectNoticeList(int currentPage,String noticeType);
+    public Map<String,Object> selectNoticeList(int currentPage,String noticeType,int memberNo, String role);
 
 
     /**

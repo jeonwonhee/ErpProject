@@ -18,4 +18,5 @@ public class Class {
     private Date endDate;
 
     private int controllNo;
+    private Date planDate;
 }

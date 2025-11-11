@@ -16,7 +16,7 @@ public interface NoticeMapper {
      * 공지사항 리스트
      * @return
      */
-    ArrayList<Notice> selectNoticeList(RowBounds rowBounds,String noticeType);
+    ArrayList<Notice> selectNoticeList(RowBounds rowBounds,Notice notice);
 
     /**
      * 반별 공지사항
@@ -28,7 +28,7 @@ public interface NoticeMapper {
      * 공지사항 갯수
      * @return
      */
-    int selectNoticeCnt(String selectNoticeType);
+    int selectNoticeCnt(Notice notice);
 
     /**
      * 공지사항 등록
