@@ -114,8 +114,6 @@
                     </c:forEach>
                 </c:if>
 
-                console.log("📅 전달된 events 데이터:", events);
-
                 // ===== 달력 렌더링 =====
                 function renderCalendar(date) {
                     $calendar.empty();

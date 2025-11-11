@@ -2,6 +2,7 @@ package com.kh.classLink.service;
 
 import com.kh.classLink.model.mapper.LectureDateMapper;
 import com.kh.classLink.model.vo.LectureDate;
+import com.kh.classLink.model.vo.LectureDateApprovalList;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -34,8 +35,15 @@ public class LectureDateServiceImpl implements LectureDateService {
     @Override
     @Transactional // 💡 트랜잭션 관리 (성공 시 커밋, 실패 시 롤백)
     public int insertLectureDate(LectureDate lectureDate) {
-        log.info("[LectureDateService] 일정 등록 실행: {}", lectureDate);
-        return lectureDateMapper.insertLectureDate(lectureDate);
+        // 1. 일정 등록
+        int result = lectureDateMapper.insertLectureDate(lectureDate);
+
+        // 2. 등록 성공 시 해당 일정번호로 승인 데이터 생성
+        if (result > 0) {
+            lectureDateMapper.insertLectureDateApproval(lectureDate.getLectureDateNo());
+        }
+
+        return result;
     }
 
     /* 일정 수정 (UPDATE) */
@@ -57,5 +65,20 @@ public class LectureDateServiceImpl implements LectureDateService {
     @Override
     public int getClassLectureNoByMemberNo(int memberNo) {
         return lectureDateMapper.selectClassLectureNoByMemberNo(memberNo);
+    }
+
+    @Override
+    public int updateApprovalStatus(int lectureDateNo, String status, String reason, int approvedBy) {
+        return lectureDateMapper.updateApprovalStatus(lectureDateNo, status, reason, approvedBy);
+    }
+
+    @Override
+    public List<LectureDateApprovalList> selectLectureDateApprovalList() {
+        return lectureDateMapper.selectLectureDateApprovalList();
+    }
+
+    @Override
+    public LectureDateApprovalList selectLectureDateApprovalDetail(int lectureDateNo) {
+        return lectureDateMapper.selectLectureDateApprovalDetail(lectureDateNo);
     }
 }

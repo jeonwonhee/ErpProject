@@ -1,5 +1,7 @@
 package com.kh.classLink.controller;
 
+import com.kh.classLink.model.vo.LectureDateApproval;
+import com.kh.classLink.model.vo.LectureDateApprovalList;
 import com.kh.classLink.service.LectureDateService;
 import com.kh.classLink.model.vo.LectureDate;
 import com.kh.classLink.model.vo.Member;
@@ -7,10 +9,7 @@ import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -35,19 +34,24 @@ public class ScheduleController {
 
     /**
      * 관리자 일정관리
-     * @return
      */
     @GetMapping("/adminCalenderManage.co")
-    public String adminCalenderManage(){
+    public String adminCalenderManage(Model model) {
+        List<LectureDateApprovalList> approvalList = lectureDateService.selectLectureDateApprovalList();
+        model.addAttribute("approvalList", approvalList);
+
         return "admin/adminCalenderManage";
     }
 
     /**
      * 관리자 일정관리 상세
-     * @return
      */
     @GetMapping("/adminCalenderDetail.co")
-    public String adminCalenderDetail(){
+    public String adminCalenderDetail(@RequestParam("lectureDateNo") int lectureDateNo,
+                                      Model model) {
+        LectureDateApprovalList detail = lectureDateService.selectLectureDateApprovalDetail(lectureDateNo);
+        model.addAttribute("detail", detail);
+
         return "admin/adminCalenderDetail";
     }
 
@@ -92,18 +96,38 @@ public class ScheduleController {
         }
     }
 
-    @GetMapping("/testLogin")
-    public String testLogin(HttpSession session) {
-        Member fakeTeacher = new Member();
-        fakeTeacher.setMemberNo(1);            // DB에 존재하는 MEMBER_NO
-        fakeTeacher.setMemberId("teacher01");
-        fakeTeacher.setMemberName("김강사");
-        fakeTeacher.setRole("TEACHER");
+//    @GetMapping("/testLogin")
+//    public String testLogin(HttpSession session) {
+//        Member fakeTeacher = new Member();
+//        fakeTeacher.setMemberNo(1);            // DB에 존재하는 MEMBER_NO
+//        fakeTeacher.setMemberId("teacher01");
+//        fakeTeacher.setMemberName("김강사");
+//        fakeTeacher.setRole("TEACHER");
+//
+//        session.setAttribute("loginUser", fakeTeacher);
+//        System.out.println("✅ 임시 로그인 완료: " + fakeTeacher);
+//
+//        return "redirect:/lecture/leCalenderPlus.co?classLectureNo=1";
+//    }
 
-        session.setAttribute("loginUser", fakeTeacher);
-        System.out.println("✅ 임시 로그인 완료: " + fakeTeacher);
+    @PostMapping("/adminCalenderManage.co")
+    @ResponseBody
+    public String updateApprovalStatus(
+            @RequestParam("lectureDateNo") int lectureDateNo,
+            @RequestParam("status") String status,
+            @RequestParam(value = "reason", required = false) String reason,
+            HttpSession session) {
 
-        return "redirect:/lecture/leCalenderPlus.co?classLectureNo=1";
+        Member admin = (Member) session.getAttribute("loginUser");
+        int adminNo = admin != null ? admin.getMemberNo() : 0;
+
+        try {
+            int result = lectureDateService.updateApprovalStatus(lectureDateNo, status, reason, adminNo);
+            return (result > 0) ? "success" : "fail";
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "fail";
+        }
     }
 
 }

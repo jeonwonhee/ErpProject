@@ -1,6 +1,8 @@
 package com.kh.classLink.model.mapper;
 
 import com.kh.classLink.model.vo.LectureDate;
+import com.kh.classLink.model.vo.LectureDateApproval;
+import com.kh.classLink.model.vo.LectureDateApprovalList;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -28,4 +30,16 @@ public interface LectureDateMapper {
     /* 일정 삭제 (DELETE) */
     int deleteLectureDate(int lectureDateNo);
 
+    /* 일정 신청 관리 추가 (INSERT) */
+    int insertLectureDateApproval(@Param("lectureDateNo") int lectureDateNo);
+
+    /* 일정 신청 관리 갱신 (UPDATE) */
+    int updateApprovalStatus(@Param("lectureDateNo") int lectureDateNo,
+                             @Param("status") String status,
+                             @Param("reason") String reason,
+                             @Param("approvedBy") int approvedBy);
+
+    List<LectureDateApprovalList> selectLectureDateApprovalList();
+
+    LectureDateApprovalList selectLectureDateApprovalDetail(int lectureDateNo);
 }
