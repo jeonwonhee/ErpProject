@@ -106,4 +106,59 @@
         WHERE L.MEMBER_NO = #{memberNo}
     </select>
 
+    <!-- 일정 등록 후 승인 테이블 자동 생성 -->
+    <insert id="insertLectureDateApproval">
+        INSERT INTO LECTURE_DATE_APPROVAL (
+            APPROVAL_NO,
+            LECTURE_DATE_NO
+        )
+        VALUES (
+            SEQ_APPROVAL_NO.NEXTVAL,
+            #{lectureDateNo}
+        )
+    </insert>
+
+    <!-- 승인 상태 업데이트 -->
+    <update id="updateApprovalStatus">
+        UPDATE LECTURE_DATE_APPROVAL
+        SET STATUS = #{status},
+            APPROVAL_REJECT = #{reason},
+            APPROVED_BY = #{approvedBy},
+            APPROVAL_DATE = SYSDATE
+        WHERE LECTURE_DATE_NO = #{lectureDateNo}
+    </update>
+
+    <select id="selectLectureDateApprovalList" resultType="LectureDateApprovalList">
+        SELECT
+            L.LECTURE_DATE_NO AS lectureDateNo,
+            L.TITLE,
+            M.MEMBER_NAME AS WRITER,
+            L.START_DATE,
+            L.END_DATE,
+            A.STATUS,
+            TO_CHAR(A.APPROVAL_DATE, 'YYYY-MM-DD') AS approvalDate
+        FROM LECTURE_DATE L
+        JOIN MEMBER M ON L.CLASS_LECTURE_NO = M.MEMBER_NO
+        JOIN LECTURE_DATE_APPROVAL A ON L.LECTURE_DATE_NO = A.LECTURE_DATE_NO
+        ORDER BY A.APPROVAL_DATE DESC
+    </select>
+
+    <select id="selectLectureDateApprovalDetail" parameterType="int" resultType="LectureDateApprovalList">
+        SELECT
+            L.LECTURE_DATE_NO AS lectureDateNo,
+            L.TITLE AS title,
+            L.CONTENT AS content,
+            TO_CHAR(L.START_DATE, 'YYYY-MM-DD') AS startDate,
+            TO_CHAR(L.END_DATE, 'YYYY-MM-DD') AS endDate,
+            M.MEMBER_NAME AS writer,
+            A.STATUS AS status,
+            TO_CHAR(A.APPROVAL_DATE, 'YYYY-MM-DD') AS approvalDate,
+            A.APPROVAL_REJECT AS rejectReason
+        FROM LECTURE_DATE L
+        JOIN MEMBER M ON L.CLASS_LECTURE_NO = M.MEMBER_NO
+        JOIN LECTURE_DATE_APPROVAL A ON L.LECTURE_DATE_NO = A.LECTURE_DATE_NO
+        WHERE L.LECTURE_DATE_NO = #{lectureDateNo}
+    </select>
+
+
 </mapper>
