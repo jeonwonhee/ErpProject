@@ -14,7 +14,7 @@
         COMMUTE_DATE,
         CREATE_DATE
         ) VALUES (
-        SEQ_COMMUTE_NO.NEXTVAL,
+        SEQ_CMNO.NEXTVAL,
         #{memberNo, jdbcType=NUMERIC},
         #{status, jdbcType=VARCHAR},
         SYSDATE,
