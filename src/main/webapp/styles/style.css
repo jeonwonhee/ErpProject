@@ -26,6 +26,45 @@ body {
   z-index: 20;
 }
 
+.alarm-page {
+    position: fixed;
+    top: 8%;
+    right: 0;
+    width: 230px;
+    height: 100vh;
+    background: #e8ecff;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 25px 20px;
+    z-index: 20;
+}
+
+.alarm-btn {
+
+}
+
+/* 학생 리스트 영역 */
+.alarm-page .alarm-list {
+    border: 1px solid #d2d4de;
+    border-radius: 14px;
+    overflow: hidden;
+}
+
+/* 한 줄 */
+.alarm-page .alarm-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 14px;
+    padding: 16px 20px;
+    background: #fff;
+}
+
+.alarm-page .alarm-row + .alarm-row {
+    border-top: 1px solid #d2d4de;
+}
+
 .logo {
   display: flex;
   align-items: center;

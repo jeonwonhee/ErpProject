@@ -23,5 +23,6 @@ public class Notice {
 
     private String className; //반 이름
     private String memberName; // 작성자 명
+    private String role;
 
 }

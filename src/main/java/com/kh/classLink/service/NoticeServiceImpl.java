@@ -38,15 +38,18 @@ public class NoticeServiceImpl implements NoticeService {
      * @return
      */
     @Override
-    public Map<String,Object> selectNoticeList(int currentPage,String noticeType) {
-        int noticeCount = noticeMapper.selectNoticeCnt(noticeType);
+    public Map<String,Object> selectNoticeList(int currentPage,String noticeType,int memberNo,String role) {
+        Notice notice = new Notice();
+        notice.setMemberNo(memberNo);
+        notice.setRole(role);
+        int noticeCount = noticeMapper.selectNoticeCnt(notice);
         System.out.println(noticeCount);
         PageInfo pi = new PageInfo(currentPage, noticeCount, 5, 5);
         int offset = (currentPage - 1) * pi.getBoardLimit();
 
         RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
 
-        ArrayList<Notice> noticeList = noticeMapper.selectNoticeList(rowBounds,noticeType);
+        ArrayList<Notice> noticeList = noticeMapper.selectNoticeList(rowBounds,notice);
         Map<String,Object> map = new HashMap<>();
         map.put("noticeList",noticeList);
         map.put("pi",pi);
