@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!DOCTYPE html>
 <html lang="ko">
@@ -20,10 +21,21 @@
         <section class="content inquiry-container">
             <div class="card">
                 <!-- 검색창 -->
-                <div class="search-box">
-                    <input type="text" placeholder="검색" />
-                    <button class="btn-search">검색</button>
-                </div>
+                <%--관리자는 불필요--%>
+                <c:if test="${loginMember.role eq 'TEACHER'}">
+                    <form action="${pageContext.request.contextPath}/questionManage.co" method="get">
+                        <div class="search-box">
+
+                            <select name="listType" id="listType" class="question-select">
+                                <option value="QUESTION" ${listType eq 'QUESTION' ? 'selected' : ''}>내 질문</option>
+                                <option value="ANSWER" ${listType eq 'ANSWER' ? 'selected' : ''}>답변</option>
+                            </select>
+                            <button class="btn-search">검색</button>
+
+
+                        </div>
+                    </form>
+                </c:if>
 
                 <!-- 문의 테이블 -->
                 <div class="inquiry-table-section">
@@ -35,43 +47,73 @@
                                 <th>작성자</th>
                                 <th>등록일</th>
                                 <th>상태</th>
-                                <th>답변여부</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr class="clickable"
-                                data-title="수강 신청이 안돼요."
-                                data-writer="홍길동"
-                                data-date="2025-10-25"
-                                data-content="수강 신청을 눌러도 반응이 없습니다."
-                                data-status="접수"
-                                data-reply=""
-                                data-stage="미답변">
-                                <td>101</td>
-                                <td onClick = "location.href='${pageContext.request.contextPath}/questionDetail.co'">수강 신청 정정 문의</td>
-                                <td>홍길동</td>
-                                <td>2025-10-25</td>
-                                <td><span class="status received">접수</span></td>
-                                <td onClick = "location.href='${pageContext.request.contextPath}/questionEnrollForm.co'">미답변</td>
-                            </tr>
-                            <tr class="clickable"
-                                data-title="오류 문의"
-                                data-writer="김길동"
-                                data-date="2025-10-28"
-                                data-content="화면 로딩 중 오류가 발생합니다."
-                                data-status="처리중"
-                                data-reply="처리 중입니다."
-                                data-stage="답변완료">
-                                <td>102</td>
-                                <td>오류 문의</td>
-                                <td>김길동</td>
-                                <td>2025-10-28</td>
-                                <td><span class="status processing">처리중</span></td>
-                                <td>답변완료</td>
-                            </tr>
+                            <%--강사--%>
+                            <c:forEach var="question" items="${questionList}">
+                                <c:choose>
+                                    <c:when test="${listType eq 'QUESTION'}">
+                                        <tr onClick = "location.href='${pageContext.request.contextPath}/stQuestionDetail.co?questionNo=${question.questionNo}'">
+                                    </c:when>
+                                    <c:otherwise>
+                                        <tr onClick = "location.href='${pageContext.request.contextPath}/questionEnrollForm.co?questionNo=${question.questionNo}'">
+                                    </c:otherwise>
+                                </c:choose>
+                                    <td>${question.questionNo}</td>
+                                    <td>${question.questionTitle}</td>
+                                    <td>${question.questionMemberName}</td>
+                                    <td>${question.createDate}</td>
+                                    <c:choose>
+                                        <c:when test="${question.questionStatus eq '대기'}">
+                                            <td><span class="status received">${question.questionStatus}</span></td>
+                                        </c:when>
+                                        <c:otherwise>
+                                            <td><span class="status processing">${question.questionStatus}</span></td>
+                                        </c:otherwise>
+                                    </c:choose>
+                                </tr>
+                            </c:forEach>
+
+                            <%--관리자--%> <%--문의 답변만 가능.--%>
                         </tbody>
                     </table>
+
+                    <c:if test="${pi.currentPage > 1}">
+                        <button class="btn btn-primary"
+                                onclick="location.href='${pageContext.request.contextPath}/questionManage.co?currentPage=${pi.currentPage - 1}&listType=${listType}'">
+                            &lt; 이전
+                        </button>
+                    </c:if>
+                    <c:forEach var="i" begin="${pi.startPage}" end="${pi.endPage}">
+                        <c:choose>
+                            <c:when test="${i == pi.currentPage}">
+                                <button class="page-btn" disabled>
+                                        ${i}
+                                </button>
+                            </c:when>
+                            <c:otherwise>
+                                <button class="page-btn"
+                                        onclick="location.href='${pageContext.request.contextPath}/questionManage.co?currentPage=${i}&listType=${listType}'">
+                                        ${i}
+                                </button>
+                            </c:otherwise>
+                        </c:choose>
+                    </c:forEach>
+                    <c:if test="${pi.currentPage < pi.maxPage}">
+                        <button class="btn btn-primary"
+                                onclick="location.href='${pageContext.request.contextPath}/questionManage.co?currentPage=${pi.currentPage + 1}&listType=${listType}'">
+                            다음 &gt;
+                        </button>
+                    </c:if>
+
                 </div>
+                <!-- 글쓰기 버튼 -->
+                <c:if test="${loginMember.role eq 'TEACHER'}">
+                    <div class="inquiry-write">
+                        <button class="btn-write" onclick="location.href='${pageContext.request.contextPath}/stQuestionWrite.co'">글쓰기</button>
+                    </div>
+                </c:if>
             </section>
         </main>
     </body>

@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!DOCTYPE html>
 <html lang="ko">
@@ -21,48 +22,72 @@
 
     <section class="content notice-write">
       <div class="card">
-        <h2>공지사항 작성</h2>
+        <h2>공지사항 수정</h2>
 
-        <form class="notice-form" enctype="multipart/form-data">
+        <form class="notice-form" enctype="multipart/form-data" action="${pageContext.request.contextPath}/updateNotice.no" method="post">
           <div class="form-group">
             <label for="title">제목</label>
-            <input type="text" id="title" placeholder="제목을 입력하세요">
+            <input type="text" id="title" name="noticeTitle" placeholder="제목을 입력하세요" value="${noticeDetail.noticeTitle}">
           </div>
+            <input type="hidden" value="${noticeDetail.noticeNo}" name="noticeNo"/>
             <div class="subject-select">
                 <label for="noticeType">공지 타입</label>
                 <select name="noticeType" onchange="changeNoticeType()" id="noticeType">
-                    <option value="ALL">전체</option>
-                    <option value="SYSTEM">시스템</option>
-                    <option value="EVENT">이벤트</option>
-                    <option value="CLASS">반 별 공지</option>
+                    <option value="ALL" ${noticeDetail.noticeType == 'ALL' ? 'selected' : ''}>전체</option>
+                    <option value="SYSTEM" ${noticeDetail.noticeType == 'SYSTEM' ? 'selected' : ''}>시스템</option>
+                    <option value="EVENT" ${noticeDetail.noticeType == 'EVENT' ? 'selected' : ''}>이벤트</option>
+                    <option value="CLASS" ${noticeDetail.noticeType == 'CLASS' ? 'selected' : ''}>반 별 공지</option>
                 </select>
             </div>
             <br>
-            <div class="classNoList">
-                <label for="classNoList">반 명</label>
-                <div class="checkbox-group">
-                    <input type="checkbox" name="classNoList" value="1"> a반
-                    <input type="checkbox" name="classNoList" value="2"> b반
-                    <input type="checkbox" name="classNoList" value="3"> c반
-                    <input type="checkbox" name="classNoList" value="4"> d반
-                </div>
-            </div>
+            <c:choose>
+                <c:when test="${noticeDetail.noticeType == 'CLASS'}">
+                    <div class="class-no-list class-true">
+                        <label for="classNoList">반 명</label>
+                        <div class="checkbox-group">
+                            <c:forEach var="c" items="${classList}">
+                                <input type="checkbox" name="classNoList" value="${c.classNo}" ${noticeDetail.classNo == c.classNo ? 'checked' : ''}> ${c.className}
+                            </c:forEach>
+                        </div>
+                    </div>
+                </c:when>
+                <c:otherwise>
+                    <div class="class-no-list class-false">
+                        <label for="classNoList">반 명</label>
+                        <div class="checkbox-group">
+                            <c:forEach var="c" items="${classList}">
+                                <input type="checkbox" name="classNoList" value="${c.classNo}" ${noticeDetail.classNo == c.classNo ? 'checked' : ''}> ${c.className}
+                            </c:forEach>
+                        </div>
+                    </div>
+                </c:otherwise>
+            </c:choose>
             <br>
           <div class="form-group file-group">
             <label for="file">첨부파일</label>
             <div class="file-box">
-              <label class="file-label" for="file">파일선택</label>
-              <input type="file" id="file">
-              <span class="file-name">선택된 파일이 없음</span>
+<%--              <label class="file-label" for="file">파일선택</label>--%>
+              <input type="file" id="file" name="upFile">
+                <c:choose>
+                    <c:when test="${empty fileList}">
+                        <span class="file-name">선택된 파일이 없음</span>
+                    </c:when>
+                    <c:otherwise>
+                        <c:forEach var="file" items="${fileList}">
+                            <span class="file-name">${file.noticeFileOriName}</span>
+                        </c:forEach>
+                    </c:otherwise>
+                </c:choose>
+
             </div>
           </div>
 
           <div class="form-group">
             <label for="content">작성 내용</label>
-            <textarea id="content" placeholder="내용을 입력하세요"></textarea>
+            <textarea id="content" name="noticeContents" placeholder="내용을 입력하세요">${noticeDetail.noticeContents}</textarea>
           </div>
 
-          <button type="submit" class="btn-submit">등록하기</button>
+          <button type="submit" class="btn-submit">수정하기</button>
         </form>
       </div>
     </section>
@@ -72,7 +97,7 @@
 
         let noticeType = document.getElementById("noticeType");
 
-        let classNoList = document.querySelector(".classNoList");
+        let classNoList = document.querySelector(".class-no-list");
         let selectNoticeType = "";
         for (let i=0; i<noticeType.options.length; i++) {
             if(noticeType.options[i].selected) {

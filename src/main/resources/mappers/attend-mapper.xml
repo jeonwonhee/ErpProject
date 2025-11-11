@@ -31,6 +31,54 @@
         <result column="MEMBER_NO" property="memberNo"/>
     </resultMap>
 
+    <!--class-->
+    <resultMap id="classResultMap" type="Class">
+        <result column="CLASS_NO" property="classNo"/>
+        <result column="CLASS_NAME" property="className"/>
+        <result column="MEMBER_COUNT" property="memberCount"/>
+        <result column="START_DATE" property="startDate"/>
+        <result column="END_DATE" property="endDate"/>
+        <result column="CONTROLL_NO" property="controllNo"/>
+        <result column="PLAN_DATE" property="planDate"/>
+    </resultMap>
+    <!--attend-->
+    <resultMap id="attendResultMap" type="Attend">
+        <result column="ATTEND_NO" property="attendNo"/>
+        <result column="ATTEND_STATUS" property="attendStatus"/>
+        <result column="ATTEND_DATE" property="attendDate"/>
+        <result column="CREATE_DATE" property="createDate"/>
+        <result column="UPDATE_DATE" property="updateDate"/>
+        <result column="SESSION_NO" property="sessionNo"/>
+        <result column="STUDENT_NO" property="studentNo"/>
+        <result column="MEMBER_NAME" property="memberName"/>
+        <result column="CLASS_NAME" property="className"/>
+        <result column="CLASS_NO" property="classNo"/>
+        <result column="START_DATE" property="startDate"/>
+        <result column="END_DATE" property="endDate"/>
+        <result column="ATTEND_COUNT" property="attendCount"/>
+        <result column="LATE_COUNT" property="lateCount"/>
+        <result column="ABSENT_COUNT" property="absentCount"/>
+        <result column="ATTEND_RATE" property="attendRate"/>
+        <result column="ATTEND_MONTH" property="attendMonth"/>
+    </resultMap>
+
+    <!--attendUpdate-->
+    <resultMap id="AttendUpdateResultMap" type="AttendUpdate">
+        <id property="attendUpdateNo" column="ATTEND_UPDATE_NO"/>
+        <result property="attendUpdateContent" column="ATTEND_UPDATE_CONTENT"/>
+        <result property="correctionApplicationDate" column="CORRECTION_APPLICATION_DATE"/>
+        <result property="status" column="STATUS"/>
+        <result property="refusal" column="REFUSAL"/>
+        <result property="attendNo" column="ATTEND_NO"/>
+        <result property="attendStatus" column="ATTEND_STATUS"/>
+
+        <association property="file" javaType="AttendUpdateFile">
+            <id property="attendUpdateFileNo" column="ATTEND_UPDATE_FILE_NO"/>
+            <result property="attendUpdateFileName" column="ATTEND_UPDATE_FILE_NAME"/>
+            <result property="attendUpdateFileOriName" column="ATTEND_UPDATE_FILE_ORI_NAME"/>
+            <result property="filePath" column="FILE_PATH"/>
+        </association>
+    </resultMap>
     <!--직원수 체크-->
     <select id="selectEmpCount" resultType="int">
         SELECT COUNT(*)
@@ -72,4 +120,196 @@
 
     </select>
 
+
+    <!--금일 본인 수업을 듣는 반 리스트-->
+    <select id="selectTodayLectureClass" parameterType="int" resultMap="classResultMap">
+        SELECT C.CLASS_NAME,
+            C.CLASS_NO,
+            LC.PLAN_DATE
+        FROM CLASS C
+        JOIN CLASS_LECTURE CL
+        ON C.CLASS_NO = CL.CLASS_NO
+        JOIN LECTURE L
+        ON CL.LECTURE_NO = L.LECTURE_NO
+        JOIN LECTURE_CONTROL LC
+        ON CL.CLASS_LECTURE_NO = LC.CLASS_LECTURE_NO
+        WHERE TO_CHAR(LC.PLAN_DATE,'YYYY-MM-DD') = TO_CHAR(SYSDATE,'YYYY-MM-DD')
+        AND L.MEMBER_NO = #{memberNo}
+    </select>
+
+    <!--선택한 반 정보-->
+    <select id="selectClassInfo" parameterType="int" resultMap="classResultMap">
+        SELECT C.CLASS_NAME,
+                C.CLASS_NO,
+                C.MEMBER_COUNT,
+                LC.CONTROLL_NO
+        FROM CLASS C
+        JOIN CLASS_LECTURE CL
+        ON C.CLASS_NO = CL.CLASS_NO
+        JOIN LECTURE_CONTROL LC
+        ON CL.CLASS_LECTURE_NO = LC.CLASS_LECTURE_NO
+        WHERE C.CLASS_NO = #{classNo}
+    </select>
+
+    <!--선택한 반의 소속 학생-->
+    <select id="selectAttendStudentList" resultType="int" resultMap="attendResultMap">
+        SELECT M.MEMBER_NAME,
+                CS.STUDENT_NO,
+                C.CLASS_NAME,
+                A.ATTEND_STATUS
+        FROM MEMBER M
+        JOIN CLASS_STUDENT CS
+        ON M.MEMBER_NO = CS.MEMBER_NO
+        JOIN CLASS C
+        ON CS.CLASS_NO = C.CLASS_NO
+        LEFT OUTER JOIN ATTEND A
+        ON A.STUDENT_NO = CS.STUDENT_NO
+        AND TO_CHAR(A.ATTEND_DATE,'YYYY-MM-DD') = TO_CHAR(SYSDATE,'YYYY-MM-DD')
+        WHERE C.CLASS_NO = #{classNo}
+    </select>
+
+    <!--학생 출석 처리-->
+    <insert id="studentAttendMan" parameterType="Attend">
+        INSERT INTO ATTEND(
+            ATTEND_NO,
+            ATTEND_STATUS,
+            SESSION_NO,
+            STUDENT_NO
+        ) VALUES (
+            SEQ_ANO.NEXTVAL,
+            #{attendStatus},
+            #{sessionNo},
+            #{studentNo}
+        )
+    </insert>
+
+    <insert id="attendClassAll" parameterType="java.util.List">
+        INSERT INTO ATTEND (ATTEND_NO, ATTEND_STATUS, SESSION_NO, STUDENT_NO)
+        SELECT SEQ_ANO.NEXTVAL,
+            t.attend_status,
+            t.session_no,
+            t.student_no
+        FROM (
+        <foreach collection="list" item="attendMap" separator="UNION ALL">
+            SELECT
+                #{attendMap.attend.attendStatus} AS attend_status,
+                #{attendMap.attend.sessionNo} AS session_no,
+                #{attendMap.attend.studentNo} AS student_no
+            FROM DUAL
+        </foreach>
+        ) t
+    </insert>
+
+    <!--학생 이번주 출결 데이터-->
+    <select id="selectStWeekAttendData" parameterType="Attend" resultMap="attendResultMap">
+        SELECT
+            TRUNC(ATTEND_DATE) AS ATTEND_DATE,
+            SUM(CASE WHEN ATTEND_STATUS = 'ATTEND' THEN 1 ELSE 0 END) AS ATTEND_COUNT,
+            SUM(CASE WHEN ATTEND_STATUS = 'LATE' THEN 1 ELSE 0 END) AS LATE_COUNT,
+            SUM(CASE WHEN ATTEND_STATUS = 'ABSENT' THEN 1 ELSE 0 END) AS ABSENT_COUNT,
+            ROUND(
+                ( (SUM(CASE WHEN ATTEND_STATUS = 'ATTEND' THEN 1 ELSE 0 END)
+                + SUM(CASE WHEN ATTEND_STATUS = 'LATE' THEN 1 ELSE 0 END)) / NULLIF(SUM(CASE WHEN ATTEND_STATUS IN ('ATTEND','LATE','ABSENT') THEN 1 ELSE 0 END), 0)
+                * 100), 2
+            ) AS ATTEND_RATE
+        FROM ATTEND
+        WHERE TRUNC(ATTEND_DATE) BETWEEN #{startDate} AND #{endDate}
+        GROUP BY TRUNC(ATTEND_DATE)
+        ORDER BY TRUNC(ATTEND_DATE)
+    </select>
+
+    <!--전체 학생 출결 데이터-->
+    <select id="selectStAllAttendData" resultMap="attendResultMap">
+        select
+            ATTEND_STATUS,
+            COUNT(STUDENT_NO) AS ATTEND_COUNT
+        FROM ATTEND
+        GROUP BY
+        ATTEND_STATUS
+    </select>
+
+    <!--전체 학생 올해 월별 출결 데이터-->
+    <select id="selectStMonthAttendData" resultMap="attendResultMap">
+        SELECT
+            TO_CHAR(ATTEND_DATE, 'YYYY-MM') AS ATTEND_MONTH,
+            SUM(CASE WHEN ATTEND_STATUS = 'ATTEND' THEN 1 ELSE 0 END) AS ATTEND_COUNT,
+            SUM(CASE WHEN ATTEND_STATUS = 'LATE' THEN 1 ELSE 0 END) AS LATE_COUNT,
+            SUM(CASE WHEN ATTEND_STATUS = 'ABSENT' THEN 1 ELSE 0 END) AS ABSENT_COUNT,
+            ROUND(
+                (
+                    (SUM(CASE WHEN ATTEND_STATUS = 'ATTEND' THEN 1 ELSE 0 END)
+                    + SUM(CASE WHEN ATTEND_STATUS = 'LATE' THEN 1 ELSE 0 END)) / NULLIF(SUM(CASE WHEN ATTEND_STATUS IN ('ATTEND','LATE','ABSENT') THEN 1 ELSE 0 END), 0)
+                    * 100
+                ), 2
+            ) AS ATTEND_RATE
+        FROM ATTEND
+        WHERE TO_CHAR(ATTEND_DATE, 'YYYY') = TO_CHAR(SYSDATE,'YYYY')
+        GROUP BY TO_CHAR(ATTEND_DATE, 'YYYY-MM')
+        ORDER BY TO_CHAR(ATTEND_DATE, 'YYYY-MM')
+    </select>
+
+    <!--출결정정 요청 리스트-->
+    <select id="selectAttendUpdateList" parameterType="int" resultMap="AttendUpdateResultMap">
+        SELECT
+        U.ATTEND_UPDATE_NO,
+        U.ATTEND_UPDATE_CONTENT,
+        U.CORRECTION_APPLICATION_DATE,
+        U.STATUS,
+        U.REFUSAL,
+        ST.MEMBER_NAME AS studentName,
+        CASE WHEN F.ATTEND_UPDATE_FILE_NO IS NULL THEN 'N' ELSE 'Y' END AS hasFile
+        FROM ATTEND_UPDATE U
+
+        /* 출결 → 학생 */
+        JOIN ATTEND A
+        ON U.ATTEND_NO = A.ATTEND_NO
+
+        /* 학생(Member) */
+        JOIN MEMBER ST
+        ON A.STUDENT_NO = ST.MEMBER_NO
+
+        /* 학생 ↔ 반 */
+        JOIN CLASS_STUDENT CS
+        ON ST.MEMBER_NO = CS.MEMBER_NO
+
+        /* 반 → 반 정보 */
+        JOIN CLASS C
+        ON CS.CLASS_NO = C.CLASS_NO
+
+        /* 반 → 강의 매핑 */
+        JOIN CLASS_LECTURE CL
+        ON C.CLASS_NO = CL.CLASS_NO
+
+        /* 강의 → 강사 */
+        JOIN LECTURE L
+        ON CL.LECTURE_NO = L.LECTURE_NO
+
+        /* 첨부파일 */
+        LEFT JOIN ATTEND_UPDATE_FILE F
+        ON U.ATTEND_UPDATE_NO = F.ATTEND_UPDATE_NO
+
+        /* ★ 강사 번호로 필터링 (로그인한 강사) */
+        WHERE L.MEMBER_NO = #{teacherNo}
+
+        ORDER BY U.ATTEND_UPDATE_NO DESC
+    </select>
+
+    <!--출결정정 요청 데이터-->
+    <select id="selectAttendUpdateDetail" parameterType="int" resultMap="AttendUpdateResultMap">
+        SELECT *
+        FROM ATTEND_UPDATE U
+        LEFT JOIN ATTEND_UPDATE_FILE F
+            ON U.ATTEND_UPDATE_NO = F.ATTEND_UPDATE_NO
+        WHERE U.ATTEND_UPDATE_NO = #{attendUpdateNo}
+    </select>
+
+    <!--출결정정 승인 반려-->
+    <update id="updateAttendCorrect" parameterType="map">
+        UPDATE ATTEND_UPDATE
+        SET STATUS = #{status},
+            REFUSAL = #{refusal},
+            APPROVER_MEMBER_NO = #{approverNo},
+            UPDATE_DATE = SYSDATE
+        WHERE ATTEND_UPDATE_NO = #{attendUpdateNo}
+    </update>
 </mapper>

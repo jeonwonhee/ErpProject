@@ -7,6 +7,11 @@
         <link rel="stylesheet" href="${pageContext.request.contextPath}/styles/default.css">
         <link rel="stylesheet" href="${pageContext.request.contextPath}/styles/style.css">
         <link rel="stylesheet" href="${pageContext.request.contextPath}/styles/admin.css">
+        <link rel="stylesheet" href="${pageContext.request.contextPath}/styles/common.css">
+
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+
+        <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
     </head>
 
     <body class="admin admin-calendar-manage">
@@ -28,46 +33,107 @@
                     <!-- 일정 테이블 -->
                     <div class="calendar-table-section">
                         <table class="calendar-table">
-                                <thead>
-                                    <tr>
-                                    <th>일정번호</th>
-                                    <th>제목</th>
-                                    <th>작성자</th>
-                                    <th>등록일</th>
-                                    <th>상태</th>
-                                    <th>승인여부</th>
-                                    </tr>
-                                </thead>
-                            <tbody>
-                                <tr class="clickable" onclick="location.href='${pageContext.request.contextPath}/adminCalenderDetail.co'" >
-                                    <td>18</td>
-                                    <td>휴강</td>
-                                    <td>김강사</td>
-                                    <td>2025-10-25</td>
-                                    <td><span class="status received">접수</span></td>
-                                    <td class="approved">승인</td>
+                            <thead>
+                                <tr>
+                                <th>일정번호</th>
+                                <th>제목</th>
+                                <th>작성자</th>
+                                <th>등록일</th>
+                                <th>상태</th>
+                                <th>승인여부</th>
                                 </tr>
-                                <tr class="clickable">
-                                    <td>17</td>
-                                    <td>휴강</td>
-                                    <td>이강사</td>
-                                    <td>2025-10-28</td>
-                                    <td><span class="status processing">처리중</span></td>
-                                    <td class="rejected">반려</td>
-                                </tr>
-                                <tr class="clickable">
-                                    <td>16</td>
-                                    <td>휴강</td>
-                                    <td>이강사</td>
-                                    <td>2025-10-21</td>
-                                    <td><span class="status processing">처리중</span></td>
-                                    <td class="approved">승인</td>
-                                </tr>
+                            </thead>
+                            <tbody id="approvalArea">
+                                <c:forEach var="a" items="${approvalList}">
+
+                                </c:forEach>
                             </tbody>
                         </table>
+                        <div id="approvalPage" class="pagination">
+
+                        </div>
                     </div>
                 </div>
             </section>
         </main>
+
+        <script>
+            function loadApproval(page) {
+
+                fetch('/ajax/adminCalender?page=' + page)
+                .then(resp => resp.json())
+                .then(data => {
+
+                    /* ----- 1) 테이블 렌더링 ----- */
+                    const area = document.getElementById("approvalArea");
+                    area.innerHTML = "";
+
+                    if (data.approvalList.length === 0) {
+                        area.innerHTML =
+                            '<tr><td colspan="6" style="text-align:center;color:#666;">등록된 일정이 없습니다.</td></tr>';
+                    } else {
+                        data.approvalList.forEach(function(a) {
+
+                            area.innerHTML +=
+                                '<tr class="clickable" ' +
+                                    'onclick="location.href=\'' +
+                                        '${pageContext.request.contextPath}/adminCalenderDetail.co?lectureDateNo=' +
+                                        a.lectureDateNo +
+                                    '\'">' +
+
+                                    '<td>' + a.lectureDateNo + '</td>' +
+                                    '<td>' + a.title + '</td>' +
+                                    '<td>' + a.writer + '</td>' +
+                                    '<td>' + a.approvalDate + '</td>' +
+
+                                    '<td>' +
+                                        (a.status === "IN_PROGRESS" ? '<span class="status pending">처리중</span>' : '') +
+                                        (a.status === "APPROVED"    ? '<span class="status approved">접수</span>'  : '') +
+                                        (a.status === "REJECTED"    ? '<span class="status rejected">반려</span>'  : '') +
+                                    '</td>' +
+
+                                    '<td>' +
+                                        (a.status === "APPROVED" ? '<span class="approved">승인</span>' : '') +
+                                        (a.status === "REJECTED" ? '<span class="rejected">반려</span>' : '') +
+                                        (a.status !== "APPROVED" && a.status !== "REJECTED"
+                                            ? '<span class="pending">대기</span>'
+                                            : '') +
+                                    '</td>' +
+
+                                '</tr>';
+                        });
+                    }
+
+
+                    /* ----- 2) 페이징 렌더링 ----- */
+                    const pageArea = document.getElementById("approvalPage");
+                    pageArea.innerHTML = "";
+
+                    // ◀ 이전
+                    if (page > 1) {
+                        pageArea.innerHTML +=
+                            '<a href="javascript:void(0)" class="page-btn" onclick="loadApproval(' + (page - 1) + ')">◀</a>';
+                    }
+
+                    // 페이지 번호들
+                    for (let p = data.startPage; p <= data.endPage; p++) {
+                        pageArea.innerHTML +=
+                            '<a href="javascript:void(0)" ' +
+                            'class="page-btn' + (p === page ? ' active' : '') + '" ' +
+                            'onclick="loadApproval(' + p + ')">' +
+                            p +
+                            '</a>';
+                    }
+
+                    // ▶ 다음
+                    if (page < data.maxPage) {
+                        pageArea.innerHTML +=
+                            '<a href="javascript:void(0)" class="page-btn" onclick="loadApproval(' + (page + 1) + ')">▶</a>';
+                    }
+                });
+            }
+
+            loadApproval(1);
+        </script>
     </body>
 </html>

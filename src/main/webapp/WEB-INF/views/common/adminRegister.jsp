@@ -83,10 +83,13 @@
 
                     <div class="form-group">
                         <label>생년월일</label>
-                        <div class="birth-selects" name="birthDate">
-                            <select><option>년도</option></select>
-                            <select><option>월</option></select>
-                            <select><option>일</option></select>
+                        <div class="form-group">
+                            <input
+                                    type="date"
+                                    id="birthDate"
+                                    name="birthDate"
+                                    required
+                            />
                         </div>
                     </div>
                 </div>
@@ -133,7 +136,7 @@
                 const idInput = document.getElementById("memberId");
 
                 $.ajax({
-                    url : "idDupiCheck.co",
+                    url : "idDuplicateCheck.co",
                     type : "get",
                     data : {
                         memberId : idInput.value
