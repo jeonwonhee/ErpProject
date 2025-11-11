@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!DOCTYPE html>
 <html lang="ko">
@@ -30,36 +31,54 @@
             </tr>
           </thead>
           <tbody>
-          <tr onclick="location.href='${pageContext.request.contextPath}/stQuestionDetail.co?studentInquiryDetailNo=1'">
-              <td>휴가 승인 지연 문의</td>
-              <td>10/19</td>
-              <td><span class="status pending">대기</span></td>
-            </tr>
-            <tr>
-              <td>상담 신청 방법</td>
-              <td>10/7</td>
-              <td><span class="status done">답변</span></td>
-            </tr>
-            <tr>
-              <td>출석 정정 신청 방법</td>
-              <td>10/3</td>
-              <td><span class="status done">답변</span></td>
-            </tr>
-            <tr>
-              <td>병결 관련 문의</td>
-              <td>9/28</td>
-              <td><span class="status done">답변</span></td>
-            </tr>
+            <c:forEach var="question" items="${questionList}">
+                <tr onclick="location.href='${pageContext.request.contextPath}/stQuestionDetail.co?questionNo=${question.questionNo}'">
+                    <td>${question.questionTitle}</td>
+                    <td>${question.createDate}</td>
+                    <c:choose>
+                        <c:when test="${question.questionStatus eq '대기'}">
+                            <td><span class="status pending">${question.questionStatus}</span></td>
+                        </c:when>
+                        <c:otherwise>
+                            <td><span class="status done">${question.questionStatus}</span></td>
+                        </c:otherwise>
+                    </c:choose>
+                </tr>
+            </c:forEach>
           </tbody>
         </table>
 
         <!-- 페이지네이션 -->
         <div class="pagination">
-          <button>1</button>
-          <button>2</button>
-          <button>3</button>
-          <button>4</button>
-          <button>5</button>
+            <c:if test="${pi.currentPage > 1}">
+                <button class="btn btn-primary"
+                        onclick="location.href='${pageContext.request.contextPath}/stQuestion.co?currentPage=${pi.currentPage - 1}'">
+                    &lt; 이전
+                </button>
+            </c:if>
+
+            <c:forEach var="i" begin="${pi.startPage}" end="${pi.endPage}">
+                <c:choose>
+                    <c:when test="${i == pi.currentPage}">
+                        <button class="btn btn-outline-primary" disabled>
+                                ${i}
+                        </button>
+                    </c:when>
+                    <c:otherwise>
+                        <button class="btn btn-outline-primary"
+                                onclick="location.href='${pageContext.request.contextPath}/stQuestion.co?currentPage=${i}'">
+                                ${i}
+                        </button>
+                    </c:otherwise>
+                </c:choose>
+            </c:forEach>
+
+            <c:if test="${pi.currentPage < pi.maxPage}">
+                <button class="btn btn-primary"
+                        onclick="location.href='${pageContext.request.contextPath}/stQuestion.co?currentPage=${pi.currentPage + 1}'">
+                    다음 &gt;
+                </button>
+            </c:if>
         </div>
 
         <!-- 글쓰기 버튼 -->

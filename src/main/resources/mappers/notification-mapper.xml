@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kh.classLink.model.mapper.NotificationMapper">
+    <!--member-->
+    <resultMap id="memberResultMap" type="Member">
+        <result column="MEMBER_NO" property="memberNo"/>
+        <result column="MEMBER_ID" property="memberId"/>
+        <result column="MEMBER_NAME" property="memberName"/>
+        <result column="MEMBER_PASSWORD" property="memberPassword"/>
+        <result column="CREATE_DATE" property="createDate"/>
+        <result column="UPDATE_DATE" property="updateDate"/>
+        <result column="STATUS" property="status"/>
+        <result column="EMAIL" property="email"/>
+        <result column="PHONE" property="phone"/>
+        <result column="ADDRESS" property="address"/>
+        <result column="ROLE" property="role"/>
+        <result column="BIRTH_DATE" property="birthDate"/>
+        <result column="LECTURE_NAME" property="lectureName"/>
+        <result column="COMMUTE_RATE" property="commuteRate"/>
+        <result column="COMMUTE_MONTH" property="commuteMonth"/>
+    </resultMap>
+    <!--알람-->
+    <resultMap id="notiResultMap" type="Notification">
+        <result column="NOTIFICATION_NO" property="notificationNo"/>
+        <result column="NOTIFICATION_TITLE" property="notificationTitle"/>
+        <result column="NOTIFICATION_CONTENTS" property="notificationContents"/>
+        <result column="NOTIFICATION_BOOLEAN" property="notificationBoolean"/>
+        <result column="MEMBER_NO" property="memberNo"/>
+        <result column="CREATE_DATE" property="createDate"/>
+        <result column="UPDATE_DATE" property="updateDate"/>
+    </resultMap>
+
+
+    <!--아직 안 읽은 알람 조회-->
+    <select id="selectNotiToMember" parameterType="int" resultMap="notiResultMap">
+        SELECT ROWNUM,
+                NOTIFICATION_NO,
+                NOTIFICATION_TITLE,
+                NOTIFICATION_CONTENTS
+        FROM (SELECT
+                NOTIFICATION_NO,
+                NOTIFICATION_TITLE,
+                NOTIFICATION_CONTENTS,
+                NOTIFICATION_BOOLEAN,
+                MEMBER_NO
+            FROM NOTIFICATION
+            ORDER BY NOTIFICATION_NO)
+        WHERE MEMBER_NO = #{memberNo}
+        AND NOTIFICATION_BOOLEAN = 'N'
+        AND ROWNUM <![CDATA[<=]]> 4
+    </select>
+
+    <!--알람 갯수 조회-->
+    <select id="selectNotiCountByMember" parameterType="int" resultType="int">
+        SELECT COUNT(*)
+        FROM NOTIFICATION
+        WHERE MEMBER_NO = #{memberNo}
+        AND NOTIFICATION_BOOLEAN = 'N'
+    </select>
+
+    <!--알림 읽음 처리-->
+    <update id="readNoti" parameterType="Notification">
+        UPDATE NOTIFICATION
+        SET
+            NOTIFICATION_BOOLEAN = 'Y'
+        WHERE NOTIFICATION_NO = #{notificationNo}
+        AND MEMBER_NO = #{memberNo}
+    </update>
+
+
+
+
+</mapper>

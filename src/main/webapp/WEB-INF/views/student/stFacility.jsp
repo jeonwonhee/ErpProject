@@ -1,4 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="ko">
     <head>
@@ -8,6 +9,7 @@
         <link rel="stylesheet" href="/styles/default.css">
         <link rel="stylesheet" href="/styles/style.css">
         <link rel="stylesheet" href="/styles/student.css">
+        <link rel="stylesheet" href="/styles/common.css">
     </head>
     <body class="student student-facility" >
         <jsp:include page="/WEB-INF/views/common/sidBar.jsp" />
@@ -20,26 +22,25 @@
                     <!-- 기자재 신청 폼 -->
                     <div class="card">
                         <h2>기자재 신청</h2>
-                        <form>
+                        <form action="${pageContext.request.contextPath}/device.in" method="post">
                             <div class="form-group">
                                 <label for="deviceType">기자재 종류</label>
-                                <select id="deviceType" name="deviceName">
+                                <select id="deviceType" name="deviceId">
                                     <option value="">선택하세요</option>
-                                    <option>노트북</option>
-                                    <option>빔프로젝터</option>
-                                    <option>마이크</option>
-                                    <option>HDMI 케이블</option>
+                                    <c:forEach var="device" items="${device}">
+                                        <option value="${device.deviceId}">${device.deviceKind}</option>
+                                    </c:forEach>
                                 </select>
                             </div>
 
                             <div class="form-group">
-                                <label for="deviceCount">수량</label>
-                                <input type="number" id="deviceCount" min="1" max="10" placeholder="1" />
+                                <label for="deviceCount">신청 수량</label>
+                                <input type="number" id="deviceCount" name="attendAmount" min="0" max="100" placeholder="1" />
                             </div>
 
                             <div class="form-group">
-                                <label for="memo">비고</label>
-                                <textarea id="memo" placeholder="필요 시 사유를 입력하세요"></textarea>
+                                <label for="endTime">반납 예정일</label>
+                                <input type="date" id="endTime" name="endTime" required />
                             </div>
 
                             <div class="form-submit">
@@ -61,26 +62,66 @@
                                 </tr>
                             </thead>
                             <tbody>
+                            <c:forEach var="r" items="${deviceRentAtt}">
                                 <tr>
-                                    <td>노트북</td>
-                                    <td>1</td>
-                                    <td>2025.11.02</td>
-                                    <td><span class="status pending">대기중</span></td>
+                                    <td>${r.deviceKind}</td>
+                                    <td>${r.attendAmount}</td>
+                                    <td>${r.createTime}</td>
+                                    <td>
+                                        <c:choose>
+                                            <c:when test="${r.status == 'WAIT'}">
+                                                <span class="status pending">대기중</span>
+                                            </c:when>
+                                            <c:when test="${r.status == 'APPROVAL'}">
+                                                <span class="status approved">승인</span>
+                                            </c:when>
+                                            <c:when test="${r.status == 'RETURN'}">
+                                                <span class="status rejected">반려</span>
+                                            </c:when>
+                                            <c:otherwise>
+                                                <span class="status">${r.status}</span>
+                                            </c:otherwise>
+                                        </c:choose>
+                                    </td>
                                 </tr>
-                                <tr>
-                                    <td>HDMI 케이블</td>
-                                    <td>2</td>
-                                    <td>2025.10.29</td>
-                                    <td><span class="status approved">승인</span></td>
-                                </tr>
-                                <tr>
-                                    <td>빔프로젝터</td>
-                                    <td>1</td>
-                                    <td>2025.10.21</td>
-                                    <td><span class="status rejected">반려</span></td>
-                                </tr>
+                            </c:forEach>
                             </tbody>
                         </table>
+                        <div class="pagination">
+
+                            <c:if test="${pi.currentPage > 1}">
+                                <button class="btn btn-primary"
+                                        onclick="location.href='${pageContext.request.contextPath}/stFacility.co?cpage=${pi.currentPage - 1}'">
+                                    &lt; 이전
+                                </button>
+                            </c:if>
+
+                            <c:forEach var="i" begin="${pi.startPage}" end="${pi.endPage}">
+                                <c:choose>
+                                    <c:when test="${i == pi.currentPage}">
+                                        <button class="btn btn-outline-primary" disabled>
+                                                ${i}
+                                        </button>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <button class="btn btn-outline-primary"
+                                                onclick="location.href='${pageContext.request.contextPath}/stFacility.co?cpage=${i}'">
+                                                ${i}
+                                        </button>
+                                    </c:otherwise>
+                                </c:choose>
+                            </c:forEach>
+
+                            <c:if test="${pi.currentPage < pi.maxPage}">
+                                <button class="btn btn-primary"
+                                        onclick="location.href='${pageContext.request.contextPath}/stFacility.co?cpage=${pi.currentPage + 1}'">
+                                    다음 &gt;
+                                </button>
+                            </c:if>
+
+                        </div>
+
+
                     </div>
                 </div>
             </section>

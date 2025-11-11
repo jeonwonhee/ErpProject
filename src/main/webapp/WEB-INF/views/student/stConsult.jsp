@@ -18,38 +18,41 @@
 
     <section class="content consult">
       <!-- 상담신청 폼 -->
-      <div class="card consult-form">
-        <h2>상담 신청</h2>
+        <!-- 상담신청 폼 -->
+        <div class="card consult-form">
+            <h2>상담 신청</h2>
 
-        <div class="form-group">
-          <label>상담 주제</label>
-          <select>
-            <option>진로 상담</option>
-            <option>학습 상담</option>
-            <option>생활 상담</option>
-          </select>
-        </div>
+            <form action="${pageContext.request.contextPath}/consult.at" method="post">
+                <div class="form-group">
+                    <label>상담 주제</label>
+                    <select name="topic">
+                        <option>진로 상담</option>
+                        <option>학습 상담</option>
+                        <option>생활 상담</option>
+                    </select>
+                </div>
 
-        <div class="form-row">
-          <div class="form-col">
-            <label>희망 날짜</label>
-            <input type="date" />
-          </div>
-          <div class="form-col">
-            <label>희망 시간</label>
-            <input type="time" />
-          </div>
-        </div>
+                <div class="form-row">
+                    <div class="form-col">
+                        <label>희망 날짜</label>
+                        <input type="date" name="date" />
+                    </div>
+                    <div class="form-col">
+                        <label>희망 시간</label>
+                        <input type="time" name="time" />
+                    </div>
+                </div>
 
-        <div class="form-group">
-          <label>상세 내용</label>
-          <textarea placeholder="상담 요청 내용을 입력하세요"></textarea>
-        </div>
+                <div class="form-group">
+                    <label>상세 내용</label>
+                    <textarea name="content" placeholder="상담 요청 내용을 입력하세요"></textarea>
+                </div>
 
-        <div class="form-submit">
-          <button class="btn-submit">신청</button>
+                <div class="form-submit">
+                    <button class="btn-submit" type="submit">신청</button>
+                </div>
+            </form>
         </div>
-      </div>
 
       <!-- 신청 내역 -->
       <div class="card consult-history">

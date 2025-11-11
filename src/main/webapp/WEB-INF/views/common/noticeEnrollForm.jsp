@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!DOCTYPE html>
 <html lang="ko">
@@ -23,10 +24,10 @@
       <div class="card">
         <h2>공지사항 작성</h2>
 
-        <form class="notice-form" enctype="multipart/form-data">
+        <form class="notice-form" enctype="multipart/form-data" action="${pageContext.request.contextPath}/insertNotice.co" method="post">
           <div class="form-group">
-            <label for="title">제목</label>
-            <input type="text" id="title" placeholder="제목을 입력하세요">
+            <label for="noticeTitle">제목</label>
+            <input type="text" id="noticeTitle" name="noticeTitle" placeholder="제목을 입력하세요">
           </div>
             <div class="subject-select">
                 <label for="noticeType">공지 타입</label>
@@ -38,28 +39,26 @@
                 </select>
             </div>
             <br>
-            <div class="classNoList">
+            <div class="class-no-list">
                 <label for="classNoList">반 명</label>
                 <div class="checkbox-group">
-                    <input type="checkbox" name="classNoList" value="1"> a반
-                    <input type="checkbox" name="classNoList" value="2"> b반
-                    <input type="checkbox" name="classNoList" value="3"> c반
-                    <input type="checkbox" name="classNoList" value="4"> d반
+                    <c:forEach var="c" items="${classList}">
+                        <input type="checkbox" name="classNoList" value="${c.classNo}"> ${c.className}
+                    </c:forEach>
                 </div>
             </div>
             <br>
           <div class="form-group file-group">
             <label for="file">첨부파일</label>
             <div class="file-box">
-              <label class="file-label" for="file">파일선택</label>
-              <input type="file" id="file">
-              <span class="file-name">선택된 파일이 없음</span>
+             <%-- <label class="file-label" for="file">파일선택</label>--%>
+              <input type="file" id="file" name="upFile">
             </div>
           </div>
 
           <div class="form-group">
-            <label for="content">작성 내용</label>
-            <textarea id="content" placeholder="내용을 입력하세요"></textarea>
+            <label for="noticeContents">작성 내용</label>
+            <textarea id="noticeContents" name="noticeContents" placeholder="내용을 입력하세요"></textarea>
           </div>
 
           <button type="submit" class="btn-submit">등록하기</button>
@@ -72,7 +71,7 @@
 
         let noticeType = document.getElementById("noticeType");
 
-        let classNoList = document.querySelector(".classNoList");
+        let classNoList = document.querySelector(".class-no-list");
         let selectNoticeType = "";
         for (let i=0; i<noticeType.options.length; i++) {
             if(noticeType.options[i].selected) {

@@ -1,31 +1,102 @@
 package com.kh.classLink.controller;
 
+import com.kh.classLink.model.vo.Member;
+import com.kh.classLink.model.vo.PageInfo;
+import com.kh.classLink.model.vo.Question;
+import com.kh.classLink.service.QuestionService;
+import jakarta.servlet.http.HttpSession;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
+import java.util.HashMap;
+import java.util.Map;
 
 @Controller
 public class QuestionController {
 
+    private QuestionService questionService;
+    @Autowired
+    public void setQuestionService(QuestionService questionService) {
+        this.questionService = questionService;
+    }
+
     /**
      * 문의 목록
+     * @param currentPage
+     * @param listType
+     * @param model
+     * @param session
      * @return
      */
     @GetMapping("/questionManage.co")
-    public String questionManage(){
+    public String questionManage(@RequestParam(value="currentPage" , defaultValue = "1") int currentPage,
+                                @RequestParam(value="listType", defaultValue = "ANSWER")String listType,
+                                 Model model, HttpSession session) {
+        Map<String,Object>  map = new HashMap<>();
+
+        Member loginMember = (Member) session.getAttribute("loginMember");
+        int memberNo = loginMember.getMemberNo();
+        String role = loginMember.getRole();
+        Question question = new Question();
+        question.setListType(listType);
+        question.setRole(role);
+        question.setQuestionMember(memberNo);
+        map = questionService.selectAnswerList(currentPage,question);
+        System.out.println(map.get("list"));
+        model.addAttribute("questionList",map.get("list"));
+        model.addAttribute("pi",map.get("pi"));
+        model.addAttribute("listType",listType);
+
+
+
         return "common/questionManage";
     }
-    
 
+
+    /**
+     * 학생 문의 페이지
+     * @param currentPage
+     * @param model
+     * @return
+     */
     @GetMapping("/stQuestion.co")
-    public String stQuestion() {
+    public String stQuestion(@RequestParam(value = "currentPage",defaultValue = "1") int currentPage,
+                             Model model,HttpSession session) {
+
+
+        Member loginMember = (Member) session.getAttribute("loginMember");
+        int memberNo = loginMember.getMemberNo();
+        Map<String, Object> map = questionService.selectQuestionList(currentPage,memberNo);
+
+        model.addAttribute("questionList",map.get("list"));
+        model.addAttribute("pi",map.get("pi"));
         //학생 문의 신청
         return "student/stQuestion";
     }
 
+
+    /**
+     * 문의 상세조회
+     * @param questionNo
+     * @param model
+     * @return
+     */
     @GetMapping("/stQuestionDetail.co")
-    public String stQuestionDetail() {
-        //문의 신청 디테일
-        return "student/stQuestionDetail";
+    public String stQuestionDetail(@RequestParam(value="questionNo") int questionNo,Model model) {
+        Question question = questionService.selectQuestionByNo(questionNo);
+
+        if (question != null) {
+            model.addAttribute("question",question);
+            return "student/stQuestionDetail";
+        } else {
+            
+            return "student/stQuestionDetail";
+        }
+
     }
 
     /**
@@ -48,9 +119,66 @@ public class QuestionController {
      * @return
      */
     @GetMapping("/questionEnrollForm.co")
-    public String questionEnrollForm(){
-        return "common/questionEnrollForm";
+    public String questionEnrollForm(@RequestParam(value="questionNo") int questionNo,Model model){
+        Question question = questionService.selectQuestionByNo(questionNo);
+
+        if (question != null) {
+            model.addAttribute("question",question);
+            return "common/questionEnrollForm";
+        } else {
+
+            return "common/questionEnrollForm";
+        }
+
+
+
     }
 
+
+    /**
+     * 문의 등록
+     * @param question
+     * @param session
+     * @param model
+     * @return
+     */
+    @PostMapping("/insertQuestion.qu")
+    public String insertQuestion(Question question , HttpSession session, Model model){
+        //추후 로그인 완성시 세션으로 불러오기
+        Member loginMember = (Member) session.getAttribute("loginMember");
+        question.setQuestionMember(loginMember.getMemberNo());
+        int result = questionService.insertQuestion(question);
+
+        if (result > 0) {
+            session.setAttribute("alertMsg", "문의 등록에 성공하였습니다.");
+            return "redirect:/stQuestion.co";
+        } else {
+            model.addAttribute("errorMsg", "문의 등록에 실패하였습니다.");
+            return "redirect:/stQuestion.co";
+        }
+
+    }
+
+    /**
+     * 문의 답변
+     * @param question
+     * @param session
+     * @param model
+     * @return
+     */
+    @PostMapping("/questionAnswer.qu")
+    public String questionAnswer(Question question , HttpSession session, Model model){
+        Member loginMember = (Member) session.getAttribute("loginMember");
+        question.setAnswerMember(loginMember.getMemberNo()) ;
+        System.out.println(question);
+        int reuslt = questionService.updateQuestion(question);
+        if (reuslt > 0) {
+            session.setAttribute("alertMsg", "문의 답변에 성공하였습니다.");
+            return "redirect:/questionManage.co";
+        } else {
+
+            return "redirect:/questionManage.co";
+        }
+    }
 
 }
