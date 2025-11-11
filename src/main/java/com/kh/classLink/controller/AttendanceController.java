@@ -29,7 +29,15 @@ public class AttendanceController {
      * @return
      */
     @GetMapping("/AttendanceDashboard.co")
-    public String adminAttendanceDashboard(){
+    public String adminAttendanceDashboard(@RequestParam(value="dataSet", defaultValue = "student") String dataSet,
+                                           Model model) {
+
+        Map<String,Object> map = attendService.attendStatistics(dataSet);
+
+        model.addAttribute("weekData",map.get("weekData"));
+        model.addAttribute("allData",map.get("allData"));
+        model.addAttribute("monthData",map.get("monthData"));
+
         return "admin/adminAttendDashboard";
     }
 
@@ -173,4 +181,5 @@ public class AttendanceController {
 
         return "redirect:/selectAttendClass.at?classNo="+classNo;
     }
+
 }
