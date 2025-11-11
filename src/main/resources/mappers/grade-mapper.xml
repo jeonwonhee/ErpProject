@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kh.classLink.model.mapper.GradeMapper">
+
+    <!-- ============================
+         resultMap: GRADE + (조인 칼럼들)
+    ============================= -->
+    <resultMap id="gradeResultMap" type="com.kh.classLink.model.vo.GradeDto">
+        <result column="GRADE_NO"      property="gradeNo"/>
+        <result column="GRADE"         property="grade"/>
+        <!-- 조인으로 얻은 강의 정보 -->
+        <result column="LECTURE_NO"    property="lectureNo"/>
+        <result column="LECTURE_NAME"  property="lectureName"/>
+        <!-- 학생/시험/일자 -->
+        <result column="STUDENT_NO"    property="studentNo"/>
+        <result column="TEST_NAME"     property="testName"/>
+        <result column="CREATE_DATE"   property="createDate"/>
+    </resultMap>
+
+    <!-- ============================
+         (1) 학생이 수강 중인 강의 목록
+         기준: CLASS_STUDENT → CLASS_LECTURE → LECTURE
+         파라미터: memberNo (세션의 loginMember.memberNo)
+    ============================= -->
+    <select id="findLecturesByStudent"
+            parameterType="int"
+            resultType="com.kh.classLink.model.vo.Lecture">
+        SELECT DISTINCT
+        L.LECTURE_NO   AS lectureNo,
+        L.LECTURE_NAME AS lectureName,
+        L.MEMBER_NO    AS memberNo
+        FROM CLASS_STUDENT   CS
+        JOIN CLASS_LECTURE   CL ON CL.CLASS_NO   = CS.CLASS_NO
+        JOIN LECTURE         L  ON L.LECTURE_NO  = CL.LECTURE_NO
+        WHERE CS.MEMBER_NO = #{memberNo}
+        ORDER BY L.LECTURE_NAME
+    </select>
+
+    <!-- ============================
+         (2) 선택한 강의의 최신 성적 N개
+         GRADE → CLASS_STUDENT(학생) → CLASS_LECTURE → LECTURE
+         파라미터: memberNo, lectureNo, limit
+    ============================= -->
+    <select id="findLatestGrades"
+            parameterType="map"
+            resultMap="gradeResultMap">
+        SELECT
+        L.LECTURE_NAME      AS lectureName,
+        M.MEMBER_NAME       AS studentName,
+        G.GRADE             AS grade
+        FROM GRADE             G
+        JOIN CLASS_STUDENT     CS ON CS.STUDENT_NO       = G.STUDENT_NO
+        JOIN MEMBER            M  ON M.MEMBER_NO         = CS.MEMBER_NO
+        JOIN CLASS_LECTURE     CL ON CL.CLASS_LECTURE_NO = G.CLASS_LECTURE_NO
+        JOIN LECTURE           L  ON L.LECTURE_NO        = CL.LECTURE_NO
+        WHERE CS.MEMBER_NO = #{memberNo}
+        AND L.LECTURE_NO = #{lectureNo}
+        ORDER BY G.CREATE_DATE DESC
+        FETCH FIRST #{limit} ROWS ONLY
+    </select>
+
+    <!-- ============================
+         (3) 새 성적 등록
+         DTO에 classLectureNo 필드가 있어야 함!
+    ============================= -->
+    <insert id="insertGrade" parameterType="com.kh.classLink.model.vo.GradeDto">
+        <selectKey keyProperty="gradeNo" resultType="int" order="BEFORE">
+            SELECT SEQ_GNO.NEXTVAL FROM DUAL
+        </selectKey>
+        INSERT INTO GRADE (
+        GRADE_NO,
+        GRADE,
+        CLASS_LECTURE_NO,
+        STUDENT_NO,
+        TEST_NAME,
+        CREATE_DATE
+        ) VALUES (
+        #{gradeNo},
+        #{grade},
+        #{classLectureNo},
+        #{studentNo},
+        #{testName},
+        SYSDATE
+        )
+    </insert>
+
+    <!-- ============================
+         (4) 성적 수정
+    ============================= -->
+    <update id="updateGrade" parameterType="com.kh.classLink.model.vo.GradeDto">
+        UPDATE GRADE
+        SET GRADE       = #{grade},
+        TEST_NAME   = #{testName},
+        CREATE_DATE = SYSDATE
+        WHERE GRADE_NO    = #{gradeNo}
+    </update>
+
+    <!-- ============================
+         (5) 성적 삭제
+    ============================= -->
+    <delete id="deleteGrade" parameterType="int">
+        DELETE FROM GRADE
+        WHERE GRADE_NO = #{gradeNo}
+    </delete>
+
+</mapper>
+
+

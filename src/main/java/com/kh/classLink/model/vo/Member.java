@@ -1,8 +1,8 @@
 package com.kh.classLink.model.vo;
 
 import lombok.*;
-
-import java.sql.Date;
+import org.springframework.format.annotation.DateTimeFormat;
+import java.time.LocalDate;
 
 @Getter
 @Setter
@@ -14,17 +14,20 @@ public class Member {
     private String memberId;
     private String memberName;
     private String memberPassword;
-    private Date createDate;
-    private Date updateDate;
+    private LocalDate createDate;
+    private LocalDate updateDate;
     private String status;
     private String email;
     private String phone;
     private String address;
     private String role;
-    private Date BirthDate;
+
+    private LocalDate birthDate;
+    private int vacCnt;
 
 
     private String lectureName;
     private String commuteRate;
     private String commuteMonth;
 }
+

@@ -1,10 +1,24 @@
 package com.kh.classLink.controller;
 
+import com.kh.classLink.service.LectureDateService;
+import com.kh.classLink.model.vo.LectureDate;
+import com.kh.classLink.model.vo.Member;
+import jakarta.servlet.http.HttpSession;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
+import java.util.List;
 
 @Controller
+@RequiredArgsConstructor
 public class ScheduleController {
+
+    private final LectureDateService lectureDateService;
 
     /**
      *
@@ -12,8 +26,10 @@ public class ScheduleController {
      */
 
     @GetMapping("/stLectureDate.co")
-    public String stLectureDate() {
+    public String stLectureDate(Model model) {
         //학생 일정조회
+        List<LectureDate> events = lectureDateService.selectLectureDateList();
+        model.addAttribute("events", events);
         return "student/stLectureDate";
     }
 
@@ -39,17 +55,55 @@ public class ScheduleController {
      * @return
      */
     @GetMapping("/leCalender.co")
-    public String lectureCalender() {
+    public String lectureCalender(Model model) {
+        List<LectureDate> events = lectureDateService.selectLectureDateList();
+        model.addAttribute("events", events);
         return "lecture/leCalender";
     }
 
     /** 강사 일정추가 페이지
      * @return
      */
-    @GetMapping("/leCalenderPlus.co")
+    @GetMapping("/lecture/leCalenderPlus.co")
     public String lectureCalenderPlus() {
         return "lecture/leCalenderAdd";
     }
 
+    /*
+    * 강사 일정 추가
+    * */
+    @PostMapping("/lecture/insertLectureDate.bo")
+    public String lecturedateAdd(@ModelAttribute LectureDate lectureDate,
+                                 HttpSession session) {
+        Member loginUser = (Member) session.getAttribute("loginUser");
+
+        int classLectureNo = lectureDateService.getClassLectureNoByMemberNo(loginUser.getMemberNo());
+
+        lectureDate.setClassLectureNo(classLectureNo); // 로그인한 강사 번호 세팅
+
+        int result = lectureDateService.insertLectureDate(lectureDate);
+
+        if(result > 0) {
+            session.setAttribute("alertMsg","일정 등록 성공");
+            return "redirect:/lecture/leCalender.co";
+        } else {
+            session.setAttribute("alertMsg", "일정 등록 실패");
+            return "redirect:/lecture/leCalenderPlus";
+        }
+    }
+
+    @GetMapping("/testLogin")
+    public String testLogin(HttpSession session) {
+        Member fakeTeacher = new Member();
+        fakeTeacher.setMemberNo(1);            // DB에 존재하는 MEMBER_NO
+        fakeTeacher.setMemberId("teacher01");
+        fakeTeacher.setMemberName("김강사");
+        fakeTeacher.setRole("TEACHER");
+
+        session.setAttribute("loginUser", fakeTeacher);
+        System.out.println("✅ 임시 로그인 완료: " + fakeTeacher);
+
+        return "redirect:/lecture/leCalenderPlus.co?classLectureNo=1";
+    }
 
 }
