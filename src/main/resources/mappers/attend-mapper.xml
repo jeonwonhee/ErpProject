@@ -53,6 +53,13 @@
         <result column="MEMBER_NAME" property="memberName"/>
         <result column="CLASS_NAME" property="className"/>
         <result column="CLASS_NO" property="classNo"/>
+        <result column="START_DATE" property="startDate"/>
+        <result column="END_DATE" property="endDate"/>
+        <result column="ATTEND_COUNT" property="attendCount"/>
+        <result column="LATE_COUNT" property="lateCount"/>
+        <result column="ABSENT_COUNT" property="absentCount"/>
+        <result column="ATTEND_RATE" property="attendRate"/>
+        <result column="ATTEND_MONTH" property="attendMonth"/>
     </resultMap>
     <!--직원수 체크-->
     <select id="selectEmpCount" resultType="int">
@@ -138,7 +145,7 @@
         ON CS.CLASS_NO = C.CLASS_NO
         LEFT OUTER JOIN ATTEND A
         ON A.STUDENT_NO = CS.STUDENT_NO
-        AND TO_CHAR(A.CREATE_DATE,'YYYY-MM-DD') = TO_CHAR(SYSDATE,'YYYY-MM-DD')
+        AND TO_CHAR(A.ATTEND_DATE,'YYYY-MM-DD') = TO_CHAR(SYSDATE,'YYYY-MM-DD')
         WHERE C.CLASS_NO = #{classNo}
     </select>
 
@@ -173,4 +180,54 @@
         </foreach>
         ) t
     </insert>
+
+    <!--학생 이번주 출결 데이터-->
+    <select id="selectStWeekAttendData" parameterType="Attend" resultMap="attendResultMap">
+        SELECT
+            TRUNC(ATTEND_DATE) AS ATTEND_DATE,
+            SUM(CASE WHEN ATTEND_STATUS = 'ATTEND' THEN 1 ELSE 0 END) AS ATTEND_COUNT,
+            SUM(CASE WHEN ATTEND_STATUS = 'LATE' THEN 1 ELSE 0 END) AS LATE_COUNT,
+            SUM(CASE WHEN ATTEND_STATUS = 'ABSENT' THEN 1 ELSE 0 END) AS ABSENT_COUNT,
+            ROUND(
+                ( (SUM(CASE WHEN ATTEND_STATUS = 'ATTEND' THEN 1 ELSE 0 END)
+                + SUM(CASE WHEN ATTEND_STATUS = 'LATE' THEN 1 ELSE 0 END)) / NULLIF(SUM(CASE WHEN ATTEND_STATUS IN ('ATTEND','LATE','ABSENT') THEN 1 ELSE 0 END), 0)
+                * 100), 2
+            ) AS ATTEND_RATE
+        FROM ATTEND
+        WHERE TRUNC(ATTEND_DATE) BETWEEN #{startDate} AND #{endDate}
+        GROUP BY TRUNC(ATTEND_DATE)
+        ORDER BY TRUNC(ATTEND_DATE)
+    </select>
+
+    <!--전체 학생 출결 데이터-->
+    <select id="selectStAllAttendData" resultMap="attendResultMap">
+        select
+            ATTEND_STATUS,
+            COUNT(STUDENT_NO) AS ATTEND_COUNT
+        FROM ATTEND
+        GROUP BY
+        ATTEND_STATUS
+    </select>
+
+    <!--전체 학생 올해 월별 출결 데이터-->
+    <select id="selectStMonthAttendData" resultMap="attendResultMap">
+        SELECT
+            TO_CHAR(ATTEND_DATE, 'YYYY-MM') AS ATTEND_MONTH,
+            SUM(CASE WHEN ATTEND_STATUS = 'ATTEND' THEN 1 ELSE 0 END) AS ATTEND_COUNT,
+            SUM(CASE WHEN ATTEND_STATUS = 'LATE' THEN 1 ELSE 0 END) AS LATE_COUNT,
+            SUM(CASE WHEN ATTEND_STATUS = 'ABSENT' THEN 1 ELSE 0 END) AS ABSENT_COUNT,
+            ROUND(
+                (
+                    (SUM(CASE WHEN ATTEND_STATUS = 'ATTEND' THEN 1 ELSE 0 END)
+                    + SUM(CASE WHEN ATTEND_STATUS = 'LATE' THEN 1 ELSE 0 END)) / NULLIF(SUM(CASE WHEN ATTEND_STATUS IN ('ATTEND','LATE','ABSENT') THEN 1 ELSE 0 END), 0)
+                    * 100
+                ), 2
+            ) AS ATTEND_RATE
+        FROM ATTEND
+        WHERE TO_CHAR(ATTEND_DATE, 'YYYY') = TO_CHAR(SYSDATE,'YYYY')
+        GROUP BY TO_CHAR(ATTEND_DATE, 'YYYY-MM')
+        ORDER BY TO_CHAR(ATTEND_DATE, 'YYYY-MM')
+    </select>
+
+
 </mapper>

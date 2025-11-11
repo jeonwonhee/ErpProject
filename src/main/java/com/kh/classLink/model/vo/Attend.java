@@ -21,4 +21,13 @@ public class Attend {
     private String memberName;
     private String className;
     private int classNo;
+
+    private Date startDate;
+    private Date endDate;
+
+    private int attendCount;
+    private int lateCount;
+    private int absentCount;
+    private double attendRate;
+    private String attendMonth;
 }
