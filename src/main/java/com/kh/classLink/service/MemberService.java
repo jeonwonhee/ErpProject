@@ -1,6 +1,8 @@
 package com.kh.classLink.service;
 
 import com.kh.classLink.model.vo.Member;
+import org.springframework.stereotype.Service;
+
 
 public interface MemberService {
 
@@ -17,4 +19,16 @@ public interface MemberService {
      * @return
      */
     public int insertMember(Member member);
+
+
+
+    /**
+     * 아이디 + 역할로 회원 조회 (로그인용)
+     */
+    Member getMemberByIdAndRole(String memberId, String role);
+
+    /**
+     * 아이디로 회원 조회 (단일 조회용)
+     */
+    Member getMemberById(String memberId);
 }

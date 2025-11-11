@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!DOCTYPE html>
 <html lang="ko">
@@ -23,18 +24,25 @@
 
         <!-- 문의 정보 -->
         <div class="inquiry-header">
-          <p><b>제목 :</b> 휴가 승인 지연 문의</p>
+          <p><b>제목 :</b>${question.questionTitle}</p>
           <div class="info-row">
-            <span>작성일 : 2025-10-19</span>
-            <span>상태 : <span class="status pending">대기</span></span>
+            <span>작성일 : ${question.createDate}</span>
+              <c:choose>
+                  <c:when test="${question.questionStatus eq '대기'}">
+                      <span>상태 : <span class="status pending">대기</span></span>
+                  </c:when>
+                  <c:otherwise>
+                      <span>상태 : <span class="status done">답변</span></span>
+                  </c:otherwise>
+              </c:choose>
+
           </div>
         </div>
 
         <!-- 문의 내용 -->
         <div class="inquiry-body">
           <p>
-            안녕하세요. 지난주에 휴가 신청을 했는데 아직 승인되지 않아 문의드립니다.<br />
-            확인 부탁드립니다.
+            ${question.questionContent}
           </p>
         </div>
 
@@ -43,17 +51,15 @@
           <h3>관리자 답변</h3>
           <div class="reply-box">
             <p>
-              안녕하세요, 홍길동님.<br />
-              해당 건은 승인 절차가 진행 중이며 오늘 중으로 처리될 예정입니다.<br />
-              감사합니다.
+              ${question.answer}
             </p>
-            <span class="reply-date">답변일 : 2025-10-20</span>
+            <span class="reply-date">답변일 : ${question.updateDate}</span>
           </div>
         </div>
 
         <!-- 버튼 영역 -->
         <div class="btn-area">
-          <button class="btn-list">목록으로</button>
+          <button class="btn-list" onclick="location.href='${pageContext.request.contextPath}/stQuestion.co'">목록으로</button>
         </div>
       </div>
     </section>

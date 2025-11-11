@@ -133,7 +133,7 @@
                 const idInput = document.getElementById("memberId");
 
                 $.ajax({
-                    url : "idDupiCheck.co",
+                    url : "idDuplicateCheck.co",
                     type : "get",
                     data : {
                         memberId : idInput.value

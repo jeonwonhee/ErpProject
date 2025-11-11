@@ -2,8 +2,10 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
 <mapper namespace="com.kh.classLink.model.mapper.MemberMapper">
-    <!--notice-->
+
+    <!-- Member ResultMap -->
     <resultMap id="memberResultMap" type="Member">
         <result column="MEMBER_NO" property="memberNo"/>
         <result column="MEMBER_ID" property="memberId"/>
@@ -14,12 +16,53 @@
         <result column="STATUS" property="status"/>
         <result column="EMAIL" property="email"/>
         <result column="PHONE" property="phone"/>
-        <result column="ADDRESS" property="address"/>
         <result column="ROLE" property="role"/>
         <result column="BIRTH_DATE" property="birthDate"/>
+        <result column="VAC_CNT" property="vacCnt"/>
     </resultMap>
 
-    <!--유저 아이디 중복 체크-->
+    <!-- ID로 회원 조회 -->
+    <select id="getMemberById" parameterType="string" resultMap="memberResultMap">
+        SELECT
+        MEMBER_NO,
+        MEMBER_ID,
+        MEMBER_NAME,
+        MEMBER_PASSWORD,
+        CREATE_DATE,
+        UPDATE_DATE,
+        STATUS,
+        EMAIL,
+        PHONE,
+        ROLE,
+        BIRTH_DATE,
+        VAC_CNT
+        FROM MEMBER
+        WHERE MEMBER_ID = #{memberId}
+        AND STATUS = 'Y'
+    </select>
+
+    <!-- ID와 역할로 회원 조회 (로그인용) -->
+    <select id="getMemberByIdAndRole" resultMap="memberResultMap">
+        SELECT
+        MEMBER_NO,
+        MEMBER_ID,
+        MEMBER_NAME,
+        MEMBER_PASSWORD,
+        CREATE_DATE,
+        UPDATE_DATE,
+        STATUS,
+        EMAIL,
+        PHONE,
+        ROLE,
+        BIRTH_DATE,
+        VAC_CNT
+        FROM MEMBER
+        WHERE MEMBER_ID = #{memberId}
+        AND UPPER(ROLE) = UPPER(#{role})
+        AND STATUS = 'Y'
+    </select>
+
+    <!-- 아이디 중복 체크 -->
     <select id="getMemberCountById" parameterType="string" resultType="int">
         SELECT COUNT(*)
         FROM MEMBER
@@ -32,37 +75,36 @@
             SELECT SEQ_MNO.NEXTVAL FROM DUAL
         </selectKey>
         INSERT INTO MEMBER (
-            MEMBER_NO,
-            MEMBER_ID,
-            MEMBER_NAME,
-            MEMBER_PASSWORD,
-            EMAIL,
-            PHONE,
-            ADDRESS,
-            ROLE,
-            BIRTH_DATE
+        MEMBER_NO,
+        MEMBER_ID,
+        MEMBER_NAME,
+        MEMBER_PASSWORD,
+        EMAIL,
+        PHONE,
+        ROLE,
+        BIRTH_DATE
         ) VALUES (
-            #{memberNo},
-            #{memberId},
-            #{memberName},
-            #{memberPassword},
-            #{email},
-            #{phone},
-            #{address},
-            UPPER(#{role}),
-            #{birthDate}
+        #{memberNo},
+        #{memberId},
+        #{memberName},
+        #{memberPassword},
+        #{email},
+        #{phone},
+        UPPER(#{role}),
+        #{birthDate}
         )
     </insert>
 
+    <!-- 강사 수업 등록 -->
     <insert id="insertLecture" parameterType="Member">
-        INSERT INTO LECTURE(
-            LECTURE_NO,
-            LECTURE_NAME,
-            MEMBER_NO
+        INSERT INTO LECTURE (
+        LECTURE_NO,
+        LECTURE_NAME,
+        MEMBER_NO
         ) VALUES (
-            SEQ_LNO.NEXTVAL,
-            #{lectureName},
-            #{memberNo}
+        SEQ_LNO.NEXTVAL,
+        #{lectureName},
+        #{memberNo}
         )
     </insert>
 

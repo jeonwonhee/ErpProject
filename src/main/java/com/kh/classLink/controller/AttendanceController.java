@@ -1,11 +1,16 @@
 package com.kh.classLink.controller;
 
+import com.kh.classLink.model.vo.Attend;
+import com.kh.classLink.model.vo.Class;
 import com.kh.classLink.service.AttendService;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -24,7 +29,15 @@ public class AttendanceController {
      * @return
      */
     @GetMapping("/AttendanceDashboard.co")
-    public String adminAttendanceDashboard(){
+    public String adminAttendanceDashboard(@RequestParam(value="dataSet", defaultValue = "student") String dataSet,
+                                           Model model) {
+
+        Map<String,Object> map = attendService.attendStatistics(dataSet);
+
+        model.addAttribute("weekData",map.get("weekData"));
+        model.addAttribute("allData",map.get("allData"));
+        model.addAttribute("monthData",map.get("monthData"));
+
         return "admin/adminAttendDashboard";
     }
 
@@ -49,7 +62,7 @@ public class AttendanceController {
         model.addAttribute("empList", map.get("empList"));
         model.addAttribute("pi", map.get("pi"));
 
-        System.out.println("map"+map.get("empList"));
+
 
         return "admin/adminLectureList";
     }
@@ -58,7 +71,11 @@ public class AttendanceController {
      * @return
      */
     @GetMapping("/lectureAttendance.co")
-    public String lectureAttendance() {
+    public String lectureAttendance(Model model) {
+        int memberNo = 6;
+        ArrayList<Class> list = attendService.selectTodayLectureClass(memberNo);
+        model.addAttribute("classList", list);
+
         return "lecture/leAttendance";
     }
 
@@ -86,6 +103,83 @@ public class AttendanceController {
     public String stAtt() {
         //츨석 정정
         return "student/stAtt";
+    }
+
+
+    /**
+     * 선택 반 정보와 소속 학생 조회
+     * @param classNo
+     * @param model
+     * @return
+     */
+    @GetMapping("/selectAttendClass.at")
+    public String selectAttendClass(@RequestParam(value = "classNo") int classNo, Model model) {
+        int memberNo = 6;
+        Map<String,Object> map = attendService.selectAttendInfo(classNo,memberNo);
+
+
+        model.addAttribute("classList", map.get("classList"));
+        model.addAttribute("studentList", map.get("studentList"));
+        model.addAttribute("classInfo", map.get("classInfo"));
+
+        return "lecture/leAttendance";
+    }
+
+    /**
+     * 학생 출석 처리
+     * @param status
+     * @param studentNo
+     * @param sessionNo
+     * @return
+     */
+    @GetMapping("/studentAttendMan.at")
+    @ResponseBody
+    public String studentAttendMan(@RequestParam(value = "status") String status,
+                                   @RequestParam(value = "studentNo") int studentNo,
+                                   @RequestParam(value = "sessionNo") int sessionNo) {
+        Attend attend = new Attend();
+        attend.setAttendStatus(status);
+        attend.setStudentNo(studentNo);
+        attend.setSessionNo(sessionNo);
+        int result = attendService.studentAttendMan(attend);
+
+        if (result > 0) {
+            return "1";
+        } else {
+            return "0";
+        }
+
+    }
+
+    /**
+     * 반 전체 일괄 출설 처리 및 페이지 리로드
+     * @param classNo
+     * @param attendStatus
+     * @param sessionNo
+     * @param session
+     * @param model
+     * @return
+     */
+    @GetMapping("/attendClassAll.at")
+    public  String attendClassAll(@RequestParam(value = "classNo") int classNo,
+                                  @RequestParam(value = "attendStatus") String attendStatus,
+                                  @RequestParam(value = "sessionNo") int sessionNo,
+                                  HttpSession session,Model model) {
+        Attend attend = new Attend();
+        attend.setAttendStatus(attendStatus);
+        attend.setSessionNo(sessionNo);
+        attend.setClassNo(classNo);
+        int memberNo = 6;
+
+        int result = attendService.attendClassAll(attend,memberNo);
+
+        if(result > 0) {
+            session.setAttribute("alertMsg", "일괄 처리에 성공하였습니다.");
+        } else {
+            model.addAttribute("errorMsg", "일괄 처리에 실패하였습니다.");
+        }
+
+        return "redirect:/selectAttendClass.at?classNo="+classNo;
     }
 
 }

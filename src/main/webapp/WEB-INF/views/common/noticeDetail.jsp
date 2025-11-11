@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!DOCTYPE html>
 <html lang="ko">
@@ -17,39 +18,50 @@
   <main class="main">
   <jsp:include page="/WEB-INF/views/common/topBar.jsp" />
 
-    <section class="content">
-      <div class="notice-detail-panel">
-        <!-- 제목 영역 -->
-        <div class="notice-header">
-          <h2 class="notice-title">팀프로젝트 관련 공지</h2>
-          <div class="notice-meta">
-            <span>작성일: <b>2025-10-19</b></span>
-            <span>작성자: <b>관리자</b></span>
-          </div>
-        </div>
+      <form action="${pageContext.request.contextPath}/deleteNotice.no?noticeNo=${noticeDetail.noticeNo}" method="get">
+          <section class="content">
+              <div class="notice-detail-panel">
+                  <!-- 제목 영역 -->
+                  <div class="notice-header">
+                      <h2 class="notice-title">${noticeDetail.noticeTitle}</h2>
+                      <input type="hidden" value="${noticeDetail.noticeNo}" name="noticeNo"/>
+                      <div class="notice-meta">
+                          <span>작성일: <b>${noticeDetail.createDate}</b></span>
+                          <span>작성자: <b>${noticeDetail.memberName}</b></span>
+                      </div>
+                      <div>
+                          <c:if test="${not empty fileList}">
+                              <h4>첨부파일</h4>
+                              <c:forEach var="file" items="${fileList}">
+                                  <a download="${file.noticeFileOriName}"
+                                     href="${pageContext.request.contextPath}/${file.filePath}${file.noticeFileName}">
+                                          ${file.noticeFileOriName}
+                                  </a>
+                              </c:forEach>
+                          </c:if>
 
-        <!-- 본문 내용 -->
-        <div class="notice-body">
-          <p>
-            안녕하세요. 팀프로젝트 관련하여 다음과 같이 공지드립니다.<br><br>
-            📌 프로젝트 주제 제출 기한: <b>10월 25일(토)</b><br>
-            📌 중간 점검 발표: <b>11월 2일(일)</b><br>
-            📌 최종 발표 및 결과물 제출: <b>11월 15일(토)</b><br><br>
-            각 팀은 일정에 맞춰 준비해주시기 바랍니다.  
-            <br><br>감사합니다.
-          </p>
-        </div>
+                      </div>
+                  </div>
 
-        <!-- 버튼 영역 -->
-        <div class="notice-detail-footer">
-          <button class="btn-list">목록</button>
-          <div class="right-btns">
-            <button class="btn-edit">수정</button>
-            <button class="btn-delete">삭제</button>
-          </div>
-        </div>
-      </div>
-    </section>
+                  <!-- 본문 내용 -->
+                  <div class="notice-body">
+                      <p>
+                          ${noticeDetail.noticeContents}
+                      </p>
+                  </div>
+
+                  <!-- 버튼 영역 -->
+                  <div class="notice-detail-footer">
+                      <button class="btn-list" type="button" onclick="location.href='${pageContext.request.contextPath}/notice.co'">목록</button>
+                      <div class="right-btns">
+                          <button class="btn-edit" type="button" onclick="location.href='${pageContext.request.contextPath}/noticeUpdateForm.no?noticeNo=${noticeDetail.noticeNo}'">수정</button>
+                          <button class="btn-delete" type="submit">삭제</button>
+                      </div>
+                  </div>
+              </div>
+          </section>
+      </form>
+
   </main>
 </body>
 </html>

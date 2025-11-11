@@ -1,6 +1,5 @@
 package com.kh.classLink.model.vo;
 
-
 import lombok.*;
 
 import java.sql.Date;
@@ -11,9 +10,12 @@ import java.sql.Date;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Class {
-    private int ClassId;
-    private String ClassName;
-    private int MemberAmount;
-    private Date StartTime;
-    private Date EndTime;
+
+    private int classNo;
+    private String className;
+    private int memberCount;
+    private Date startDate;
+    private Date endDate;
+
+    private int controllNo;
 }
