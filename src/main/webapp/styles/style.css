@@ -26,7 +26,7 @@ body {
   z-index: 20;
 }
 
-.alarm-page {
+.noti-page {
     position: fixed;
     top: 8%;
     right: 0;
@@ -40,29 +40,41 @@ body {
     z-index: 20;
 }
 
-.alarm-btn {
+.noti-page .noti-area {
+    margin-top: 16px;
+}
+
+.noti-btn {
 
 }
 
 /* 학생 리스트 영역 */
-.alarm-page .alarm-list {
+.noti-page .noti-list {
     border: 1px solid #d2d4de;
     border-radius: 14px;
     overflow: hidden;
+    margin-bottom: 16px;
 }
 
 /* 한 줄 */
-.alarm-page .alarm-row {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
+.noti-page .noti-row {
     gap: 14px;
     padding: 16px 20px;
     background: #fff;
 }
 
-.alarm-page .alarm-row + .alarm-row {
+.noti-page .noti-row + .noti-row {
     border-top: 1px solid #d2d4de;
+}
+
+.noti-page .noti-title {
+    font-weight: 600;
+    font-size: 18px;
+    margin-bottom: 16px;
+}
+
+.noti-page .noti-content {
+    margin-bottom: 16px;
 }
 
 .logo {
