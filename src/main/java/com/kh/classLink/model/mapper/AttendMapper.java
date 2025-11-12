@@ -61,4 +61,25 @@ public interface AttendMapper {
      */
     int attendClassAll(List<Map<String,Object>> attendClassAllList);
 
+    /**
+     * 전체 학생 이번주 출결 데이터
+     * @param attend
+     * @return
+     */
+    ArrayList<Attend> selectStWeekAttendData(Attend attend);
+
+    /**
+     * 전체 학생 전체 출결 데이터
+     * @param attend
+     * @return
+     */
+    ArrayList<Attend> selectStAllAttendData(Attend attend);
+
+    /**
+     * 전체 학생 월 별 출결 데이터
+     * @param attend
+     * @return
+     */
+    ArrayList<Attend> selectStMonthAttendData(Attend attend);
+
 }

@@ -24,7 +24,7 @@ public interface QuestionMapper {
      * @param rowBounds
      * @return
      */
-    ArrayList<Question> selectAnswerList(RowBounds rowBounds,int questionMember, String listType);
+    ArrayList<Question> selectAnswerList(RowBounds rowBounds, Question question);
 
     /**
      * 문의 갯수 조회
@@ -37,7 +37,7 @@ public interface QuestionMapper {
      * 답변 필요 문의 갯수
      * @return
      */
-    int selectAnswerCount(int questionMember,String listType);
+    int selectAnswerCount(Question question);
 
     /**
      * 문의 상세조회

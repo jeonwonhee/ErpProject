@@ -47,4 +47,11 @@ public interface AttendService {
      * @return
      */
     int attendClassAll(Attend attend,int memberNo);
+
+    /**
+     * 관리자 출결현황
+     * @param dataSet
+     * @return
+     */
+    Map<String,Object> attendStatistics(String dataSet);
 }

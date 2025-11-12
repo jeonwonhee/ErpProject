@@ -1,5 +1,6 @@
 package com.kh.classLink.controller;
 
+import com.kh.classLink.model.vo.Member;
 import com.kh.classLink.model.vo.PageInfo;
 import com.kh.classLink.model.vo.Question;
 import com.kh.classLink.service.QuestionService;
@@ -25,16 +26,26 @@ public class QuestionController {
 
     /**
      * 문의 목록
+     * @param currentPage
+     * @param listType
+     * @param model
+     * @param session
      * @return
      */
     @GetMapping("/questionManage.co")
     public String questionManage(@RequestParam(value="currentPage" , defaultValue = "1") int currentPage,
-                                @RequestParam(value="listType", defaultValue = "QUESTION")String listType,
-                                 Model model) {
-        Map<String,Object> map = new HashMap<>();
+                                @RequestParam(value="listType", defaultValue = "ANSWER")String listType,
+                                 Model model, HttpSession session) {
+        Map<String,Object>  map = new HashMap<>();
 
-        int memberNo = 6;
-        map = questionService.selectAnswerList(currentPage,memberNo,listType);
+        Member loginMember = (Member) session.getAttribute("loginMember");
+        int memberNo = loginMember.getMemberNo();
+        String role = loginMember.getRole();
+        Question question = new Question();
+        question.setListType(listType);
+        question.setRole(role);
+        question.setQuestionMember(memberNo);
+        map = questionService.selectAnswerList(currentPage,question);
         System.out.println(map.get("list"));
         model.addAttribute("questionList",map.get("list"));
         model.addAttribute("pi",map.get("pi"));
@@ -53,9 +64,12 @@ public class QuestionController {
      * @return
      */
     @GetMapping("/stQuestion.co")
-    public String stQuestion(@RequestParam(value = "currentPage",defaultValue = "1") int currentPage,Model model) {
-        int memberNo = 6;
+    public String stQuestion(@RequestParam(value = "currentPage",defaultValue = "1") int currentPage,
+                             Model model,HttpSession session) {
 
+
+        Member loginMember = (Member) session.getAttribute("loginMember");
+        int memberNo = loginMember.getMemberNo();
         Map<String, Object> map = questionService.selectQuestionList(currentPage,memberNo);
 
         model.addAttribute("questionList",map.get("list"));
@@ -131,7 +145,8 @@ public class QuestionController {
     @PostMapping("/insertQuestion.qu")
     public String insertQuestion(Question question , HttpSession session, Model model){
         //추후 로그인 완성시 세션으로 불러오기
-        question.setQuestionMember(6);
+        Member loginMember = (Member) session.getAttribute("loginMember");
+        question.setQuestionMember(loginMember.getMemberNo());
         int result = questionService.insertQuestion(question);
 
         if (result > 0) {
@@ -153,14 +168,16 @@ public class QuestionController {
      */
     @PostMapping("/questionAnswer.qu")
     public String questionAnswer(Question question , HttpSession session, Model model){
-        question.setAnswerMember(7);
+        Member loginMember = (Member) session.getAttribute("loginMember");
+        question.setAnswerMember(loginMember.getMemberNo()) ;
+        System.out.println(question);
         int reuslt = questionService.updateQuestion(question);
         if (reuslt > 0) {
             session.setAttribute("alertMsg", "문의 답변에 성공하였습니다.");
-            return "common/questionManage";
+            return "redirect:/questionManage.co";
         } else {
 
-            return "common/questionManage";
+            return "redirect:/questionManage.co";
         }
     }
 

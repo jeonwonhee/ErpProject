@@ -37,12 +37,14 @@
                 WHERE QUESTION_MEMBER = #{questionMember}
             </when>
             <otherwise>
-                WHERE QUESTION_MEMBER IN (SELECT MEMBER_NO FROM MEMBER WHERE ROLE = 'STUDENT')
+                <if test="role == 'TEACHER'">
+                    WHERE QUESTION_MEMBER IN (SELECT MEMBER_NO FROM MEMBER WHERE ROLE = 'STUDENT')
+                </if>
             </otherwise>
         </choose>
     </select>
 
-    <!--문의 조회 / 수정필요할수도. /-->
+    <!--문의 조회 -->
     <select id="selectQuestionList" parameterType="Question" resultMap="questionResultMap">
         SELECT A.QUESTION_NO,
                 A.QUESTION_TYPE,
@@ -53,8 +55,8 @@
                 A.ANSWER_MEMBER,
                 A.CREATE_DATE,
                 A.UPDATE_DATE,
-                B.MEMBER_NAME,
-                C.MEMBER_NAME,
+                B.MEMBER_NAME AS QUESTION_MEMBER_NAME,
+                C.MEMBER_NAME AS ANSWER_MEMBER_NAME,
                 CASE WHEN A.ANSWER IS NULL THEN '대기' ELSE '답변' END AS QUESTION_STATUS
         FROM QUESTION A
         JOIN MEMBER B
@@ -64,6 +66,7 @@
         WHERE A.QUESTION_MEMBER = #{questionMember}
     </select>
 
+    <!--답변 필요 문의 리스트-->
     <select id="selectAnswerList" parameterType="Question" resultMap="questionResultMap">
         SELECT A.QUESTION_NO,
             A.QUESTION_TYPE,
@@ -87,7 +90,9 @@
                 WHERE QUESTION_MEMBER = #{questionMember}
             </when>
             <otherwise>
-                WHERE QUESTION_MEMBER IN (SELECT MEMBER_NO FROM MEMBER WHERE ROLE = 'STUDENT')
+                <if test="role == 'TEACHER'">
+                    WHERE QUESTION_MEMBER IN (SELECT MEMBER_NO FROM MEMBER WHERE ROLE = 'STUDENT')
+                </if>
             </otherwise>
         </choose>
     </select>
@@ -97,10 +102,14 @@
     <select id="selectQuestionByNo" parameterType="int" resultMap="questionResultMap">
         SELECT QUESTION_TITLE,
                 QUESTION_CONTENT,
+                CASE WHEN QUESTION_TYPE = 'COURSE' THEN '수업관련'
+                    WHEN QUESTION_TYPE = 'SYSTEM' THEN '시스템관련'
+                    ELSE '기타문의' END AS QUESTION_TYPE,
                 CREATE_DATE,
                 UPDATE_DATE,
                 CASE WHEN ANSWER IS NULL THEN '대기' ELSE '답변' END AS QUESTION_STATUS,
-                ANSWER
+                ANSWER,
+                QUESTION_NO
         FROM QUESTION
         WHERE QUESTION_NO = #{questionNo}
     </select>

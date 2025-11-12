@@ -39,7 +39,7 @@
       <div class="attendance-panel">
         <div class="attendance-head">
           <div class="attendance-info">
-            <p>출결 날짜 : <b>2025-10-05</b></p>
+            <p>출결 날짜 : <b>${classList[0].planDate}</b></p>
             <p>반 : <b>${classInfo[0].className}</b></p>
             <p>인원 수 : <b>${classInfo[0].memberCount}</b></p>
           </div>
@@ -70,9 +70,9 @@
             </c:forEach>
         </div>
 
-        <div class="attendance-footer">
+<%--        <div class="attendance-footer">
           <button type="button" class="btn-submit">적용</button>
-        </div>
+        </div>--%>
       </div>
     </section>
   </main>
