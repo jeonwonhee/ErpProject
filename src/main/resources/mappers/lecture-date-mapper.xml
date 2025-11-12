@@ -36,22 +36,23 @@
 
     <select id="selectLectureDateList" resultMap="lectureDateResultMap">
         SELECT
-        L.LECTURE_DATE_NO,
-        TO_CHAR(L.START_DATE, 'YYYY-MM-DD') AS START_DATE,
-        TO_CHAR(L.END_DATE, 'YYYY-MM-DD') AS END_DATE,
-        L.TITLE,
-        L.CONTENT,
-        L.CLASS_LECTURE_NO,
-        L.DATE_TYPE
+            L.LECTURE_DATE_NO,
+            TO_CHAR(L.START_DATE, 'YYYY-MM-DD') AS START_DATE,
+            TO_CHAR(L.END_DATE, 'YYYY-MM-DD') AS END_DATE,
+            L.TITLE,
+            L.CONTENT,
+            L.CLASS_LECTURE_NO,
+            L.DATE_TYPE,
+            A.STATUS
         FROM
-        LECTURE_DATE L
+            LECTURE_DATE L
         JOIN
-        LECTURE_DATE_APPROVAL A
+            LECTURE_DATE_APPROVAL A
         ON L.LECTURE_DATE_NO = A.LECTURE_DATE_NO
         WHERE
-        A.STATUS = 'APPROVED'
+            L.CLASS_LECTURE_NO = #{memberNo}
         ORDER BY
-        L.START_DATE DESC
+            L.START_DATE DESC
     </select>
 
     <!-- ===============================
@@ -133,7 +134,7 @@
             LECTURE_DATE_NO
         )
         VALUES (
-            SEQ_APPROVAL_NO.NEXTVAL,
+            SEQ_LDANO.NEXTVAL,
             #{lectureDateNo}
         )
     </insert>
@@ -161,6 +162,36 @@
         JOIN MEMBER M ON L.CLASS_LECTURE_NO = M.MEMBER_NO
         JOIN LECTURE_DATE_APPROVAL A ON L.LECTURE_DATE_NO = A.LECTURE_DATE_NO
         ORDER BY A.APPROVAL_DATE DESC
+    </select>
+
+    <select id="selectLectureDateListPaged" parameterType="map" resultType="LectureDateApprovalList">
+        SELECT *
+        FROM (
+        SELECT ROWNUM AS RNUM, A.*
+        FROM (
+            SELECT
+                L.LECTURE_DATE_NO AS lectureDateNo,
+                L.TITLE AS title,
+                M.MEMBER_NAME AS writer,
+                TO_CHAR(A.APPROVAL_DATE, 'YYYY-MM-DD') AS approvalDate,
+                A.STATUS AS status
+            FROM LECTURE_DATE L
+            JOIN LECTURE_DATE_APPROVAL A
+                ON L.LECTURE_DATE_NO = A.LECTURE_DATE_NO
+            JOIN CLASS_LECTURE CL
+                ON L.CLASS_LECTURE_NO = CL.CLASS_LECTURE_NO
+            JOIN MEMBER M
+                ON CL.LECTURE_NO = M.MEMBER_NO
+            ORDER BY L.LECTURE_DATE_NO DESC
+        ) A
+        WHERE ROWNUM &lt;= #{endRow}
+        )
+        WHERE RNUM &gt; #{startRow}
+    </select>
+
+    <select id="getLectureDateListCount" resultType="int">
+        SELECT COUNT(*)
+        FROM LECTURE_DATE_APPROVAL
     </select>
 
     <select id="selectLectureDateApprovalDetail" parameterType="int" resultType="LectureDateApprovalList">

@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Map;
 
 @Slf4j
 @Service
@@ -19,9 +20,9 @@ public class LectureDateServiceImpl implements LectureDateService {
 
     /* 전체 일정 조회 */
     @Override
-    public List<LectureDate> selectLectureDateList() {
+    public List<LectureDate> selectLectureDateList(int memberNo) {
         log.info("[LectureDateService] 전체 일정 조회 실행");
-        return lectureDateMapper.selectLectureDateList();
+        return lectureDateMapper.selectLectureDateList(memberNo);
     }
 
     /* 특정 반(CLASS_LECTURE_NO)의 일정 조회 */
@@ -80,5 +81,15 @@ public class LectureDateServiceImpl implements LectureDateService {
     @Override
     public LectureDateApprovalList selectLectureDateApprovalDetail(int lectureDateNo) {
         return lectureDateMapper.selectLectureDateApprovalDetail(lectureDateNo);
+    }
+
+    @Override
+    public List<LectureDateApprovalList> selectLectureDateListPaged(Map<String, Object> map) {
+        return lectureDateMapper.selectLectureDateListPaged(map);
+    }
+
+    @Override
+    public int getLectureDateListCount() {
+        return lectureDateMapper.getLectureDateListCount();
     }
 }

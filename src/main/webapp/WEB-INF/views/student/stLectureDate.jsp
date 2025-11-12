@@ -8,7 +8,6 @@
         <link rel="stylesheet" href="/styles/default.css">
         <link rel="stylesheet" href="/styles/style.css">
         <link rel="stylesheet" href="/styles/student.css">
-        <link rel="stylesheet" href="/styles/common.css">
 
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 

@@ -9,7 +9,6 @@
         <link rel="stylesheet" href="/styles/default.css">
         <link rel="stylesheet" href="/styles/style.css">
         <link rel="stylesheet" href="/styles/lecture.css">
-        <link rel="stylesheet" href="/styles/common.css">
 
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 
@@ -66,16 +65,25 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td>11/14</td>
-                                    <td>프로젝트 개발</td>
-                                    <td class="status-pending">대기</td>
-                                </tr>
-                                <tr>
-                                    <td>11/19</td>
-                                    <td>프로젝트 발표</td>
-                                    <td class="status-approved">승인</td>
-                                </tr>
+                                <c:forEach var="e" items="${events}">
+                                    <tr>
+                                        <td>${e.startDate} ~ ${e.endDate}</td>
+                                        <td>${e.title}</td>
+                                        <td>
+                                            <c:choose>
+                                                <c:when test="${e.status eq 'APPROVED'}">
+                                                    <span class="status-approved">승인</span>
+                                                </c:when>
+                                                <c:when test="${e.status eq 'REJECTED'}">
+                                                    <span class="status-rejected">반려</span>
+                                                </c:when>
+                                                <c:otherwise>
+                                                    <span class="status-pending">대기</span>
+                                                </c:otherwise>
+                                            </c:choose>
+                                        </td>
+                                    </tr>
+                                </c:forEach>
                             </tbody>
                         </table>
                     </div>
