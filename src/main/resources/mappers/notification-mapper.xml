@@ -35,9 +35,26 @@
 
     <!--아직 안 읽은 알람 조회-->
     <select id="selectNotiToMember" parameterType="int" resultMap="notiResultMap">
-        SELECT NOTIFICATION_NO,
+        SELECT ROWNUM,
+                NOTIFICATION_NO,
                 NOTIFICATION_TITLE,
                 NOTIFICATION_CONTENTS
+        FROM (SELECT
+                NOTIFICATION_NO,
+                NOTIFICATION_TITLE,
+                NOTIFICATION_CONTENTS,
+                NOTIFICATION_BOOLEAN,
+                MEMBER_NO
+            FROM NOTIFICATION
+            ORDER BY NOTIFICATION_NO)
+        WHERE MEMBER_NO = #{memberNo}
+        AND NOTIFICATION_BOOLEAN = 'N'
+        AND ROWNUM <![CDATA[<=]]> 4
+    </select>
+
+    <!--알람 갯수 조회-->
+    <select id="selectNotiCountByMember" parameterType="int" resultType="int">
+        SELECT COUNT(*)
         FROM NOTIFICATION
         WHERE MEMBER_NO = #{memberNo}
         AND NOTIFICATION_BOOLEAN = 'N'

@@ -22,4 +22,11 @@ public interface NotificationMapper {
      */
     int readNoti(Notification notification);
 
+    /**
+     * 알람 갯수 조회
+     * @param memberNo
+     * @return
+     */
+    int selectNotiCountByMember(int memberNo);
+
 }
