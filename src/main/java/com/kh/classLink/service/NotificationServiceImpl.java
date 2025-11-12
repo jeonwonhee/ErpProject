@@ -54,7 +54,22 @@ public class NotificationServiceImpl implements NotificationService {
      */
     @Override
     public int readNoti(Notification notification) {
-        int result =  notificationMapper.readNoti(notification);
+        int readResult =  notificationMapper.readNoti(notification);
+        int result = 0;
+        if (readResult > 0) {
+            result = notificationMapper.selectNotiCountByMember(notification.getMemberNo());
+        }
+        return result;
+    }
+
+    /**
+     * 알람 갯수 조회
+     * @param memberNo
+     * @return
+     */
+    @Override
+    public int selectNotiCountByMember(int memberNo) {
+        int result = notificationMapper.selectNotiCountByMember(memberNo);
         return result;
     }
 }
