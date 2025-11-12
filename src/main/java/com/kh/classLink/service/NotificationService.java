@@ -21,4 +21,11 @@ public interface NotificationService {
      */
     public int readNoti(Notification notification);
 
+    /**
+     * 알람 갯수 조회
+     * @param memberNo
+     * @return
+     */
+    public int selectNotiCountByMember(int memberNo);
+
 }

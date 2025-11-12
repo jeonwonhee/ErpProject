@@ -13,72 +13,138 @@
 <body>
 <header class="topbar">
     <div class="path">강사 › 공지사항 <b>강사 페이지</b></div>
-    <div class="user-info"><a class="alarm-btn" onclick="alarmPage();">알림(<span> </span>)</a><a onclick="location.href='${pageContext.request.contextPath}/stMyPage.co'">김강사(강사)</a></div>
+    <div class="user-info"><a class="noti-btn" onclick="notiPage();">알림(<span class="noti-count"> </span>)</a><a onclick="location.href='${pageContext.request.contextPath}/stMyPage.co'">김강사(강사)</a></div>
 </header>
-<aside class="alarm-page" style="display: none" id="alarmPage">
+<aside class="noti-page" style="display: none" id="notiPage">
     <div>
         <div class="logo"><span>알림창</span></div>
         <%--알람 발생에 따라 반복 필요 ajax처리?--%>
-        <div class="alarm-area">
-            <div class="alarm-list">
-                <div class="alarm-row">
+        <div class="noti-area">
+<%--            <div class="noti-list">
+                <div class="noti-row">
 
                 </div>
-            </div>
+            </div>--%>
         </div>
 
     </div>
 
 </aside>
 <script>
-    function alarmPage() {
-        let alarmPage = document.querySelector(".alarm-page");
+    function init() {
+        notiCount();
+    }
+
+    function notiCount() {
+        $.ajax({
+            url : "selectNotiCount.nt",
+            type : "get",
+            success: function(data){
+                console.log(data);
+                notiCountReload(data);
+
+            },
+            error: function(err){
+                console.log("아이디 체크 요청 실패 : ", err);
+            }
+        })
+    }
+
+    function notiPage() {
+        let notiPage = document.querySelector(".noti-page");
 
         console.log("TEST!!");
-        console.log(alarmPage.style.display);
-        if(alarmPage.style.display === 'none') {
-            alarmPage.style.display = 'block';
+        console.log(notiPage.style.display);
+        if(notiPage.style.display === 'none') {
+            notiPage.style.display = 'block';
 
             //ajax호출 -- 알림 리스트 가져오기 div 꾸미기 필요
-            $.ajax({
-                url : "selectNotiToMember.nt",
-                type : "get",
-                success: function(data){
-                    console.log(data);
-                    if (data.result === "1") {
-                        alramReload(data);
-                    } else {
-                        console.log("알림 호출 에러.");
-                    }
-                },
-                error: function(err){
-                    console.log("아이디 체크 요청 실패 : ", err);
-                }
-            })
+            selectNotiToMember()
 
         } else {
-            alarmPage.style.display = 'none';
+            notiPage.style.display = 'none';
         }
+
+        notiCount();
     }
 
-    function alramReload(data) {
-        let alarmArea = document.querySelector(".alarm-area");
+    function selectNotiToMember() {
+        $.ajax({
+            url : "selectNotiToMember.nt",
+            type : "get",
+            success: function(data){
+                console.log(data);
+                if (data.result === "1") {
+                    notiReload(data);
+                } else {
+                    console.log("알림 호출 에러.");
+                    let notiArea = document.querySelector(".noti-area");
+                    notiArea.innerHTML ="";
+                }
+            },
+            error: function(err){
+                console.log("아이디 체크 요청 실패 : ", err);
+            }
+        })
+    }
+
+    function notiReload(data) {
+        let notiArea = document.querySelector(".noti-area");
         let notiList = JSON.parse(data.notiList);
-            alarmArea.innerHTML ="";
-            console.log(notiList);
-            console.log(notiList.length);
+        notiArea.innerHTML ="";
+
         for (let i=0; i<notiList.length; i++) {
-            alarmArea.innerHTML += '<div class="alarm-list">'+
-                                        '<div class="alarm-row">'+notiList[i].notificationTitle+'</div>'+
+            notiArea.innerHTML += '<div class="noti-list">'+
+                                        '<div class="noti-row">'+
+                                            '<div class="noti-title">'+notiList[i].notificationTitle+'</div>'+
+                                            '<div class="noti-content">'+notiList[i].notificationContents+'</div>'+
+                                            '<button class="noti-read" data-id='+notiList[i].notificationNo+'>읽음</button>'+
+                                        '</div>'+
                                     '</div>';
 
-            //알람 내역도 출력시키고
-
-            //읽음 버튼 추가해서 읽음 처리 및 해당 알림창에서 삭제(상태값 변경후 리로드)
-
-
         }
+
+        const readBtnList = document.querySelectorAll('.noti-read');
+        readBtnList.forEach(function(readBtn) {
+            readBtn.addEventListener('click',function() {
+                notiRead(readBtn.dataset.id);
+            })
+
+        })
+        // readBtn.addEventListener('click',function() {
+        //     console.log(readBtn)
+        //     //notiRead();
+        // })
     }
+
+    function notiCountReload(data) {
+        let notiSpan = document.querySelector(".noti-count");
+
+        notiSpan.innerHTML = "";
+        notiSpan.innerHTML = data;
+    }
+
+    function notiRead(notificationNo) {
+        console.log(notificationNo);
+        $.ajax({
+            url : "notiRead.nt",
+            type : "get",
+            data : {
+                notificationNo : notificationNo
+            },
+            success: function(data){
+                console.log(data);
+                notiCountReload(data);
+                selectNotiToMember();
+
+            },
+            error: function(err){
+                console.log("알람 읽음 요청 실패 : ", err);
+            }
+        })
+    }
+
+    document.addEventListener('DOMContentLoaded' , init);
 </script>
 </body>
 </html>
