@@ -21,17 +21,37 @@
     <!-- ===============================
          1) 전체 일정 조회
          =============================== -->
+<!--    <select id="selectLectureDateList" resultMap="lectureDateResultMap">-->
+<!--        SELECT-->
+<!--            LECTURE_DATE_NO,-->
+<!--            TO_CHAR(START_DATE, 'YYYY-MM-DD') AS START_DATE,-->
+<!--            TO_CHAR(END_DATE, 'YYYY-MM-DD') AS END_DATE,-->
+<!--            TITLE,-->
+<!--            CONTENT,-->
+<!--            CLASS_LECTURE_NO,-->
+<!--            DATE_TYPE-->
+<!--        FROM LECTURE_DATE-->
+<!--        ORDER BY START_DATE DESC-->
+<!--    </select>-->
+
     <select id="selectLectureDateList" resultMap="lectureDateResultMap">
         SELECT
-            LECTURE_DATE_NO,
-            TO_CHAR(START_DATE, 'YYYY-MM-DD') AS START_DATE,
-            TO_CHAR(END_DATE, 'YYYY-MM-DD') AS END_DATE,
-            TITLE,
-            CONTENT,
-            CLASS_LECTURE_NO,
-            DATE_TYPE
-        FROM LECTURE_DATE
-        ORDER BY START_DATE DESC
+        L.LECTURE_DATE_NO,
+        TO_CHAR(L.START_DATE, 'YYYY-MM-DD') AS START_DATE,
+        TO_CHAR(L.END_DATE, 'YYYY-MM-DD') AS END_DATE,
+        L.TITLE,
+        L.CONTENT,
+        L.CLASS_LECTURE_NO,
+        L.DATE_TYPE
+        FROM
+        LECTURE_DATE L
+        JOIN
+        LECTURE_DATE_APPROVAL A
+        ON L.LECTURE_DATE_NO = A.LECTURE_DATE_NO
+        WHERE
+        A.STATUS = 'APPROVED'
+        ORDER BY
+        L.START_DATE DESC
     </select>
 
     <!-- ===============================
