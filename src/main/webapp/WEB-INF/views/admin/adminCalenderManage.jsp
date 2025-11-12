@@ -7,6 +7,7 @@
         <link rel="stylesheet" href="${pageContext.request.contextPath}/styles/default.css">
         <link rel="stylesheet" href="${pageContext.request.contextPath}/styles/style.css">
         <link rel="stylesheet" href="${pageContext.request.contextPath}/styles/admin.css">
+        <link rel="stylesheet" href="${pageContext.request.contextPath}/styles/common.css">
 
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 
@@ -85,6 +86,20 @@
                                 </c:forEach>
                             </tbody>
                         </table>
+                        <div class="pagination">
+                            <c:if test="${startPage > 1}">
+                                <a href="?page=${startPage - 1}" class="page-btn">이전</a>
+                            </c:if>
+
+                            <c:forEach begin="${startPage}" end="${endPage}" var="p">
+                                <a href="?page=${p}" class="page-btn
+                                    <c:if test='${p eq currentPage}'>active</c:if>'">${p}</a>
+                            </c:forEach>
+
+                            <c:if test="${endPage < maxPage}">
+                                <a href="?page=${endPage + 1}" class="page-btn">다음</a>
+                            </c:if>
+                        </div>
                     </div>
                 </div>
             </section>

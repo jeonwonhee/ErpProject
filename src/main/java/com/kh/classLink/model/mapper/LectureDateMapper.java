@@ -8,12 +8,13 @@ import org.apache.ibatis.annotations.Param;
 
 
 import java.util.List;
+import java.util.Map;
 
 @Mapper
 public interface LectureDateMapper {
 
     /* 전체 일정 조회 */
-    List<LectureDate> selectLectureDateList();
+    List<LectureDate> selectLectureDateList(int memberNo);
 
     /* 특정 반(CLASS_LECTURE_NO)의 일정 조회 */
     List<LectureDate> selectLectureDateByClass(int classLectureNo);
@@ -42,4 +43,8 @@ public interface LectureDateMapper {
     List<LectureDateApprovalList> selectLectureDateApprovalList();
 
     LectureDateApprovalList selectLectureDateApprovalDetail(int lectureDateNo);
+
+    int getLectureDateListCount();
+
+    List<LectureDateApprovalList> selectLectureDateListPaged(Map<String, Object> map);
 }

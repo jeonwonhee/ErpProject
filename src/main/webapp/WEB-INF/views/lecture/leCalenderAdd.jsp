@@ -25,7 +25,7 @@
             </header>
 
             <section class="content">
-                <form action="/lecture/insertLectureDate.bo" method="post">
+                <form action="/insertLectureDate.bo" method="post">
                     <!-- 일정 추가 -->
                     <div class="schedule-add">
                         <h3>일정 추가</h3>

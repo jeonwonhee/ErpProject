@@ -18,5 +18,6 @@ public class LectureDate {
     private String content;
     private int classLectureNo;
     private String dateType;
+    private String status;
 
 }
