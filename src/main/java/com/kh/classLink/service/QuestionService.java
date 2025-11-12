@@ -21,10 +21,10 @@ public interface QuestionService {
     /**
      * 답변 필요 문의 조회
      * @param currentPage
-     * @param questionMember
+     * @param question
      * @return
      */
-    public Map<String,Object> selectAnswerList(int currentPage, int questionMember,String listType);
+    public Map<String,Object> selectAnswerList(int currentPage,Question question);
     
     /**
      * 문의 상세조회

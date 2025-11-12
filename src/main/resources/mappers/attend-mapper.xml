@@ -39,7 +39,7 @@
         <result column="START_DATE" property="startDate"/>
         <result column="END_DATE" property="endDate"/>
         <result column="CONTROLL_NO" property="controllNo"/>
-
+        <result column="PLAN_DATE" property="planDate"/>
     </resultMap>
     <!--attend-->
     <resultMap id="attendResultMap" type="Attend">
@@ -106,7 +106,8 @@
     <!--금일 본인 수업을 듣는 반 리스트-->
     <select id="selectTodayLectureClass" parameterType="int" resultMap="classResultMap">
         SELECT C.CLASS_NAME,
-            C.CLASS_NO
+            C.CLASS_NO,
+            LC.PLAN_DATE
         FROM CLASS C
         JOIN CLASS_LECTURE CL
         ON C.CLASS_NO = CL.CLASS_NO
