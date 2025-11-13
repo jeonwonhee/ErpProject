@@ -12,11 +12,12 @@ import java.sql.Date;
 public class LectureDate {
 
     private int lectureDateNo;
-    private Date startDate;
-    private Date endDate;
+    private String startDate;
+    private String endDate;
     private String title;
     private String content;
     private int classLectureNo;
     private String dateType;
+    private String status;
 
 }
