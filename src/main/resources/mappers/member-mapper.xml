@@ -1,8 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<!DOCTYPE mapper
-        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
-
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.kh.classLink.model.mapper.MemberMapper">
 
     <!-- Member ResultMap -->
@@ -19,27 +16,59 @@
         <result column="ROLE" property="role"/>
         <result column="BIRTH_DATE" property="birthDate"/>
         <result column="VAC_CNT" property="vacCnt"/>
+        <result column="CLASS_NO" property="classNo"/>
+        <result column="CLASS_NAME" property="className"/>
     </resultMap>
 
-    <!-- ID로 회원 조회 -->
-    <select id="getMemberById" parameterType="string" resultMap="memberResultMap">
+    <!-- ID로 회원 조회 (수강반 포함 단일 조회) -->
+    <select id="getMemberById" parameterType="string" resultType="Member">
         SELECT
-        MEMBER_NO,
-        MEMBER_ID,
-        MEMBER_NAME,
-        MEMBER_PASSWORD,
-        CREATE_DATE,
-        UPDATE_DATE,
-        STATUS,
-        EMAIL,
-        PHONE,
-        ROLE,
-        BIRTH_DATE,
-        VAC_CNT
-        FROM MEMBER
-        WHERE MEMBER_ID = #{memberId}
-        AND STATUS = 'Y'
+        m.MEMBER_NO AS memberNo,
+        m.MEMBER_ID AS memberId,
+        m.MEMBER_NAME AS memberName,
+        m.MEMBER_PASSWORD AS memberPassword,
+        m.CREATE_DATE AS createDate,
+        m.UPDATE_DATE AS updateDate,
+        m.STATUS AS status,
+        m.EMAIL AS email,
+        m.PHONE AS phone,
+        m.ROLE AS role,
+        m.BIRTH_DATE AS birthDate,
+        m.VAC_CNT AS vacCnt,
+        cs.CLASS_NO AS classNo,
+        c.CLASS_NAME AS className
+        FROM MEMBER m
+        LEFT JOIN CLASS_STUDENT cs ON cs.MEMBER_NO = m.MEMBER_NO
+        LEFT JOIN CLASS c ON c.CLASS_NO = cs.CLASS_NO
+        WHERE m.MEMBER_ID = #{memberId} AND
+        m.STATUS = 'Y'
     </select>
+
+    <!-- 수강반 정보까지 포함해서 로그인 회원 조회 -->
+    <select id="selectLoginMember"
+            parameterType="string"
+            resultType="com.kh.classLink.model.vo.Member">
+
+        SELECT
+        m.MEMBER_NO      AS memberNo,
+        m.MEMBER_ID      AS memberId,
+        m.MEMBER_NAME    AS memberName,
+        m.ROLE           AS role,
+        m.EMAIL          AS email,
+        m.PHONE          AS phone,
+        m.BIRTH_DATE     AS birthDate,
+        cs.CLASS_NO      AS classNo,
+        c.CLASS_NAME     AS className
+        FROM MEMBER m
+        LEFT JOIN CLASS_STUDENT cs
+        ON m.MEMBER_NO = cs.MEMBER_NO
+        LEFT JOIN CLASS c
+        ON cs.CLASS_NO = c.CLASS_NO
+        WHERE m.MEMBER_ID = #{memberId}
+
+    </select>
+
+
 
     <!-- ID와 역할로 회원 조회 (로그인용) -->
     <select id="getMemberByIdAndRole" resultMap="memberResultMap">
@@ -64,26 +93,26 @@
 
     <!-- 아이디 중복 체크 -->
     <select id="getMemberCountById" parameterType="string" resultType="int">
-        SELECT COUNT(*)
-        FROM MEMBER
+        SELECT COUNT(*) FROM MEMBER
         WHERE MEMBER_ID = #{memberId}
     </select>
 
     <!--회원가입-->
-    <insert id="insertMember" parameterType="Member">
+    <insert id="insertMember" parameterType="com.kh.classLink.model.vo.Member">
         <selectKey keyProperty="memberNo" resultType="int" order="BEFORE">
             SELECT SEQ_MNO.NEXTVAL FROM DUAL
         </selectKey>
-        INSERT INTO MEMBER (
-        MEMBER_NO,
+        INSERT INTO MEMBER
+        ( MEMBER_NO,
         MEMBER_ID,
         MEMBER_NAME,
         MEMBER_PASSWORD,
         EMAIL,
         PHONE,
         ROLE,
-        BIRTH_DATE
-        ) VALUES (
+        STATUS,
+        BIRTH_DATE )
+        VALUES (
         #{memberNo},
         #{memberId},
         #{memberName},
@@ -91,7 +120,22 @@
         #{email},
         #{phone},
         UPPER(#{role}),
-        #{birthDate}
+        #{status},
+        #{birthDate} )
+    </insert>
+
+    <!-- 학생 ↔ 수강반 매핑 INSERT (CLASS_STUDENT) -->
+    <insert id="insertClass"
+            parameterType="com.kh.classLink.model.vo.Member">
+
+        INSERT INTO CLASS_STUDENT (
+        STUDENT_NO,
+        CLASS_NO,
+        MEMBER_NO
+        ) VALUES (
+        SEQ_CSNO.NEXTVAL,
+        #{classNo},
+        #{memberNo}
         )
     </insert>
 
@@ -100,12 +144,30 @@
         INSERT INTO LECTURE (
         LECTURE_NO,
         LECTURE_NAME,
-        MEMBER_NO
-        ) VALUES (
+        MEMBER_NO )
+        VALUES (
         SEQ_LNO.NEXTVAL,
-        #{lectureName},
-        #{memberNo}
-        )
+        #{lectureName}, #{memberNo} )
     </insert>
 
+    <!-- 비밀번호 변경-->
+    <update id="updatePassword">
+        UPDATE MEMBER
+        SET MEMBER_PASSWORD = #{encodedPassword}
+        WHERE MEMBER_NO = #{memberNo}
+    </update>
+
+    <!-- 회원 탈퇴 -->
+    <delete id="deleteMember" parameterType="long">
+        DELETE FROM MEMBER
+        WHERE MEMBER_NO = #{memberNo}
+    </delete>
+
+    <!-- 마이페이지 정보 수정-->
+    <update id="updateInfo" parameterType="map">
+    UPDATE MEMBER
+        SET EMAIL = #{email},
+        PHONE = #{phone}
+        WHERE MEMBER_NO = #{memberNo}
+    </update>
 </mapper>

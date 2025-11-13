@@ -15,53 +15,58 @@
 
         <!-- 메인 -->
         <main class="main">
-            <header class="topbar">
-                <div class="path">강사 › 학생조회 <b>강사 페이지</b></div>
-                <div class="user-info">알림(<span>2</span>) 김강사(강사)</div>
-            </header>
+            <jsp:include page="/WEB-INF/views/common/topBar.jsp" />
 
             <section class="content grade-content">
                 <h2>학생 성적 입력</h2>
 
                 <!-- 검색 영역 -->
                 <div class="search-area">
-                    <div class="search-box">
-                        <input type="text" placeholder="반 검색" />
-                        <button class="btn-search">🔍</button>
+                    <form id="classForm"
+                          action="${pageContext.request.contextPath}/leGrade.co"
+                          method="get">
+                    <div class="subject">
+                        <option value="">-- 수강반 선택 --</option>
+                        <c:forEach var="cls" items="${classList}">
+                            <option value="${cls.classNo}"
+                                    <c:if test="${param.classNo == cls.classNo || selectedClassNo == cls.classNo}">
+                                        selected
+                                    </c:if>
+                                    ${cls.className}
+                            </option>
+                        </c:forEach>
+                        </select>
                     </div>
-                    <input type="text" class="exam-name" placeholder="시험명을 입력하세요..." />
+                    </form>
                 </div>
 
-                <!-- 테이블 -->
+                <!-- =======================
+             학생 성적 입력 테이블
+             - studentList : 선택된 반의 학생 목록
+               · stu.studentNo    : 학생 번호
+               · stu.studentName  : 학생 이름 (memberName)
+               · stu.lectureName  : 수강 과목명 (선택 상황에 따라)
+           ======================= -->
                 <table class="grade-table">
                     <thead>
                         <tr>
                             <th>이름</th>
-                            <th>반이름</th>
+                            <th>수강과목</th>
                             <th>점수</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
                             <td>박혜정</td>
-                            <td>**반</td>
-                            <td><input type="number" placeholder="점수를 입력하세요" value="98" /></td>
-                        </tr>
-                        <tr>
-                            <td>박혜정</td>
-                            <td>**반</td>
-                            <td><input type="number" value="98" /></td>
-                        </tr>
-                        <tr>
-                            <td>박혜정</td>
-                            <td>**반</td>
-                            <td><input type="number" value="98" /></td>
+                            <td>A반</td>
+                            <td><input type="number" placeholder="점수를 입력하세요"/></td>
                         </tr>
                     </tbody>
                 </table>
 
                 <!-- 저장 버튼 -->
                 <div class="btn-area">
+                    <button class="btn-change" onclick="chageGrades()">수정</button>
                     <button class="btn-save" onclick="saveGrades()">저장</button>
                 </div>
             </section>
@@ -70,6 +75,10 @@
         <script>
             function saveGrades() {
             alert("성적이 저장되었습니다.");
+            }
+
+            function chageGrades() {
+                alert("성적이 수정되었습니다.");
             }
         </script>
     </body>

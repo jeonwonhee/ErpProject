@@ -19,8 +19,53 @@
         <result column="CREATE_DATE"   property="createDate"/>
     </resultMap>
 
+
     <!-- ============================
-         (1) 학생이 수강 중인 강의 목록
+         강사가 담당하는 수강반 목록
+         기준: CLASS_STUDENT → CLASS_LECTURE → LECTURE
+         파라미터: memberNo (세션의 loginMember.memberNo)
+    ============================= -->
+    <select id="findClassesByLecture"
+            parameterType="int"
+            resultType="com.kh.classLink.model.vo.Lecture">
+        SELECT DISTINCT
+        c.CLASS_NO     AS classNo,
+        c.CLASS_NAME   AS className,
+        c.MEMBER_COUNT AS memberCount,
+        c.START_DATE   AS startDate,
+        c.END_DATE     AS endDate
+        FROM CLASS c
+        JOIN CLASS_LECTURE cl ON c.CLASS_NO = cl.CLASS_NO
+        JOIN LECTURE l ON cl.LECTURE_NO = l.LECTURE_NO
+        WHERE l.MEMBER_NO = #{memberNo}
+        ORDER BY c.CLASS_NAME
+    </select>
+
+    <!-- ============================
+         선택된 반의 학생 목록
+         기준: CLASS_STUDENT → CLASS_LECTURE → LECTURE
+         파라미터: memberNo (세션의 loginMember.memberNo)
+    ============================= -->
+    <select id="findStudentsByClass"
+            parameterType="int"
+            resultType="com.kh.classLink.model.vo.GradeDto">
+        SELECT
+        cs.STUDENT_NO            AS studentNo,
+        m.MEMBER_NAME            AS studentName,
+        cl.CLASS_LECTURE_NO      AS classLectureNo,
+        l.LECTURE_NAME           AS lectureName,
+        c.CLASS_NAME             AS className
+        FROM CLASS_STUDENT cs
+        JOIN MEMBER m        ON cs.MEMBER_NO = m.MEMBER_NO
+        JOIN CLASS c         ON cs.CLASS_NO = c.CLASS_NO
+        JOIN CLASS_LECTURE cl ON c.CLASS_NO = cl.CLASS_NO
+        JOIN LECTURE l       ON cl.LECTURE_NO = l.LECTURE_NO
+        WHERE cs.CLASS_NO = #{classNo}
+        ORDER BY m.MEMBER_NAME
+    </select>
+
+    <!-- ============================
+         (1) 학생이 수강 중인 강의 목록 (학생 성적조회용)
          기준: CLASS_STUDENT → CLASS_LECTURE → LECTURE
          파라미터: memberNo (세션의 loginMember.memberNo)
     ============================= -->
