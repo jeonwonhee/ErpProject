@@ -1,10 +1,7 @@
 package com.kh.classLink.controller;
 
-import com.kh.classLink.model.vo.LectureDateApproval;
-import com.kh.classLink.model.vo.LectureDateApprovalList;
+import com.kh.classLink.model.vo.*;
 import com.kh.classLink.service.LectureDateService;
-import com.kh.classLink.model.vo.LectureDate;
-import com.kh.classLink.model.vo.Member;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -35,7 +32,11 @@ public class ScheduleController {
         }
 
         int memberNo = loginMember.getMemberNo();
-        List<LectureDate> events = lectureDateService.selectLectureDateList(memberNo);
+
+        String className = lectureDateService.getClassNameByStudent(memberNo);
+        model.addAttribute("className", className);
+
+        List<LectureDate> events = lectureDateService.selectLectureDateListStudent(memberNo);
         model.addAttribute("events", events);
 
         return "student/stLectureDate";
@@ -107,15 +108,59 @@ public class ScheduleController {
      * @return
      */
     @GetMapping("/leCalender.co")
-    public String lectureCalender(Model model, HttpSession session) {
+    public String lectureCalender(@RequestParam(value="classLectureNo", required=false) Integer classLectureNo,
+                                  @RequestParam(value="page", defaultValue="1") int currentPage,
+                                  Model model, HttpSession session) {
         Member loginMember = (Member) session.getAttribute("loginMember");
         if (loginMember == null) {
             return "redirect:/login.co";
         }
 
         int memberNo = loginMember.getMemberNo();
-        List<LectureDate> events = lectureDateService.selectLectureDateList(memberNo);
+
+        // 1. 강사가 가진 반 전체
+        List<ClassLecture> classList = lectureDateService.selectLectureDateByClass(memberNo);
+
+        model.addAttribute("classList", classList);
+
+        System.out.println("classList = " + classList);
+
+        if(classLectureNo == null && !classList.isEmpty()) {
+            classLectureNo = (Integer) classList.get(0).getClassLectureNo();
+        }
+
+        List<LectureDate> events = lectureDateService.selectLectureDateList(classLectureNo);
         model.addAttribute("events", events);
+        model.addAttribute("selectedClassLectureNo", classLectureNo);
+
+        // =====================
+        //      페이징 처리
+        // =====================
+        int listCount = lectureDateService.getLectureDateCount(classLectureNo);
+
+        int boardLimit = 5;   // 5개씩
+        int pageLimit = 5;    // 페이지 버튼 5개
+
+        int maxPage = (int) Math.ceil((double) listCount / boardLimit);
+        int startPage = (currentPage - 1) / pageLimit * pageLimit + 1;
+        int endPage = startPage + pageLimit - 1;
+        if (endPage > maxPage) endPage = maxPage;
+
+        int startRow = (currentPage - 1) * boardLimit;
+        int endRow = startRow + boardLimit;
+
+        Map<String, Object> param = new HashMap<>();
+        param.put("classLectureNo", classLectureNo);
+        param.put("startRow", startRow);
+        param.put("endRow", endRow);
+
+        List<LectureDate> upcomingList = lectureDateService.selectLectureDatePaged(param);
+
+        model.addAttribute("upcomingList", upcomingList);
+        model.addAttribute("currentPage", currentPage);
+        model.addAttribute("maxPage", maxPage);
+        model.addAttribute("startPage", startPage);
+        model.addAttribute("endPage", endPage);
 
         return "lecture/leCalender";
     }
@@ -124,7 +169,18 @@ public class ScheduleController {
      * @return
      */
     @GetMapping("/leCalenderPlus.co")
-    public String lectureCalenderPlus() {
+    public String lectureDatePlus(@RequestParam(value = "classLectureNo", required = false) Integer classLectureNo,
+                                  HttpSession session,
+                                  Model model) {
+
+        Member login = (Member) session.getAttribute("loginMember");
+
+        // 강사가 담당하는 모든 반 조회
+        List<ClassLecture> classList = lectureDateService.selectLectureDateByClass(login.getMemberNo());
+
+        model.addAttribute("classList", classList);
+        model.addAttribute("selectedClassLectureNo", classLectureNo);
+
         return "lecture/leCalenderAdd";
     }
 
@@ -134,36 +190,17 @@ public class ScheduleController {
     @PostMapping("/insertLectureDate.bo")
     public String lectureDateAdd(@ModelAttribute LectureDate lectureDate,
                                  HttpSession session) {
-        Member lecture = (Member) session.getAttribute("loginMember");
-
-        int classLectureNo = lectureDateService.getClassLectureNoByMemberNo(lecture.getMemberNo());
-
-        lectureDate.setClassLectureNo(classLectureNo); // 로그인한 강사 번호 세팅
 
         int result = lectureDateService.insertLectureDate(lectureDate);
 
         if(result > 0) {
             session.setAttribute("alertMsg","일정 등록 성공");
-            return "redirect:/lecture/leCalender.co";
+            return "redirect:/leCalender.co";
         } else {
             session.setAttribute("alertMsg", "일정 등록 실패");
-            return "redirect:/lecture/leCalenderPlus";
+            return "redirect:/leCalenderPlus";
         }
     }
-
-//    @GetMapping("/testLogin")
-//    public String testLogin(HttpSession session) {
-//        Member fakeTeacher = new Member();
-//        fakeTeacher.setMemberNo(1);            // DB에 존재하는 MEMBER_NO
-//        fakeTeacher.setMemberId("teacher01");
-//        fakeTeacher.setMemberName("김강사");
-//        fakeTeacher.setRole("TEACHER");
-//
-//        session.setAttribute("loginUser", fakeTeacher);
-//        System.out.println("✅ 임시 로그인 완료: " + fakeTeacher);
-//
-//        return "redirect:/lecture/leCalenderPlus.co?classLectureNo=1";
-//    }
 
     @PostMapping("/adminCalenderManage.co")
     @ResponseBody

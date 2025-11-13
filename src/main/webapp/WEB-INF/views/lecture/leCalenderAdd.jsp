@@ -26,9 +26,24 @@
 
             <section class="content">
                 <form action="/insertLectureDate.bo" method="post">
+
                     <!-- 일정 추가 -->
                     <div class="schedule-add">
                         <h3>일정 추가</h3>
+                        <!-- 반 선택 -->
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>반 선택</label>
+                                <select name="classLectureNo" class="form-select">
+                                    <c:forEach var="c" items="${classList}">
+                                        <option value="${c.classLectureNo}"
+                                            ${c.classLectureNo == selectedClassLectureNo ? "selected" : ""}>
+                                            ${c.className}
+                                        </option>
+                                    </c:forEach>
+                                </select>
+                            </div>
+                        </div>
                         <div class="form-row">
                             <div class="form-group">
                                 <label>제목</label>
@@ -59,36 +74,10 @@
                             <label>상세 내용</label>
                             <textarea class="form-textarea" name="content" placeholder="내용을 입력하세요"></textarea>
                         </div>
-
+                        <br><br>
                         <button type="submit" class="btn-submit">추가</button>
                     </div>
                 </form>
-
-                <!-- 다가오는 일정 -->
-                <div class="upcoming-schedule">
-                    <h3>다가오는 일정</h3>
-                        <table>
-                            <thead>
-                                <tr>
-                                    <th>기간</th>
-                                    <th>제목</th>
-                                    <th>승인상태</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>11/14</td>
-                                    <td>프로젝트 개발</td>
-                                    <td class="status-pending">대기</td>
-                                </tr>
-                                <tr>
-                                    <td>11/19</td>
-                                    <td>프로젝트 발표</td>
-                                    <td class="status-approved">승인</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                </div>
             </section>
         </main>
         <script>

@@ -24,6 +24,8 @@
             <jsp:include page="/WEB-INF/views/common/topBar.jsp" />
 
             <section class="content">
+                <h2 class="class-title">${className} 일정</h2>
+
                 <!-- Calender Section -->
                 <div class="calender-box">
                     <div class="calender-header">
