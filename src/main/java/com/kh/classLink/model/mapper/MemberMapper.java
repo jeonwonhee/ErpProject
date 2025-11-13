@@ -33,17 +33,36 @@ public interface MemberMapper {
     int insertMember(Member member);
 
     /**
-     * 학생 회원가입
+     * 수업 등록
      * @param member
      * @return
      */
-    int insertStudent(Member member);
+    int insertLecture(Member member);
 
     /**
      * 수업 등록
      * @param member
      * @return
      */
-    int insertLecture(Member member);
-    
+    int insertClass(Member member);
+
+    /**
+     *
+     * @param member
+     * @return
+     */
+    int selectLoginMember(Member member);
+
+
+    //비밀번호 변경
+    int updatePassword(@Param("memberNo") long memberNo,
+                           @Param("encodedPassword") String encodedPassword);
+
+    //회원 탈퇴
+    int deleteMember(@Param("memberNo") long memberNo);
+
+    //정보 수정
+    int updateInfo(Member member);
+
+
 }

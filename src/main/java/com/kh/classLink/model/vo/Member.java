@@ -4,6 +4,7 @@ import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
 import java.time.LocalDate;
 
+@Data
 @Getter
 @Setter
 @ToString
@@ -25,6 +26,8 @@ public class Member {
     private LocalDate birthDate;
     private int vacCnt;
 
+    private Integer classNo;
+    private String className;
 
     private String lectureName;
     private String commuteRate;

@@ -4,6 +4,144 @@
    =================================== */
 
 /* ===================================
+   alert
+   =================================== */
+.toast-wrap {
+    position: fixed;
+    top: 24px;
+    right: 24px;
+    z-index: 9999;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.toast {
+    min-width: 280px;
+    max-width: 420px;
+    background: #fff;
+    border: 1px solid #e4e7ed;
+    border-radius: 12px;
+    box-shadow: 0 10px 24px rgba(22,36,55,0.12);
+    padding: 14px 16px 14px 14px;
+    display: grid;
+    grid-template-columns: 28px 1fr auto;
+    gap: 10px;
+    align-items: start;
+    animation: slideDown 0.28s ease-out;
+    font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Apple SD Gothic Neo", "Noto Sans KR", sans-serif;
+}
+
+.toast .icon {
+    font-size: 18px;
+    line-height: 1;
+    margin-top: 2px;
+}
+
+.toast .title {
+    font-weight: 700;
+    font-size: 14px;
+    color: #0f172a;
+    margin-bottom: 4px;
+}
+
+.toast .desc {
+    font-size: 13px;
+    color: #334155;
+    white-space: pre-wrap;
+}
+
+.toast .close {
+    border: 0;
+    background: transparent;
+    font-size: 18px;
+    cursor: pointer;
+    color: #64748b;
+}
+
+.toast .close:hover {
+    color: #0f172a;
+}
+
+.toast-bar {
+    height: 3px;
+    border-radius: 999px;
+    margin-top: 10px;
+    grid-column: 1 / -1;
+    background: #eef2ff;
+    overflow: hidden;
+    position: relative;
+}
+
+.toast-bar > i {
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 100%;
+    transform-origin: left;
+    animation: bar 4s linear forwards;
+}
+
+/* 상태별 색상 */
+.toast.success {
+    border-color: #c7f0d5;
+}
+.toast.success .icon {
+    color: #16a34a;
+}
+.toast.success .toast-bar > i {
+    background: #16a34a;
+}
+
+.toast.error {
+    border-color: #f9caca;
+}
+.toast.error .icon {
+    color: #dc2626;
+}
+.toast.error .toast-bar > i {
+    background: #dc2626;
+}
+
+.toast.info {
+    border-color: #cfe3ff;
+}
+.toast.info .icon {
+    color: #2563eb;
+}
+.toast.info .toast-bar > i {
+    background: #2563eb;
+}
+
+.toast.warn {
+    border-color: #ffe3b0;
+}
+.toast.warn .icon {
+    color: #d97706;
+}
+.toast.warn .toast-bar > i {
+    background: #d97706;
+}
+
+/* 애니메이션 */
+@keyframes slideDown {
+    from { transform: translateY(-8px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+}
+
+@keyframes bar {
+    from { transform: scaleX(1); }
+    to { transform: scaleX(0); }
+}
+
+@media (max-width:480px) {
+    .toast-wrap {
+        left: 12px;
+        right: 12px;
+    }
+}
+/* ===================================
    문의 리스트 (question-detail) | 문의 상세보기 (question-enroll-form)
    =================================== */
 

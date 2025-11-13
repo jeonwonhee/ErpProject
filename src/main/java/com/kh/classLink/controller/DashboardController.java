@@ -26,11 +26,4 @@ public class DashboardController {
         return "student/stMain";
     }
 
-    @GetMapping("/stMyPage.co")
-    public String stMyPage() {
-        //학생 마이페이지
-        return "student/stMyPage";
-    }
-
-
 }
