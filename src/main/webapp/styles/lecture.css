@@ -696,40 +696,55 @@ th {
 }
 
 /* 검색 영역 */
+/* 검색 영역 */
 .lecture-grade .search-area {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 14px;
-  margin-bottom: 24px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 28px;
+    width: 100%; /* 전체 폭 기준 */
 }
 
+/* 수강반 셀렉트 박스 */
+.lecture-grade .subject select {
+    width: 420px; /* 기존보다 넓게 */
+    height: 42px;
+    padding: 8px 12px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 15px;
+    background-color: #fff;
+    transition: all 0.2s ease;
+}
+
+/* 호버/포커스 시 효과 */
+.lecture-grade .subject select:hover,
+.lecture-grade .subject select:focus {
+    border-color: #4b73ff;
+    box-shadow: 0 0 4px rgba(75, 115, 255, 0.3);
+}
+
+/* 검색 박스 (추후 확장 대비) */
 .lecture-grade .search-box {
-  display: flex;
-  align-items: center;
-  width: 360px;
-  border: 1px solid #ccc;
-  border-radius: 999px;
-  overflow: hidden;
-  background: #fff;
+    display: flex;
+    align-items: center;
+    width: 420px;
+    border: 1px solid #ccc;
+    border-radius: 999px;
+    overflow: hidden;
+    background: #fff;
 }
 
 .lecture-grade .search-box input {
-  border: none;
-  outline: none;
-  flex: 1;
-  padding: 8px 12px;
-  font-size: 14px;
+    border: none;
+    outline: none;
+    flex: 1;
+    padding: 8px 12px;
+    font-size: 14px;
 }
 
-.lecture-grade .exam-name {
-  width: 360px;
-  border: 1px solid #ccc;
-  border-radius: 10px;
-  padding: 8px 12px;
-  font-size: 14px;
-  outline: none;
-}
+
 
 /* 테이블 */
 .lecture-grade .grade-table {

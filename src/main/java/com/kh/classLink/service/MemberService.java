@@ -3,7 +3,6 @@ package com.kh.classLink.service;
 import com.kh.classLink.model.vo.Member;
 import org.springframework.stereotype.Service;
 
-
 public interface MemberService {
 
     /**
@@ -13,6 +12,7 @@ public interface MemberService {
      */
     public int getMemberCountById(String memberId);
 
+
     /**
      * 회원 가입
      * @param member
@@ -20,6 +20,24 @@ public interface MemberService {
      */
     public int insertMember(Member member);
 
+    /**
+     *
+     * @param member
+     * @return
+     */
+    public int insertClass(Member member);
+
+
+
+    //비밀번호 변경
+    int updatePassword(long memberNo, String encodedPassword);
+
+    /**
+     * 회원 삭제
+     * @param memberNo
+     * @return
+     */
+     int deleteMember(long memberNo);
 
 
     /**
@@ -31,4 +49,13 @@ public interface MemberService {
      * 아이디로 회원 조회 (단일 조회용)
      */
     Member getMemberById(String memberId);
+
+    /**
+     * 정보 수정
+     * @param member
+     * @return
+     */
+    int updateInfo(Member member);
+
+
 }
