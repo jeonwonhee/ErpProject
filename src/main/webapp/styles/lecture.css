@@ -877,3 +877,42 @@ th {
     font-size: 13px;
     color: #777;
 }
+
+.classSelect {
+    width: 260px; /* 기존보다 줄여 시각적 안정감 */
+    padding: 10px 14px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    background: #fff;
+
+    font-size: 15px;
+    color: #333;
+    outline: none;
+
+    cursor: pointer;
+    appearance: none; /* 화살표 제거 */
+    -webkit-appearance: none;
+    -moz-appearance: none;
+
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23777' stroke-width='2' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 14px center;
+    background-size: 12px;
+}
+
+/* 호버 */
+.classSelect:hover {
+    border-color: #bbb;
+}
+
+/* 포커스(클릭 시 강조) */
+.classSelect:focus {
+    border-color: #4A90E2;
+    box-shadow: 0 0 0 3px rgba(74, 144, 226, 0.2);
+}
+
+/* 옵션 스타일 */
+.classSelect option {
+    padding: 10px;
+    font-size: 15px;
+}

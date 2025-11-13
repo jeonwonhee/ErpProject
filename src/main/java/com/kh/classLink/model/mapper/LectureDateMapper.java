@@ -1,5 +1,6 @@
 package com.kh.classLink.model.mapper;
 
+import com.kh.classLink.model.vo.ClassLecture;
 import com.kh.classLink.model.vo.LectureDate;
 import com.kh.classLink.model.vo.LectureDateApproval;
 import com.kh.classLink.model.vo.LectureDateApprovalList;
@@ -8,15 +9,16 @@ import org.apache.ibatis.annotations.Param;
 
 
 import java.util.List;
+import java.util.Map;
 
 @Mapper
 public interface LectureDateMapper {
 
     /* 전체 일정 조회 */
-    List<LectureDate> selectLectureDateList();
+    List<LectureDate> selectLectureDateList(int classLectureNo);
 
     /* 특정 반(CLASS_LECTURE_NO)의 일정 조회 */
-    List<LectureDate> selectLectureDateByClass(int classLectureNo);
+    List<ClassLecture> selectLectureDateByClass(int memberNo);
 
     /* 일정 등록 (INSERT) */
     int insertLectureDate(LectureDate lectureDate);
@@ -42,4 +44,18 @@ public interface LectureDateMapper {
     List<LectureDateApprovalList> selectLectureDateApprovalList();
 
     LectureDateApprovalList selectLectureDateApprovalDetail(int lectureDateNo);
+
+    int getLectureDateListCount();
+
+    List<LectureDateApprovalList> selectLectureDateListPaged(Map<String, Object> map);
+
+    int getLectureDateCount(int classLectureNo);
+
+    List<LectureDate> selectLectureDatePaged(Map<String, Object> map);
+
+    // 학생용 일정 조회
+    List<LectureDate> selectLectureDateListStudent(int memberNo);
+
+    // 학생 반 이름 조회
+    String selectClassNameByStudent(int memberNo);
 }

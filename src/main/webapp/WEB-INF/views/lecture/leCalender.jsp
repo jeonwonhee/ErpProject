@@ -9,7 +9,6 @@
         <link rel="stylesheet" href="/styles/default.css">
         <link rel="stylesheet" href="/styles/style.css">
         <link rel="stylesheet" href="/styles/lecture.css">
-        <link rel="stylesheet" href="/styles/common.css">
 
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 
@@ -30,6 +29,15 @@
 
             <!-- 콘텐츠 영역 -->
             <section class="content">
+                <select class="classSelect" onchange="changeClass()">
+                    <c:forEach var="c" items="${classList}">
+                        <option value="${c.classLectureNo}"
+                            <c:if test="${c.classLectureNo eq selectedClassLectureNo}">selected</c:if>>
+                            ${c.className}
+                        </option>
+                    </c:forEach>
+                </select>
+
                 <!-- Calender Section -->
                 <div class="calender-box">
                     <div class="calender-header">
@@ -65,19 +73,43 @@
                                     <th>승인상태</th>
                                 </tr>
                             </thead>
+                            <%
+                                System.out.println("🔥 JSP에서 확인하는 upcomingList = " + request.getAttribute("upcomingList"));
+                            %>
+
                             <tbody>
-                                <tr>
-                                    <td>11/14</td>
-                                    <td>프로젝트 개발</td>
-                                    <td class="status-pending">대기</td>
-                                </tr>
-                                <tr>
-                                    <td>11/19</td>
-                                    <td>프로젝트 발표</td>
-                                    <td class="status-approved">승인</td>
-                                </tr>
+                                <c:forEach var="e" items="${upcomingList}">
+                                    <tr>
+                                        <td>${e.startDate} ~ ${e.endDate}</td>
+                                        <td>${e.title}</td>
+                                        <td>
+                                            <c:choose>
+                                                <c:when test="${e.status eq 'APPROVED'}"><span class="status-approved">승인</span></c:when>
+                                                <c:when test="${e.status eq 'REJECTED'}"><span class="status-rejected">반려</span></c:when>
+                                                <c:otherwise><span class="status-pending">대기</span></c:otherwise>
+                                            </c:choose>
+                                        </td>
+                                    </tr>
+                                </c:forEach>
                             </tbody>
                         </table>
+
+                        <div class="pagination">
+                            <c:if test="${currentPage > 1}">
+                                <a href="?classLectureNo=${selectedClassLectureNo}&page=${currentPage - 1}" class="page-btn">이전</a>
+                            </c:if>
+
+                            <c:forEach var="p" begin="${startPage}" end="${endPage}">
+                                <a href="?classLectureNo=${selectedClassLectureNo}&page=${p}"
+                                   class="page-btn ${p == currentPage ? 'active' : ''}">
+                                    ${p}
+                                </a>
+                            </c:forEach>
+
+                            <c:if test="${currentPage < maxPage}">
+                                <a href="?classLectureNo=${selectedClassLectureNo}&page=${currentPage + 1}" class="page-btn">다음</a>
+                            </c:if>
+                        </div>
                     </div>
                 </div>
             </section>
@@ -257,6 +289,11 @@
                 // 초기 렌더
                 renderCalendar(current);
             });
+
+            function changeClass() {
+                const no = document.getElementById("classSelect").value;
+                location.href = "/lecture/leCalender.co?classLectureNo=" + no;
+            }
         </script>
 
     </body>

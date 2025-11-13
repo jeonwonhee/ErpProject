@@ -16,59 +16,40 @@
         <result column="CONTENT" property="content"/>
         <result column="CLASS_LECTURE_NO" property="classLectureNo"/>
         <result column="DATE_TYPE" property="dateType"/>
+        <result column="STATUS" property="status"/>
     </resultMap>
 
     <!-- ===============================
          1) 전체 일정 조회
          =============================== -->
-<!--    <select id="selectLectureDateList" resultMap="lectureDateResultMap">-->
-<!--        SELECT-->
-<!--            LECTURE_DATE_NO,-->
-<!--            TO_CHAR(START_DATE, 'YYYY-MM-DD') AS START_DATE,-->
-<!--            TO_CHAR(END_DATE, 'YYYY-MM-DD') AS END_DATE,-->
-<!--            TITLE,-->
-<!--            CONTENT,-->
-<!--            CLASS_LECTURE_NO,-->
-<!--            DATE_TYPE-->
-<!--        FROM LECTURE_DATE-->
-<!--        ORDER BY START_DATE DESC-->
-<!--    </select>-->
-
     <select id="selectLectureDateList" resultMap="lectureDateResultMap">
         SELECT
-        L.LECTURE_DATE_NO,
-        TO_CHAR(L.START_DATE, 'YYYY-MM-DD') AS START_DATE,
-        TO_CHAR(L.END_DATE, 'YYYY-MM-DD') AS END_DATE,
-        L.TITLE,
-        L.CONTENT,
-        L.CLASS_LECTURE_NO,
-        L.DATE_TYPE
-        FROM
-        LECTURE_DATE L
-        JOIN
-        LECTURE_DATE_APPROVAL A
-        ON L.LECTURE_DATE_NO = A.LECTURE_DATE_NO
-        WHERE
-        A.STATUS = 'APPROVED'
-        ORDER BY
-        L.START_DATE DESC
+            L.LECTURE_DATE_NO,
+            TO_CHAR(L.START_DATE, 'YYYY-MM-DD') AS START_DATE,
+            TO_CHAR(L.END_DATE, 'YYYY-MM-DD') AS END_DATE,
+            L.TITLE,
+            L.CONTENT,
+            L.CLASS_LECTURE_NO,
+            L.DATE_TYPE,
+            NVL(A.STATUS, 'IN_PROGRESS') AS STATUS
+        FROM LECTURE_DATE L
+        LEFT JOIN LECTURE_DATE_APPROVAL A
+            ON L.LECTURE_DATE_NO = A.LECTURE_DATE_NO
+        WHERE L.CLASS_LECTURE_NO = #{classLectureNo}
+        ORDER BY L.START_DATE ASC
     </select>
 
     <!-- ===============================
          2) 특정 반(CLASS_LECTURE_NO)의 일정 조회
          =============================== -->
-    <select id="selectLectureDateByClass" resultMap="lectureDateResultMap" parameterType="int">
+    <select id="selectLectureDateByClass" parameterType="int" resultType="ClassLecture">
         SELECT
-            LECTURE_DATE_NO,
-            TO_CHAR(START_DATE, 'YYYY-MM-DD') AS START_DATE,
-            TO_CHAR(END_DATE, 'YYYY-MM-DD') AS END_DATE,
-            TITLE,
-            CONTENT,
-            CLASS_LECTURE_NO,
-            DATE_TYPE
-        FROM LECTURE_DATE
-        WHERE CLASS_LECTURE_NO = #{classLectureNo}
-        ORDER BY START_DATE DESC
+            CAST(CL.CLASS_LECTURE_NO AS INTEGER) AS classLectureNo,
+            C.CLASS_NAME AS className
+        FROM CLASS_LECTURE CL
+        JOIN LECTURE L ON CL.LECTURE_NO = L.LECTURE_NO
+        JOIN CLASS C ON CL.CLASS_NO = C.CLASS_NO
+        WHERE L.MEMBER_NO = #{memberNo}
     </select>
 
     <!-- ===============================
@@ -118,14 +99,6 @@
         WHERE LECTURE_DATE_NO = #{lectureDateNo}
     </delete>
 
-    <!-- 로그인한 강사의 담당 반번호 조회 -->
-    <select id="selectClassLectureNoByMemberNo" parameterType="int" resultType="int">
-        SELECT CL.CLASS_LECTURE_NO
-        FROM CLASS_LECTURE CL
-        JOIN LECTURE L ON CL.LECTURE_NO = L.LECTURE_NO
-        WHERE L.MEMBER_NO = #{memberNo}
-    </select>
-
     <!-- 일정 등록 후 승인 테이블 자동 생성 -->
     <insert id="insertLectureDateApproval">
         INSERT INTO LECTURE_DATE_APPROVAL (
@@ -133,7 +106,7 @@
             LECTURE_DATE_NO
         )
         VALUES (
-            SEQ_APPROVAL_NO.NEXTVAL,
+            SEQ_LDANO.NEXTVAL,
             #{lectureDateNo}
         )
     </insert>
@@ -158,9 +131,43 @@
             A.STATUS,
             TO_CHAR(A.APPROVAL_DATE, 'YYYY-MM-DD') AS approvalDate
         FROM LECTURE_DATE L
-        JOIN MEMBER M ON L.CLASS_LECTURE_NO = M.MEMBER_NO
-        JOIN LECTURE_DATE_APPROVAL A ON L.LECTURE_DATE_NO = A.LECTURE_DATE_NO
+        JOIN LECTURE_DATE_APPROVAL A
+            ON L.LECTURE_DATE_NO = A.LECTURE_DATE_NO
+        JOIN CLASS_LECTURE CL
+            ON L.CLASS_LECTURE_NO = CL.CLASS_LECTURE_NO
+        JOIN MEMBER M
+            ON CL.LECTURE_NO = M.MEMBER_NO
         ORDER BY A.APPROVAL_DATE DESC
+    </select>
+
+    <select id="selectLectureDateListPaged" parameterType="map" resultType="LectureDateApprovalList">
+        SELECT *
+        FROM (
+        SELECT ROWNUM AS RNUM, A.*
+        FROM (
+            SELECT
+                L.LECTURE_DATE_NO AS lectureDateNo,
+                L.TITLE AS title,
+                M.MEMBER_NAME AS writer,
+                TO_CHAR(A.APPROVAL_DATE, 'YYYY-MM-DD') AS approvalDate,
+                A.STATUS AS status
+            FROM LECTURE_DATE L
+            JOIN LECTURE_DATE_APPROVAL A
+                ON L.LECTURE_DATE_NO = A.LECTURE_DATE_NO
+            JOIN CLASS_LECTURE CL
+                ON L.CLASS_LECTURE_NO = CL.CLASS_LECTURE_NO
+            JOIN MEMBER M
+                ON CL.LECTURE_NO = M.MEMBER_NO
+            ORDER BY L.LECTURE_DATE_NO DESC
+        ) A
+        WHERE ROWNUM &lt;= #{endRow}
+        )
+        WHERE RNUM &gt; #{startRow}
+    </select>
+
+    <select id="getLectureDateListCount" resultType="int">
+        SELECT COUNT(*)
+        FROM LECTURE_DATE_APPROVAL
     </select>
 
     <select id="selectLectureDateApprovalDetail" parameterType="int" resultType="LectureDateApprovalList">
@@ -175,10 +182,83 @@
             TO_CHAR(A.APPROVAL_DATE, 'YYYY-MM-DD') AS approvalDate,
             A.APPROVAL_REJECT AS rejectReason
         FROM LECTURE_DATE L
-        JOIN MEMBER M ON L.CLASS_LECTURE_NO = M.MEMBER_NO
-        JOIN LECTURE_DATE_APPROVAL A ON L.LECTURE_DATE_NO = A.LECTURE_DATE_NO
+        JOIN CLASS_LECTURE CL
+            ON L.CLASS_LECTURE_NO = CL.CLASS_LECTURE_NO
+        JOIN LECTURE LC
+            ON CL.LECTURE_NO = LC.LECTURE_NO
+        JOIN MEMBER M
+            ON LC.MEMBER_NO = M.MEMBER_NO
+        JOIN LECTURE_DATE_APPROVAL A
+            ON L.LECTURE_DATE_NO = A.LECTURE_DATE_NO
         WHERE L.LECTURE_DATE_NO = #{lectureDateNo}
     </select>
 
+    <select id="getLectureDateCount" parameterType="int" resultType="int">
+        SELECT COUNT(*)
+        FROM LECTURE_DATE
+        WHERE CLASS_LECTURE_NO = #{classLectureNo}
+    </select>
+
+    <select id="selectLectureDatePaged" parameterType="map" resultType="LectureDate">
+        SELECT *
+        FROM (
+            SELECT ROWNUM AS RNUM,
+            T.*
+            FROM (
+                SELECT
+                    L.LECTURE_DATE_NO,
+                    TO_CHAR(L.START_DATE, 'YYYY-MM-DD') AS startDate,
+                    TO_CHAR(L.END_DATE, 'YYYY-MM-DD') AS endDate,
+                    L.TITLE,
+                    L.CONTENT,
+                    L.DATE_TYPE,
+                    NVL(A.STATUS, 'IN_PROGRESS') AS STATUS
+                FROM LECTURE_DATE L
+                LEFT JOIN LECTURE_DATE_APPROVAL A
+                    ON L.LECTURE_DATE_NO = A.LECTURE_DATE_NO
+                WHERE CLASS_LECTURE_NO = #{classLectureNo}
+                ORDER BY START_DATE ASC
+            ) T
+            WHERE ROWNUM &lt;= #{endRow}
+        )
+        WHERE RNUM &gt; #{startRow}
+    </select>
+
+    <!-- ===============================
+     학생용 일정 조회 (자신의 반 일정)
+     =============================== -->
+    <select id="selectLectureDateListStudent"
+            parameterType="int"
+            resultMap="lectureDateResultMap">
+
+        SELECT
+            L.LECTURE_DATE_NO,
+            TO_CHAR(L.START_DATE, 'YYYY-MM-DD') AS START_DATE,
+            TO_CHAR(L.END_DATE, 'YYYY-MM-DD') AS END_DATE,
+            L.TITLE,
+            L.CONTENT,
+            L.CLASS_LECTURE_NO,
+            L.DATE_TYPE,
+            A.STATUS
+        FROM LECTURE_DATE L
+        JOIN LECTURE_DATE_APPROVAL A
+            ON L.LECTURE_DATE_NO = A.LECTURE_DATE_NO
+        JOIN CLASS_LECTURE CL
+            ON L.CLASS_LECTURE_NO = CL.CLASS_LECTURE_NO
+        JOIN CLASS C
+            ON CL.CLASS_NO = C.CLASS_NO
+        JOIN CLASS_STUDENT CS
+            ON C.CLASS_NO = CS.CLASS_NO
+        WHERE CS.MEMBER_NO = #{memberNo}
+        ORDER BY L.START_DATE DESC
+    </select>
+
+    <!-- 학생이 속한 반 이름 조회 -->
+    <select id="selectClassNameByStudent" parameterType="int" resultType="string">
+        SELECT C.CLASS_NAME
+        FROM CLASS C
+        JOIN CLASS_STUDENT CS ON C.CLASS_NO = CS.CLASS_NO
+        WHERE CS.MEMBER_NO = #{memberNo}
+    </select>
 
 </mapper>

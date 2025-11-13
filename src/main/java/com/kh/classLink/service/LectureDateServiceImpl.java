@@ -1,14 +1,17 @@
 package com.kh.classLink.service;
 
 import com.kh.classLink.model.mapper.LectureDateMapper;
+import com.kh.classLink.model.vo.ClassLecture;
 import com.kh.classLink.model.vo.LectureDate;
 import com.kh.classLink.model.vo.LectureDateApprovalList;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Map;
 
 @Slf4j
 @Service
@@ -19,16 +22,14 @@ public class LectureDateServiceImpl implements LectureDateService {
 
     /* 전체 일정 조회 */
     @Override
-    public List<LectureDate> selectLectureDateList() {
-        log.info("[LectureDateService] 전체 일정 조회 실행");
-        return lectureDateMapper.selectLectureDateList();
+    public List<LectureDate> selectLectureDateList(int classLectureNo) {
+        return lectureDateMapper.selectLectureDateList(classLectureNo);
     }
 
     /* 특정 반(CLASS_LECTURE_NO)의 일정 조회 */
     @Override
-    public List<LectureDate> selectLectureDateByClass(int classLectureNo) {
-        log.info("[LectureDateService] 반 번호 {} 일정 조회 실행", classLectureNo);
-        return lectureDateMapper.selectLectureDateByClass(classLectureNo);
+    public List<ClassLecture> selectLectureDateByClass(int memberNo) {
+        return lectureDateMapper.selectLectureDateByClass(memberNo);
     }
 
     /* 일정 등록 (INSERT) */
@@ -63,11 +64,6 @@ public class LectureDateServiceImpl implements LectureDateService {
     }
 
     @Override
-    public int getClassLectureNoByMemberNo(int memberNo) {
-        return lectureDateMapper.selectClassLectureNoByMemberNo(memberNo);
-    }
-
-    @Override
     public int updateApprovalStatus(int lectureDateNo, String status, String reason, int approvedBy) {
         return lectureDateMapper.updateApprovalStatus(lectureDateNo, status, reason, approvedBy);
     }
@@ -80,5 +76,38 @@ public class LectureDateServiceImpl implements LectureDateService {
     @Override
     public LectureDateApprovalList selectLectureDateApprovalDetail(int lectureDateNo) {
         return lectureDateMapper.selectLectureDateApprovalDetail(lectureDateNo);
+    }
+
+    @Override
+    public List<LectureDateApprovalList> selectLectureDateListPaged(Map<String, Object> map) {
+        return lectureDateMapper.selectLectureDateListPaged(map);
+    }
+
+    @Override
+    public int getLectureDateListCount() {
+        return lectureDateMapper.getLectureDateListCount();
+    }
+
+    @Override
+    public int getLectureDateCount(int classLectureNo) {
+        return lectureDateMapper.getLectureDateCount(classLectureNo);
+    }
+
+    @Override
+    public List<LectureDate> selectLectureDatePaged(Map<String, Object> map) {
+        return lectureDateMapper.selectLectureDatePaged(map);
+    }
+
+    // =========================
+    // 학생용 일정 조회
+    // =========================
+    @Override
+    public List<LectureDate> selectLectureDateListStudent(int memberNo) {
+        return lectureDateMapper.selectLectureDateListStudent(memberNo);
+    }
+
+    @Override
+    public String getClassNameByStudent(int memberNo) {
+        return lectureDateMapper.selectClassNameByStudent(memberNo);
     }
 }
