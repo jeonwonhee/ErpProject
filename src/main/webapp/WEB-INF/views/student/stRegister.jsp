@@ -1,4 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -16,6 +17,7 @@
     --%>
 </head>
 <body class="register">
+
 <div class="card">
     <h1>회원가입 페이지</h1>
     <p class="desc">해당하는 회원가입 유형을 선택하세요</p>
@@ -37,9 +39,12 @@
                 <label for="classNo">수강반</label>
                 <select id="classNo" name="classNo" required>
                     <option value="">반 선택</option>
-                    <option value="1">A반</option>
-                    <option value="2">B반</option>
-                    <option value="3">C반</option>
+                    <c:forEach var="cls" items="${classList}">
+
+                        <option value="${cls.classNo}">
+                                ${cls.className}
+                        </option>
+                    </c:forEach>
                 </select>
             </div>
 
