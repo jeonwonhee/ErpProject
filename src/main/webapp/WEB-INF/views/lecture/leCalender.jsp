@@ -73,9 +73,6 @@
                                     <th>승인상태</th>
                                 </tr>
                             </thead>
-                            <%
-                                System.out.println("🔥 JSP에서 확인하는 upcomingList = " + request.getAttribute("upcomingList"));
-                            %>
 
                             <tbody>
                                 <c:forEach var="e" items="${upcomingList}">
