@@ -57,7 +57,7 @@ public interface MemberMapper {
 
     //비밀번호 변경
     int updatePassword(@Param("memberNo") long memberNo,
-                           @Param("encodedPassword") String encodedPassword);
+                       @Param("encodedPassword") String encodedPassword);
 
     //회원 탈퇴
     int deleteMember(@Param("memberNo") long memberNo);
@@ -79,6 +79,7 @@ public interface MemberMapper {
      */
     int insertPasswordToken(PasswordToken passwordToken);
 
+    Member selectMemberByNo(int memberNo);
 
 
 }
