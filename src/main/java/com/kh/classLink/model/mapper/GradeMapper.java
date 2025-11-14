@@ -9,6 +9,7 @@ import java.util.List;
 
 @Mapper
 public interface GradeMapper {
+
     /**
      * 특정 학생이 수강 중인 강의 목록 조회
      * @param memberNo 학생 고유번호
@@ -25,4 +26,11 @@ public interface GradeMapper {
     List<GradeDto> findLatestGrades(@Param("memberNo") int memberNo,
                                     @Param("lectureNo") int lectureNo,
                                     @Param("limit") int limit);
+
+    int selectClassLectureNo(@Param("classNo") int classNo,
+                             @Param("lectureNo") int lectureNo);
+
+    int insertGrade(GradeDto gradeDto);
+
+
 }

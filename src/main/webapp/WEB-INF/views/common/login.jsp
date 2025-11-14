@@ -13,11 +13,7 @@
 
 <h1>모두를 위한 통합 학원 관리 <span>KH EduERP</span></h1>
 <p>학생, 강사, 관리자가 한 곳에서 연결되는 스마트 학원 통합 시스템.<br>출결부터 휴가, 공지사항까지 한 번에 관리하세요.</p>
-<c:if test="${not empty alertMsg}">
-    <script>
-        alert('${alertMsg}');
-    </script>
-</c:if>
+
 <div class="login-card">
 
     <!-- 로그인 폼 시작 -->

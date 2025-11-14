@@ -725,18 +725,69 @@ th {
     box-shadow: 0 0 4px rgba(75, 115, 255, 0.3);
 }
 
-/* 검색 박스 (추후 확장 대비) */
-.lecture-grade .search-box {
+.lecture-grade .test-name {
+    width: 100%;
     display: flex;
-    align-items: center;
-    width: 420px;
-    border: 1px solid #ccc;
-    border-radius: 999px;
-    overflow: hidden;
-    background: #fff;
+    flex-direction: column;
+    align-items: center;  /* 가로 가운데 정렬 */
+    justify-content: center;
+    gap: 8px;
+    margin: 20px 0;
 }
 
-.lecture-grade .search-box input {
+.lecture-grade #testName {
+    width: 420px;  /* 수강반 셀렉트 박스와 동일한 폭 */
+    height: 42px;
+    padding: 8px 12px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 15px;
+}
+/* 전체 줄 가운데 정렬 */
+.lecture-grade .test-name-row {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* 전체를 중앙으로 */
+    margin-bottom: 20px;
+    gap: 8px;
+}
+
+/* input + 버튼 묶음 */
+.lecture-grade .test-input-group {
+    display: flex;
+    align-items: center;
+    gap: 10px; /* input과 버튼 사이 간격 */
+}
+
+/* input 스타일 */
+.lecture-grade #testName {
+    width: 320px;
+    height: 42px;
+    padding: 8px 12px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 15px;
+}
+
+/* 저장 버튼 스타일 */
+.lecture-grade .btn-test-save {
+    height: 42px;
+    padding: 0 16px;
+    background-color: #4a66f7;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 15px;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.lecture-grade .btn-test-save:hover {
+    background-color: #3a52d1;
+}
+
+.lecture-grade .test-name input {
     border: none;
     outline: none;
     flex: 1;

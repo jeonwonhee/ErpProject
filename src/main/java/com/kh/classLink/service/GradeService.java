@@ -21,4 +21,11 @@ public interface GradeService {
      * @return 성적 정보 리스트
      */
     List<GradeDto> findLatestGrades(int memberNo, int lectureNo, int limit);
+
+    // CLASS_LECTURE_NO 조회 (CLASS_NO + LECTURE_NO)
+    int findClassLectureNo(int classNo, int lectureNo);
+
+    // 성적 여러 개 저장
+    void insertGrades(List<GradeDto> gradeList);
 }
+
