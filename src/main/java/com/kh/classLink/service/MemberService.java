@@ -3,6 +3,8 @@ package com.kh.classLink.service;
 import com.kh.classLink.model.vo.Member;
 import org.springframework.stereotype.Service;
 
+import java.util.Map;
+
 public interface MemberService {
 
     /**
@@ -56,6 +58,13 @@ public interface MemberService {
      * @return
      */
     int updateInfo(Member member);
+
+    /**
+     * 비밀번호 찾기
+     * @param member
+     * @return
+     */
+    Map<String,Object> orderpasswordFind(Member member);
 
 
 }
