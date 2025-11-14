@@ -413,9 +413,11 @@ body.admin.admin-calendar-manage {
 
 /* ===== 기자재 목록 (카드형 리스트) ===== */
 .admin-facility .facility-list {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-    gap: 16px;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 16px;
+  height: 200px ;
+
 }
 
 .admin-facility .facility-card {
