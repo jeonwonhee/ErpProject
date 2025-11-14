@@ -3,9 +3,14 @@ package com.kh.classLink.service;
 import com.kh.classLink.model.mapper.ClassStudentMapper;
 import com.kh.classLink.model.mapper.MemberMapper;
 import com.kh.classLink.model.vo.Member;
+import com.kh.classLink.model.vo.PasswordToken;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.HashMap;
+import java.util.Map;
+import java.util.UUID;
 
 @Service
 public class MemberServiceImpl implements MemberService {
@@ -105,6 +110,33 @@ public class MemberServiceImpl implements MemberService {
     @Transactional
     public int updateInfo(Member member) {
         return memberMapper.updateInfo(member);
+    }
+
+    /**
+     * 비밀번호 찾기 요청
+     * @param member
+     * @return
+     */
+    @Override
+    public Map<String, Object> orderpasswordFind(Member member) {
+        Map<String, Object> map = new HashMap<>();
+        int emailCheck = memberMapper.memberEmailCheck(member);
+        Member orderMember = memberMapper.getMemberById(member.getMemberId());
+        if  (emailCheck > 0) {
+            String token = UUID.randomUUID().toString();
+            PasswordToken passwordToken = new PasswordToken();
+            passwordToken.setMemberNo(orderMember.getMemberNo());
+            passwordToken.setToken(token);
+            System.out.println(passwordToken);
+            int result = memberMapper.insertPasswordToken(passwordToken);
+            map.put("token", token);
+            map.put("result",1);
+            map.put("memberId", member.getMemberId());
+        } else {
+            map.put("result",0);
+        }
+
+        return map;
     }
 
 }

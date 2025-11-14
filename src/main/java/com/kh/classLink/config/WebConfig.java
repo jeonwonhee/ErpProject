@@ -19,6 +19,7 @@ public class WebConfig implements WebMvcConfigurer {
                         "/insertMember.co",
                         "/idDupiCheck.co",
                         "/findPassword.co",
+                        "/orderPasswordFind.co",
                         "/styles/**",
                         "/images/**",
                         "/js/**"

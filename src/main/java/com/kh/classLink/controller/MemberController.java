@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 public class MemberController {
@@ -369,6 +370,25 @@ public class MemberController {
     public String idDuplicateCheck(@RequestParam String memberId) {
         int count = memberService.getMemberCountById(memberId);
         return count > 0 ? "NNNNN" : "NNNNY";
+    }
+
+    /**
+     * 비밀번호 찾기 요청 처리
+     * @param memberId
+     * @param email
+     * @return
+     */
+    @PostMapping("/orderPasswordFind.co")
+    @ResponseBody
+    public Map<String,Object> orderPasswordFind(@RequestParam(value = "memberId") String memberId,
+                                                @RequestParam(value = "email") String email) {
+
+        Member member = new  Member();
+        member.setMemberId(memberId);
+        member.setEmail(email);
+        Map<String,Object> map = memberService.orderpasswordFind(member);
+        System.out.println("::::::orderPasswordFind.co::::::");
+        return map;
     }
 
 }

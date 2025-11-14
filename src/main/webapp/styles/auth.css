@@ -283,6 +283,34 @@ select:focus {
   transition: 0.15s;
 }
 
+
+.input-password-change {
+    display: flex;
+    align-items: center;
+    gap: 8px; /* input과 버튼 사이 간격 */
+}
+
+.input-password-change .input-password-email {
+    flex: 1; /* input이 가능한 넓게 차지하도록 */
+    padding: 12px 15px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    font-size: 14px;
+}
+
+.btn-email {
+    background: #fff;
+    border: 1px solid #bbb;
+    border-radius: 10px;
+    padding: 10px 14px;
+    font-size: 13px;
+    cursor: pointer;
+    color: #444;
+    transition: 0.15s;
+    white-space: nowrap;
+    margin-bottom: 13px;
+}
+
 /* ===== 하단 버튼 ===== */
 .pw-submit {
   position: absolute;
