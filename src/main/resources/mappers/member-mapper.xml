@@ -176,7 +176,7 @@
 
     <!-- 마이페이지 정보 수정-->
     <update id="updateInfo" parameterType="map">
-    UPDATE MEMBER
+        UPDATE MEMBER
         SET EMAIL = #{email},
         PHONE = #{phone}
         WHERE MEMBER_NO = #{memberNo}
@@ -193,15 +193,21 @@
     <!--비밀번호 토큰 생성-->
     <insert id="insertPasswordToken" parameterType="PasswordToken">
         INSERT INTO PASSWORD_TOKEN(
-                PASSWORD_TOKEN_NO,
-                MEMBER_NO,
-                TOKEN,
-                STATUS
+        PASSWORD_TOKEN_NO,
+        MEMBER_NO,
+        TOKEN,
+        STATUS
         ) VALUES (
-                SEQ_PTNO.NEXTVAL,
-                #{memberNo},
-                #{token},
-                'ORDER'
+        SEQ_PTNO.NEXTVAL,
+        #{memberNo},
+        #{token},
+        'ORDER'
         )
     </insert>
+
+    <select id="selectMemberByNo" parameterType="int" resultMap="memberResultMap">
+        SELECT *
+        FROM MEMBER
+        WHERE MEMBER_NO = #{memberNo}
+    </select>
 </mapper>
