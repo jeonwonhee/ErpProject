@@ -1,9 +1,12 @@
 package com.kh.classLink.controller;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.kh.classLink.model.vo.Attend;
 import com.kh.classLink.model.vo.AttendanceStats;
 import com.kh.classLink.model.vo.LectureDate;
 import com.kh.classLink.model.vo.Member;
+import com.kh.classLink.service.AdminDashboardService;
 import com.kh.classLink.service.StudentDashboardService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
@@ -17,18 +20,38 @@ import java.util.List;
 public class DashboardController {
 
     private final StudentDashboardService studentDashboardService;
+    private final AdminDashboardService adminDashboardService;
+    private final ObjectMapper objectMapper = new ObjectMapper();
 
-    public DashboardController(StudentDashboardService studentDashboardService) {
+    public DashboardController(StudentDashboardService studentDashboardService,
+                               AdminDashboardService adminDashboardService) {
         this.studentDashboardService = studentDashboardService;
+        this.adminDashboardService = adminDashboardService;
     }
 
     /**
      * 관리자 대시보드 화면
      * @return 관리자 대시보드 페이지
      */
-
     @GetMapping("/adminDashboard.co")
-    public String adminDashboard() {
+    public String adminDashboard(Model model) throws JsonProcessingException {
+
+        model.addAttribute("totalStudents", adminDashboardService.getTotalStudents());
+        model.addAttribute("totalLectures", adminDashboardService.getTotalLectures());
+        model.addAttribute("studentAvgRate", adminDashboardService.getStudentAvgRate());
+        model.addAttribute("lectureAvgRate", adminDashboardService.getLectureAvgRate());
+        model.addAttribute("todayAbsents", adminDashboardService.getTodayAbsents());
+
+
+        model.addAttribute("pendingCounsel", adminDashboardService.getPendingCounselCount());
+        model.addAttribute("pendingVacation", adminDashboardService.getPendingVacationCount());
+        model.addAttribute("pendingDeviceRent", adminDashboardService.getPendingDeviceRentCount());
+
+        // 요일별 출석률 → JSON 변환
+        String weeklyJson = objectMapper.writeValueAsString(adminDashboardService.getWeeklyAttendRate());
+        model.addAttribute("weeklyJson", weeklyJson);
+
+
         return "admin/adminDashboard";
     }
 
@@ -36,7 +59,6 @@ public class DashboardController {
      * 강사 대시보드 화면
      * @return 강사 대시보드 페이지
      */
-
     @GetMapping("/lectureDashboard")
     public String lectureDashboard() {
         return "lecture/leDashboard";
