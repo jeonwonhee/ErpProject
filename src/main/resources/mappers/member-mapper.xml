@@ -121,7 +121,6 @@
         EMAIL,
         PHONE,
         ROLE,
-        STATUS,
         BIRTH_DATE )
         VALUES (
         #{memberNo},
@@ -131,7 +130,6 @@
         #{email},
         #{phone},
         UPPER(#{role}),
-        #{status},
         #{birthDate} )
     </insert>
 
@@ -150,8 +148,19 @@
         )
     </insert>
 
+    <!-- 강사 아이디로 강의명 조회 -->
+    <select id="selectLectureNameByMemberNo"
+            parameterType="int"
+            resultType="string">
+        SELECT LECTURE_NAME
+        FROM LECTURE
+        WHERE MEMBER_NO = #{memberNo}
+    </select>
+
+
+
     <!-- 강사 수업 등록 -->
-    <insert id="insertLecture" parameterType="Member">
+    <insert id="insertLecture" parameterType="com.kh.classLink.model.vo.Member">
         INSERT INTO LECTURE (
         LECTURE_NO,
         LECTURE_NAME,

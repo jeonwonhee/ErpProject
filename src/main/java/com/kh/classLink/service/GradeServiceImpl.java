@@ -22,4 +22,15 @@ public class GradeServiceImpl implements GradeService {
     public List<GradeDto> findLatestGrades(int memberNo, int lectureNo, int limit) {
         return gradeMapper.findLatestGrades(memberNo, lectureNo, limit);
     }
+    @Override
+    public int findClassLectureNo(int classNo, int lectureNo) {
+        return gradeMapper.selectClassLectureNo(classNo, lectureNo);
+    }
+
+    @Override
+    public void insertGrades(List<GradeDto> gradeList) {
+        for (GradeDto dto : gradeList) {
+            gradeMapper.insertGrade(dto);
+        }
+    }
 }

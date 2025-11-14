@@ -1,9 +1,12 @@
 package com.kh.classLink.model.mapper;
 
+import com.kh.classLink.model.vo.GradeDto;
 import com.kh.classLink.model.vo.Member;
 import com.kh.classLink.model.vo.PasswordToken;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 @Mapper
 public interface MemberMapper {
@@ -26,6 +29,7 @@ public interface MemberMapper {
      */
     int getMemberCountById(String memberId);
 
+    String selectLectureNameByMemberNo(int memberNo);
     /**
      * 강사, 관리자 회원가입
      * @param member
