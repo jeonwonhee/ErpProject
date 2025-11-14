@@ -14,6 +14,8 @@ public interface MemberService {
      */
     public int getMemberCountById(String memberId);
 
+    //강사 회원번호로 강의명 조회
+    String selectLectureNameByMemberNo(int memberNo);
 
     /**
      * 회원 가입
@@ -28,8 +30,6 @@ public interface MemberService {
      * @return
      */
     public int insertClass(Member member);
-
-
 
     //비밀번호 변경
     int updatePassword(long memberNo, String encodedPassword);

@@ -5,6 +5,7 @@ import com.kh.classLink.model.vo.Member;
 import com.kh.classLink.service.ClassService;
 import com.kh.classLink.service.MemberService;
 import com.kh.classLink.service.CommuteService;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -13,7 +14,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
 import java.util.List;
 import java.util.Map;
 
@@ -126,11 +127,18 @@ public class MemberController {
 
         // 2) 로그인 안 되어 있으면 로그인 페이지로
         if (sessionMember == null) {
+            session.setAttribute("alertMsg", "로그인 후 이용 가능합니다.");
             return "redirect:/login.co";
         }
 
         // 3) DB에서 최신 회원 정보(수강반 조인 포함) 다시 조회
         Member fresh = memberService.getMemberById(sessionMember.getMemberId());
+
+        // ⭐ 강사일 경우, 강의명 조회해서 fresh에 채워넣기
+        if ("TEACHER".equalsIgnoreCase(fresh.getRole())) {
+            String lectureName = memberService.selectLectureNameByMemberNo(fresh.getMemberNo());
+            fresh.setLectureName(lectureName);
+        }
 
         // 4) 세션도 최신 정보로 덮어쓰기
         session.setAttribute("loginMember", fresh);
@@ -151,16 +159,15 @@ public class MemberController {
      */
     @PostMapping("/stMyPage.co")
     public String updateInfo(@ModelAttribute Member member,
-                                   HttpSession session,
-                                   RedirectAttributes ra) {
+                                   HttpSession session) {
 
         // 세션에서 현재 로그인한 회원 정보 가져오기
         Member loginMember = (Member) session.getAttribute("loginMember");
 
+
         // 로그인 정보가 없으면 로그인 페이지로 이동
         if (loginMember == null) {
-            ra.addFlashAttribute("alertMsg", "로그인 후 이용 가능합니다.");
-            ra.addFlashAttribute("alertType", "warn");
+            session.setAttribute("alertMsg", "로그인 후 이용 가능합니다.");
             return "redirect:/login.co";
         }
 
@@ -173,11 +180,9 @@ public class MemberController {
             Member fresh = memberService.getMemberById(loginMember.getMemberId());
             session.setAttribute("loginMember", fresh);
 
-            ra.addFlashAttribute("alertMsg", "회원 정보가 성공적으로 수정되었습니다.");
-            ra.addFlashAttribute("alertType", "success");
+            session.setAttribute("alertMsg", "회원 정보가 성공적으로 수정되었습니다.");
         } else {
-            ra.addFlashAttribute("alertMsg", "회원 정보 수정에 실패했습니다.");
-            ra.addFlashAttribute("alertType", "error");
+            session.setAttribute("alertMsg", "회원 정보 수정에 실패했습니다.");
         }
 
         return "redirect:/stMyPage.co";
@@ -194,27 +199,23 @@ public class MemberController {
     public String changePassword(@RequestParam("newPw") String newPw,
                                  @RequestParam("confirmPw") String confirmPw,
                                  @RequestParam("role") String role, // 탭에서 hidden으로 넘어옴
-                                 HttpSession session,
-                                 RedirectAttributes ra) {
+                                 HttpSession session) {
 
         Member loginMember = (Member) session.getAttribute("loginMember");
         String sessionRole = (String) session.getAttribute("role"); // 로그인 시 세션에 저장했던 역할
 
         if (loginMember == null || sessionRole == null) {
-            ra.addFlashAttribute("alertMsg", "로그인 후 이용하세요.");
-            ra.addFlashAttribute("alertType", "error");
+            session.setAttribute("alertMsg", "로그인 후 이용하세요.");
             return "redirect:/login.co";
         }
 
         if (!newPw.equals(confirmPw)) {
-            ra.addFlashAttribute("alertMsg", "비밀번호가 서로 일치하지 않습니다.");
-            ra.addFlashAttribute("alertType", "error");
+            session.setAttribute("alertMsg", "비밀번호가 서로 일치하지 않습니다.");
             return "redirect:/changePassword.co";
         }
 
         // BCrypt 해시
         String encoded = bCryptPasswordEncoder.encode(newPw);
-
         int result = memberService.updatePassword(loginMember.getMemberNo(), encoded);
 
         if (result > 0) {
@@ -222,8 +223,7 @@ public class MemberController {
             loginMember.setMemberPassword(encoded);
             session.setAttribute("loginMember", loginMember);
 
-            ra.addFlashAttribute("alertMsg", "변경이 완료되었습니다.");
-            ra.addFlashAttribute("alertType", "success");
+            session.setAttribute("alertMsg", "변경이 완료되었습니다.");
 
             // 역할별 대시보드 이동
             switch (role.toUpperCase()) {
@@ -232,7 +232,7 @@ public class MemberController {
                 default:        return "redirect:/stMain.co";
             }
         } else {
-            ra.addFlashAttribute("alertMsg", "변경에 실패했습니다. 잠시 후 다시 시도해 주세요.");
+            session.setAttribute("alertMsg", "변경에 실패했습니다. 다시 시도해 주세요.");
             return "redirect:/changePassword.co";
         }
     }
@@ -240,43 +240,44 @@ public class MemberController {
     @PostMapping("/delete.co")
     public String deleteMember(@RequestParam("memberPassword") String memberPassword,
                                HttpSession session,
-                               RedirectAttributes ra) {
+                               HttpServletRequest request){
 
         Member sessionMember = (Member) session.getAttribute("loginMember");
         if (sessionMember == null) {
-            ra.addFlashAttribute("alertMsg", "로그인 후 이용하세요.");
+            session.setAttribute("alertMsg","로그인 후 이용하세요.");
             return "redirect:/login.co";
         }
 
         // 1) 최신 회원정보 조회 (아이디로 조회 유지)
         Member fresh = memberService.getMemberById(sessionMember.getMemberId());
         if (fresh == null) {
-            ra.addFlashAttribute("alertMsg", "계정을 찾을 수 없습니다.");
+            session.setAttribute("alertMsg", "계정을 찾을 수 없습니다.");
             session.invalidate();
             return "redirect:/login.co";
         }
 
         // 2) 비밀번호 검증 (BCrypt)
         if (!bCryptPasswordEncoder.matches(memberPassword, fresh.getMemberPassword())) {
-            ra.addFlashAttribute("alertMsg", "비밀번호가 일치하지 않습니다.");
+            session.setAttribute("alertMsg", "비밀번호가 일치하지 않습니다.");
             return "redirect:/stMyPage.co";
         }
 
         try {
             int updated = memberService.deleteMember(fresh.getMemberNo());
             if (updated < 1) {
-                ra.addFlashAttribute("alertMsg", "탈퇴 처리에 실패했습니다. 다시 시도해주세요.");
+                session.setAttribute("alertMsg", "탈퇴 처리에 실패했습니다.");
                 return "redirect:/stMyPage.co";
             }
         } catch (DataIntegrityViolationException e) {
-            ra.addFlashAttribute("alertMsg", "연결된 데이터가 있어 삭제할 수 없습니다. 관리자에게 문의하세요.");
+            session.setAttribute("alertMsg", "연결된 데이터가 있어 삭제할 수 없습니다.");
             return "redirect:/stMyPage.co";
         }
 
         // 4) 세션 종료 후 완료 안내
-        session.invalidate();
-        ra.addFlashAttribute("alertMsg", "회원 탈퇴가 완료되었습니다.");
-        ra.addFlashAttribute("alertType", "success");
+        session.invalidate();  // 기존 세션 완전 파괴
+
+        HttpSession newSession = request.getSession(true); // ★ 새로운 세션
+        newSession.setAttribute("alertMsg", "회원 탈퇴가 완료되었습니다.");
         return "redirect:/login.co";
     }
 
@@ -314,9 +315,7 @@ public class MemberController {
         // 기본값 설정
     public String insertStudent(Member member,
                                 @RequestParam("classNo") Integer classNo,
-                                HttpSession session,
-                                RedirectAttributes ra,
-                                Model model) {
+                                HttpSession session) {
 
         if (member.getRole() == null || member.getRole().isBlank()) {
             member.setRole("STUDENT");
@@ -332,14 +331,14 @@ public class MemberController {
         member.setMemberPassword(pwd);
 
         int result = memberService.insertMember(member);
-
-        if (result > 0) {
-            ra.addFlashAttribute("alertMsg", "회원가입에 성공하였습니다.");
+        if(result > 0) {
+            session.setAttribute("alertMsg","회원가입에 성공하였습니다.");
             return "redirect:/login.co";
         } else {
-            model.addAttribute("errorMsg", "회원가입에 실패하였습니다.");
-            return "student/stRegister";
+            session.setAttribute("alertMsg", "회원가입에 실패하였습니다.");
+            return "redirect:/stRegister";
         }
+
     }
 
     /**

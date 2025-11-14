@@ -21,14 +21,13 @@
 <!-- 사이드바 -->
 <jsp:include page="/WEB-INF/views/common/sidBar.jsp" />
 
-<c:if test="${not empty requestScope.alertMsg}">
+<c:if test="${not empty sessionScope.alertMsg}">
     <script>
-        alert('${requestScope.alertMsg}');
+        alert('${sessionScope.alertMsg}');
     </script>
-    <%-- 한 번 보여줬으면 request / session 둘 다에서 제거 --%>
-    <c:remove var="alertMsg" scope="request" />
     <c:remove var="alertMsg" scope="session" />
 </c:if>
+
 
 <!-- 메인 -->
 <main class="main">
@@ -76,13 +75,34 @@
                     <input type="email" name="email" value="${loginMember.email}" placeholder="example@naver.com" />
                 </div>
 
-                <!-- 수강반 (읽기 전용 + hidden으로 값 전송) -->
+                <!-- 수강반 / 강의명 출력 영역 -->
                 <div class="form-group">
-                    <label>수강반</label>
-                    <select id="course_view" name="course_view" disabled>
-                        <option value="${loginMember.classNo}" selected>${loginMember.className}</option>
-                    </select>
-                    <input type="hidden" id="course" name="courseId" value="${loginMember.classNo}">
+                    <c:choose>
+                        <c:when test="${loginMember.role eq 'STUDENT'}">
+                            <label>수강반</label>
+                            <select id="course_view" name="course_view" disabled>
+                                <option value="${loginMember.classNo}" selected>
+                                        ${loginMember.className}
+                                </option>
+                            </select>
+                            <input type="hidden" name="courseId" value="${loginMember.classNo}">
+                        </c:when>
+
+                        <c:when test="${loginMember.role eq 'TEACHER'}">
+                            <label>강의명</label>
+                            <select id="lecture_view" name="lecture_view" disabled>
+                                <option value="${loginMember.lectureNo}" selected>
+                                        ${loginMember.lectureName}
+                                </option>
+                            </select>
+                            <input type="hidden" name="lectureId" value="${loginMember.lectureNo}">
+                        </c:when>
+
+                        <c:otherwise>
+                            <!-- 관리자라면 출력 생략 -->
+                        </c:otherwise>
+
+                    </c:choose>
                 </div>
 
                 <div class="form-buttons">
