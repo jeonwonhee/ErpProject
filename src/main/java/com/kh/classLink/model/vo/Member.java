@@ -29,6 +29,10 @@ public class Member {
     private Integer classNo;
     private String className;
 
+    private Integer studentNo;
+    private String studentName;
+
+    private Integer lectureNo;
     private String lectureName;
     private String commuteRate;
     private String commuteMonth;

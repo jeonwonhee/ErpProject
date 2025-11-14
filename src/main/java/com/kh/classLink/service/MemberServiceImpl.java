@@ -22,7 +22,6 @@ public class MemberServiceImpl implements MemberService {
                              ClassStudentMapper classStudentMapper) {
         this.memberMapper = memberMapper;
     }
-
     /**
      * ID로 회원 조회
      */
@@ -72,13 +71,21 @@ public class MemberServiceImpl implements MemberService {
         return result;
     }
 
+    /**
+     * 강사 회원번호로 자신의 강의명 한 개 조회
+     */
+    @Override
+    public String selectLectureNameByMemberNo(int memberNo) {
+        return memberMapper.selectLectureNameByMemberNo(memberNo);
+    }
+
     @Override
     public int insertClass(Member member) {
         int result = memberMapper.insertClass(member);
 
         if (result <= 0) return 0;
 
-         // 🔹 여기가 핵심! role 변수를 먼저 꺼내와야 함!!!
+        // 🔹 여기가 핵심! role 변수를 먼저 꺼내와야 함!!!
         String role = member.getRole();
 
         if ("STUDENT".equalsIgnoreCase(role)
