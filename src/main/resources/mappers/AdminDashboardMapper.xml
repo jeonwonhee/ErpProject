@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.kh.classLink.model.mapper.AdminDashboardMapper">
+
+    <!-- 전체 학생 수 -->
+    <select id="getTotalStudents" resultType="int">
+        SELECT COUNT(*)
+        FROM MEMBER
+        WHERE ROLE = 'STUDENT'
+    </select>
+
+    <!-- 전체 강사 수 -->
+    <select id="getTotalLectures" resultType="int">
+        SELECT COUNT(*)
+        FROM MEMBER
+        WHERE ROLE = 'TEACHER'
+    </select>
+
+    <!-- 학생 평균 출석률 -->
+    <select id="getStudentAvgRate" resultType="double">
+        SELECT NVL(AVG(CASE WHEN ATTEND_STATUS = 'ATTEND' THEN 1 ELSE 0 END),0)
+        FROM ATTEND A
+        JOIN CLASS_STUDENT CS ON A.STUDENT_NO = CS.STUDENT_NO
+        JOIN MEMBER M ON CS.MEMBER_NO = M.MEMBER_NO
+        WHERE M.ROLE = 'STUDENT'
+    </select>
+
+    <!-- 강사 평균 출석률 (근태 IN 기준) -->
+    <select id="getLectureAvgRate" resultType="double">
+        SELECT NVL(AVG(CASE WHEN COMMUTE_STATUS = 'IN' THEN 1 ELSE 0 END),0)
+        FROM COMMUTE C
+        JOIN MEMBER M ON C.MEMBER_NO = M.MEMBER_NO
+        WHERE M.ROLE = 'TEACHER'
+    </select>
+
+    <!-- 오늘 결석자 -->
+    <select id="getTodayAbsents" resultType="int">
+        SELECT COUNT(*)
+        FROM ATTEND
+        WHERE ATTEND_STATUS = 'ABSENT'
+        AND TRUNC(ATTEND_DATE) = TRUNC(SYSDATE)
+    </select>
+
+    <!-- 상담 신청 대기 -->
+    <select id="getPendingCounselCount" resultType="int">
+        SELECT COUNT(*)
+        FROM COUNSEL_APPLICATION
+        WHERE STATUS = 'REQUESTED'
+    </select>
+
+    <!-- 휴가 신청 대기 -->
+    <select id="getPendingVacationCount" resultType="int">
+        SELECT COUNT(*)
+        FROM VACATION_APPLICATION
+        WHERE STATUS = 'REQUESTED'
+    </select>
+
+    <!-- 기자재 렌탈 신청 대기 -->
+    <select id="getPendingDeviceRentCount" resultType="int">
+        SELECT COUNT(*)
+        FROM DEVICE_RENT_ATT
+        WHERE STATUS = 'REQUESTED'
+    </select>
+
+    <!-- 요일별 출석률 -->
+    <select id="getWeeklyAttendRate" resultType="map">
+        SELECT
+        TO_CHAR(ATTEND_DATE, 'DY', 'NLS_DATE_LANGUAGE=KOREAN') AS WEEKDAY,
+        AVG(CASE WHEN ATTEND_STATUS = 'ATTEND' THEN 1 ELSE 0 END) AS RATE
+        FROM ATTEND
+        GROUP BY TO_CHAR(ATTEND_DATE, 'DY', 'NLS_DATE_LANGUAGE=KOREAN')
+        ORDER BY MIN(ATTEND_DATE)
+    </select>
+
+</mapper>
