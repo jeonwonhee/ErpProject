@@ -28,8 +28,8 @@ public class LectureDateServiceImpl implements LectureDateService {
 
     /* 특정 반(CLASS_LECTURE_NO)의 일정 조회 */
     @Override
-    public List<ClassLecture> selectLectureDateByClass(int memberNo) {
-        return lectureDateMapper.selectLectureDateByClass(memberNo);
+    public List<ClassLecture> selectClassLectureList(int memberNo) {
+        return lectureDateMapper.selectClassLectureList(memberNo);
     }
 
     /* 일정 등록 (INSERT) */
@@ -47,30 +47,9 @@ public class LectureDateServiceImpl implements LectureDateService {
         return result;
     }
 
-    /* 일정 수정 (UPDATE) */
-    @Override
-    @Transactional
-    public int updateLectureDate(LectureDate lectureDate) {
-        log.info("[LectureDateService] 일정 수정 실행: {}", lectureDate);
-        return lectureDateMapper.updateLectureDate(lectureDate);
-    }
-
-    /* 특정 반(CLASS_LECTURE_NO)의 일정 조회 */
-    @Override
-    @Transactional
-    public int deleteLectureDate(int lectureDateNo) {
-        log.info("[LectureDateService] 일정 삭제 실행 - 번호: {}", lectureDateNo);
-        return lectureDateMapper.deleteLectureDate(lectureDateNo);
-    }
-
     @Override
     public int updateApprovalStatus(int lectureDateNo, String status, String reason, int approvedBy) {
         return lectureDateMapper.updateApprovalStatus(lectureDateNo, status, reason, approvedBy);
-    }
-
-    @Override
-    public List<LectureDateApprovalList> selectLectureDateApprovalList() {
-        return lectureDateMapper.selectLectureDateApprovalList();
     }
 
     @Override

@@ -13,13 +13,13 @@ public interface SatisfactionService {
 
     int countTotalSatisfactionClass(int classLectureNo);
 
-    int getClassLectureNo(int studentNo);
+    List<Integer> getStudentLectureList(int studentNo);
 
     String getClassName(int studentNo);
 
     int getStudentNo(int memberNo);
 
-    int checkSubmit(int studentNo);
+    int checkSatisfactionSubmit(int studentNo, int classLectureNo);
 
     List<Integer> getLectureClassList(int memberNo);
 
@@ -28,5 +28,7 @@ public interface SatisfactionService {
     int getCommentCount(int classLectureNo);
 
     List<Satisfaction> getCommentPage(int classLectureNo, int start, int end);
+
+    String getLectureName(int classLectureNo);
 
 }

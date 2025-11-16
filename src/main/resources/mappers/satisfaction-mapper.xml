@@ -68,11 +68,10 @@
         WHERE CL.CLASS_LECTURE_NO = #{classLectureNo}
     </select>
 
-    <select id="selectClassLectureNo" parameterType="int" resultType="int">
+    <select id="selectStudentLectureList" parameterType="int" resultType="int">
         SELECT CL.CLASS_LECTURE_NO
         FROM CLASS_STUDENT CS
-        JOIN CLASS C ON CS.CLASS_NO = C.CLASS_NO
-        JOIN CLASS_LECTURE CL ON C.CLASS_NO = CL.CLASS_NO
+        JOIN CLASS_LECTURE CL ON CS.CLASS_NO = CL.CLASS_NO
         WHERE CS.STUDENT_NO = #{studentNo}
     </select>
 
@@ -90,17 +89,19 @@
     </select>
 
     <!-- 특정 학생이 이미 제출했는지 체크 -->
-    <select id="checkSubmit" parameterType="int" resultType="int">
+    <select id="checkSatisfactionSubmit" resultType="int">
         SELECT COUNT(*)
         FROM SATISFACTION_OF_A_LECTURE
         WHERE STUDENT_NO = #{studentNo}
+            AND CLASS_LECTURE_NO = #{classLectureNo}
     </select>
 
     <!-- 강사가 맡은 수업 목록 -->
     <select id="selectLectureClassList" parameterType="int" resultType="int">
-        SELECT CLASS_LECTURE_NO
-        FROM CLASS_LECTURE
-        WHERE LECTURE_NO = #{memberNo}
+        SELECT CL.CLASS_LECTURE_NO
+        FROM CLASS_LECTURE CL
+        JOIN LECTURE L ON CL.LECTURE_NO = L.LECTURE_NO
+        WHERE L.MEMBER_NO = #{memberNo}
     </select>
 
     <!-- 특정 반의 만족도 조사 -->
@@ -164,5 +165,12 @@
         FROM SATISFACTION_OF_A_LECTURE
         WHERE CLASS_LECTURE_NO = #{classLectureNo}
             AND SUGGESTION IS NOT NULL
+    </select>
+
+    <select id="selectLectureName" parameterType="int" resultType="string">
+        SELECT L.LECTURE_NAME
+        FROM CLASS_LECTURE CL
+        JOIN LECTURE L ON CL.LECTURE_NO = L.LECTURE_NO
+        WHERE CL.CLASS_LECTURE_NO = #{classLectureNo}
     </select>
 </mapper>

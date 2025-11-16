@@ -40,6 +40,12 @@ public class SatisficationController {
         double lectureRating = data.getAvgLectureRating();
         data.setAvgLectureRating(Math.round(lectureRating * 10) / 10.0);
 
+        double submitRate = 0;
+        if (data.getTotalCount() > 0) {
+            submitRate = Math.round((data.getSubmittedCount() * 100.0 / data.getTotalCount()) * 10) / 10.0;
+        }
+
+        model.addAttribute("submitRate", submitRate);
         model.addAttribute("lectureData", data);
 
         int limit = 5;
@@ -123,13 +129,29 @@ public class SatisficationController {
 
         int memberNo = login.getMemberNo();
         int studentNo = satisfactionService.getStudentNo(memberNo);
-        int classLectureNo = satisfactionService.getClassLectureNo(studentNo);
 
-        int already = satisfactionService.checkSubmit(studentNo);
+        // 🔹 학생이 들을 수 있는 수업 목록 (CLASS_LECTURE_NO 리스트)
+        List<Integer> lectureList = satisfactionService.getStudentLectureList(studentNo);
 
-        if (already > 0) {
-            model.addAttribute("already", true);
+        Map<Integer, String> lectureNameMap = new HashMap<>();
+        Map<Integer, Boolean> submitCheckMap = new HashMap<>();
+        for (int lecNo : lectureList) {
+            String lectureName = satisfactionService.getLectureName(lecNo);
+            boolean submitCheck = satisfactionService.checkSatisfactionSubmit(studentNo, lecNo) > 0;
+
+            lectureNameMap.put(lecNo, lectureName);
+            submitCheckMap.put(lecNo, submitCheck);
         }
+
+        int classLectureNo = lectureList.get(0);
+
+        model.addAttribute("lectureList", lectureList);
+        model.addAttribute("lectureNameMap", lectureNameMap);
+        model.addAttribute("submitCheckMap", submitCheckMap);
+        model.addAttribute("selectedLectureNo", classLectureNo);
+
+        boolean submitCheck = satisfactionService.checkSatisfactionSubmit(studentNo, classLectureNo) > 0;
+        model.addAttribute("submitCheck", submitCheck);
 
         String className = satisfactionService.getClassName(studentNo);
         model.addAttribute("className", className);
@@ -146,6 +168,7 @@ public class SatisficationController {
 
     @PostMapping("/stSatisfactionInsert.co")
     public String insertSatisfication(
+            @RequestParam int classLectureNo,
             @RequestParam int classRating,
             @RequestParam int lectureRating,
             @RequestParam String suggestion,
@@ -154,10 +177,9 @@ public class SatisficationController {
         Member login = (Member) session.getAttribute("loginMember");
 
         int studentNo = satisfactionService.getStudentNo(login.getMemberNo());
-        int classLectureNo = satisfactionService.getClassLectureNo(studentNo);
 
         // 중복 제출 방지
-        if (satisfactionService.checkSubmit(studentNo) > 0) {
+        if (satisfactionService.checkSatisfactionSubmit(studentNo, classLectureNo) > 0) {
             session.setAttribute("alertMsg", "이미 만족도 조사를 제출했습니다.");
             return "redirect:/stSatisfication.co";
         }

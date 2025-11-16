@@ -20,14 +20,23 @@
             <jsp:include page="/WEB-INF/views/common/topBar.jsp" />
 
             <section class="content satisfaction">
+
                 <div class="card">
                     <h2>만족도 조사<br><small>(${className})</small></h2>
 
-                    <!-- <div class="info">
-                        <p>제출 현황: ${submittedCount} / ${totalCount}</p>
-                    </div> -->
-
                     <form action="/stSatisfactionInsert.co" method="post">
+                        <div class="form-group">
+                            <label>• 수업 선택</label>
+                            <select name="classLectureNo">
+                                <c:forEach var="lec" items="${lectureList}">
+                                    <option value="${lec}"
+                                        ${lec == selectedLectureNo ? 'selected' : ''}>
+                                         ${lectureNameMap[lec]}
+                                    </option>
+                                </c:forEach>
+                            </select>
+                        </div>
+
                         <div class="form-group">
                             <label>• 강의 내용 만족도</label>
                             <select name="classRating">
@@ -56,16 +65,18 @@
                         </div>
 
                         <div class="form-submit">
-                            <c:if test="${already}">
-                                <div class="alert alert-info" style="margin-bottom:10px;">
-                                    이미 만족도 조사를 제출했습니다.
-                                </div>
-                                <button disabled class="btn-submit disabled">제출 완료됨</button>
-                            </c:if>
+                            <c:choose>
+                                <c:when test="${submitCheckMap[selectedLectureNo]}">
+                                    <div class="alert alert-info" style="margin-bottom:10px;">
+                                        이미 만족도 조사를 제출했습니다.
+                                    </div>
+                                    <button disabled class="btn-submit disabled">제출 완료됨</button>
+                                </c:when>
 
-                            <c:if test="${!already}">
-                                <button type="submit" class="btn-submit">제출</button>
-                            </c:if>
+                                <c:otherwise>
+                                    <button type="submit" class="btn-submit">제출</button>
+                                </c:otherwise>
+                            </c:choose>
                         </div>
                     </form>
                 </div>

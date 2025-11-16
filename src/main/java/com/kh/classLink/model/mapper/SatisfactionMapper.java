@@ -17,13 +17,13 @@ public interface SatisfactionMapper {
 
     int countTotalSatisfactionClass(int classLectureNo);
 
-    int selectClassLectureNo(int studentNo);
+    Integer selectStudentNo(int memberNo);
 
     String selectClassName(int studentNo);
 
-    int selectStudentNo(int memberNo);
+    List<Integer> selectStudentLectureList(int studentNo);
 
-    int checkSubmit(int studentNo);
+    int checkSatisfactionSubmit(Map<String, Object> map);
 
     List<Integer> selectLectureClassList(int memberNo);
 
@@ -32,4 +32,6 @@ public interface SatisfactionMapper {
     int selectCommentCount(int classLectureNo);
 
     List<Satisfaction> selectCommentPage(Map<String, Object> map);
+
+    String selectLectureName(int classLectureNo);
 }
