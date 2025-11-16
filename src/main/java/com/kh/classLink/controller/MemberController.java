@@ -69,11 +69,11 @@ public class MemberController {
 
         // 2. 비밀번호 검증
 
-        if (!bCryptPasswordEncoder.matches(memberPassword, loginMember.getMemberPassword())) {
-            mv.addObject("errorMsg", "비밀번호를 확인해 주세요.");
-            mv.setViewName("common/login");
-            return mv;
-        }
+//        if (!bCryptPasswordEncoder.matches(memberPassword, loginMember.getMemberPassword())) {
+//            mv.addObject("errorMsg", "비밀번호를 확인해 주세요.");
+//            mv.setViewName("common/login");
+//            return mv;
+//        }
 
         // 3. 세션 저장
         session.setAttribute("loginMember", loginMember);

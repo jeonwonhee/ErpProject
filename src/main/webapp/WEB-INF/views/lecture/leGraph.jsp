@@ -36,8 +36,7 @@
                     <!-- 제출률 표시 -->
                         <p style="margin-top: 5px;">
                             <strong>제출률 :</strong>
-                            ${lectureData.submittedCount} / ${lectureData.totalCount}
-                            ( ${lectureData.totalCount > 0 ? lectureData.submittedCount * 100 / lectureData.totalCount : 0}% )
+                            ${lectureData.submittedCount} / ${lectureData.totalCount} (${submitRate}%)
                         </p>
 
                     <div class="chart-container">
@@ -125,12 +124,32 @@
                     const pageArea = document.getElementById("pageArea");
                     pageArea.innerHTML = "";
 
-                    for (let p = 1; p <= data.maxPage; p++) {
+                    if (page > 1) {
                         pageArea.innerHTML +=
                             '<a href="javascript:void(0)" ' +
                             'class="page-btn" ' +
+                            'onclick="loadComments(' + (page - 1) + ')">' +
+                            '◀' +
+                            '</a>';
+                    }
+
+                    // 페이지 번호
+                    for (let p = 1; p <= data.maxPage; p++) {
+                        pageArea.innerHTML +=
+                            '<a href="javascript:void(0)" ' +
+                            'class="page-btn' + (p === page ? ' active' : '') + '" ' +
                             'onclick="loadComments(' + p + ')">' +
                             p +
+                            '</a>';
+                    }
+
+                    // ▶ 다음 버튼
+                    if (page < data.maxPage) {
+                        pageArea.innerHTML +=
+                            '<a href="javascript:void(0)" ' +
+                            'class="page-btn" ' +
+                            'onclick="loadComments(' + (page + 1) + ')">' +
+                            '▶' +
                             '</a>';
                     }
                 });

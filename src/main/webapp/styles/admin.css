@@ -163,12 +163,6 @@
     font-size: 14px;
 }
 
-
-
-
-
-
-
 /* 상태 배지 */
 .admin-calendar-manage .status {
     display: inline-block;
@@ -179,23 +173,17 @@
     color: #fff;
 }
 
-.admin-calendar-manage .status.received {
+.admin-calendar-manage .status.approved {
     background: #4b5dff;
 }
 
-.admin-calendar-manage .status.processing {
-    background: #d9f365;
-    color: #333;
+.admin-calendar-manage .status.rejected {
+    background: #e53935;
 }
 
-/* 승인여부 컬러 */
-.admin-calendar-manage td.approved {
-    color: #2c6e49;
-    font-weight: 600;
-}
-.admin-calendar-manage td.rejected {
-    color: #e53935;
-    font-weight: 600;
+.admin-calendar-manage .status.pending {
+    background: #d9f365;
+    color: #333;
 }
 
 /* ===============================

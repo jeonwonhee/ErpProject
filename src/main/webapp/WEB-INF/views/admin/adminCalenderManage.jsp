@@ -43,89 +43,97 @@
                                 <th>승인여부</th>
                                 </tr>
                             </thead>
-                            <tbody>
+                            <tbody id="approvalArea">
                                 <c:forEach var="a" items="${approvalList}">
-                                    <tr class="clickable"
-                                        onclick="location.href='${pageContext.request.contextPath}/adminCalenderDetail.co?lectureDateNo=${a.lectureDateNo}'">
 
-                                        <td>${a.lectureDateNo}</td>
-                                        <td>${a.title}</td>
-                                        <td>${a.writer}</td>
-                                        <td>${a.approvalDate}</td>
-                                        <td>
-                                            <c:choose>
-                                                <c:when test="${a.status eq 'IN_PROGRESS'}">
-                                                    <span class="status processing">처리중</span>
-                                                </c:when>
-                                                <c:when test="${a.status eq 'APPROVED'}">
-                                                    <span class="status received">접수</span>
-                                                </c:when>
-                                                <c:when test="${a.status eq 'REJECTED'}">
-                                                    <span class="status rejected">반려</span>
-                                                </c:when>
-                                                <c:otherwise>
-                                                    <span class="status unknown">-</span>
-                                                </c:otherwise>
-                                            </c:choose>
-                                        </td>
-
-                                        <td>
-                                            <c:choose>
-                                                <c:when test="${a.status eq 'APPROVED'}">
-                                                    <span class="approved">승인</span>
-                                                </c:when>
-                                                <c:when test="${a.status eq 'REJECTED'}">
-                                                    <span class="rejected">반려</span>
-                                                </c:when>
-                                                <c:otherwise>
-                                                    <span class="pending">대기</span>
-                                                </c:otherwise>
-                                            </c:choose>
-                                        </td>
-                                    </tr>
                                 </c:forEach>
                             </tbody>
                         </table>
-                        <div class="pagination">
-                            <c:if test="${startPage > 1}">
-                                <a href="?page=${startPage - 1}" class="page-btn">이전</a>
-                            </c:if>
+                        <div id="approvalPage" class="pagination">
 
-                            <c:forEach begin="${startPage}" end="${endPage}" var="p">
-                                <a href="?page=${p}" class="page-btn
-                                    <c:if test='${p eq currentPage}'>active</c:if>'">${p}</a>
-                            </c:forEach>
-
-                            <c:if test="${endPage < maxPage}">
-                                <a href="?page=${endPage + 1}" class="page-btn">다음</a>
-                            </c:if>
                         </div>
                     </div>
                 </div>
             </section>
         </main>
 
-        <!-- ✅ Ajax 스크립트 추가 -->
         <script>
-            // 승인/반려 버튼 클릭 시 호출되는 함수
-            function updateApproval(lectureDateNo, status, reason = "") {
-                $.ajax({
-                    type: "POST",
-                    url: "${pageContext.request.contextPath}/adminCalenderManage.co", // 기존 URL 그대로
-                    data: { lectureDateNo, status, reason },
-                    success: function (res) {
-                        if (res === "success") {
-                            alert("처리 완료");
-                            location.reload();
-                        } else {
-                            alert("처리 실패");
-                        }
-                    },
-                    error: function () {
-                        alert("서버 오류 발생");
+            function loadApproval(page) {
+
+                fetch('/ajax/adminCalender?page=' + page)
+                .then(resp => resp.json())
+                .then(data => {
+
+                    /* ----- 1) 테이블 렌더링 ----- */
+                    const area = document.getElementById("approvalArea");
+                    area.innerHTML = "";
+
+                    if (data.approvalList.length === 0) {
+                        area.innerHTML =
+                            '<tr><td colspan="6" style="text-align:center;color:#666;">등록된 일정이 없습니다.</td></tr>';
+                    } else {
+                        data.approvalList.forEach(function(a) {
+
+                            area.innerHTML +=
+                                '<tr class="clickable" ' +
+                                    'onclick="location.href=\'' +
+                                        '${pageContext.request.contextPath}/adminCalenderDetail.co?lectureDateNo=' +
+                                        a.lectureDateNo +
+                                    '\'">' +
+
+                                    '<td>' + a.lectureDateNo + '</td>' +
+                                    '<td>' + a.title + '</td>' +
+                                    '<td>' + a.writer + '</td>' +
+                                    '<td>' + a.approvalDate + '</td>' +
+
+                                    '<td>' +
+                                        (a.status === "IN_PROGRESS" ? '<span class="status pending">처리중</span>' : '') +
+                                        (a.status === "APPROVED"    ? '<span class="status approved">접수</span>'  : '') +
+                                        (a.status === "REJECTED"    ? '<span class="status rejected">반려</span>'  : '') +
+                                    '</td>' +
+
+                                    '<td>' +
+                                        (a.status === "APPROVED" ? '<span class="approved">승인</span>' : '') +
+                                        (a.status === "REJECTED" ? '<span class="rejected">반려</span>' : '') +
+                                        (a.status !== "APPROVED" && a.status !== "REJECTED"
+                                            ? '<span class="pending">대기</span>'
+                                            : '') +
+                                    '</td>' +
+
+                                '</tr>';
+                        });
+                    }
+
+
+                    /* ----- 2) 페이징 렌더링 ----- */
+                    const pageArea = document.getElementById("approvalPage");
+                    pageArea.innerHTML = "";
+
+                    // ◀ 이전
+                    if (page > 1) {
+                        pageArea.innerHTML +=
+                            '<a href="javascript:void(0)" class="page-btn" onclick="loadApproval(' + (page - 1) + ')">◀</a>';
+                    }
+
+                    // 페이지 번호들
+                    for (let p = data.startPage; p <= data.endPage; p++) {
+                        pageArea.innerHTML +=
+                            '<a href="javascript:void(0)" ' +
+                            'class="page-btn' + (p === page ? ' active' : '') + '" ' +
+                            'onclick="loadApproval(' + p + ')">' +
+                            p +
+                            '</a>';
+                    }
+
+                    // ▶ 다음
+                    if (page < data.maxPage) {
+                        pageArea.innerHTML +=
+                            '<a href="javascript:void(0)" class="page-btn" onclick="loadApproval(' + (page + 1) + ')">▶</a>';
                     }
                 });
             }
+
+            loadApproval(1);
         </script>
     </body>
 </html>

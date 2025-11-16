@@ -32,8 +32,8 @@ public class SatisfactionServiceImpl implements SatisfactionService {
     }
 
     @Override
-    public int getClassLectureNo(int studentNo) {
-        return mapper.selectClassLectureNo(studentNo);
+    public List<Integer> getStudentLectureList(int studentNo) {
+        return mapper.selectStudentLectureList(studentNo);
     }
 
     @Override
@@ -47,8 +47,12 @@ public class SatisfactionServiceImpl implements SatisfactionService {
     }
 
     @Override
-    public int checkSubmit(int studentNo) {
-        return mapper.checkSubmit(studentNo);
+    public int checkSatisfactionSubmit(int studentNo, int classLectureNo) {
+        Map<String, Object> map = new HashMap<>();
+        map.put("studentNo", studentNo);
+        map.put("classLectureNo", classLectureNo);
+
+        return mapper.checkSatisfactionSubmit(map);
     }
 
     @Override
@@ -73,6 +77,11 @@ public class SatisfactionServiceImpl implements SatisfactionService {
         map.put("start", start);
         map.put("end", end);
         return mapper.selectCommentPage(map);
+    }
+
+    @Override
+    public String getLectureName(int classLectureNo) {
+        return mapper.selectLectureName(classLectureNo);
     }
 
 }

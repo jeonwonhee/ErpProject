@@ -24,4 +24,5 @@ public class LectureDateApprovalList {
     // 🔹 LECTURE_DATE_APPROVAL 테이블
     private String status;        // IN_PROGRESS / APPROVED / REJECTED
     private String approvalDate;    // 승인 처리 날짜
+    private String rejectReason;    // 반려 사유
 }
