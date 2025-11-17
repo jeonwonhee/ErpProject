@@ -145,10 +145,10 @@ public class FacilityController {
         Map<String, Object> result = facilityService.getBoardList(currentPage);
 
         List<DeviceRentAtt> list = (List<DeviceRentAtt>) result.get("list");
-        list.forEach(d -> {
-            Member m = memberMapper.selectMemberByNo(d.getMemberNo());
-            d.setMemberName(m.getMemberName());
-        });
+        for (DeviceRentAtt d : list) {
+            d.setMemberName(memberMapper.selectMemberByNo(d.getMemberNo()).getMemberName());
+        }
+
 
         Map<String, Object> map = new HashMap<>();
         map.put("list", list);
@@ -156,21 +156,27 @@ public class FacilityController {
         return map;
     }
 
-    @PostMapping("/updateDeviceStatus") // 완료
+    @PostMapping("/updateDeviceStatus")
     @ResponseBody
     public String updateDeviceStatus(@RequestParam int deviceRentAttId,
                                      @RequestParam String status) {
 
-        int result = facilityService.updateDeviceStatus(deviceRentAttId, status);
-        if (result <= 0) return "0";
-
         if ("APPROVAL".equals(status)) {
             boolean approved = facilityService.approveDeviceRent(deviceRentAttId);
-            if (!approved) return "0";
+            if (!approved) {
+                // 재고 부족 → 상태는 변경하지 않고 0 반환
+                return "0";
+            }
+            // 재고 충분 → 상태를 APPROVAL로 바꿈
+            facilityService.updateDeviceStatus(deviceRentAttId, status);
+        } else {
+            // 승인 외 상태는 바로 변경 가능
+            facilityService.updateDeviceStatus(deviceRentAttId, status);
         }
 
         return "1";
     }
+
 
 
     @GetMapping("/getDeviceStatus") // 완료
