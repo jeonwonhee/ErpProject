@@ -29,7 +29,7 @@
 
             <!-- 콘텐츠 영역 -->
             <section class="content">
-                <select class="classSelect" onchange="changeClass()">
+                <select id="classSelect" class="classSelect" onchange="changeClass()">
                     <c:forEach var="c" items="${classList}">
                         <option value="${c.classLectureNo}"
                             <c:if test="${c.classLectureNo eq selectedClassLectureNo}">selected</c:if>>
@@ -73,9 +73,6 @@
                                     <th>승인상태</th>
                                 </tr>
                             </thead>
-                            <%
-                                System.out.println("🔥 JSP에서 확인하는 upcomingList = " + request.getAttribute("upcomingList"));
-                            %>
 
                             <tbody>
                                 <c:forEach var="e" items="${upcomingList}">
@@ -96,7 +93,7 @@
 
                         <div class="pagination">
                             <c:if test="${currentPage > 1}">
-                                <a href="?classLectureNo=${selectedClassLectureNo}&page=${currentPage - 1}" class="page-btn">이전</a>
+                                <a href="?classLectureNo=${selectedClassLectureNo}&page=${currentPage - 1}" class="page-btn">◀</a>
                             </c:if>
 
                             <c:forEach var="p" begin="${startPage}" end="${endPage}">
@@ -107,7 +104,7 @@
                             </c:forEach>
 
                             <c:if test="${currentPage < maxPage}">
-                                <a href="?classLectureNo=${selectedClassLectureNo}&page=${currentPage + 1}" class="page-btn">다음</a>
+                                <a href="?classLectureNo=${selectedClassLectureNo}&page=${currentPage + 1}" class="page-btn">▶</a>
                             </c:if>
                         </div>
                     </div>
@@ -291,8 +288,8 @@
             });
 
             function changeClass() {
-                const no = document.getElementById("classSelect").value;
-                location.href = "/lecture/leCalender.co?classLectureNo=" + no;
+                const number = document.getElementById("classSelect").value;
+                location.href = "/leCalender.co?classLectureNo=" + number;
             }
         </script>
 

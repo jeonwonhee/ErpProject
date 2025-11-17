@@ -8,6 +8,8 @@
         <link rel="stylesheet" href="styles\default.css">
         <link rel="stylesheet" href="styles\style.css">
         <link rel="stylesheet" href="styles\lecture.css">
+
+        <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
     </head>
 
     <body class="lecture lecture-feedback">
@@ -29,29 +31,18 @@
                 <div class="card">
                     <h2>강의별 만족도 (5점 만점 기준)</h2>
                     <div class="course-list">
-                        <div class="card course-card" onclick="location.href='${pageContext.request.contextPath}/leGraph.co?lectureGraphNo=1'">
-                            <div class="course-info" >
-                                <h3>JAVA/SPRING - 강사명</h3>
-                                <p>강의 평점: <strong>4.2</strong> / 강사 평점: <strong>4.3</strong></p>
+                        <c:forEach var="lec" items="${lectureList}">
+                            <div class="card course-card" onclick="location.href='/leGraph.co?lectureGraphNo=${lec.classLectureNo}'">
+                                <div class="course-info">
+                                    <h3>${lec.className} - ${lec.lectureName}</h3>
+                                    <p>강의 평점: <strong>${lec.avgClassRating}</strong> /
+                                       강사 평점: <strong>${lec.avgLectureRating}</strong></p>
+                                </div>
+                                <span class="response">
+                                    제출률 ${lec.submittedCount} / ${lec.totalCount}
+                                </span>
                             </div>
-                            <span class="response">응답수 48</span>
-                        </div>
-
-                        <div class="card course-card">
-                            <div class="course-info">
-                                <h3>웹프론트 - 강사명</h3>
-                                <p>강의 평점: <strong>4.2</strong> / 강사 평점: <strong>4.3</strong></p>
-                            </div>
-                            <span class="response">응답수 35</span>
-                        </div>
-
-                        <div class="card course-card">
-                            <div class="course-info">
-                                <h3>DB/SQL - 강사명</h3>
-                                <p>강의 평점: <strong>4.2</strong> / 강사 평점: <strong>4.3</strong></p>
-                            </div>
-                            <span class="response">응답수 29</span>
-                        </div>
+                        </c:forEach>
                     </div>
                 </div>
             </section>
