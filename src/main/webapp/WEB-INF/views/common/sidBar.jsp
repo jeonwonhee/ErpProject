@@ -43,6 +43,7 @@
             <li><a href="${pageContext.request.contextPath}/adminDashboard.co">대시보드</a></li>
             <li><a href="${pageContext.request.contextPath}/adminStudentList.co">학생관리</a></li>
             <li><a href="${pageContext.request.contextPath}/adminLectureList.co">직원관리</a></li>
+            <li><a href="${pageContext.request.contextPath}/adminClassManage.co">반 관리</a></li>
             <li><a href="${pageContext.request.contextPath}/adminCalenderManage.co">일정관리</a></li>
             <li><a href="${pageContext.request.contextPath}/AttendanceDashboard.co">출결현황</a></li>
             <li><a href="${pageContext.request.contextPath}/notice.co">공지사항</a></li>
