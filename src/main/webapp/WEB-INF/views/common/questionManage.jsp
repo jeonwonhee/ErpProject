@@ -108,6 +108,12 @@
                     </c:if>
 
                 </div>
+                <!-- 글쓰기 버튼 -->
+                <c:if test="${loginMember.role eq 'TEACHER'}">
+                    <div class="inquiry-write">
+                        <button class="btn-write" onclick="location.href='${pageContext.request.contextPath}/stQuestionWrite.co'">글쓰기</button>
+                    </div>
+                </c:if>
             </section>
         </main>
     </body>

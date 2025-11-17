@@ -16,6 +16,7 @@
 
   <!-- 메인 -->
   <main class="main">
+  <c:set var="pageName" value="공지사항" scope="request"></c:set>
   <jsp:include page="/WEB-INF/views/common/topBar.jsp" />
 
     <section class="content">
@@ -160,7 +161,7 @@
     <%--    })--%>
     <%--}--%>
 
-    <%--function reloadNotice(data) {--%>
+        <%--function reloadNotice(data) {--%>
     <%--    let table = document.querySelector(".notice-table tbody");--%>
     <%--    let page = document.querySelector(".pagination");--%>
     <%--    const contextPath = "${pageContext.request.contextPath}";--%>
