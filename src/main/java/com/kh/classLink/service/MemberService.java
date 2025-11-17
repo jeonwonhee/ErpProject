@@ -32,7 +32,7 @@ public interface MemberService {
     public int insertClass(Member member);
 
     //비밀번호 변경
-    int updatePassword(long memberNo, String encodedPassword);
+    int updatePassword(long memberNo, String encodedPassword, String token);
 
     /**
      * 회원 삭제
@@ -65,6 +65,13 @@ public interface MemberService {
      * @return
      */
     Map<String,Object> orderpasswordFind(Member member);
+
+    /**
+     * 토큰 정보 조회
+     * @param token
+     * @return
+     */
+    int selectTokenInfo(String token);
 
 
 }

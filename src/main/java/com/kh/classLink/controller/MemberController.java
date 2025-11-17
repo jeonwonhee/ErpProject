@@ -191,7 +191,15 @@ public class MemberController {
 
     //비밀번호 변경
    @GetMapping("/changePassword.co")
-   public String changePasswordPage() {
+   public String changePasswordPage(HttpServletRequest request, Model model) {
+        String token = request.getParameter("token");
+        if (token != null && !token.equals("")) {
+            int result = memberService.selectTokenInfo(token);
+            if (result == 0) {
+                model.addAttribute("errMeg","토큰이 만료되었습니다. 재 발급 바랍니다.");
+                return "redirect:/login.co";
+            }
+        }
        return "common/changePassword"; // JSP 경로
 }
     // 실제 변경 처리
@@ -199,15 +207,24 @@ public class MemberController {
     public String changePassword(@RequestParam("newPw") String newPw,
                                  @RequestParam("confirmPw") String confirmPw,
                                  @RequestParam("role") String role, // 탭에서 hidden으로 넘어옴
-                                 HttpSession session) {
+                                 HttpSession session,
+                                 @RequestParam(value = "token", defaultValue = "") String token) {
 
         Member loginMember = (Member) session.getAttribute("loginMember");
         String sessionRole = (String) session.getAttribute("role"); // 로그인 시 세션에 저장했던 역할
 
-        if (loginMember == null || sessionRole == null) {
-            session.setAttribute("alertMsg", "로그인 후 이용하세요.");
-            return "redirect:/login.co";
+        int memberNo = 0;
+        if (token.equals("")) {
+            if (loginMember == null || sessionRole == null) {
+                session.setAttribute("alertMsg", "로그인 후 이용하세요.");
+                return "redirect:/login.co";
+            } else {
+                memberNo = loginMember.getMemberNo();
+            }
+        } else {
+            loginMember = new  Member();
         }
+
 
         if (!newPw.equals(confirmPw)) {
             session.setAttribute("alertMsg", "비밀번호가 서로 일치하지 않습니다.");
@@ -216,7 +233,8 @@ public class MemberController {
 
         // BCrypt 해시
         String encoded = bCryptPasswordEncoder.encode(newPw);
-        int result = memberService.updatePassword(loginMember.getMemberNo(), encoded);
+
+        int result = memberService.updatePassword(memberNo, encoded,token);
 
         if (result > 0) {
             // 세션 객체 갱신(선택)

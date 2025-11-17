@@ -29,7 +29,7 @@
                 <button type="button" class="role-tab" data-role="TEACHER">강사</button>
                 <button type="button" class="role-tab" data-role="ADMIN">관리자</button>
             </div>
-
+            <input type="hidden" name="token" value="${param.token}">
             <!-- 서버로 보낼 role -->
             <input type="hidden" id="role" name="role" value="STUDENT" />
 
