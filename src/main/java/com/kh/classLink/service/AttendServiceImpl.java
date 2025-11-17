@@ -4,10 +4,8 @@ package com.kh.classLink.service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.kh.classLink.model.mapper.AttendMapper;
-import com.kh.classLink.model.vo.Attend;
+import com.kh.classLink.model.vo.*;
 import com.kh.classLink.model.vo.Class;
-import com.kh.classLink.model.vo.Member;
-import com.kh.classLink.model.vo.PageInfo;
 import org.apache.ibatis.session.RowBounds;
 import org.springframework.stereotype.Service;
 
@@ -212,5 +210,30 @@ public class AttendServiceImpl implements AttendService {
 
 
         return map;
+    }
+
+    /*출결정정 요청 리스트*/
+    @Override
+    public List<AttendUpdate> getAttendUpdateList(int teacherNo) {
+        return attendMapper.selectAttendUpdateList(teacherNo);
+    }
+
+    /*출결정정 요청 데이터*/
+    @Override
+    public AttendUpdate getAttendUpdateDetail(int attendUpdateNo) {
+        return attendMapper.selectAttendUpdateDetail(attendUpdateNo);
+    }
+
+    /*출결정정 승인 반려*/
+    @Override
+    public int updateAttendCorrect(int attendUpdateNo, String status, String refusal, int approverNo) {
+
+        Map<String, Object> param = new HashMap<>();
+        param.put("attendUpdateNo", attendUpdateNo);
+        param.put("status", status);
+        param.put("refusal", refusal);
+        param.put("approverNo", approverNo);
+
+        return attendMapper.updateAttendCorrect(param);
     }
 }

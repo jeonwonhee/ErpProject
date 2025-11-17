@@ -1,17 +1,21 @@
 package com.kh.classLink.controller;
 
 import com.kh.classLink.model.vo.Attend;
+import com.kh.classLink.model.vo.AttendUpdate;
 import com.kh.classLink.model.vo.Class;
+import com.kh.classLink.model.vo.Member;
 import com.kh.classLink.service.AttendService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Controller
@@ -67,32 +71,51 @@ public class AttendanceController {
         return "admin/adminLectureList";
     }
 
-    /** 강사 출결관리
-     * @return
-     */
-    @GetMapping("/lectureAttendance.co")
-    public String lectureAttendance(Model model) {
-        int memberNo = 6;
-        ArrayList<Class> list = attendService.selectTodayLectureClass(memberNo);
-        model.addAttribute("classList", list);
+    /* 강사 출결관리 페이지*/
+    @GetMapping("/lectureAttendanceList.co")
+    public String lectureAttendanceList(HttpSession session, Model model) {
 
-        return "lecture/leAttendance";
+        Member teacher = (Member) session.getAttribute("loginMember");
+        int teacherNo = teacher.getMemberNo();
+
+        List<AttendUpdate> list = attendService.getAttendUpdateList(teacherNo);
+
+        model.addAttribute("list", list);
+
+        return "lecture/leAttendanceList";
     }
 
-    /** 강사 출결정정 승인/반려 여부 페이지
-     * @return
-     */
+    /* 강사 출결정정 승인/반려 여부 페이지 */
     @GetMapping("/lectureAttendanceCorrection.co")
-    public String lectureAttendanceCorrection() {
+    public String lectureAttendanceCorrection(@RequestParam int attendUpdateNo, Model model) {
+
+        AttendUpdate detail = attendService.getAttendUpdateDetail(attendUpdateNo);
+
+        model.addAttribute("detail", detail);
+
         return "lecture/leAttendanceCorrection";
     }
 
-    /** 강사 출결정정목록 페이지
-     * @return
-     */
-    @GetMapping("/lectureAttendanceList.co")
-    public String lectureAttendanceList() {
-        return "lecture/leAttendanceList";
+
+    /* 강사 출결정정 승인/반려 */
+    @PostMapping("/lectureAttendanceCorrection.co")
+    public String lectureAttendanceCorrect(@RequestParam int attendUpdateNo,
+                                           @RequestParam String status,
+                                           @RequestParam(required=false) String refusal,
+                                           HttpSession session) {
+
+        Member loginUser = (Member) session.getAttribute("loginUser");
+
+        if (loginUser == null) {
+            // 로그인 안되어있으면 로그인 페이지로
+            return "redirect:/login.co";
+        }
+
+        int approverNo = loginUser.getMemberNo();
+
+        attendService.updateAttendCorrect(attendUpdateNo, status, refusal, approverNo);
+
+        return "redirect:/AttendanceList.co";
     }
 
     /**
