@@ -4,136 +4,206 @@
    =================================== */
 /* ===== 메인 ===== */
 .student {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  background: #f8f9fc;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    background: #f8f9fc;
 }
 
 /* ===== 카드 기본 ===== */
 .student .card h2 {
-  font-size: 16px;
-  font-weight: 600;
-  margin-bottom: 16px;
-  color: #222;
+    font-size: 16px;
+    font-weight: 600;
+    margin-bottom: 16px;
+    color: #222;
 }
 
 /* ===================================
    출석률 (도넛 차트)
    =================================== */
 .student .attendance-wrapper {
-  display: flex;
-  align-items: center;
-  gap: 24px;
+    display: flex;
+    align-items: center;
+    gap: 24px;
 }
 
 .student .donut-wrapper {
-  position: relative;
-  width: 180px;
-  aspect-ratio: 1 / 1;
+    position: relative;
+    width: 180px;
+    aspect-ratio: 1 / 1;
 }
 
 .student svg {
-  width: 100%;
-  height: 100%;
-  transform: rotate(-90deg);
+    width: 100%;
+    height: 100%;
+    transform: rotate(-90deg);
 }
 
 .student circle {
-  fill: none;
-  stroke-width: 18;
-  transform-origin: center;
+    fill: none;
+    stroke-width: 18;
+    transform-origin: center;
 }
 
 .student .bg {
-  stroke: #e5e5ff;
+    stroke: #e5e5ff;
 }
 
 .student .attend {
-  stroke: #4b45ff;
-  stroke-dasharray: 491.73 73.75;
-  stroke-linecap: round;
+    stroke: #4b45ff;
+    stroke-linecap: round;
+    transition: stroke-dasharray 0.6s ease;
 }
 
 .student .late {
-  stroke: #ffd84d;
-  stroke-dasharray: 49.17 516.31;
-  stroke-dashoffset: -491.73;
+    stroke: #ffd84d;
+    stroke-linecap: round;
 }
 
 .student .absent {
-  stroke: #ff6b6b;
-  stroke-dasharray: 24.59 540.89;
-  stroke-dashoffset: -540.9;
+    stroke: #ff6b6b;
+    stroke-linecap: round;
 }
 
 .student .chart-text {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  font-size: 22px;
-  font-weight: 700;
-  color: #222;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 22px;
+    font-weight: 700;
+    color: #222;
 }
 
 .student .attendance-details {
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-  font-size: 15px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    font-size: 15px;
 }
 
 /* ===== 범례 (Legend) ===== */
 .student .legend {
-  display: flex;
-  gap: 16px;
-  margin-top: 8px;
-  font-size: 13px;
-  color: #555;
+    display: flex;
+    gap: 16px;
+    margin-top: 8px;
+    font-size: 13px;
+    color: #555;
 }
 
 .student .legend span::before {
-  content: '';          /* dot 만들기용 가상 데이터 */
-  display: inline-block;
-  width: 10px;
-  height: 10px;
-  border-radius: 50%;
-  margin-right: 5px;
-  vertical-align: middle;
+    content: '';
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    margin-right: 5px;
+    vertical-align: middle;
 }
 
 .student .legend .att::before {
-  background: #4b45ff;
+    background: #4b45ff;
 }
 
 .student .legend .late::before {
-  background: #ffd84d;
+    background: #ffd84d;
 }
 
 .student .legend .abs::before {
-  background: #ff6b6b;
+    background: #ff6b6b;
+}
+
+/* ===================================
+   출석 상태 색상 (상세기록용)
+   =================================== */
+.attend-text {
+    color: #4b45ff;
+    font-weight: 600;
+}
+.late-text {
+    color: #f4b400;
+    font-weight: 600;
+}
+.absent-text {
+    color: #ea4335;
+    font-weight: 600;
 }
 
 /* ===================================
    이번달 일정
    =================================== */
 .student .schedule ul {
-  margin-top: 6px;
-  margin-left: 18px;
-  line-height: 1.8;
-  font-size: 14px;
-  color: #333;
+    margin-top: 6px;
+    margin-left: 18px;
+    line-height: 1.8;
+    font-size: 14px;
+    color: #333;
 }
 
 /* ===================================
    상세 기록 표
    =================================== */
 .student .details-card table {
-  width: 100%;
-  border-collapse: collapse;
-  margin-top: 10px;
-  font-size: 14px;
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+    font-size: 14px;
+}
+
+.student .details-card th,
+.student .details-card td {
+    text-align: center;
+    padding: 10px 0;
+    border-bottom: 1px solid #eee;
+}
+
+.attend-text {
+    color: #4b45ff;
+    font-weight: 600;
+}
+
+.late-text {
+    color: #ffd84d;
+    font-weight: 600;
+}
+
+.absent-text {
+    color: #ff6b6b;
+    font-weight: 600;
+}
+/* ===================================
+   주간 이동 버튼
+   =================================== */
+.week-nav {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 10px;
+}
+
+.week-nav button {
+    background-color: #4b45ff;
+    color: white;
+    font-size: 13px;
+    border: none;
+    padding: 6px 16px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: 0.2s ease;
+}
+
+.week-nav button:hover {
+    background-color: #3c38d2;
+}
+
+/* 비활성화 상태 (데이터 없음) */
+.week-nav button:disabled,
+.week-nav button.disabled {
+    background-color: #ddd;
+    color: #777;
+    cursor: not-allowed;
+    opacity: 0.6;
+    box-shadow: none;
 }
 
 /* ===============================

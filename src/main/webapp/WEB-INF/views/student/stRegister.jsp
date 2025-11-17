@@ -17,7 +17,6 @@
     --%>
 </head>
 <body class="register">
-
 <div class="card">
     <h1>회원가입 페이지</h1>
     <p class="desc">해당하는 회원가입 유형을 선택하세요</p>

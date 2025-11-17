@@ -104,32 +104,46 @@
         AND L.LECTURE_NO = #{lectureNo}
         ORDER BY G.CREATE_DATE DESC
         FETCH FIRST #{limit} ROWS ONLY
+
     </select>
 
-    <!-- ============================
-         (3) 새 성적 등록
-         DTO에 classLectureNo 필드가 있어야 함!
-    ============================= -->
-    <insert id="insertGrade" parameterType="com.kh.classLink.model.vo.GradeDto">
-        <selectKey keyProperty="gradeNo" resultType="int" order="BEFORE">
-            SELECT SEQ_GNO.NEXTVAL FROM DUAL
-        </selectKey>
-        INSERT INTO GRADE (
-        GRADE_NO,
-        GRADE,
-        CLASS_LECTURE_NO,
-        STUDENT_NO,
-        TEST_NAME,
-        CREATE_DATE
-        ) VALUES (
-        #{gradeNo},
-        #{grade},
-        #{classLectureNo},
-        #{studentNo},
-        #{testName},
-        SYSDATE
-        )
-    </insert>
+        <!-- CLASS_NO + LECTURE_NO 로 CLASS_LECTURE_NO 조회 -->
+        <select id="selectClassLectureNo"
+                parameterType="map"
+                resultType="int">
+            SELECT CLASS_LECTURE_NO
+            FROM CLASS_LECTURE
+            WHERE CLASS_NO = #{classNo}
+            AND LECTURE_NO = #{lectureNo}
+        </select>
+
+        <!-- 성적 1건 INSERT -->
+        <insert id="insertGrade"
+                parameterType="com.kh.classLink.model.vo.GradeDto">
+            INSERT INTO GRADE (
+            GRADE_NO,
+            GRADE,
+            CLASS_LECTURE_NO,
+            STUDENT_NO,
+            TEST_NAME,
+            CREATE_DATE
+            )
+            SELECT
+            SEQ_GNO.NEXTVAL,
+            #{grade},
+            #{classLectureNo},
+            cs.STUDENT_NO,
+            #{testName},
+            SYSDATE
+            FROM CLASS_STUDENT cs
+            JOIN CLASS_LECTURE cl
+            ON cs.CLASS_NO = cl.CLASS_NO
+            WHERE cs.MEMBER_NO = #{studentNo}
+            AND cl.CLASS_LECTURE_NO = #{classLectureNo}
+        </insert>
+
+
+
 
     <!-- ============================
          (4) 성적 수정

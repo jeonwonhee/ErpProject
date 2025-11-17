@@ -351,6 +351,37 @@ question-detail .question-header .align-right,
   overflow: hidden;
 }
 
+
+/* ===== 페이지네이션 ===== */
+ .pagination {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 22px;
+}
+
+ .page-btn {
+  width: 32px;
+  height: 32px;
+  border: 1px solid #ccc;
+  background: #fff;
+  border-radius: 999px;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+ .page-btn:hover {
+  background: #eef1ff;
+  border-color: #6b5bff;
+}
+
+ .page-btn.active {
+  background: #6b5bff;
+  color: #fff;
+  border-color: #6b5bff;
+}
+
+
 /* ===== 글쓰기 버튼 ===== */
 .notice .notice-footer {
   display: flex;

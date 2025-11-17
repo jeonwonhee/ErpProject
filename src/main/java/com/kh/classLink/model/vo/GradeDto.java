@@ -24,3 +24,4 @@ public class GradeDto {
     private String className;     // CLASS.CLASS_NAME
 
 }
+

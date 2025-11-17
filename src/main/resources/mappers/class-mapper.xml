@@ -14,4 +14,39 @@
         ORDER BY CLASS_NO
     </select>
 
+    <!--강사가 담당하고 있는 반 조회-->
+    <select id="selectClassByLecture"
+            resultType = "com.kh.classLink.model.vo.Class"
+            parameterType="map">
+        SELECT DISTINCT
+            c.CLASS_NO   AS classNo,
+            c.CLASS_NAME AS className
+        FROM LECTURE l
+        JOIN CLASS_LECTURE cl
+        ON l.LECTURE_NO = cl.LECTURE_NO
+        JOIN CLASS c ON cl.CLASS_NO = c.CLASS_NO
+        WHERE l.MEMBER_NO = #{memberNo}
+        AND l.LECTURE_NO = #{lectureNo}
+        ORDER BY c.CLASS_NO
+    </select>
+
+    <!-- 특정 수강반에 소속된 학생 목록 조회 (STUDENT만) -->
+    <select id="selectStudentsByClassNo" parameterType="int"
+            resultType="com.kh.classLink.model.vo.Member">
+
+        SELECT
+            m.MEMBER_NO      AS studentNo,
+            m.MEMBER_NAME    AS studentName,
+            c.CLASS_NO       AS classNo,
+            c.CLASS_NAME     AS className
+        FROM
+            CLASS_STUDENT cs
+                JOIN MEMBER m ON cs.MEMBER_NO = m.MEMBER_NO
+                JOIN CLASS c  ON cs.CLASS_NO = c.CLASS_NO
+        WHERE
+            cs.CLASS_NO = #{classNo}
+          AND m.ROLE = 'STUDENT'        -- 학생만
+        ORDER BY m.MEMBER_NAME
+    </select>
+
 </mapper>
