@@ -2,8 +2,6 @@ package com.kh.classLink.model.vo;
 
 import lombok.*;
 
-import java.sql.Date;
-
 @Getter
 @Setter
 @ToString
