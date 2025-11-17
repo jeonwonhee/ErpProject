@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.kh.classLink.model.mapper.TeacherDashboardMapper">
+
+    <!-- 1) 강사 출석률 조회 (도넛 그래프) -->
+    <select id="getTeacherAttendanceRate" resultType="double">
+        SELECT NVL(
+        ROUND(
+        (SUM(CASE WHEN C.COMMUTE_STATUS IN ('IN', 'LATE', 'HALF') THEN 1 ELSE 0 END)
+        / COUNT(*)) * 100,
+        1), 0
+        ) AS attendanceRate
+        FROM COMMUTE C
+        WHERE C.MEMBER_NO = #{teacherNo}
+    </select>
+
+    <!-- 2) 강사 담당 반별 평균 성적 + 인원수 (막대그래프 + 테이블) -->
+    <select id="getTeacherClassAvgScores"
+            resultType="com.kh.classLink.model.vo.ClassAvgScore">
+        SELECT
+        C.CLASS_NAME AS className,
+        ROUND(AVG(G.GRADE), 1) AS avgGrade,
+        COUNT(DISTINCT G.STUDENT_NO) AS studentCount
+        FROM GRADE G
+        JOIN CLASS_LECTURE CL ON G.CLASS_LECTURE_NO = CL.CLASS_LECTURE_NO
+        JOIN CLASS C ON CL.CLASS_NO = C.CLASS_NO
+        JOIN LECTURE L ON CL.LECTURE_NO = L.LECTURE_NO
+        WHERE L.MEMBER_NO = #{teacherNo}
+        GROUP BY C.CLASS_NAME
+        ORDER BY C.CLASS_NAME
+    </select>
+
+    <!-- 3) 최근 신청 리스트 (예: 휴가 신청 기준) -->
+    <select id="getRecentApplications"
+            resultType="com.kh.classLink.model.vo.RecentApplication">
+        SELECT
+        M.MEMBER_NAME AS studentName,
+        TO_CHAR(V.CREATE_DATE, 'YYYY-MM-DD') AS applyDate,
+        '휴가 신청' AS reason
+        FROM VACATION_APPLICATION V
+        JOIN MEMBER M ON V.MEMBER_NO = M.MEMBER_NO
+        JOIN LECTURE L ON V.LECTURE_NO = L.LECTURE_NO
+        WHERE L.MEMBER_NO = #{teacherNo}
+        ORDER BY V.CREATE_DATE DESC
+        FETCH FIRST 5 ROWS ONLY
+    </select>
+
+</mapper>

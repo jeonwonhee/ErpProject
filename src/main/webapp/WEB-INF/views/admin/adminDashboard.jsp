@@ -1,4 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %> <!-- JSTL 포맷팅 태그 선언 추가 -->
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -40,11 +41,11 @@
             </div>
             <div class="stat-box">
                 <h4>학생 평균 출석률</h4>
-                <p>${studentAvgRate}%</p>
+                <p><fmt:formatNumber value="${studentAvgRate}" type="number" maxFractionDigits="1" />%</p> <!-- ✅ 반올림 적용 -->
             </div>
             <div class="stat-box">
                 <h4>강사 평균 출석률</h4>
-                <p>${lectureAvgRate}%</p>
+                <p><fmt:formatNumber value="${lectureAvgRate}" type="number" maxFractionDigits="1" />%</p> <!-- ✅ 반올림 적용 -->
             </div>
             <div class="stat-box">
                 <h4>금일 결석자</h4>

@@ -10,174 +10,71 @@
 /* ===================================
    강사 대시보드(lecture-dashboard)
    =================================== */
-.lecture-dashboard .calendar-box {
+
+/* 전체 그리드: 2x2 */
+.lecture-dashboard .dashboard-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 18px;
+    width: 100%;
+    margin-top: 15px;
+}
+
+/* 카드 UI 공통 */
+.lecture-dashboard .card {
     background: #fff;
     border: 1px solid #e2e4ef;
-    border-radius: 16px;
-    padding: 20px;
+    border-radius: 14px;
+    padding: 18px;
+    box-shadow: 0px 2px 6px rgba(0,0,0,0.04);
 }
 
-.lecture-dashboard .calendar-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 16px;
+/* 카드 제목 */
+.lecture-dashboard .card h3 {
+    font-size: 15px;
+    font-weight: 700;
+    margin-bottom: 14px;
+    color: #333;
 }
 
-.lecture-dashboard .month-control {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-}
-
-.lecture-dashboard .month-btn {
-    width: 28px;
-    height: 28px;
-    border: 1px solid #dcdde5;
-    border-radius: 999px;
-    background: #fff;
-    cursor: pointer;
+/* 차트 영역 */
+.lecture-dashboard .chart-area {
+    width: 100%;
+    height: 220px;
     display: flex;
     justify-content: center;
     align-items: center;
-    font-size: 14px;
 }
 
-.lecture-dashboard .month-title {
-  background: #fff;
-  border: 1px solid #dcdde5;
-  border-radius: 999px;
-  padding: 6px 16px 7px;
-  font-weight: 600;
-  font-size: 14px;
+.lecture-dashboard canvas {
+    max-width: 100% !important;
+    max-height: 200px !important;
 }
 
-.lecture-dashboard .legend {
-  display: flex;
-  gap: 18px;
-  font-size: 14px;
-  color: #555;
-}
-
-.lecture-dashboard .legend span {
-  display: flex;
-  align-items: center;
-  gap: 5px;
-}
-
-.lecture-dashboard .dot {
-  width: 9px;
-  height: 9px;
-  border-radius: 50%;
-  display: inline-block;
-}
-
-.lecture-dashboard .dot.blue { background: #4b5dff; }
-.lecture-dashboard .dot.orange { background: #ff9f43; }
-.lecture-dashboard .dot.red { background: #ff6b6b; }
-
-/* ===== 달력 그리드 ===== */
-.lecture-dashboard .calendar-grid {
-  display: grid;
-  grid-template-columns: repeat(7, minmax(90px, 1fr));
-  gap: 10px;
-  background: #fff;
-  border-radius: 16px;
-}
-
-.lecture-dashboard .day-cell {
-  background: #fff;
-  border: 1px solid #e1e2f0;
-  border-radius: 14px;
-  height: 80px;
-  padding: 7px 9px;
-  font-size: 13px;
-  color: #333;
-  position: relative;
-  transition: 0.12s ease;
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-}
-
-.lecture-dashboard .day-cell:hover {
-  background: #f3f4ff;
-  border-color: #cdd2ff;
-  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.05);
-  cursor: pointer;
-}
-
-.lecture-dashboard .day-num {
-  font-weight: 600;
-  font-size: 13px;
-}
-
-/* ===== 일정 점 표시 ===== */
-.lecture-dashboard .event-dots {
-  display: flex;
-  gap: 4px;
-  margin-top: auto;
-}
-
-.lecture-dashboard .event-dot {
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-}
-
-.lecture-dashboard .event-dot.blue { background: #4b5dff; }
-.lecture-dashboard .event-dot.orange { background: #ff9f43; }
-.lecture-dashboard .event-dot.red { background: #ff6b6b; }
-
-/* ===== 툴팁 (Hover Tooltip) ===== */
-.lecture-dashboard .tooltip {
-  display: none;
-  position: absolute;
-  bottom: 100%;
-  left: 0;
-  transform: translateY(-8px);
-  background: #fff;
-  border: 1px solid #ccc;
-  padding: 6px 10px;
-  font-size: 12px;
-  border-radius: 8px;
-  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.1);
-  white-space: nowrap;
-  z-index: 10;
-}
-
-.lecture-dashboard .day-cell:hover .tooltip {
-  display: block;
-}
-
-/* ====== 정보 카드 (Info Section) ===== */
-.lecture-dashboard .info-section {
-  display: flex;
-  gap: 20px;
-}
-
-.lecture-dashboard .card h3 {
-  font-size: 16px;
-  font-weight: 600;
-  margin-bottom: 12px;
-}
-
+/* 테이블 */
 .lecture-dashboard table {
-  width: 100%;
-  border-collapse: collapse;
-  font-size: 14px;
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
 }
 
 .lecture-dashboard th,
 .lecture-dashboard td {
-  border: 1px solid #ddd;
-  padding: 8px 10px;
-  text-align: center;
+    border: 1px solid #ddd;
+    padding: 8px 10px;
+    text-align: center;
 }
 
 .lecture-dashboard th {
-  background: #f3f4ff;
-  font-weight: 600;
+    background: #f3f4ff;
+    font-weight: 600;
+}
+
+/* 반응형 처리 */
+@media (max-width: 950px) {
+    .lecture-dashboard .dashboard-grid {
+        grid-template-columns: 1fr;
+    }
 }
 
 /* ===================================
