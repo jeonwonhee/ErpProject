@@ -2,12 +2,10 @@ package com.kh.classLink.controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.kh.classLink.model.vo.Attend;
-import com.kh.classLink.model.vo.AttendanceStats;
-import com.kh.classLink.model.vo.LectureDate;
-import com.kh.classLink.model.vo.Member;
+import com.kh.classLink.model.vo.*;
 import com.kh.classLink.service.AdminDashboardService;
 import com.kh.classLink.service.StudentDashboardService;
+import com.kh.classLink.service.TeacherDashboardService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -21,12 +19,15 @@ public class DashboardController {
 
     private final StudentDashboardService studentDashboardService;
     private final AdminDashboardService adminDashboardService;
+    private final TeacherDashboardService teacherDashboardService;
     private final ObjectMapper objectMapper = new ObjectMapper();
 
     public DashboardController(StudentDashboardService studentDashboardService,
-                               AdminDashboardService adminDashboardService) {
+                               AdminDashboardService adminDashboardService,
+                               TeacherDashboardService teacherDashboardService) {
         this.studentDashboardService = studentDashboardService;
         this.adminDashboardService = adminDashboardService;
+        this.teacherDashboardService = teacherDashboardService;
     }
 
     /**
@@ -36,21 +37,21 @@ public class DashboardController {
     @GetMapping("/adminDashboard.co")
     public String adminDashboard(Model model) throws JsonProcessingException {
 
+        // 기본 통계
         model.addAttribute("totalStudents", adminDashboardService.getTotalStudents());
         model.addAttribute("totalLectures", adminDashboardService.getTotalLectures());
         model.addAttribute("studentAvgRate", adminDashboardService.getStudentAvgRate());
         model.addAttribute("lectureAvgRate", adminDashboardService.getLectureAvgRate());
         model.addAttribute("todayAbsents", adminDashboardService.getTodayAbsents());
 
-
+        // 승인 대기 건수
         model.addAttribute("pendingCounsel", adminDashboardService.getPendingCounselCount());
         model.addAttribute("pendingVacation", adminDashboardService.getPendingVacationCount());
         model.addAttribute("pendingDeviceRent", adminDashboardService.getPendingDeviceRentCount());
 
-        // 요일별 출석률 → JSON 변환
+        // 요일별 출석률(JSON 변환)
         String weeklyJson = objectMapper.writeValueAsString(adminDashboardService.getWeeklyAttendRate());
         model.addAttribute("weeklyJson", weeklyJson);
-
 
         return "admin/adminDashboard";
     }
@@ -60,7 +61,29 @@ public class DashboardController {
      * @return 강사 대시보드 페이지
      */
     @GetMapping("/lectureDashboard")
-    public String lectureDashboard() {
+    public String lectureDashboard(HttpSession session, Model model) {
+
+        Member loginMember = (Member) session.getAttribute("loginMember");
+
+        if (loginMember == null) {
+            session.setAttribute("alertMsg", "로그인이 필요합니다.");
+            return "redirect:/login.co";
+        }
+
+        int teacherNo = loginMember.getMemberNo();
+
+        // 출석률
+        double attendanceRate = teacherDashboardService.getTeacherAttendanceRate(teacherNo);
+        model.addAttribute("attendanceRate", attendanceRate);
+
+        // 반별 평균 성적
+        List<ClassAvgScore> classAvgScores = teacherDashboardService.getTeacherClassAvgScores(teacherNo);
+        model.addAttribute("classAvgScores", classAvgScores);
+
+        // 최근 신청 리스트(옵션)
+        List<RecentApplication> recentApplicationList = teacherDashboardService.getRecentApplications(teacherNo);
+        model.addAttribute("recentApplicationList", recentApplicationList);
+
         return "lecture/leDashboard";
     }
 
@@ -76,57 +99,43 @@ public class DashboardController {
      * @param model JSP로 데이터 전달용
      * @return 학생 대시보드 페이지
      */
-
     @GetMapping("/stMain.co")
     public String stMain(@RequestParam(defaultValue = "0") int weekOffset,
                          HttpSession session,
                          Model model) {
 
-        // 로그인 확인
         Member loginMember = (Member) session.getAttribute("loginMember");
+
         if (loginMember == null) {
             session.setAttribute("alertMsg", "로그인이 필요합니다.");
             return "redirect:/login.co";
         }
 
         int memberNo = loginMember.getMemberNo();
-        System.out.println("🔑 로그인 MEMBER_NO: " + memberNo);
 
-        // 미래 주차 이동 방지
         if (weekOffset < 0) {
             weekOffset = 0;
         }
 
         try {
-            // 이번달 출석 통계
             AttendanceStats stats = studentDashboardService.getMonthlyAttendance(memberNo);
-            System.out.println("📊 출석 통계: " + stats);
-
             if (stats == null) {
                 stats = new AttendanceStats(0, 0, 0);
-                System.out.println("⚠️ 출석 데이터 없음 - 기본값 설정");
             }
             model.addAttribute("attendanceData", stats);
 
-            // 주간 출석 상세
             List<Attend> weeklyList = studentDashboardService.getWeeklyAttendance(memberNo, weekOffset);
-            System.out.println("📅 주간 출석: " + weeklyList.size() + "건");
             model.addAttribute("weeklyList", weeklyList);
 
-            // 오늘 일정
             List<LectureDate> todaySchedule = studentDashboardService.getTodaySchedule(memberNo);
-            System.out.println("📌 오늘 일정: " + todaySchedule.size() + "건");
             model.addAttribute("todaySchedule", todaySchedule);
 
-            // 주간 이동 관련
             model.addAttribute("weekOffset", weekOffset);
+
             boolean hasPrevWeek = studentDashboardService.hasPrevWeek(memberNo, weekOffset);
-            System.out.println("◀️ 이전주 존재: " + hasPrevWeek);
             model.addAttribute("hasPrevWeek", hasPrevWeek);
 
         } catch (Exception e) {
-            System.err.println("❌ 대시보드 로딩 오류: " + e.getMessage());
-            e.printStackTrace();
             model.addAttribute("attendanceData", new AttendanceStats(0, 0, 0));
             model.addAttribute("weeklyList", List.of());
             model.addAttribute("todaySchedule", List.of());
