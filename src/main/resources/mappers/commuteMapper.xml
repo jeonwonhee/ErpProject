@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.kh.classLink.model.mapper.CommuteMapper">
+
+    <!-- 로그인 시 출근 등록 -->
+    <insert id="insertCommuteIn">
+        INSERT INTO COMMUTE (
+        COMMUTE_NO,
+        MEMBER_NO,
+        COMMUTE_STATUS,
+        COMMUTE_DATE,
+        CREATE_DATE
+        ) VALUES (
+        SEQ_CMNO.NEXTVAL,
+        #{memberNo, jdbcType=NUMERIC},
+        #{status, jdbcType=VARCHAR},
+        SYSDATE,
+        SYSDATE
+        )
+    </insert>
+
+    <!-- 오늘 출근기록 중복 확인 -->
+    <select id="checkTodayCommute" resultType="int">
+        SELECT COUNT(*)
+        FROM COMMUTE
+        WHERE MEMBER_NO = #{memberNo}
+        AND TRUNC(COMMUTE_DATE) = TRUNC(SYSDATE)
+    </select>
+
+</mapper>
