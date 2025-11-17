@@ -70,7 +70,7 @@ public class FacilityServiceImpl implements FacilityService{
     public Map<String, Object> getBoardList(int currentPage) {
         int listCount = deviceMapper.selectBoardListCount();
 
-        PageInfo pi = new PageInfo(currentPage, listCount, 5, 3);
+        PageInfo pi = new PageInfo(currentPage, listCount, 5, 5);
 
         int offset = (currentPage - 1) * pi.getBoardLimit();
         RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());

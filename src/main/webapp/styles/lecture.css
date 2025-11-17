@@ -982,3 +982,8 @@ th {
     padding: 10px;
     font-size: 15px;
 }
+
+.rejected {
+    background: #ffe9e9;
+    color: #d93c3c;
+}

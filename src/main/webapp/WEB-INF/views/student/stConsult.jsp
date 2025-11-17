@@ -1,4 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -55,34 +57,51 @@
         </div>
 
       <!-- 신청 내역 -->
-      <div class="card consult-history">
-        <h2>신청내역</h2>
+        <div class="card consult-history">
+            <h2>신청내역</h2>
 
-        <table>
-          <thead>
-            <tr>
-              <th>기간</th>
-              <th>사유</th>
-              <th>제출일</th>
-              <th>승인상태</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>10/29~10/31</td>
-              <td>가족 행사</td>
-              <td>9/28</td>
-              <td><span class="status pending">대기</span></td>
-            </tr>
-            <tr>
-              <td>9/8~9/9</td>
-              <td>건강 검진</td>
-              <td>8/31</td>
-              <td><span class="status approved">승인</span></td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
+            <table>
+                <thead>
+                <tr>
+                    <th>기간</th>
+                    <th>사유</th>
+                    <th>제출일</th>
+                    <th>승인상태</th>
+                </tr>
+                </thead>
+                <tbody>
+                <c:forEach var="r" items="${consultApplicationList}">
+                    <tr>
+                        <td><fmt:formatDate value="${r.consultTime}" pattern="yyyy-MM-dd" /></td>
+                        <td>${r.consultAppContent}</td>
+                        <td>${r.createTime}</td>
+                        <td>
+                            <c:choose>
+                                <c:when test="${r.status == 'REQUESTED'}">
+                                    <span class="status pending">신청</span>
+                                </c:when>
+                                <c:when test="${r.status == 'APPROVED'}">
+                                    <span class="status approved">승인</span>
+                                </c:when>
+                                <c:when test="${r.status == 'REJECTED'}">
+                                    <span class="status rejected">반려</span>
+                                </c:when>
+                                <c:when test="${r.status == 'DONE'}">
+                                    <span class="status approved">완료</span>
+                                </c:when>
+                                <c:otherwise>
+                                    <span class="status">${r.status}</span>
+                                </c:otherwise>
+                            </c:choose>
+                        </td>
+                    </tr>
+                </c:forEach>
+                </tbody>
+
+            </table>
+        </div>
+
+
     </section>
   </main>
 </body>
