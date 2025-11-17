@@ -353,7 +353,7 @@
         LEFT JOIN ATTEND_UPDATE_FILE F
             ON U.ATTEND_UPDATE_NO = F.ATTEND_UPDATE_NO
         /* ★ 강사 번호로 필터링 (로그인한 강사) */
-        WHERE L.MEMBER_NO = 6
+        WHERE L.MEMBER_NO = #{teacher_no}
         ORDER BY U.ATTEND_UPDATE_NO DESC
     </select>
 
