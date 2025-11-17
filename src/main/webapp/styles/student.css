@@ -446,17 +446,19 @@
 /* ===============================
    성적조회 (student-score)
    =============================== */
-
-.student-score .content {
-  justify-content: center;
+/* 성적 조회 테이블 가운데 정렬 */
+.score-table {
+    width: 60%;       /* 가운데로 오게 적당한 너비 */
+    margin: 0 auto;   /* 중앙 정렬 */
+}
+/* 성적조회 페이지 제목 */
+.student-score .content.score h2 {
+    font-size: 20px;         /* 더 크게 */
+    font-weight: 600;
+    text-align: center;      /* 가운데 정렬 */
+    margin-bottom: 28px;     /* 아래 여백 */
 }
 
-.student-score .card h2 {
-  font-size: 16px;
-  font-weight: 600;
-  text-align: center;
-  margin-bottom: 30px;
-}
 
 /* ===== 학생 정보 영역 ===== */
 .student-score .student-info {
@@ -464,6 +466,7 @@
   align-items: center;
   justify-content: space-between;
   margin-bottom: 24px;
+  margin-left: 50px;
   flex-wrap: wrap;
   gap: 16px;
 }
@@ -477,6 +480,7 @@
   display: flex;
   align-items: center;
   gap: 8px;
+    margin-right: 30px;
 }
 
 .student-score select {
@@ -512,6 +516,50 @@
   color: #4b5dff;
 }
 
+/* 점수 셀 안에서 점수 + 버튼 정렬 */
+.student-score .score-table .score-cell {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+}
+
+/* 정정 신청 버튼 스타일 */
+.student-score .btn-correct {
+    padding: 2px 10px;
+    border-radius: 999px;
+    border: 1px solid #4a66f7;
+    background: #fff;
+    color: #4a66f7;
+    font-size: 12px;
+    cursor: pointer;
+}
+
+.student-score .btn-correct:hover {
+    background: #4a66f7;
+    color: #fff;
+}
+/* ===============================
+   성적정정 - 희망 점수 입력칸
+   =============================== */
+
+/* 기본 폼 인풋 스타일과 통일 */
+.student-attendance input[type="number"] {
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 10px 12px;
+    font-size: 14px;
+    background: #fff;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+/* 포커스 시 효과 */
+.student-attendance input[type="number"]:focus {
+    border-color: #4b45ff;
+    box-shadow: 0 0 0 3px rgba(75, 93, 255, 0.1);
+    outline: none;
+}
 /* ===============================
    마이페이지 (student-mypage)
    =============================== */

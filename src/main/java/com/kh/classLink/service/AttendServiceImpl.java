@@ -31,6 +31,17 @@ public class AttendServiceImpl implements AttendService {
         this.notificationMapper = notificationMapper;
     }
 
+    @Override
+    public int getStudentCount() {
+        return attendMapper.getStudentCount();
+    }
+
+    @Override
+    public List<Member> findAllStudentsForAdmin(PageInfo pi) {
+        return attendMapper.findAllStudentsForAdmin(pi);
+    }
+
+
     /**
      * 직원 관리 조회
      * @param currentPage

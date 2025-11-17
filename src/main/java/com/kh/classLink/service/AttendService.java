@@ -4,6 +4,7 @@ import com.kh.classLink.model.vo.Attend;
 import com.kh.classLink.model.vo.AttendUpdate;
 import com.kh.classLink.model.vo.Class;
 import com.kh.classLink.model.vo.Member;
+import com.kh.classLink.model.vo.PageInfo;
 import org.apache.ibatis.session.RowBounds;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -12,6 +13,10 @@ import java.util.List;
 import java.util.Map;
 
 public interface AttendService {
+
+
+    int getStudentCount();
+    List<Member> findAllStudentsForAdmin(PageInfo pi);
 
     /**
      * 관리자 직원 조회

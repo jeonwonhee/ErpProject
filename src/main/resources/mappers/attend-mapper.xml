@@ -95,6 +95,68 @@
         WHERE ROLE NOT IN ('STUDENT')
     </select>
 
+        <!--관리자 학생 조회-->
+        <select id="findAllStudentsForAdmin"
+                parameterType="com.kh.classLink.model.vo.PageInfo"
+                resultType="com.kh.classLink.model.vo.Member">
+            SELECT *
+            FROM (
+            SELECT
+            ROWNUM rnum,
+            t.*
+            FROM (
+            SELECT
+            m.MEMBER_NO   AS memberNo,
+            m.MEMBER_ID   AS memberId,
+            m.MEMBER_NAME AS memberName,
+            c.CLASS_NAME  AS className,
+            m.PHONE       AS phone,
+
+            /* 🔥 출석률 계산 */
+            CASE
+            WHEN COUNT(a.ATTEND_NO) = 0 THEN NULL
+            ELSE ROUND(
+            SUM(
+            CASE
+            WHEN a.ATTEND_STATUS = '출석' THEN 1
+            ELSE 0
+            END
+            ) * 100.0
+            / COUNT(a.ATTEND_NO)
+            )
+            END AS attendRate,
+
+            m.STATUS AS status
+
+            FROM MEMBER m
+            LEFT JOIN CLASS_STUDENT cs ON m.MEMBER_NO = cs.MEMBER_NO
+            LEFT JOIN CLASS c ON cs.CLASS_NO = c.CLASS_NO
+            LEFT JOIN ATTEND a ON cs.STUDENT_NO = a.STUDENT_NO
+
+            WHERE UPPER(m.ROLE) = 'STUDENT'
+
+            GROUP BY
+            m.MEMBER_NO,
+            m.MEMBER_ID,
+            m.MEMBER_NAME,
+            c.CLASS_NAME,
+            m.PHONE,
+            m.STATUS
+
+            ORDER BY m.MEMBER_NAME
+            ) t
+            )
+            WHERE rnum BETWEEN #{startRow} AND #{endRow}
+
+        </select>
+
+    <!--학생 수 카운트-->
+    <select id="getStudentCount" resultType="int">
+        SELECT COUNT(*)
+        FROM MEMBER
+        WHERE UPPER(ROLE) = 'STUDENT'
+    </select>
+
     <!--직원 관리 조회--><!--추후 개발하면서 계속 확인-->
     <select id="selectEmpList" resultMap="memberResultMap">
         SELECT M.MEMBER_NAME,

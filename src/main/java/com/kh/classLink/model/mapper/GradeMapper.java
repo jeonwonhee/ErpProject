@@ -6,6 +6,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
+import java.util.Map;
 
 @Mapper
 public interface GradeMapper {
@@ -32,5 +33,12 @@ public interface GradeMapper {
 
     int insertGrade(GradeDto gradeDto);
 
+    List<GradeDto> findGradesByStudentAndLecture(Map<String, Object> param);
+
+    List<GradeDto> searchGradesForEdit(Map<String, Object> param);
+
+    List<String> findTestNamesByStudent(int memberNo);
+
+    int updateGrade(GradeDto gradeDto);
 
 }

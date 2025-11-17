@@ -4,6 +4,8 @@ import com.kh.classLink.model.vo.Attend;
 import com.kh.classLink.model.vo.AttendUpdate;
 import com.kh.classLink.model.vo.Class;
 import com.kh.classLink.model.vo.Member;
+import com.kh.classLink.model.vo.Member;
+import com.kh.classLink.model.vo.PageInfo;
 import com.kh.classLink.service.AttendService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
@@ -46,12 +48,34 @@ public class AttendanceController {
         return "admin/adminAttendDashboard";
     }
 
+
     /**
      * 관리자 학생관리
      * @return
      */
     @GetMapping("/adminStudentList.co")
-    public String adminStudentList(){
+    public String adminStudentList(@RequestParam(value = "currentPage", defaultValue = "1") int currentPage,
+                                   HttpSession session,Model model){
+
+        // 로그인 체크
+        if (session.getAttribute("loginMember") == null) {
+            session.setAttribute("alertMsg", "로그인 후 이용 가능합니다.");
+            return "redirect:/login.co";
+        }
+
+        // 1) 전체 학생 수 조회
+        int listCount = attendService.getStudentCount();
+
+        // 2) PageInfo 생성 (한 페이지 10명, 페이징바 5개 예시)
+        PageInfo pi = new PageInfo(currentPage, listCount, 5, 5);
+
+        // 3) 페이징된 학생 목록 조회
+        List<Member> studentList = attendService.findAllStudentsForAdmin(pi);
+
+        // JSP로 값 전달
+        model.addAttribute("studentList", studentList);
+        model.addAttribute("pi", pi);
+
         return "admin/adminStudentList";
     }
 

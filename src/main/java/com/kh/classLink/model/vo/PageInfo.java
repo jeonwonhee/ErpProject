@@ -16,6 +16,10 @@ public class PageInfo {
     private int maxPage; //가장 마지막페이지가 몇인가?(총 페이지 수)
     private int startPage; //하단에 보여질 페이징 버튼의 시작 수
     private int endPage; //하단에 보여질 페이징 버튼의 마지막 수
+
+    private int startRow;
+    private int endRow;
+
     public PageInfo(int currentPage, int listCount, int pageLimit, int boardLimit) {
         super();
         this.currentPage = currentPage;
@@ -23,11 +27,14 @@ public class PageInfo {
         this.pageLimit = pageLimit;
         this.boardLimit = boardLimit;
 
+
+
         this.maxPage = (int)Math.ceil((double)this.listCount/this.boardLimit);
         this.startPage = ((this.currentPage - 1) / this.pageLimit) * this.pageLimit + 1;
         this.endPage = this.startPage + this.pageLimit - 1;
         this.endPage = this.endPage > this.maxPage ? this.maxPage : this.endPage;
+
+        this.startRow = (currentPage - 1) * boardLimit + 1;
+        this.endRow   = startRow + boardLimit - 1;
     }
-
-
 }

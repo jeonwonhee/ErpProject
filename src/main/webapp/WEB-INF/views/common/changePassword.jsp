@@ -52,7 +52,10 @@
         </div>
 
         <!-- 제출 버튼 (폼 안으로 이동!) -->
-        <button type="submit" class="pw-submit">변경</button>
+        <button type="button" class="pw-submit"
+                onclick="alert('비밀번호 변경이 완료되었습니다.'); this.form.submit();">
+            변경
+        </button>
     </form>
     <!-- ✅ 폼 끝 -->
 </div>
