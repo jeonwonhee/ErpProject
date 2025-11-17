@@ -21,12 +21,10 @@
                 <div class="card">
                     <h2>휴강 요청</h2>
 
-                    <!-- ★ 리로드 방식 form -->
                     <form action="${pageContext.request.contextPath}/adminCalenderManage.co" method="post">
 
                         <input type="hidden" name="lectureDateNo" value="${detail.lectureDateNo}">
 
-                        <!-- ----- 기존 정보 영역 유지 ----- -->
                         <div class="form-group">
                             <label>제목</label>
                             <input type="text" class="form-input" value="${detail.title}" readonly>
@@ -42,36 +40,30 @@
                             <textarea class="form-textarea" readonly>${detail.content}</textarea>
                         </div>
 
-                        <!-- ----- 승인 여부 ----- -->
                         <div class="form-group">
                             <label>승인 여부</label>
                             <div class="radio-group">
                                 <label>
-                                    <input type="radio" name="status" value="APPROVED"
-                                        ${detail.status eq 'APPROVED' ? 'checked="checked"' : ''}>
+                                    <input type="radio" name="status" value="APPROVED" ${detail.status eq 'APPROVED' ? 'checked="checked"' : ''}>
                                     승인
                                 </label>
 
                                 <label>
-                                    <input type="radio" name="status" value="REJECTED"
-                                        ${detail.status eq 'REJECTED' ? 'checked="checked"' : ''}>
+                                    <input type="radio" name="status" value="REJECTED" ${detail.status eq 'REJECTED' ? 'checked="checked"' : ''}>
                                     반려
                                 </label>
                             </div>
                         </div>
 
-                        <!-- ----- 반려 사유 입력 ----- -->
                         <div class="form-group approval-reject">
                             <label>반려 사유</label>
-                            <input type="text" class="form-input" name="reason"
-                                value="${detail.rejectReason}" placeholder="반려 시 사유를 입력하세요">
+                            <input type="text" class="form-input" name="reason" value="${detail.rejectReason}" placeholder="반려 시 사유를 입력하세요">
                         </div>
 
                         <button class="btn-submit" type="submit">등록하기</button>
                     </form>
-
                 </div>
             </section>
         </main>
-</body>
+    </body>
 </html>
