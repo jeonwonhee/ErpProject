@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -79,7 +80,7 @@ public class AttendanceController {
         int teacherNo = teacher.getMemberNo();
 
         List<AttendUpdate> list = attendService.getAttendUpdateList(teacherNo);
-
+        System.out.println("teacherNo:"+list);
         model.addAttribute("list", list);
 
         return "lecture/leAttendanceList";
@@ -87,7 +88,7 @@ public class AttendanceController {
 
     /* 강사 출결정정 승인/반려 여부 페이지 */
     @GetMapping("/lectureAttendanceCorrection.co")
-    public String lectureAttendanceCorrection(@RequestParam int attendUpdateNo, Model model) {
+    public String lectureAttendanceCorrection(@RequestParam(value = "attendUpdateNo", required = false) int attendUpdateNo, Model model) {
 
         AttendUpdate detail = attendService.getAttendUpdateDetail(attendUpdateNo);
 
@@ -123,7 +124,10 @@ public class AttendanceController {
      * 학생/ 출석정정 신청 페이지     */
 
     @GetMapping("/stAtt.co")
-    public String stAtt() {
+    public String stAtt(HttpSession session, Model model) {
+        Member loginMember = (Member) session.getAttribute("loginMember");
+        ArrayList<AttendUpdate> result = attendService.selectAttendOrderList(loginMember.getMemberNo());
+        model.addAttribute("result",result);
         //츨석 정정
         return "student/stAtt";
     }
@@ -203,6 +207,29 @@ public class AttendanceController {
         }
 
         return "redirect:/selectAttendClass.at?classNo="+classNo;
+    }
+
+
+    /**
+     * 출석 정정 신청
+     * @param attendUpdate
+     * @param session
+     * @param model
+     * @return
+     */
+    @PostMapping("/insertAttendOrder.at")
+    public String insertAttendOrder(AttendUpdate attendUpdate, HttpSession session, Model model,
+                                    @RequestParam(value="upFile" , required = false) MultipartFile upfile) {
+        Member loginMember = (Member) session.getAttribute("loginMember");
+        int memberNo = loginMember.getMemberNo();
+        attendUpdate.setMemberNo(memberNo);
+        int result = attendService.insertAttendOrder(attendUpdate,upfile);
+        if (result > 0) {
+            session.setAttribute("alertMsg", "정정 신청에 성공하였습니다.");
+        } else {
+            model.addAttribute("errorMsg", "해당 날짜에 출석 정보가 없습니다. 확인 바랍니다.");
+        }
+        return "redirect:/stAtt.co";
     }
 
 }

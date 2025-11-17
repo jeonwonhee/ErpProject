@@ -1,5 +1,6 @@
 <!-- === 강사 출결정정 페이지 (상태 오른쪽으로 이동 및 크기 확장) === -->
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="ko">
     <head>
@@ -33,7 +34,7 @@
 
                             <c:forEach var="u" items="${list}">
 
-                                <div class="card lecture-request-card" onclick="location.href='${pageContext.request.contextPath}/lectureAttendanceCorrection.co?number=${u.attendUpdateNo}'">
+                                <div class="card lecture-request-card" onclick="location.href='${pageContext.request.contextPath}/lectureAttendanceCorrection.co?attendUpdateNo=${u.attendUpdateNo}'">
 
                                     <div class="lecture-request-main">
                                         <div class="lecture-request-info">
