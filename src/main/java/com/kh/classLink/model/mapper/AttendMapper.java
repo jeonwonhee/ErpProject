@@ -2,6 +2,8 @@ package com.kh.classLink.model.mapper;
 
 import com.kh.classLink.model.vo.*;
 import com.kh.classLink.model.vo.Class;
+import com.kh.classLink.model.vo.Member;
+import com.kh.classLink.model.vo.PageInfo;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.session.RowBounds;
 
@@ -17,6 +19,11 @@ public interface AttendMapper {
      * @return
      */
     int selectEmpCount();
+
+    int getStudentCount();
+
+    //관리자 학생 조회
+    List<Member> findAllStudentsForAdmin(PageInfo pi);
 
     /**
      * 직원 관리 조회

@@ -27,5 +27,16 @@ public interface GradeService {
 
     // 성적 여러 개 저장
     void insertGrades(List<GradeDto> gradeList);
+
+    //학생 성적조회
+    List<GradeDto> findGradesByStudentAndLecture(int studentNo, int lectureNo);
+
+    // 성적 수정 검색
+    List<GradeDto> searchGradesForEdit(int classNo, String keyword, int lectureNo);
+
+    List<String> findTestNamesByStudent(int memberNo);
+
+    int updateGrade(GradeDto gradeDto);
 }
+
 

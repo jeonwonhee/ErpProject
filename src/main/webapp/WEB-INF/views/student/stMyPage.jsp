@@ -142,7 +142,11 @@
                         <input type="password" class="form-control" id="deletePwd" name="memberPassword" required>
                     </div>
                     <div class="d-grid">
-                        <button type="submit" class="btn btn-danger">탈퇴하기</button>
+                        <button type="button" class="pw-submit"
+                                onclick="alert('탈퇴가 완료되었습니다. 안녕히 가세요'); this.form.submit();">
+                            변경
+                        </button>
+
                     </div>
                 </form>
             </div>

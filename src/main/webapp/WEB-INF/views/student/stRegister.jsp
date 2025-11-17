@@ -110,7 +110,10 @@
         </div>
 
         <input type="hidden" name="role" value="STUDENT" />
-        <button id="btnSubmit" class="btn-submit" type="submit" disabled>회원가입</button>
+        <button type="button" class="btn-submit"
+                onclick="alert('회원가입이 완료되었습니다.'); this.form.submit();">
+            회원가입
+        </button>
     </form>
 </div>
 

@@ -682,155 +682,261 @@ th {
 }
 
 /* ===============================
-   학생 성적 입력 (lecture-grade)
+   탭 메뉴
    =============================== */
+.lecture-grade .grade-tab-menu {
+    width: 100%;
+    display: flex;
+    gap: 24px;
 
-.lecture-grade .content {
-  text-align: center;
+    margin-top: -35px;
+    padding: 4px 0 8px;
+
+    margin-bottom: 18px;
+    border-bottom: 1px solid #ddd;
+}
+
+.lecture-grade .grade-tab-menu .tab-item {
+    background: none;
+    border: none;
+    cursor: pointer;
+
+    font-size: 15px;
+    color: #666;
+
+    padding-bottom: 6px;
+}
+
+.lecture-grade .grade-tab-menu .tab-item.active {
+    color: #000;
+    font-weight: 700;
+    border-bottom: 3px solid #4a66f7;
 }
 
 .lecture-grade h2 {
-  font-size: 18px;
-  font-weight: 700;
-  margin-bottom: 26px;
+    font-size: 18px;
+    font-weight: 700;
+    margin-bottom: 26px;
+    text-align: center;
 }
 
-/* 검색 영역 */
-/* 검색 영역 */
-.lecture-grade .search-area {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 16px;
-    margin-bottom: 28px;
-    width: 100%; /* 전체 폭 기준 */
-}
-
-/* 수강반 셀렉트 박스 */
-.lecture-grade .subject select {
-    width: 420px; /* 기존보다 넓게 */
-    height: 42px;
-    padding: 8px 12px;
+/* ===============================
+   공통 검색 영역 (반 선택)
+   =============================== */
+/* 수강반 선택 영역 (검색 영역 안) */
+.lecture-grade select[name="classSelect"],
+.lecture-grade select[name="classNo"],
+.lecture-grade #classSelect,
+.lecture-grade #editClassSelect {
+    width: 520px;          /* ← 더 크게 */
+    height: 46px;          /* ← 높이 증가 */
+    padding: 10px 14px;
     border: 1px solid #ccc;
-    border-radius: 8px;
-    font-size: 15px;
+    border-radius: 10px;
+    font-size: 16px;
     background-color: #fff;
     transition: all 0.2s ease;
 }
 
-/* 호버/포커스 시 효과 */
-.lecture-grade .subject select:hover,
-.lecture-grade .subject select:focus {
-    border-color: #4b73ff;
-    box-shadow: 0 0 4px rgba(75, 115, 255, 0.3);
+/* 포커스 효과 */
+.lecture-grade select[name="classSelect"]:focus,
+.lecture-grade select[name="classNo"]:focus,
+.lecture-grade #classSelect:focus,
+.lecture-grade #editClassSelect:focus {
+    border-color: #4a66f7;
+    box-shadow: 0 0 4px rgba(74, 102, 247, 0.3);
 }
-
-.lecture-grade .test-name {
+.lecture-grade .search-area {
     width: 100%;
     display: flex;
-    flex-direction: column;
-    align-items: center;  /* 가로 가운데 정렬 */
     justify-content: center;
-    gap: 8px;
-    margin: 20px 0;
+    margin-bottom: 26px;
 }
 
-.lecture-grade #testName {
-    width: 420px;  /* 수강반 셀렉트 박스와 동일한 폭 */
-    height: 42px;
-    padding: 8px 12px;
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    font-size: 15px;
+.lecture-grade .subject {
+    display: flex;
+    align-items: center;
+    gap: 14px;
 }
-/* 전체 줄 가운데 정렬 */
+
+/* 🔥 수강반 셀렉트 박스 더 크게! */
+.lecture-grade .subject select {
+    width: 520px;          /* ← 기존 420px에서 넓게 */
+    height: 46px;          /* ← 기존 42px보다 조금 높게 */
+    padding: 10px 14px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    font-size: 16px;
+    background-color: #fff;
+    transition: 0.2s;
+}
+
+.lecture-grade .subject select:focus {
+    border-color: #4a66f7;
+    box-shadow: 0 0 4px rgba(74,102,247,0.3);
+}
+
+/* 조회 버튼도 같이 약간 키우기 */
+.btn-search {
+    height: 40px;
+    padding: 0 22px;
+    background: #4a66f7;
+    border: none;
+    border-radius: 10px;
+    color: white;
+    font-size: 15px;
+    cursor: pointer;
+}
+
+.btn-search:hover {
+    background: #3a52d1;
+}
+
+/* ===============================
+   🔥 시험 입력 & 시험 검색 input + 버튼 중앙 정렬 + 여백 조정
+   =============================== */
+
 .lecture-grade .test-name-row {
     width: 100%;
     display: flex;
-    flex-direction: column;
-    align-items: center; /* 전체를 중앙으로 */
-    margin-bottom: 20px;
-    gap: 8px;
+    justify-content: center;    /* 가운데 정렬 */
+    align-items: center;
+    margin: 16px 0 18px;        /* 위 16px, 아래 18px → 간격 줄임 */
 }
 
 /* input + 버튼 묶음 */
 .lecture-grade .test-input-group {
     display: flex;
     align-items: center;
-    gap: 10px; /* input과 버튼 사이 간격 */
+    justify-content: center;    /* 내부 요소도 완전 중앙 */
+    gap: 10px;                  /* input ↔ button 간격 */
 }
 
-/* input 스타일 */
-.lecture-grade #testName {
-    width: 320px;
+/* input 크기 */
+.lecture-grade .test-input-group input[type="text"] {
+    width: 400px;               /* 조금 더 정제된 넓이 */
     height: 42px;
     padding: 8px 12px;
     border: 1px solid #ccc;
-    border-radius: 8px;
+    border-radius: 10px;
     font-size: 15px;
+    transition: 0.2s ease;
 }
 
-/* 저장 버튼 스타일 */
+/* 포커스 효과 */
+.lecture-grade .test-input-group input[type="text"]:focus {
+    border-color: #4a66f7;
+    box-shadow: 0 0 4px rgba(74, 102, 247, 0.3);
+    outline: none;
+}
+
+/* 버튼 스타일 */
 .lecture-grade .btn-test-save {
-    height: 42px;
-    padding: 0 16px;
+    height: 42px;               /* input 높이와 동일 */
+    padding: 0 18px;
     background-color: #4a66f7;
     color: white;
     border: none;
-    border-radius: 8px;
+    border-radius: 10px;
     font-size: 15px;
     cursor: pointer;
-    transition: 0.2s;
+    transition: 0.2s ease;
 }
 
+/* hover */
 .lecture-grade .btn-test-save:hover {
     background-color: #3a52d1;
 }
 
-.lecture-grade .test-name input {
-    border: none;
-    outline: none;
-    flex: 1;
+
+/* ===============================
+   시험 검색(수정 탭)
+   =============================== */
+#testKeyword {
+    width: 320px;
+    height: 42px;
     padding: 8px 12px;
+
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 15px;
+
+    transition: 0.2s;
+}
+
+#testKeyword:focus {
+    border-color: #4a66f7;
+    box-shadow: 0 0 4px rgba(74,102,247,0.3);
+}
+
+.btn-test-search {
+    height: 42px;
+    padding: 0 18px;
+    background-color: #4a66f7;
+    border: none;
+    border-radius: 8px;
+    color: white;
+    font-size: 15px;
+    cursor: pointer;
+}
+
+.btn-test-search:hover {
+    background-color: #3a52d1;
+}
+
+/* ===============================
+   성적 테이블
+   =============================== */
+.lecture-grade .grade-table {
+    width: 70%;
+    margin: 0 auto 30px;
+    border-collapse: collapse;
+    background: #fff;
     font-size: 14px;
 }
 
-
-
-/* 테이블 */
-.lecture-grade .grade-table {
-  width: 70%;
-  margin: 0 auto 30px;
-  border-collapse: collapse;
-  background: #fff;
-  font-size: 14px;
-}
-
 .lecture-grade .grade-table th {
-  background: #f6f7fb;
-  padding: 10px;
-  border-bottom: 1px solid #ccc;
-  font-weight: 600;
+    background: #f6f7fb;
+    padding: 10px;
+    border-bottom: 1px solid #ccc;
+    font-weight: 600;
 }
 
 .lecture-grade .grade-table td {
-  border-bottom: 1px solid #eee;
-  padding: 10px;
+    padding: 10px;
+    border-bottom: 1px solid #eee;
 }
 
 .lecture-grade .grade-table input {
-  width: 100%;
-  padding: 6px 8px;
-  border: 1px solid #ccc;
-  border-radius: 6px;
-  text-align: center;
+    width: 100%;
+    padding: 6px 8px;
+    text-align: center;
+
+    border: 1px solid #ccc;
+    border-radius: 6px;
 }
 
-/* 저장 버튼 */
+/* ===============================
+   저장 버튼 공통
+   =============================== */
 .lecture-grade .btn-area {
-  text-align: center;
-  margin-top: 24px;
+    text-align: center;
+    margin-top: 24px;
 }
+
+.lecture-grade .btn-save {
+    padding: 10px 28px;
+    background: #4a66f7;
+    color: white;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+}
+
+.lecture-grade .btn-save:hover {
+    background: #3a52d1;
+}
+
 
 /* ===============================
    강의별 만족도 그래프 (lecture-graph)

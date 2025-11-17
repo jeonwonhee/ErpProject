@@ -179,7 +179,8 @@
 
     <!-- 회원 탈퇴 -->
     <delete id="deleteMember" parameterType="long">
-        DELETE FROM MEMBER
+        UPDATE MEMBER
+        SET STATUS = 'N'
         WHERE MEMBER_NO = #{memberNo}
     </delete>
 
