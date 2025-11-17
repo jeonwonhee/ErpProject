@@ -25,42 +25,40 @@
                 <div class="card">
                     <h2>출결 정정 요청</h2>
 
-                    <form action="${pageContext.request.contextPath}/leAttendanceCorrection.co" method="post">
-                        <div class="form-group">
-                            <label>제목</label>
-                            <input type="text" class="form-input" value="출석 정정 요청합니다">
-                        </div>
+                    <form action="${pageContext.request.contextPath}/lectureAttendanceCorrection.co" method="post">
+
+                        <input type="hidden" name="attendUpdateNo" value="${detail.attendUpdateNo}">
 
                         <div class="form-group">
                             <label>첨부파일</label>
                             <div class="file-box">
                                 <label for="fileInput" class="file-label">파일선택</label>
-                                <input type="file" id="fileInput">
-                                <span>진단서.JPG</span>
+                                <input type="file" id="fileInput" name="uploadFile">
+                                <span>${detail.file.attendUpdateFileOriName}</span>
                             </div>
                         </div>
 
                         <div class="form-group">
                             <label>정정 요청일</label>
-                            <input type="text" class="form-input" value="2025.10.29">
+                            <input type="text" class="form-input" value="${detail.correctionApplicationDate}">
                         </div>
 
                         <div class="form-group">
                             <label>신청 사유</label>
-                            <textarea class="form-textarea">교통사고 나서 입원했는데 병가 처리로 바꿔주세요.</textarea>
+                            <textarea class="form-textarea">${detail.attendUpdateContent}</textarea>
                         </div>
 
                         <div class="form-group">
                             <label>승인 여부</label>
                                 <div class="radio-group">
-                                    <label><input type="radio" name="approve" checked> 승인</label>
-                                    <label><input type="radio" name="approve"> 반려</label>
+                                    <label><input type="radio" name="status" value="APPROVED" ${detail.status eq 'APPROVED' ? 'checked="checked"' : ''}>승인</label>
+                                    <label><input type="radio" name="status" value="REJECTED" ${detail.status eq 'REJECTED' ? 'checked="checked"' : ''}>반려</label>
                                 </div>
                         </div>
 
                         <div class="form-group">
                             <label>반려 사유</label>
-                            <input type="text" class="form-input" value="병가 모두 소진하셨습니다.">
+                            <input type="text" class="form-input" name="refusal" value="${detail.refusal}">
                         </div>
 
                         <button class="btn-submit">등록하기</button>

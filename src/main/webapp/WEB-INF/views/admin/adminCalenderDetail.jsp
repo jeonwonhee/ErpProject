@@ -43,15 +43,8 @@
                         <div class="form-group">
                             <label>승인 여부</label>
                             <div class="radio-group">
-                                <label>
-                                    <input type="radio" name="status" value="APPROVED" ${detail.status eq 'APPROVED' ? 'checked="checked"' : ''}>
-                                    승인
-                                </label>
-
-                                <label>
-                                    <input type="radio" name="status" value="REJECTED" ${detail.status eq 'REJECTED' ? 'checked="checked"' : ''}>
-                                    반려
-                                </label>
+                                <label><input type="radio" name="status" value="APPROVED" ${detail.status eq 'APPROVED' ? 'checked="checked"' : ''}>승인</label>
+                                <label><input type="radio" name="status" value="REJECTED" ${detail.status eq 'REJECTED' ? 'checked="checked"' : ''}>반려</label>
                             </div>
                         </div>
 

@@ -1,6 +1,7 @@
 package com.kh.classLink.service;
 
 import com.kh.classLink.model.vo.Attend;
+import com.kh.classLink.model.vo.AttendUpdate;
 import com.kh.classLink.model.vo.Class;
 import com.kh.classLink.model.vo.Member;
 import org.apache.ibatis.session.RowBounds;
@@ -54,5 +55,14 @@ public interface AttendService {
      * @return
      */
     Map<String,Object> attendStatistics(String dataSet);
+
+    /*출결정정 요청 리스트*/
+    List<AttendUpdate> getAttendUpdateList(int teacherNo);
+
+    /*출결정정 요청 데이터*/
+    AttendUpdate getAttendUpdateDetail(int attendUpdateNo);
+
+    /*출결정정 승인 반려*/
+    int updateAttendCorrect(int attendUpdateNo, String status, String refusal, int approverNo);
 }
 

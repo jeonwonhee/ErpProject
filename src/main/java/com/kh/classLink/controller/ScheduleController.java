@@ -92,7 +92,7 @@ public class ScheduleController {
                                        @RequestParam(value = "reason", required = false) String reason,
                                        HttpSession session) {
 
-        Member admin = (Member) session.getAttribute("loginUser");
+        Member admin = (Member) session.getAttribute("loginMember");
         int adminNo = admin != null ? admin.getMemberNo() : 0;
 
         lectureDateService.updateApprovalStatus(lectureDateNo, status, reason, adminNo);
