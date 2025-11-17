@@ -1,6 +1,7 @@
 package com.kh.classLink.model.mapper;
 
 import com.kh.classLink.model.vo.Attend;
+import com.kh.classLink.model.vo.AttendUpdate;
 import com.kh.classLink.model.vo.Class;
 import com.kh.classLink.model.vo.Member;
 import org.apache.ibatis.annotations.Mapper;
@@ -82,4 +83,12 @@ public interface AttendMapper {
      */
     ArrayList<Attend> selectStMonthAttendData(Attend attend);
 
+    /*출결정정 요청 리스트*/
+    List<AttendUpdate> selectAttendUpdateList(int teacherNo);
+
+    /*출결정정 요청 데이터*/
+    AttendUpdate selectAttendUpdateDetail(int attendUpdateNo);
+
+    /*출결정정 승인 반려*/
+    int updateAttendCorrect(Map<String, Object> param);
 }

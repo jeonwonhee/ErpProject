@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.kh.classLink.model.mapper.SatisfactionMapper">
+
+    <resultMap id="satisfactionResultMap" type="Satisfaction">
+        <id column="SATISFACTION_NO" property="satisfactionNo"/>
+        <result column="CLASS_RATING" property="classRating"/>
+        <result column="LECTURE_RATING" property="lectureRating"/>
+        <result column="SUGGESTION" property="suggestion"/>
+        <result column="CREATE_DATE" property="createDate"/>
+        <result column="END_DATE" property="endDate"/>
+        <result column="CLASS_LECTURE_NO" property="classLectureNo"/>
+        <result column="STUDENT_NO" property="studentNo"/>
+    </resultMap>
+
+    <resultMap id="lectureSatisfactionMap" type="LectureSatisfaction">
+        <result column="CLASS_LECTURE_NO" property="classLectureNo"/>
+        <result column="CLASS_NAME" property="className"/>
+        <result column="LECTURE_NAME" property="lectureName"/>
+        <result column="AVG_CLASS_RATING" property="avgClassRating"/>
+        <result column="AVG_LECTURE_RATING" property="avgLectureRating"/>
+        <result column="SUBMITTED_COUNT" property="submittedCount"/>
+        <result column="TOTAL_COUNT" property="totalCount"/>
+    </resultMap>
+
+
+    <!-- INSERT -->
+    <insert id="insertSatisfaction" parameterType="Satisfaction">
+        <selectKey keyProperty="satisfactionNo" resultType="_int" order="BEFORE">
+            SELECT SEQ_SLNO.NEXTVAL FROM DUAL
+        </selectKey>
+
+        INSERT INTO SATISFACTION_OF_A_LECTURE (
+        SATISFACTION_NO,
+        CLASS_RATING,
+        LECTURE_RATING,
+        SUGGESTION,
+        END_DATE,
+        CLASS_LECTURE_NO,
+        STUDENT_NO
+        )
+        VALUES (
+        #{satisfactionNo},
+        #{classRating},
+        #{lectureRating},
+        #{suggestion},
+        #{endDate},
+        #{classLectureNo},
+        #{studentNo}
+        )
+    </insert>
+
+    <!-- 제출한 학생 수 -->
+    <select id="countSatisfactionClass" parameterType="int" resultType="int">
+        SELECT COUNT(*)
+        FROM SATISFACTION_OF_A_LECTURE
+        WHERE CLASS_LECTURE_NO = #{classLectureNo}
+    </select>
+
+    <!-- 제출 진행률 -->
+    <select id="countTotalSatisfactionClass" parameterType="int" resultType="int">
+        SELECT COUNT(*)
+        FROM CLASS_STUDENT CS
+        JOIN CLASS_LECTURE CL ON CS.CLASS_NO = CL.CLASS_NO
+        WHERE CL.CLASS_LECTURE_NO = #{classLectureNo}
+    </select>
+
+    <select id="selectStudentLectureList" parameterType="int" resultType="int">
+        SELECT CL.CLASS_LECTURE_NO
+        FROM CLASS_STUDENT CS
+        JOIN CLASS_LECTURE CL ON CS.CLASS_NO = CL.CLASS_NO
+        WHERE CS.STUDENT_NO = #{studentNo}
+    </select>
+
+    <select id="selectClassName" parameterType="int" resultType="string">
+        SELECT C.CLASS_NAME
+        FROM CLASS C
+        JOIN CLASS_STUDENT CS ON C.CLASS_NO = CS.CLASS_NO
+        WHERE CS.STUDENT_NO = #{studentNo}
+    </select>
+
+    <select id="selectStudentNo" parameterType="int" resultType="int">
+        SELECT STUDENT_NO
+        FROM CLASS_STUDENT
+        WHERE MEMBER_NO = #{memberNo}
+    </select>
+
+    <!-- 특정 학생이 이미 제출했는지 체크 -->
+    <select id="checkSatisfactionSubmit" resultType="int">
+        SELECT COUNT(*)
+        FROM SATISFACTION_OF_A_LECTURE
+        WHERE STUDENT_NO = #{studentNo}
+            AND CLASS_LECTURE_NO = #{classLectureNo}
+    </select>
+
+    <!-- 강사가 맡은 수업 목록 -->
+    <select id="selectLectureClassList" parameterType="int" resultType="int">
+        SELECT CL.CLASS_LECTURE_NO
+        FROM CLASS_LECTURE CL
+        JOIN LECTURE L ON CL.LECTURE_NO = L.LECTURE_NO
+        WHERE L.MEMBER_NO = #{memberNo}
+    </select>
+
+    <!-- 특정 반의 만족도 조사 -->
+    <select id="selectLectureSatisfaction" parameterType="int" resultMap="lectureSatisfactionMap">
+        SELECT
+            CL.CLASS_LECTURE_NO,
+            C.CLASS_NAME,
+            M.MEMBER_NAME AS LECTURE_NAME,
+            NVL(AVG(S.CLASS_RATING), 0) AS AVG_CLASS_RATING,
+            NVL(AVG(S.LECTURE_RATING), 0) AS AVG_LECTURE_RATING,
+            COUNT(S.STUDENT_NO) AS SUBMITTED_COUNT,
+            CS_COUNT.TOTAL_COUNT
+        FROM CLASS_LECTURE CL
+        JOIN CLASS C
+            ON CL.CLASS_NO = C.CLASS_NO
+        JOIN LECTURE L
+            ON CL.LECTURE_NO = L.LECTURE_NO
+        JOIN MEMBER M
+            ON L.MEMBER_NO = M.MEMBER_NO
+        LEFT JOIN SATISFACTION_OF_A_LECTURE S
+            ON S.CLASS_LECTURE_NO = CL.CLASS_LECTURE_NO
+        LEFT JOIN (
+            SELECT CLASS_NO, COUNT(*) AS TOTAL_COUNT
+            FROM CLASS_STUDENT
+            GROUP BY CLASS_NO
+        ) CS_COUNT
+            ON CS_COUNT.CLASS_NO = CL.CLASS_NO
+        WHERE CL.CLASS_LECTURE_NO = #{classLectureNo}
+        GROUP BY
+            CL.CLASS_LECTURE_NO,
+            C.CLASS_NAME,
+            M.MEMBER_NAME,
+            CS_COUNT.TOTAL_COUNT
+    </select>
+
+    <select id="selectCommentPage" resultType="Satisfaction">
+        SELECT *
+        FROM (
+            SELECT ROWNUM AS RNUM, A.*
+            FROM (
+                SELECT
+                    SATISFACTION_NO,
+                    CLASS_RATING,
+                    LECTURE_RATING,
+                    SUGGESTION,
+                    END_DATE,
+                    CLASS_LECTURE_NO,
+                    STUDENT_NO
+                FROM SATISFACTION_OF_A_LECTURE
+                WHERE CLASS_LECTURE_NO = #{classLectureNo}
+                    AND SUGGESTION IS NOT NULL
+                ORDER BY STUDENT_NO
+            ) A
+            WHERE ROWNUM &lt;= #{end}
+        )
+        WHERE RNUM &gt;= #{start}
+    </select>
+
+    <select id="selectCommentCount" parameterType="int" resultType="int">
+        SELECT COUNT(*)
+        FROM SATISFACTION_OF_A_LECTURE
+        WHERE CLASS_LECTURE_NO = #{classLectureNo}
+            AND SUGGESTION IS NOT NULL
+    </select>
+
+    <select id="selectLectureName" parameterType="int" resultType="string">
+        SELECT L.LECTURE_NAME
+        FROM CLASS_LECTURE CL
+        JOIN LECTURE L ON CL.LECTURE_NO = L.LECTURE_NO
+        WHERE CL.CLASS_LECTURE_NO = #{classLectureNo}
+    </select>
+</mapper>

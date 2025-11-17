@@ -18,11 +18,7 @@ public class ScheduleController {
 
     private final LectureDateService lectureDateService;
 
-    /**
-     *
-     * 일정 컨트롤러
-     */
-
+    /* 일정 컨트롤러 */
     @GetMapping("/stLectureDate.co")
     public String stLectureDate(Model model, HttpSession session) {
         //학생 일정조회
@@ -42,21 +38,9 @@ public class ScheduleController {
         return "student/stLectureDate";
     }
 
-    /**
-     * 관리자 일정관리
-     */
-//    @GetMapping("/adminCalenderManage.co")
-//    public String adminCalenderManage(Model model) {
-//        List<LectureDateApprovalList> approvalList = lectureDateService.selectLectureDateApprovalList();
-//        model.addAttribute("approvalList", approvalList);
-//
-//        return "admin/adminCalenderManage";
-//    }
-
+    /* 관리자 일정관리 */
     @GetMapping("/adminCalenderManage.co")
-    public String adminCalenderManage(
-            @RequestParam(value = "page", defaultValue = "1") int currentPage,
-            Model model) {
+    public String adminCalenderManage(@RequestParam(value = "page", defaultValue = "1") int currentPage, Model model) {
 
         // 전체 데이터 개수 조회
         int listCount = lectureDateService.getLectureDateListCount();
@@ -92,25 +76,36 @@ public class ScheduleController {
         return "admin/adminCalenderManage";
     }
 
-    /**
-     * 관리자 일정관리 상세
-     */
+    /* 관리자 일정관리 상세 */
     @GetMapping("/adminCalenderDetail.co")
-    public String adminCalenderDetail(@RequestParam("lectureDateNo") int lectureDateNo,
-                                      Model model) {
+    public String adminCalenderDetail(@RequestParam("lectureDateNo") int lectureDateNo, Model model) {
         LectureDateApprovalList detail = lectureDateService.selectLectureDateApprovalDetail(lectureDateNo);
         model.addAttribute("detail", detail);
 
         return "admin/adminCalenderDetail";
     }
 
-    /** 강사 일정목록 페이지
-     * @return
-     */
+    /* 관리자 일정관리 승인/반려 */
+    @PostMapping("/adminCalenderManage.co")
+    public String updateApprovalStatus(@RequestParam("lectureDateNo") int lectureDateNo,
+                                       @RequestParam("status") String status,
+                                       @RequestParam(value = "reason", required = false) String reason,
+                                       HttpSession session) {
+
+        Member admin = (Member) session.getAttribute("loginMember");
+        int adminNo = admin != null ? admin.getMemberNo() : 0;
+
+        lectureDateService.updateApprovalStatus(lectureDateNo, status, reason, adminNo);
+
+        return "redirect:/adminCalenderManage.co";
+    }
+
+    /* 강사 일정목록 페이지 */
     @GetMapping("/leCalender.co")
     public String lectureCalender(@RequestParam(value="classLectureNo", required=false) Integer classLectureNo,
                                   @RequestParam(value="page", defaultValue="1") int currentPage,
                                   Model model, HttpSession session) {
+
         Member loginMember = (Member) session.getAttribute("loginMember");
         if (loginMember == null) {
             return "redirect:/login.co";
@@ -119,11 +114,9 @@ public class ScheduleController {
         int memberNo = loginMember.getMemberNo();
 
         // 1. 강사가 가진 반 전체
-        List<ClassLecture> classList = lectureDateService.selectLectureDateByClass(memberNo);
+        List<ClassLecture> classList = lectureDateService.selectClassLectureList(memberNo);
 
         model.addAttribute("classList", classList);
-
-        System.out.println("classList = " + classList);
 
         if(classLectureNo == null && !classList.isEmpty()) {
             classLectureNo = (Integer) classList.get(0).getClassLectureNo();
@@ -132,6 +125,10 @@ public class ScheduleController {
         List<LectureDate> events = lectureDateService.selectLectureDateList(classLectureNo);
         model.addAttribute("events", events);
         model.addAttribute("selectedClassLectureNo", classLectureNo);
+
+        System.out.println("🟦 classLectureNo = " + classLectureNo);
+
+        System.out.println("🟦 events = " + events);
 
         // =====================
         //      페이징 처리
@@ -165,9 +162,7 @@ public class ScheduleController {
         return "lecture/leCalender";
     }
 
-    /** 강사 일정추가 페이지
-     * @return
-     */
+    /* 강사 일정추가 페이지 */
     @GetMapping("/leCalenderPlus.co")
     public String lectureDatePlus(@RequestParam(value = "classLectureNo", required = false) Integer classLectureNo,
                                   HttpSession session,
@@ -176,7 +171,7 @@ public class ScheduleController {
         Member login = (Member) session.getAttribute("loginMember");
 
         // 강사가 담당하는 모든 반 조회
-        List<ClassLecture> classList = lectureDateService.selectLectureDateByClass(login.getMemberNo());
+        List<ClassLecture> classList = lectureDateService.selectClassLectureList(login.getMemberNo());
 
         model.addAttribute("classList", classList);
         model.addAttribute("selectedClassLectureNo", classLectureNo);
@@ -184,12 +179,15 @@ public class ScheduleController {
         return "lecture/leCalenderAdd";
     }
 
-    /*
-    * 강사 일정 추가
-    * */
+    /* 강사 일정 추가 */
     @PostMapping("/insertLectureDate.bo")
     public String lectureDateAdd(@ModelAttribute LectureDate lectureDate,
                                  HttpSession session) {
+
+        System.out.println("▶ insert 요청 classLectureNo = " + lectureDate.getClassLectureNo());
+        System.out.println("▶ insert 요청 title = " + lectureDate.getTitle());
+        System.out.println("▶ insert 요청 startDate = " + lectureDate.getStartDate());
+        System.out.println("▶ insert 요청 endDate = " + lectureDate.getEndDate());
 
         int result = lectureDateService.insertLectureDate(lectureDate);
 
@@ -202,24 +200,51 @@ public class ScheduleController {
         }
     }
 
-    @PostMapping("/adminCalenderManage.co")
+
+
+    @GetMapping("/ajax/adminCalender")
     @ResponseBody
-    public String updateApprovalStatus(
-            @RequestParam("lectureDateNo") int lectureDateNo,
-            @RequestParam("status") String status,
-            @RequestParam(value = "reason", required = false) String reason,
-            HttpSession session) {
+    public Map<String, Object> ajaxAdminCalender(
+            @RequestParam(defaultValue="1") int page) {
 
-        Member admin = (Member) session.getAttribute("loginUser");
-        int adminNo = admin != null ? admin.getMemberNo() : 0;
+        int listCount = lectureDateService.getLectureDateListCount();
+        int boardLimit = 10; // 한 페이지 당 10개
+        int pageLimit = 5;   // 페이징 바 5개
 
-        try {
-            int result = lectureDateService.updateApprovalStatus(lectureDateNo, status, reason, adminNo);
-            return (result > 0) ? "success" : "fail";
-        } catch (Exception e) {
-            e.printStackTrace();
-            return "fail";
-        }
+        // ------------------------
+        // ▼ 페이지 계산 (정상)
+        // ------------------------
+        int maxPage = (int) Math.ceil((double) listCount / boardLimit);
+
+        int startPage = ((page - 1) / pageLimit) * pageLimit + 1;
+        int endPage = startPage + pageLimit - 1;
+        if (endPage > maxPage) endPage = maxPage;
+
+        // ------------------------
+        // ▼ rownum 계산 (Oracle 방식)
+        // ------------------------
+        int startRow = (page - 1) * boardLimit + 1; // 1, 11, 21 ...
+        int endRow = page * boardLimit;             // 10, 20, 30 ...
+
+        System.out.println("📌 maxPage = " + maxPage);
+        System.out.println("📌 listCount = " + listCount);
+        System.out.println("📌 startRow = " + startRow + ", endRow = " + endRow);
+
+        Map<String, Object> paramMap = new HashMap<>();
+        paramMap.put("startRow", startRow);
+        paramMap.put("endRow", endRow);
+
+        List<LectureDateApprovalList> approvalList =
+                lectureDateService.selectLectureDateListPaged(paramMap);
+
+        Map<String, Object> result = new HashMap<>();
+        result.put("approvalList", approvalList);
+        result.put("currentPage", page);
+        result.put("startPage", startPage);
+        result.put("endPage", endPage);
+        result.put("maxPage", maxPage);
+
+        return result;
     }
 
 }

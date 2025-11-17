@@ -42,8 +42,8 @@
     <!-- ===============================
          2) 특정 반(CLASS_LECTURE_NO)의 일정 조회
          =============================== -->
-    <select id="selectLectureDateByClass" parameterType="int" resultType="ClassLecture">
-        SELECT
+    <select id="selectClassLectureList" parameterType="int" resultType="ClassLecture">
+        SELECT DISTINCT
             CAST(CL.CLASS_LECTURE_NO AS INTEGER) AS classLectureNo,
             C.CLASS_NAME AS className
         FROM CLASS_LECTURE CL
@@ -143,26 +143,28 @@
     <select id="selectLectureDateListPaged" parameterType="map" resultType="LectureDateApprovalList">
         SELECT *
         FROM (
-        SELECT ROWNUM AS RNUM, A.*
-        FROM (
-            SELECT
-                L.LECTURE_DATE_NO AS lectureDateNo,
-                L.TITLE AS title,
-                M.MEMBER_NAME AS writer,
-                TO_CHAR(A.APPROVAL_DATE, 'YYYY-MM-DD') AS approvalDate,
-                A.STATUS AS status
-            FROM LECTURE_DATE L
-            JOIN LECTURE_DATE_APPROVAL A
-                ON L.LECTURE_DATE_NO = A.LECTURE_DATE_NO
-            JOIN CLASS_LECTURE CL
-                ON L.CLASS_LECTURE_NO = CL.CLASS_LECTURE_NO
-            JOIN MEMBER M
-                ON CL.LECTURE_NO = M.MEMBER_NO
-            ORDER BY L.LECTURE_DATE_NO DESC
-        ) A
-        WHERE ROWNUM &lt;= #{endRow}
+            SELECT ROWNUM AS RNUM, A.*
+            FROM (
+                SELECT
+                    L.LECTURE_DATE_NO AS lectureDateNo,
+                    L.TITLE AS title,
+                    M.MEMBER_NAME AS writer,
+                    TO_CHAR(A.APPROVAL_DATE, 'YYYY-MM-DD') AS approvalDate,
+                    A.STATUS AS status
+                FROM LECTURE_DATE L
+                JOIN LECTURE_DATE_APPROVAL A
+                    ON L.LECTURE_DATE_NO = A.LECTURE_DATE_NO
+                JOIN CLASS_LECTURE CL
+                    ON L.CLASS_LECTURE_NO = CL.CLASS_LECTURE_NO
+                JOIN LECTURE LC
+                    ON CL.LECTURE_NO = LC.LECTURE_NO
+                JOIN MEMBER M
+                    ON LC.MEMBER_NO = M.MEMBER_NO
+                ORDER BY L.LECTURE_DATE_NO DESC
+            ) A
+            WHERE ROWNUM &lt;= #{endRow}
         )
-        WHERE RNUM &gt; #{startRow}
+        WHERE RNUM &gt;= #{startRow}
     </select>
 
     <select id="getLectureDateListCount" resultType="int">
