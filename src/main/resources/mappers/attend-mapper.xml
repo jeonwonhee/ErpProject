@@ -62,23 +62,32 @@
         <result column="ATTEND_MONTH" property="attendMonth"/>
     </resultMap>
 
-    <!--attendUpdate-->
-    <resultMap id="AttendUpdateResultMap" type="AttendUpdate">
-        <id property="attendUpdateNo" column="ATTEND_UPDATE_NO"/>
-        <result property="attendUpdateContent" column="ATTEND_UPDATE_CONTENT"/>
-        <result property="correctionApplicationDate" column="CORRECTION_APPLICATION_DATE"/>
-        <result property="status" column="STATUS"/>
-        <result property="refusal" column="REFUSAL"/>
-        <result property="attendNo" column="ATTEND_NO"/>
-        <result property="attendStatus" column="ATTEND_STATUS"/>
-
-        <association property="file" javaType="AttendUpdateFile">
-            <id property="attendUpdateFileNo" column="ATTEND_UPDATE_FILE_NO"/>
-            <result property="attendUpdateFileName" column="ATTEND_UPDATE_FILE_NAME"/>
-            <result property="attendUpdateFileOriName" column="ATTEND_UPDATE_FILE_ORI_NAME"/>
-            <result property="filePath" column="FILE_PATH"/>
-        </association>
+    <resultMap id="attendUpdateResultMap" type="AttendUpdate">
+        <result column="ATTEND_UPDATE_NO" property="attendUpdateNo"/>
+        <result column="ATTEND_UPDATE_CONTENT" property="attendUpdateContent"/>
+        <result column="CORRECTION_APPLICATION_DATE" property="correctionApplicationDate"/>
+        <result column="STATUS" property="status"/>
+        <result column="REFUSAL" property="refusal"/>
+        <result column="CREATE_DATE" property="createDate"/>
+        <result column="UPDATE_DATE" property="updateDate"/>
+        <result column="APPROVER_MEMBER_NO" property="approverMemberNo"/>
+        <result column="ATTEND_NO" property="attendNo"/>
+        <result column="ATTEND_STATUS" property="attendStatus"/>
+        <result column="MEMBER_NO" property="memberNo"/>
+        <result column="STUDENT_NO" property="studentNo"/>
+        <result column="APPROVER_MEMBER_NAME" property="approverMemberName"/>
     </resultMap>
+
+    <resultMap id="attendUpdateFileResultMap" type="AttendUpdateFile">
+        <result column="ATTEND_UPDATE_FILE_NO" property="attendUpdateFileNo"/>
+        <result column="ATTEND_UPDATE_NO" property="attendUpdateNo"/>
+        <result column="ATTEND_UPDATE_FILE_NAME" property="attendUpdateFileName"/>
+        <result column="FILE_PATH" property="filePath"/>
+        <result column="CREATE_DATE" property="createDate"/>
+        <result column="UPDATE_DATE" property="updateDate"/>
+        <result column="ATTEND_UPDATE_FILE_ORI_NAME" property="attendUpdateFileOriName"/>
+    </resultMap>
+
     <!--직원수 체크-->
     <select id="selectEmpCount" resultType="int">
         SELECT COUNT(*)
@@ -249,7 +258,7 @@
     </select>
 
     <!--출결정정 요청 리스트-->
-    <select id="selectAttendUpdateList" parameterType="int" resultMap="AttendUpdateResultMap">
+    <select id="selectAttendUpdateList" parameterType="int" resultMap="attendUpdateResultMap">
         SELECT
         U.ATTEND_UPDATE_NO,
         U.ATTEND_UPDATE_CONTENT,
@@ -295,13 +304,87 @@
     </select>
 
     <!--출결정정 요청 데이터-->
-    <select id="selectAttendUpdateDetail" parameterType="int" resultMap="AttendUpdateResultMap">
+    <select id="selectAttendUpdateDetail" parameterType="int" resultMap="attendUpdateResultMap">
         SELECT *
         FROM ATTEND_UPDATE U
         LEFT JOIN ATTEND_UPDATE_FILE F
             ON U.ATTEND_UPDATE_NO = F.ATTEND_UPDATE_NO
         WHERE U.ATTEND_UPDATE_NO = #{attendUpdateNo}
     </select>
+    <select id="selectOrderAttendInfo" parameterType="AttendUpdate" resultMap="attendUpdateResultMap">
+        SELECT M.MEMBER_NO AS APPROVER_MEMBER_NO,
+                A.ATTEND_NO
+        FROM ATTEND A
+        JOIN CLASS_STUDENT CS
+        ON A.STUDENT_NO = CS.STUDENT_NO
+        JOIN LECTURE_CONTROL LC
+        ON A.SESSION_NO = LC.CONTROLL_NO
+        JOIN CLASS_LECTURE CL
+        ON LC.CLASS_LECTURE_NO = CL.CLASS_LECTURE_NO
+        JOIN LECTURE L
+        ON CL.LECTURE_NO =  L.LECTURE_NO
+        JOIN MEMBER M
+        ON L.MEMBER_NO = M.MEMBER_NO
+        WHERE TO_CHAR(A.ATTEND_DATE, 'YYYY-MM-DD') = #{correctionApplicationDate}
+        AND CS.MEMBER_NO = #{memberNo}
+    </select>
+
+    <insert id="insertAttendOrder" parameterType="AttendUpdate">
+        <selectKey keyProperty="attendUpdateNo" resultType="_int" order="BEFORE">
+            SELECT SEQ_AUNO.NEXTVAL FROM DUAL
+        </selectKey>
+        INSERT INTO ATTEND_UPDATE(
+                ATTEND_UPDATE_NO,
+                ATTEND_UPDATE_CONTENT,
+                CORRECTION_APPLICATION_DATE,
+                REFUSAL,
+                APPROVER_MEMBER_NO,
+                ATTEND_NO,
+                ATTEND_STATUS
+        ) VALUES (
+                #{attendUpdateNo},
+                #{attendUpdateContent},
+                #{correctionApplicationDate},
+                #{refusal},
+                #{approverMemberNo},
+                #{attendNo},
+                #{attendStatus}
+        )
+    </insert>
+
+    <!--출석 정정 신청 리스트-->
+    <select id="selectAttendOrderList" parameterType="int" resultMap="attendUpdateResultMap">
+        SELECT AU.CORRECTION_APPLICATION_DATE,
+                AU.ATTEND_UPDATE_CONTENT,
+                CASE WHEN AU.UPDATE_DATE != NULL THEN AU.UPDATE_DATE
+                    ELSE NULL END AS UPDATE_DATE,
+                CASE WHEN AU.STATUS = 'REQUESTED' THEN '대기'
+                    WHEN AU.STATUS = 'APPROVED' THEN '승인'
+                    ELSE '반려' END AS STATUS
+        FROM ATTEND_UPDATE AU
+        JOIN ATTEND A
+        ON AU.ATTEND_NO = A.ATTEND_NO
+        JOIN CLASS_STUDENT CS
+        ON A.STUDENT_NO = CS.STUDENT_NO
+        WHERE CS.MEMBER_NO = #{memberNo}
+    </select>
+
+    <insert id="insertAttendFile" parameterType="AttendUpdateFile">
+        INSERT INTO ATTEND_UPDATE_FILE (
+            ATTEND_UPDATE_FILE_NO,
+            ATTEND_UPDATE_NO,
+            ATTEND_UPDATE_FILE_NAME,
+            FILE_PATH,
+            ATTEND_UPDATE_FILE_ORI_NAME
+        ) VALUES (
+            SEQ_AUFNO.NEXTVAL,
+            #{attendUpdateNo},
+            #{attendUpdateFileName},
+            #{filePath},
+            #{attendUpdateFileOriName}
+        )
+
+    </insert>
 
     <!--출결정정 승인 반려-->
     <update id="updateAttendCorrect" parameterType="map">

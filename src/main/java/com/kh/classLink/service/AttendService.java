@@ -5,6 +5,7 @@ import com.kh.classLink.model.vo.AttendUpdate;
 import com.kh.classLink.model.vo.Class;
 import com.kh.classLink.model.vo.Member;
 import org.apache.ibatis.session.RowBounds;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -64,5 +65,19 @@ public interface AttendService {
 
     /*출결정정 승인 반려*/
     int updateAttendCorrect(int attendUpdateNo, String status, String refusal, int approverNo);
+
+    /**
+     * 출석 정정처리
+     * @param attendUpdate
+     * @return
+     */
+    int insertAttendOrder(AttendUpdate attendUpdate, MultipartFile upfile);
+
+    /**
+     * 출석 정정 신청 리스트
+     * @param memberNo
+     * @return
+     */
+    ArrayList<AttendUpdate> selectAttendOrderList(int memberNo);
 }
 

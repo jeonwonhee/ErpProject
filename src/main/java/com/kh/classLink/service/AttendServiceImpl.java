@@ -4,10 +4,15 @@ package com.kh.classLink.service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.kh.classLink.model.mapper.AttendMapper;
+import com.kh.classLink.model.mapper.NotificationMapper;
 import com.kh.classLink.model.vo.*;
 import com.kh.classLink.model.vo.Class;
+import com.kh.classLink.utils.FileUtils;
 import org.apache.ibatis.session.RowBounds;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
+
 
 import java.sql.Date;
 import java.time.DayOfWeek;
@@ -19,9 +24,11 @@ import java.util.*;
 public class AttendServiceImpl implements AttendService {
 
     private final AttendMapper  attendMapper;
+    private final NotificationMapper notificationMapper;
 
-    public AttendServiceImpl(AttendMapper attendMapper) {
+    public AttendServiceImpl(AttendMapper attendMapper, NotificationMapper notificationMapper) {
         this.attendMapper = attendMapper;
+        this.notificationMapper = notificationMapper;
     }
 
     /**
@@ -235,5 +242,57 @@ public class AttendServiceImpl implements AttendService {
         param.put("approverNo", approverNo);
 
         return attendMapper.updateAttendCorrect(param);
+    }
+
+    /**
+     * 출석 정정 신청
+     * @param attendUpdate
+     * @return
+     */
+    @Override
+    @Transactional
+    public int insertAttendOrder(AttendUpdate attendUpdate, MultipartFile upfile) {
+        String filePath ="C:/workspace/ErpProject/src/main/webapp/resources/attendFile/";
+        System.out.println("::::::::::::::::"+attendUpdate);
+        AttendUpdate orderAttendInfo = attendMapper.selectOrderAttendInfo(attendUpdate);
+        if (orderAttendInfo == null) {
+            return 0;
+        }
+        attendUpdate.setApproverMemberNo(orderAttendInfo.getApproverMemberNo());
+        attendUpdate.setAttendNo(orderAttendInfo.getAttendNo());
+        int result = attendMapper.insertAttendOrder(attendUpdate);
+        String savedFileName = null;
+        if (result > 0) {
+            Notification no = new Notification();
+            no.setNotificationTitle("신규 출석 정정 신청");
+            no.setNotificationContents("신규 출석 정정 신청이 들어왔습니다.");
+            no.setMemberNo(orderAttendInfo.getApproverMemberNo());
+            result = notificationMapper.insertNoti(no);
+        }
+        if (result > 0 && upfile != null && !upfile.isEmpty()) {
+
+            AttendUpdatefile af = new AttendUpdatefile();
+            af.setAttendUpdateNo(attendUpdate.getAttendUpdateNo());
+            af.setAttendUpdateFileOriName(upfile.getOriginalFilename());
+            af.setFilePath("resources/attendFile/");
+            af.setAttendUpdateFileName(FileUtils.saveFile(upfile, filePath));
+
+            result += attendMapper.insertAttendFile(af);
+
+        }
+
+
+        return result;
+    }
+
+    /**
+     * 출결 정정 리스트
+     * @param memberNo
+     * @return
+     */
+    @Override
+    public ArrayList<AttendUpdate> selectAttendOrderList(int memberNo) {
+        ArrayList<AttendUpdate> result = attendMapper.selectAttendOrderList(memberNo);
+        return result;
     }
 }

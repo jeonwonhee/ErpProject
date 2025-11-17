@@ -29,4 +29,11 @@ public interface NotificationMapper {
      */
     int selectNotiCountByMember(int memberNo);
 
+    /**
+     * 알람 발생
+     * @param notification
+     * @return
+     */
+    int insertNoti(Notification notification);
+
 }

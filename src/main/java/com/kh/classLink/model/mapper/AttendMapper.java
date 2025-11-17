@@ -1,9 +1,7 @@
 package com.kh.classLink.model.mapper;
 
-import com.kh.classLink.model.vo.Attend;
-import com.kh.classLink.model.vo.AttendUpdate;
+import com.kh.classLink.model.vo.*;
 import com.kh.classLink.model.vo.Class;
-import com.kh.classLink.model.vo.Member;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.session.RowBounds;
 
@@ -91,4 +89,32 @@ public interface AttendMapper {
 
     /*출결정정 승인 반려*/
     int updateAttendCorrect(Map<String, Object> param);
+    /**
+     * 정정신청 출결 정보
+     * @param attendUpdate
+     * @return
+     */
+    AttendUpdate selectOrderAttendInfo(AttendUpdate attendUpdate);
+
+    /**
+     * 출결 정정 신청
+     * @param attendUpdate
+     * @return
+     */
+    int insertAttendOrder(AttendUpdate attendUpdate);
+
+    /**
+     * 정정 신청 리스트
+     * @param memberNo
+     * @return
+     */
+    ArrayList<AttendUpdate> selectAttendOrderList(int memberNo);
+
+    /**
+     * 출결 정정 신청 파일 저장
+     * @param attendUpdateFile
+     * @return
+     */
+    int insertAttendFile(AttendUpdatefile attendUpdateFile);
+
 }

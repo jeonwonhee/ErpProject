@@ -69,6 +69,21 @@
         AND MEMBER_NO = #{memberNo}
     </update>
 
+    <!--알람 발생-->
+    <insert id="insertNoti" parameterType="Notification">
+        INSERT INTO NOTIFICATION (
+            NOTIFICATION_NO,
+            NOTIFICATION_TITLE,
+            NOTIFICATION_CONTENTS,
+            MEMBER_NO
+        ) VALUES (
+            SEQ_NCNO.NEXTVAL,
+            #{notificationTitle},
+            #{notificationContents},
+            #{memberNo}
+        )
+    </insert>
+
 
 
 
