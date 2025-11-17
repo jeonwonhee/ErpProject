@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
@@ -107,8 +108,22 @@ public class MemberServiceImpl implements MemberService {
 
     }
     @Override
-    public int updatePassword(long memberNo, String newPassword) {
-        return memberMapper.updatePassword(memberNo, newPassword);
+    public int updatePassword(long memberNo, String newPassword, String token) {
+        int result = 0;
+        if (token.equals("")) {
+            result = memberMapper.updatePassword(memberNo, newPassword);
+        } else {
+            ArrayList<PasswordToken> tokenResult = memberMapper.checkToken(token);
+            if (tokenResult.isEmpty()) {
+                result = 0;
+                return result;
+            } else {
+                memberNo = tokenResult.get(0).getMemberNo();
+                result =  memberMapper.updatePassword(memberNo, newPassword);
+                result = memberMapper.updateToken(token);
+            }
+        }
+        return result;
     }
     /**
      * 정보 수정
@@ -145,5 +160,17 @@ public class MemberServiceImpl implements MemberService {
 
         return map;
     }
+
+    @Override
+    public int selectTokenInfo(String token) {
+        ArrayList<PasswordToken> result = memberMapper.checkToken(token);
+        if (result.isEmpty()) {
+            return 0;
+        } else {
+            return 1;
+        }
+
+    }
+
 
 }
