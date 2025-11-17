@@ -96,6 +96,18 @@ public class AttendanceController {
         return "admin/adminLectureList";
     }
 
+    /** 강사 출결관리
+     * @return
+     */
+    @GetMapping("/lectureAttendance.co")
+    public String lectureAttendance(Model model) {
+        int memberNo = 6;
+        ArrayList<Class> list = attendService.selectTodayLectureClass(memberNo);
+        model.addAttribute("classList", list);
+
+        return "lecture/leAttendance";
+    }
+
     /* 강사 출결관리 페이지*/
     @GetMapping("/lectureAttendanceList.co")
     public String lectureAttendanceList(HttpSession session, Model model) {
@@ -104,7 +116,7 @@ public class AttendanceController {
         int teacherNo = teacher.getMemberNo();
 
         List<AttendUpdate> list = attendService.getAttendUpdateList(teacherNo);
-
+        System.out.println("TEST!!"+list);
         model.addAttribute("list", list);
 
         return "lecture/leAttendanceList";
@@ -129,18 +141,18 @@ public class AttendanceController {
                                            @RequestParam(required=false) String refusal,
                                            HttpSession session) {
 
-        Member loginUser = (Member) session.getAttribute("loginUser");
+        Member loginMember = (Member) session.getAttribute("loginMember");
 
-        if (loginUser == null) {
+        if (loginMember == null) {
             // 로그인 안되어있으면 로그인 페이지로
             return "redirect:/login.co";
         }
 
-        int approverNo = loginUser.getMemberNo();
+        int approverNo = loginMember.getMemberNo();
 
         attendService.updateAttendCorrect(attendUpdateNo, status, refusal, approverNo);
 
-        return "redirect:/AttendanceList.co";
+        return "redirect:/lectureAttendanceList.co";
     }
 
     /**
@@ -164,7 +176,7 @@ public class AttendanceController {
      * @return
      */
     @GetMapping("/selectAttendClass.at")
-    public String selectAttendClass(@RequestParam(value = "classNo") int classNo, Model model) {
+    public String selectAttendClass(@RequestParam(value = "classNo", defaultValue = "0") int classNo, Model model) {
         int memberNo = 6;
         Map<String,Object> map = attendService.selectAttendInfo(classNo,memberNo);
 

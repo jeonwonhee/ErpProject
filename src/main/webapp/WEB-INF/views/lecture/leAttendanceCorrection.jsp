@@ -32,20 +32,21 @@
                         <div class="form-group">
                             <label>첨부파일</label>
                             <div class="file-box">
-                                <label for="fileInput" class="file-label">파일선택</label>
-                                <input type="file" id="fileInput" name="uploadFile">
-                                <span>${detail.file.attendUpdateFileOriName}</span>
+                                <a download="${detail.attendUpdateFileOriName}"
+                                   href="${pageContext.request.contextPath}/${detail.filePath}${detail.attendUpdateFileName}">
+                                    ${detail.attendUpdateFileName}
+                                </a>
                             </div>
                         </div>
 
                         <div class="form-group">
                             <label>정정 요청일</label>
-                            <input type="text" class="form-input" value="${detail.correctionApplicationDate}">
+                            <input type="text" class="form-input" readonly value="${detail.correctionApplicationDate}">
                         </div>
 
                         <div class="form-group">
                             <label>신청 사유</label>
-                            <textarea class="form-textarea">${detail.attendUpdateContent}</textarea>
+                            <textarea class="form-textarea" readonly>${detail.attendUpdateContent}</textarea>
                         </div>
 
                         <div class="form-group">

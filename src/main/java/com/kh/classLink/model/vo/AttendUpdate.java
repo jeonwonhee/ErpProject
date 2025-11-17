@@ -28,6 +28,13 @@ public class AttendUpdate {
 
     private AttendUpdatefile file;
 
+    private String hasFile;
+
+    private int attendUpdateFileNo;
+    private String attendUpdateFileName;
+    private String filePath;
+    private String attendUpdateFileOriName;
+
 
 
 
