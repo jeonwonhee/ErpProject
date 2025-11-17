@@ -22,6 +22,7 @@ public class Member {
     private String address;
     private String role;
 
+    private Integer attendRate;
     private LocalDate birthDate;
     private int vacCnt;
 
