@@ -1,12 +1,11 @@
 package com.kh.classLink.model.mapper;
 
-import com.kh.classLink.model.vo.GradeDto;
 import com.kh.classLink.model.vo.Member;
 import com.kh.classLink.model.vo.PasswordToken;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
-import java.util.List;
+import java.util.ArrayList;
 
 @Mapper
 public interface MemberMapper {
@@ -84,6 +83,19 @@ public interface MemberMapper {
     int insertPasswordToken(PasswordToken passwordToken);
 
     Member selectMemberByNo(int memberNo);
+    /**
+     * 비밀번호 찾기 토큰 확인
+     * @param token
+     * @return
+     */
+    ArrayList<PasswordToken> checkToken(String token);
 
+
+    /**
+     * 토큰 정보 업데이트
+     * @param token
+     * @return
+     */
+    int updateToken(String token);
 
 }

@@ -81,7 +81,7 @@
 
         function sendEmail(data,memberId,memberEmail) {
 
-            const passwordChangeLink = 'http://localhost:8005/findPassword.co?token='+data.token;
+            const passwordChangeLink = 'http://localhost:8005/changePassword.co?token='+data.token;
 
 
             var data = {

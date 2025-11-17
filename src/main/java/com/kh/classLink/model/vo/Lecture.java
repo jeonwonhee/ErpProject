@@ -11,4 +11,6 @@ public class Lecture {
     private int lectureNo;
     private String lectureName;
     private int memberNo;
+
+    private String memberName;
 }
