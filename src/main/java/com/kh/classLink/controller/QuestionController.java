@@ -151,10 +151,19 @@ public class QuestionController {
 
         if (result > 0) {
             session.setAttribute("alertMsg", "문의 등록에 성공하였습니다.");
-            return "redirect:/stQuestion.co";
+            if (loginMember.getRole().equals("STUDENT")) {
+                return "redirect:/stQuestion.co";
+            } else {
+                return "redirect:/questionManage.co";
+            }
+
         } else {
             model.addAttribute("errorMsg", "문의 등록에 실패하였습니다.");
-            return "redirect:/stQuestion.co";
+            if (loginMember.getRole().equals("STUDENT")) {
+                return "redirect:/stQuestion.co";
+            } else {
+                return "redirect:/questionManage.co";
+            }
         }
 
     }

@@ -648,3 +648,65 @@ body.admin.admin-calendar-manage {
     text-align: right;
     margin-top: 10px;
 }
+
+/* ==== 반 관리 ==== */
+.admin-class-manage table,
+.admin-class-enroll table{
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+}
+
+.admin-class-manage thead,
+.admin-class-enroll thead{
+    background: #f3f3ff;
+}
+
+.admin-class-enroll .attendance-container {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    margin-top: 20px;
+}
+
+.admin-class-enroll .form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-bottom: 18px;
+}
+
+.admin-class-enroll .form-row {
+    display: flex;
+    gap: 16px;
+    margin-bottom: 18px;
+}
+
+.admin-class-enroll .form-col {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.admin-class-enroll input,
+.admin-class-enroll select{
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 10px 12px;
+    font-size: 14px;
+    background: #fff;
+}
+
+.admin-class-enroll .form-submit {
+    text-align: right;
+}
+
+.admin-class-enroll .lecture-no {
+    display : none;
+}
+
+.lecture-btn {
+    display: flex;
+    justify-content: space-between;
+}

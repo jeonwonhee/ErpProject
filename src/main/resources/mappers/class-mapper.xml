@@ -4,6 +4,62 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.kh.classLink.model.mapper.ClassMapper">
+    <!--class-->
+    <resultMap id="classResultMap" type="Class">
+        <result column="CLASS_NO" property="classNo"/>
+        <result column="CLASS_NAME" property="className"/>
+        <result column="MEMBER_COUNT" property="memberCount"/>
+        <result column="START_DATE" property="startDate"/>
+        <result column="END_DATE" property="endDate"/>
+        <result column="CONTROLL_NO" property="controllNo"/>
+        <result column="PLAN_DATE" property="planDate"/>
+    </resultMap>
+
+    <resultMap id="lectureResultMap" type="Lecture">
+        <result column="LECTURE_NO" property="lectureNo"/>
+        <result column="LECTURE_NAME" property="lectureName"/>
+        <result column="MEMBER_NO" property="memberNo"/>
+        <result column="MEMBER_NAME" property="memberName"/>
+    </resultMap>
+
+    <!--배정 수업-->
+    <resultMap id="classLectureResultMap" type="ClassLecture">
+        <result column="CLASS_LECTURE_NO" property="classLectureNo"/>
+        <result column="CLASS_NO" property="classNo"/>
+        <result column="LECTURE_NO" property="lectureNo"/>
+        <result column="CLASS_DESC" property="classDesc"/>
+        <result column="PLAN_START_DATE" property="planStartDate"/>
+        <result column="PLAN_END_DATE" property="planEndDate"/>
+        <result column="MEMBER_NO" property="memberNo"/>
+        <result column="LECTURE_NAME" property="lectureName"/>
+        <result column="MEMBER_NAME" property="memberName"/>
+    </resultMap>
+
+
+    <!--반 정보 조회-->
+    <select id="selectClassInfoList" resultMap="classResultMap" parameterType="int">
+        SELECT CLASS_NO,
+               CLASS_NAME,
+               MEMBER_COUNT,
+               START_DATE,
+               END_DATE
+        FROM CLASS
+        WHERE 1=1
+        <if test="classNo != 0">
+            AND CLASS_NO = #{classNo}
+        </if>
+    </select>
+
+    <!--수업 정보 조회-->
+    <select id="selectLecture" resultMap="lectureResultMap">
+        SELECT L.LECTURE_NO,
+                L.LECTURE_NAME,
+                L.MEMBER_NO,
+                M.MEMBER_NAME
+        FROM LECTURE L
+        JOIN MEMBER M
+        ON L.MEMBER_NO = M.MEMBER_NO
+    </select>
 
     <select id="selectClassList"
             resultType="com.kh.classLink.model.vo.Class">
@@ -49,4 +105,74 @@
         ORDER BY m.MEMBER_NAME
     </select>
 
+    <!--반등록-->
+    <insert id="insertClass" parameterType="Class">
+        <selectKey keyProperty="classNo" resultType="int" order="BEFORE">
+            SELECT SEQ_CCNO.NEXTVAL FROM DUAL
+        </selectKey>
+        INSERT INTO CLASS(
+                    CLASS_NO,
+                    CLASS_NAME,
+                    START_DATE,
+                    END_DATE
+        ) VALUES (
+                #{classNo},
+                #{className},
+                #{startDate},
+                #{endDate}
+        )
+    </insert>
+
+    <!--수업 배정-->
+    <insert id="insertClassLecture" parameterType="ClassLecture">
+        INSERT INTO CLASS_LECTURE(
+                    CLASS_LECTURE_NO,
+                    CLASS_NO,
+                    LECTURE_NO,
+                    CLASS_DESC,
+                    PLAN_START_DATE,
+                    PLAN_END_DATE
+        ) VALUES (
+                    SEQ_CLNO.NEXTVAL,
+                    #{classNo},
+                    #{lectureNo},
+                    #{classDesc},
+                    #{planStartDate},
+                    #{planEndDate}
+        )
+    </insert>
+
+    <!--반별 배정 수업 정보 조회-->
+    <select id="selectClassLectureByClassNo" parameterType="int" resultMap="classLectureResultMap">
+        SELECT CL.CLASS_LECTURE_NO,
+               CL.CLASS_NO,
+               CL.LECTURE_NO,
+                L.LECTURE_NAME,
+               CL.CLASS_DESC,
+               CL.PLAN_START_DATE,
+               CL.PLAN_END_DATE,
+               M.MEMBER_NAME
+        FROM CLASS_LECTURE CL
+        JOIN LECTURE L
+        ON CL.LECTURE_NO = L.LECTURE_NO
+        JOIN MEMBER M
+        ON L.MEMBER_NO = M.MEMBER_NO
+        WHERE CL.CLASS_NO = #{classNo}
+
+    </select>
+
+    <!--반 정보 수정-->
+    <update id="updateClass" parameterType="Class">
+        UPDATE CLASS
+        SET
+            START_DATE = #{startDate},
+            END_DATE = #{endDate}
+        WHERE CLASS_NO = #{classNo}
+    </update>
+
+    <!--반에 배정된 수업 삭제-->
+    <delete id="deleteClassLecture" parameterType="int">
+        DELETE CLASS_LECTURE
+        WHERE CLASS_NO = #{classNo}
+    </delete>
 </mapper>

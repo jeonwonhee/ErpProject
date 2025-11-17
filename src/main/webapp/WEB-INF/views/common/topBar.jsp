@@ -6,19 +6,34 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 <head>
     <title>topBar</title>
 </head>
 <body>
 <header class="topbar">
-    <div class="path">강사 › 공지사항 <b>강사 페이지</b></div>
+    <c:if test="${not empty alertMsg}">
+        <script>
+            alert("${alertMsg}");
+        </script>
+        <c:remove var="alertMsg"/>
+    </c:if>
+    <div class="path">
+        <c:set var="roleName"
+                value="${loginMember.role eq 'STUDENT'
+                ? '학생'
+                : (loginMember.role eq 'TEACHER')
+                ? '강사'
+                : '관리자'}"/>
+
+        ${roleName} › ${pageName} <b>강사 페이지</b></div>
     <div class="user-info"><a class="noti-btn" onclick="notiPage();">알림(<span class="noti-count"> </span>)</a><a onclick="location.href='${pageContext.request.contextPath}/stMyPage.co'">김강사(강사)</a></div>
 </header>
 <aside class="noti-page" style="display: none" id="notiPage">
     <div>
         <div class="logo"><span>알림창</span></div>
-        <%--알람 발생에 따라 반복 필요 ajax처리?--%>
+        <%--알람 발생에 따라 반복 필요 ajax처리--%>
         <div class="noti-area">
 <%--            <div class="noti-list">
                 <div class="noti-row">
