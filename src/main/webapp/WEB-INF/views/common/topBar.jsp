@@ -29,6 +29,8 @@
 
         ${roleName} › ${pageName} <b>강사 페이지</b></div>
     <div class="user-info"><a class="noti-btn" onclick="notiPage();">알림(<span class="noti-count"> </span>)</a><a onclick="location.href='${pageContext.request.contextPath}/stMyPage.co'">김강사(강사)</a></div>
+
+    <button type="button" class="logout-btn" onclick="logoutFn()">로그아웃</button>
 </header>
 <aside class="noti-page" style="display: none" id="notiPage">
     <div>
@@ -160,6 +162,12 @@
     }
 
     document.addEventListener('DOMContentLoaded' , init);
+
+    function logoutFn() {
+        if(confirm("로그아웃 하시겠습니까?")){
+            location.href = "${pageContext.request.contextPath}/logout.co";
+        }
+    }
 </script>
 </body>
 </html>

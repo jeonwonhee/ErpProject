@@ -14,6 +14,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
 import java.util.Map;
@@ -69,11 +70,12 @@ public class MemberController {
 
         // 2. 비밀번호 검증
 
-        if (!bCryptPasswordEncoder.matches(memberPassword, loginMember.getMemberPassword())) {
+            if (!bCryptPasswordEncoder.matches(memberPassword, loginMember.getMemberPassword())) {
             mv.addObject("errorMsg", "비밀번호를 확인해 주세요.");
             mv.setViewName("common/login");
             return mv;
         }
+
 
         // 3. 세션 저장
         session.setAttribute("loginMember", loginMember);
@@ -103,15 +105,40 @@ public class MemberController {
         return mv;
     }
 
-    /**
-     * 로그아웃
-     */
     @GetMapping("/logout.co")
-    public String logout(HttpSession session) {
+    public String logout(HttpSession session, RedirectAttributes ra) {
+
+        Member loginMember = (Member) session.getAttribute("loginMember");
+
+        // 로그인 상태일 경우만 처리
+        if (loginMember != null) {
+
+            String role = loginMember.getRole();
+
+            // 관리자 또는 강사 → 퇴근 처리
+            if ("TEACHER".equalsIgnoreCase(role) || "ADMIN".equalsIgnoreCase(role)) {
+
+                try {
+                    commuteService.processLogoutCommute(loginMember.getMemberNo());
+                    ra.addFlashAttribute("alertMsg", "퇴근 처리 후 로그아웃 되었습니다.");
+                } catch (Exception e) {
+                    ra.addFlashAttribute("alertMsg", "퇴근 처리 중 오류가 발생했습니다. 담당자에게 문의하세요.");
+                }
+
+            } else {
+                // 학생일 경우 단순 로그아웃
+                ra.addFlashAttribute("alertMsg", "로그아웃 되었습니다.");
+            }
+
+        } else {
+            ra.addFlashAttribute("alertMsg", "로그인 정보가 존재하지 않습니다.");
+        }
+
+        // 모든 처리 끝난 후 세션 종료
         session.invalidate();
+
         return "redirect:/login.co";
     }
-
     /**
      * 비밀번호 찾기 페이지
      */
