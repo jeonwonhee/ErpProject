@@ -2,10 +2,8 @@ package com.kh.classLink.service;
 
 import com.kh.classLink.model.mapper.DeviceMapper;
 import com.kh.classLink.model.mapper.MemberMapper;
-import com.kh.classLink.model.vo.Device;
-import com.kh.classLink.model.vo.DeviceLog;
-import com.kh.classLink.model.vo.DeviceRentAtt;
-import com.kh.classLink.model.vo.PageInfo;
+import com.kh.classLink.model.mapper.NotificationMapper;
+import com.kh.classLink.model.vo.*;
 import org.apache.ibatis.session.RowBounds;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,6 +17,8 @@ import java.util.Map;
 @Service
 public class FacilityServiceImpl implements FacilityService{
     private final DeviceMapper deviceMapper;
+
+    private NotificationMapper notificationMapper;
 
     @Override
     public List<Device> getDevice() {
@@ -36,8 +36,9 @@ public class FacilityServiceImpl implements FacilityService{
         return deviceMapper.selectDeviceRentAtt();
     }
 
-    public FacilityServiceImpl(DeviceMapper deviceMapper) {
+    public FacilityServiceImpl(DeviceMapper deviceMapper,  NotificationMapper notificationMapper) {
         this.deviceMapper = deviceMapper;
+        this.notificationMapper = notificationMapper;
     }
 
     @Override
@@ -147,6 +148,7 @@ public class FacilityServiceImpl implements FacilityService{
         DeviceRentAtt rent = deviceMapper.getDeviceRentAttById(deviceRentAttId);
         int deviceId = rent.getDeviceId();
         int attendAmount = rent.getAttendAmount();
+        int memberNo = rent.getMemberNo();
 
         // 2. 남은 수량 확인
         int deviceRemain = deviceMapper.getDeviceRemain(deviceId);
@@ -160,6 +162,13 @@ public class FacilityServiceImpl implements FacilityService{
 
         // 4. DEVICE 남은 수량 차감
         int updateResult = deviceMapper.updateDeviceRemain(deviceId, attendAmount);
+
+        Notification no = new Notification();
+        no.setNotificationTitle("기자재 대여 신청 처리");
+        no.setNotificationContents("기자재 대여 신청 처리가 완료되었습니다.");
+        no.setMemberNo(memberNo);
+        int result = notificationMapper.insertNoti(no);
+
         return updateResult > 0;
     }
 

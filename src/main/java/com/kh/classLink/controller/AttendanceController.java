@@ -100,9 +100,9 @@ public class AttendanceController {
      * @return
      */
     @GetMapping("/lectureAttendance.co")
-    public String lectureAttendance(Model model) {
-        int memberNo = 6;
-        ArrayList<Class> list = attendService.selectTodayLectureClass(memberNo);
+    public String lectureAttendance(HttpSession session,Model model) {
+        Member loginMember = (Member) session.getAttribute("loginMember");
+        ArrayList<Class> list = attendService.selectTodayLectureClass(loginMember.getMemberNo());
         model.addAttribute("classList", list);
 
         return "lecture/leAttendance";
@@ -176,8 +176,9 @@ public class AttendanceController {
      * @return
      */
     @GetMapping("/selectAttendClass.at")
-    public String selectAttendClass(@RequestParam(value = "classNo", defaultValue = "0") int classNo, Model model) {
-        int memberNo = 6;
+    public String selectAttendClass(@RequestParam(value = "classNo", defaultValue = "0") int classNo,HttpSession session ,Model model) {
+        Member loginMember = (Member) session.getAttribute("loginMember");
+        int memberNo = loginMember.getMemberNo();
         Map<String,Object> map = attendService.selectAttendInfo(classNo,memberNo);
 
 
@@ -232,7 +233,8 @@ public class AttendanceController {
         attend.setAttendStatus(attendStatus);
         attend.setSessionNo(sessionNo);
         attend.setClassNo(classNo);
-        int memberNo = 6;
+        Member loginMember = (Member) session.getAttribute("loginMember");
+        int memberNo = loginMember.getMemberNo();
 
         int result = attendService.attendClassAll(attend,memberNo);
 

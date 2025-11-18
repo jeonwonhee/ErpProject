@@ -95,7 +95,6 @@ public class ConsultController {
 
         app.setStatus("REQUESTED");
         app.setConsultAppMemberNo(loginMember.getMemberNo());
-        app.setConsultMemberNo(1);
 
         consultService.insertConsult(app);
 
@@ -110,10 +109,13 @@ public class ConsultController {
     public String lectureConsultUpdate(
             @RequestParam("consultAppNo") int consultAppNo,
             @RequestParam("status") String status,
-            @RequestParam(value="refusal", required=false) String refusal
+            @RequestParam(value="refusal", required=false) String refusal,
+            HttpSession session
     ) {
         // 서비스 호출
-        int result = consultService.updateConsultStatus(consultAppNo, status, refusal);
+        Member loginMember = (Member) session.getAttribute("loginMember");
+
+        int result = consultService.updateConsultStatus(consultAppNo, status, refusal, loginMember.getMemberNo());
         if(result>0){
             return "redirect:/lectureConsult.co";
         }else{

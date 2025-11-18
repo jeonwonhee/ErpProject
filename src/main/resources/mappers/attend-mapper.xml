@@ -462,4 +462,15 @@
             UPDATE_DATE = SYSDATE
         WHERE ATTEND_UPDATE_NO = #{attendUpdateNo}
     </update>
+
+    <!--알람 발행용 정정 요청자-->
+    <select id="selectAttendOrderMemberNo" parameterType="int" resultType="int">
+        SELECT CT.MEMBER_NO
+        FROM ATTEND_UPDATE AU
+        JOIN ATTEND A
+        ON AU.ATTEND_NO = A.ATTEND_NO
+        JOIN CLASS_STUDENT CT
+        ON A.STUDENT_NO = CT.STUDENT_NO
+        WHERE AU.ATTEND_UPDATE_NO = #{attendUpdateNo}
+    </select>
 </mapper>

@@ -2,10 +2,8 @@ package com.kh.classLink.service;
 
 import com.kh.classLink.model.mapper.AttendMapper;
 import com.kh.classLink.model.mapper.ConsultMapper;
-import com.kh.classLink.model.vo.Consult;
-import com.kh.classLink.model.vo.ConsultApplication;
-import com.kh.classLink.model.vo.DeviceRentAtt;
-import com.kh.classLink.model.vo.PageInfo;
+import com.kh.classLink.model.mapper.NotificationMapper;
+import com.kh.classLink.model.vo.*;
 import org.apache.ibatis.session.RowBounds;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,8 +20,11 @@ public class ConsultServiceImpl implements ConsultService {
     @Autowired
     private final ConsultMapper consultMapper;
 
-    public ConsultServiceImpl(ConsultMapper consultMapper) {
+    private NotificationMapper notificationMapper;
+
+    public ConsultServiceImpl(ConsultMapper consultMapper, NotificationMapper notificationMapper) {
         this.consultMapper = consultMapper;
+        this.notificationMapper = notificationMapper;
     }
 
     @Override
@@ -60,8 +61,19 @@ public class ConsultServiceImpl implements ConsultService {
     }
     @Override
     @Transactional
-    public int updateConsultStatus(int consultAppNo, String status, String refusal) {
-        return consultMapper.updateConsultStatus(consultAppNo, status, refusal);
+    public int updateConsultStatus(int consultAppNo, String status, String refusal, int memberNo) {
+        int result = consultMapper.updateConsultStatus(consultAppNo, status, refusal, memberNo);
+        System.out.println("consultAppNo = " + consultAppNo);
+        int consultMemberNo = consultMapper.selectConsultMemberNo(consultAppNo);
+
+        if (result > 0) {
+            Notification no = new Notification();
+            no.setNotificationTitle("상담 신청 처리");
+            no.setNotificationContents("상담 신청 처리가 완료되었습니다.");
+            no.setMemberNo(consultMemberNo);
+            result = notificationMapper.insertNoti(no);
+        }
+        return result;
     }
     @Override
     @Transactional

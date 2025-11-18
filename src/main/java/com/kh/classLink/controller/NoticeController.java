@@ -134,8 +134,8 @@ public class NoticeController {
                                @RequestParam(value="upFile" , required = false) MultipartFile upfile,
                                @RequestParam(value = "classNoList" ,required = false) String[] classNoList) {
         //멤버 번호 호출 필요 로그인되면
-        session.getAttribute("loginMember");
-        notice.setMemberNo(6);
+        Member loginMember = (Member) session.getAttribute("loginMember");
+        notice.setMemberNo(loginMember.getMemberNo());
         int result = noticeService.insertNotice(notice,upfile,classNoList);
 
         if (result > 0) {
@@ -183,7 +183,8 @@ public class NoticeController {
         System.out.println(":::::::updateNotice::::::::::::");
         System.out.println("notice:::::::"+notice);
         System.out.println("classNoList:::::::"+classNoList);
-        notice.setMemberNo(6);
+        Member loginMember = (Member) session.getAttribute("loginMember");
+        notice.setMemberNo(loginMember.getMemberNo());
         int result = noticeService.updateNotice(notice,upFile,classNoList);
 
         if (result > 0) {
