@@ -49,13 +49,23 @@
                                             </div>
                                         </div>
 
-                                        <span class="status-tag">
-                                            <c:choose>
-                                                <c:when test="${u.status eq 'REQUESTED'}">대기</c:when>
-                                                <c:when test="${u.status eq 'APPROVED'}">승인</c:when>
-                                                <c:when test="${u.status eq 'REJECTED'}">반려</c:when>
-                                            </c:choose>
-                                        </span>
+                                        <c:choose>
+                                            <c:when test="${u.status eq 'REQUESTED'}">
+                                                <span class="status-tag status-pending">
+                                                    대기
+                                                </span>
+                                            </c:when>
+                                            <c:when test="${u.status eq 'APPROVED'}">
+                                                <span class="status-tag status-approved">
+                                                    승인
+                                                </span>
+                                            </c:when>
+                                            <c:when test="${u.status eq 'REJECTED'}">
+                                                <span class="status-tag rejected">
+                                                    반려
+                                                </span>
+                                            </c:when>
+                                        </c:choose>
                                     </div>
                                 </div>
                             </c:forEach>
