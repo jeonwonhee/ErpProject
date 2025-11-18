@@ -39,7 +39,6 @@
                 <select id="classNo" name="classNo" required>
                     <option value="">반 선택</option>
                     <c:forEach var="cls" items="${classList}">
-
                         <option value="${cls.classNo}">
                                 ${cls.className}
                         </option>
@@ -55,13 +54,14 @@
 
             <!-- 아이디 + 중복확인 -->
             <div class="form-group">
-                <label for="id">아이디</label>
+                <label for="memberId">아이디</label>
                 <div class="input-with-btn">
-                    <input id="id" name="memberId" type="text" placeholder="아이디 입력 (6~20자)"
+                    <!-- 🔹 id를 JS에서 쓰는 이름과 맞춤 -->
+                    <input id="memberId" name="memberId" type="text" placeholder="아이디 입력 (6~20자)"
                            minlength="6" maxlength="20" required autocomplete="username" />
                     <span class="check-icon success" style="display:none;">✅</span>
                     <span class="check-icon fail" style="display:none;">❌</span>
-                    <button type="button" class="btn-submit" id="btnCheckId">중복확인</button>
+                    <button type="button" class="btn-submit" onclick="idDupiCheck()">중복확인</button>
                 </div>
             </div>
 
@@ -71,19 +71,22 @@
                 <input id="pw" name="memberPassword" type="password"
                        placeholder="문자, 특수문자, 숫자 포함 8~20자"
                        minlength="8" maxlength="20" required autocomplete="new-password"
-                       pattern="^(?=.*[A-Za-z])(?=.*\d)(?=.*[^\w\s]).{8,20}$" />
+                       pattern="^(?=.*[A-Za-z])(?=.*\\d)(?=.*[^\\w\\s]).{8,20}$" />
             </div>
 
             <!-- 비밀번호 확인 -->
             <div class="form-group">
                 <label for="pw2">비밀번호 확인</label>
-                <input id="pw2" name="memberPwdConfirm" type="password" required autocomplete="new-password" />
+                <input id="pw2" name="memberPwdConfirm" type="password"
+                       required autocomplete="new-password" onblur="passwordChk();" />
+                <!-- 메시지 표시용 -->
+                <div id="pwdChkMsg" style="margin-top:4px; font-size:0.9rem;"></div>
             </div>
 
             <!-- 전화번호 -->
             <div class="form-group">
                 <label for="phone">전화번호</label>
-                <input id="phone" name="phone" type="tel"
+                <input id="phone" name="phone" type="tel" maxlength="11"
                        placeholder="휴대폰 번호 입력 ('-' 제외 11자리)"
                        pattern="^01[016789][0-9]{7,8}$" autocomplete="tel" />
             </div>
@@ -94,9 +97,9 @@
                 <input id="email" name="email" type="email" placeholder="이메일 입력" autocomplete="email" />
             </div>
 
-            <!-- 생년월일(년/월/일 선택) -->
+            <!-- 생년월일 -->
             <div class="form-group">
-                <label>생년월일</label>
+                <label for="birthDate">생년월일</label>
                 <div class="form-group">
                     <input
                             type="date"
@@ -105,90 +108,111 @@
                             required
                     />
                 </div>
-
             </div>
         </div>
 
         <input type="hidden" name="role" value="STUDENT" />
-        <button type="button" class="btn-submit"
-                onclick="alert('회원가입이 완료되었습니다.'); this.form.submit();">
+
+        <!-- 회원가입 버튼 -->
+        <button type="button" class="btn-submit" onclick="submitRegisterForm()">
             회원가입
         </button>
     </form>
 </div>
 
 <script>
+    // 🔹 비밀번호 일치 체크
+    function passwordChk() {
+        const pw = document.getElementById("pw");
+        const pw2 = document.getElementById("pw2");
+        const msg = document.getElementById("pwdChkMsg");
 
-    // ===== 아이디 중복확인 + 제출 제어 =====
-    (function setupDuplicateCheck() {
-        const idInput = document.getElementById('id');
-        const btnCheck = document.getElementById('btnCheckId');
-        const submitBtn = document.getElementById('btnSubmit');
-        const okIcon = document.querySelector('.check-icon.success');
-        const noIcon = document.querySelector('.check-icon.fail');
+        if (!pw.value || !pw2.value) {
+            msg.textContent = "";
+            return;
+        }
 
-        let idLocked = false;
+        if (pw.value === pw2.value) {
+            msg.textContent = "비밀번호가 일치합니다.";
+            msg.style.color = "green";
+        } else {
+            msg.textContent = "비밀번호가 일치하지 않습니다.";
+            msg.style.color = "red";
+        }
+    }
 
-        idInput.addEventListener('input', () => {
-            idLocked = false;
-            submitBtn.disabled = true;
-            okIcon.style.display = 'none';
-            noIcon.style.display = 'none';
-            idInput.removeAttribute('readonly');
-        });
+    // 🔹 아이디 중복확인
+    function idDupiCheck() {
+        const idInput = document.getElementById("memberId");
+        const memberId = idInput.value.trim();
 
-        btnCheck.addEventListener('click', () => {
-            const val = idInput.value.trim();
-            if (val.length < 6 || val.length > 20) {
-                alert('아이디는 6~20자로 입력하세요.');
-                idInput.focus();
-                return;
-            }
+        if (!memberId) {
+            alert("아이디를 입력해주세요.");
+            idInput.focus();
+            return;
+        }
 
-            fetch('${pageContext.request.contextPath}/idDuplicateCheck.co?checkId=' + encodeURIComponent(val))
-                .then(res => res.text())
-                .then(code => {
-                    if (code === 'NNNNN') {        // 이미 존재
-                        okIcon.style.display = 'none';
-                        noIcon.style.display = 'inline';
-                        alert('이미 존재하는 ID입니다.');
-                        submitBtn.disabled = true;
-                        idLocked = false;
-                    } else {                       // 사용 가능
-                        if (confirm('사용 가능한 ID입니다. 이 아이디로 확정할까요?')) {
-                            idInput.setAttribute('readonly', 'readonly');
-                            okIcon.style.display = 'inline';
-                            noIcon.style.display = 'none';
-                            idLocked = true;
-                            submitBtn.disabled = false;
-                        }
+        // 아이디 길이 기본체크
+        if (memberId.length < 6 || memberId.length > 20) {
+            alert("아이디는 6~20자 사이로 입력해주세요.");
+            idInput.focus();
+            return;
+        }
+
+        // fetch 사용 (jQuery 안 써도 됨)
+        fetch("${pageContext.request.contextPath}/idDuplicateCheck.co?memberId=" + encodeURIComponent(memberId))
+            .then(function (res) {
+                if (!res.ok) {
+                    throw new Error("서버 오류");
+                }
+                return res.text(); // 컨트롤러에서 String("NNNNN" 등) 반환한다고 가정
+            })
+            .then(function (result) {
+                console.log("ID CHECK RESULT:", result);
+
+                if (result === "NNNNN") { // 이미 존재
+                    alert("이미 존재하는 아이디입니다.");
+                    idInput.focus();
+                } else { // 사용 가능
+                    if (confirm("사용 가능한 아이디입니다. 사용하시겠습니까?")) {
+                        idInput.readOnly = true;
+
+                        // 필요하면 '중복확인 완료' 표시
+                        const okIcon = document.querySelector(".check-icon.success");
+                        const failIcon = document.querySelector(".check-icon.fail");
+                        if (okIcon) okIcon.style.display = "inline";
+                        if (failIcon) failIcon.style.display = "none";
+                    } else {
+                        idInput.focus();
                     }
-                })
-                .catch(err => {
-                    console.error('아이디 중복확인 오류:', err);
-                    alert('중복확인 중 오류가 발생했습니다.');
-                });
-        });
+                }
+            })
+            .catch(function (err) {
+                console.error("아이디 체크 요청 실패:", err);
+                alert("중복확인 중 오류가 발생했습니다.");
+            });
+    }
 
-        document.getElementById('registerForm').addEventListener('submit', (e) => {
-            const pw = document.getElementById('pw').value;
-            const pw2 = document.getElementById('pw2').value;
-            if (!idLocked) {
-                e.preventDefault();
-                alert('아이디 중복확인을 완료해 주세요.');
-                return;
-            }
-            if (pw !== pw2) {
-                e.preventDefault();
-                alert('비밀번호가 일치하지 않습니다.');
-            }
-            // birthDate hidden 값이 비어있으면 막기
-            if (!document.getElementById('birthDate').value) {
-                e.preventDefault();
-                alert('생년월일을 선택해 주세요.');
-            }
-        });
-    })();
+    // 🔹 회원가입 버튼 클릭 시 검증 + 제출
+    function submitRegisterForm() {
+        const birth = document.getElementById("birthDate").value;
+        const pw = document.getElementById("pw").value;
+        const pw2 = document.getElementById("pw2").value;
+
+        if (!birth) {
+            alert("생년월일을 선택해 주세요.");
+            return;
+        }
+
+        if (pw !== pw2) {
+            alert("비밀번호가 일치하지 않습니다.");
+            document.getElementById("pw2").focus();
+            return;
+        }
+
+        alert("회원가입이 완료되었습니다.");
+        document.getElementById("registerForm").submit();
+    }
 </script>
 </body>
 </html>

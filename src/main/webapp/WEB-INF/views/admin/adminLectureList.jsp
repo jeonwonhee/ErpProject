@@ -17,6 +17,7 @@
 
         <!-- 메인 -->
         <main class="main">
+            <c:set var="pageName" value="직원 관리" scope="request"></c:set>
             <jsp:include page="/WEB-INF/views/common/topBar.jsp" />
 
             <section class="content lecture-list">
