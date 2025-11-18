@@ -17,6 +17,7 @@
         <jsp:include page="/WEB-INF/views/common/sidBar.jsp" />
 
             <main class="main">
+            <c:set var="pageName" value="출결정정 처리" scope="request"></c:set>
             <header class="topbar">
                 <div class="path">강사 &gt; 반려페이지 <b>강사 페이지</b></div>
                 <div class="user-info">알림(<span>2</span>) 김강사(강사)</div>

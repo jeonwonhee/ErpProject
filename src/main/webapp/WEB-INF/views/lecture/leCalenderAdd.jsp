@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!DOCTYPE html>
 <html lang="ko">
@@ -11,14 +12,15 @@
 
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 
-        <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
     </head>
 
     <body>
+        <c:set var="pageName" value="일정관리" scope="request"></c:set>
         <!-- 사이드바 -->
         <jsp:include page="/WEB-INF/views/common/sidBar.jsp" />
 
         <main class="main">
+            <c:set var="pageName" value="일정관리" scope="request"></c:set>
             <header class="topbar">
                 <div class="path">강사 › 일정관리 <b>강사 페이지</b></div>
                 <div class="user-info">알림(<span>2</span>) 김강사(강사)</div>
