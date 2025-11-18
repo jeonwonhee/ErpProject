@@ -148,6 +148,44 @@
         )
     </insert>
 
+    <select id="selectClassNoByMemberNo"
+            parameterType="long"
+            resultType="int">
+        SELECT cs.CLASS_NO
+        FROM CLASS_STUDENT cs
+        WHERE cs.MEMBER_NO = #{memberNo}
+    </select>
+
+    <!-- CLASS 테이블의 MEMBER_COUNT 재계산 -->
+    <update id="updateClassMemberCount" parameterType="int">
+        UPDATE CLASS c
+        SET c.MEMBER_COUNT = (
+        SELECT COUNT(*)
+        FROM CLASS_STUDENT cs
+        WHERE cs.CLASS_NO = c.CLASS_NO
+        )
+        WHERE c.CLASS_NO = #{classNo}
+    </update>
+
+    <!--count +1-->
+    <update id="increaseClassMemberCount" parameterType="int">
+        UPDATE CLASS
+        SET MEMBER_COUNT = NVL(MEMBER_COUNT, 0) + 1
+        WHERE CLASS_NO = #{classNo}
+    </update>
+
+    <!--count -1-->
+    <update id="decreaseClassMemberCount" parameterType="int">
+        UPDATE CLASS
+        SET MEMBER_COUNT =
+        CASE
+        WHEN MEMBER_COUNT > 0 THEN MEMBER_COUNT - 1
+        ELSE 0
+        END
+        WHERE CLASS_NO = #{classNo}
+    </update>
+
+
     <!-- 강사 아이디로 강의명 조회 -->
     <select id="selectLectureNameByMemberNo"
             parameterType="int"

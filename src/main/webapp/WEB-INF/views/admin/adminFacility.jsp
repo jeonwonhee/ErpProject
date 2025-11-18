@@ -4,7 +4,7 @@
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
-    <title>KH EduERP | 기자재 관리 통합</title>
+    <title>KH EduERP | 기자재 관리</title>
 
     <link rel="stylesheet" href="${pageContext.request.contextPath}/styles/default.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/styles/style.css">
@@ -20,6 +20,7 @@
 
 <!-- 메인 -->
 <main class="main">
+    <c:set var="pageName" value="기자재 관리 통합" scope="request"></c:set>
     <jsp:include page="/WEB-INF/views/common/topBar.jsp" />
 
     <section class="content">

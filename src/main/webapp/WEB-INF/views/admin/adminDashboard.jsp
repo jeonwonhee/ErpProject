@@ -24,6 +24,7 @@
 <main class="main">
 
     <!-- 상단바 -->
+    <c:set var="pageName" value="대시보드" scope="request"></c:set>
     <jsp:include page="/WEB-INF/views/common/topBar.jsp" />
 
     <!-- 콘텐츠 영역 -->

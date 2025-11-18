@@ -36,6 +36,16 @@ public interface MemberMapper {
      */
     int insertMember(Member member);
 
+    Integer selectClassNoByMemberNo(@Param("memberNo") long memberNo);
+
+    //학생 수 카운트하기
+    int updateClassMemberCount(@Param("classNo") int classNo);
+
+    //학생 수 카운트(+1)하기
+    int increaseClassMemberCount(@Param("classNo") int classNo);
+
+    //학생 수 카운트(-1)하기
+    int decreaseClassMemberCount(@Param("classNo") int classNo);
     /**
      * 수업 등록
      * @param member

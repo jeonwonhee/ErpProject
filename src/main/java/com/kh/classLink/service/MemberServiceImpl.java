@@ -47,7 +47,6 @@ public class MemberServiceImpl implements MemberService {
         return memberMapper.getMemberCountById(memberId);
     }
 
-    /**
 
     /**
      * 회원가입
@@ -57,19 +56,28 @@ public class MemberServiceImpl implements MemberService {
     public int insertMember(Member member) {
         int result = memberMapper.insertMember(member);
 
+        if (result <= 0) {
+            return 0;
+        }
         if ("STUDENT".equalsIgnoreCase(member.getRole())
                 && member.getClassNo() != null
                 && member.getClassNo() > 0) {
 
-            memberMapper.insertClass(member);   // ★ 여기만 잘 있으면 OK
+            int r2 = memberMapper.insertClass(member);
+            if (r2 <= 0) return 0;
+
+            int r3 = memberMapper.increaseClassMemberCount(member.getClassNo());
+            if (r3 <= 0) return 0;
         }
 
         // 강사인 경우 LECTURE 테이블에도 INSERT
         if (result > 0 && "TEACHER".equals(member.getRole()) && member.getLectureName() != null) {
-            result = memberMapper.insertLecture(member);
+
+            int r4 = memberMapper.insertLecture(member);
+            if (r4 <= 0) return 0;
         }
 
-        return result;
+        return 1;
     }
 
     /**
@@ -99,14 +107,33 @@ public class MemberServiceImpl implements MemberService {
         return result;
     }
     /**
-     * 회원 탈퇴
+     * 회원 탈퇴 (소프트 삭제 + 반 인원수 -1)
      */
     @Override
     @Transactional
     public int deleteMember(long memberNo) {
-        return memberMapper.deleteMember(memberNo);
 
+        // 1) 이 회원이 속한 반 번호 조회 (학생이 아니면 null 나올 수 있음)
+        Integer classNo = memberMapper.selectClassNoByMemberNo(memberNo);
+
+        // 2) MEMBER.STATUS = 'N' 으로 변경 (실제 삭제 X)
+        int r1 = memberMapper.deleteMember(memberNo);
+        if (r1 <= 0) {
+            return 0;
+        }
+
+        // 3) 반 정보가 있는 경우에만 MEMBER_COUNT -1
+        int r2 = 1;
+        if (classNo != null && classNo > 0) {
+            r2 = memberMapper.decreaseClassMemberCount(classNo);
+            if (r2 <= 0) {
+                return 0;
+            }
+        }
+
+        return 1;
     }
+
     @Override
     public int updatePassword(long memberNo, String newPassword, String token) {
         int result = 0;
