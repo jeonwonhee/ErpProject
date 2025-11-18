@@ -1,8 +1,8 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!DOCTYPE html>
 <html lang="ko">
-<head>
+    <head>
         <meta charset="UTF-8">
         <title>KH EduERP | 강의 만족도 상세</title>
         <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -18,6 +18,7 @@
         <jsp:include page="/WEB-INF/views/common/sidBar.jsp" />
 
         <main class="main">
+            <c:set var="pageName" value="강의별 만족도" scope="request"></c:set>
             <header class="topbar">
                 <div class="path">강사 > 만족도 결과 > JAVA/SPRING > 강사명 <b>강사 페이지</b></div>
                 <div class="user-info">

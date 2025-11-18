@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!DOCTYPE html>
 <html lang="ko">
@@ -9,7 +10,6 @@
         <link rel="stylesheet" href="styles\style.css">
         <link rel="stylesheet" href="styles\lecture.css">
 
-        <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
     </head>
 
     <body class="lecture lecture-feedback">
@@ -17,6 +17,7 @@
         <jsp:include page="/WEB-INF/views/common/sidBar.jsp" />
 
         <main class="main">
+            <c:set var="pageName" value="강의별 만족도" scope="request"></c:set>
             <header class="topbar">
                 <div class="path">강사 > 만족도 결과 <b>강사 페이지</b></div>
                 <div class="user-info">

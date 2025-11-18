@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!DOCTYPE html>
 <html lang="ko">
@@ -5,22 +6,23 @@
         <meta charset="UTF-8">
         <title>KH EduERP | 강사 일정관리</title>
 
-        <!-- ✅ 통합된 스타일 -->
+        <!-- 통합된 스타일 -->
         <link rel="stylesheet" href="/styles/default.css">
         <link rel="stylesheet" href="/styles/style.css">
         <link rel="stylesheet" href="/styles/lecture.css">
 
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 
-        <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
     </head>
 
     <body class="lecture calender">
+        <c:set var="pageName" value="일정관리" scope="request"></c:set>
         <!-- ===== 사이드바 ===== -->
         <jsp:include page="/WEB-INF/views/common/sidBar.jsp" />
 
         <!-- ===== 메인 영역 ===== -->
         <main class="main">
+            <c:set var="pageName" value="일정관리" scope="request"></c:set>
             <!-- 상단바 -->
             <header class="topbar">
                 <div class="path">강사 &gt; 일정관리 <b>강사 페이지</b></div>
