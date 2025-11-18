@@ -93,7 +93,7 @@
 
                     <div class="btn-area">
                         <button type="button" class="btn-save"
-                        onclick="alert('시험 성적이 저장되었습니다.');">
+                        onclick="alert('시험 성적이 저장되었습니다.');this.form.submit();">
                             저장
                         </button>
                     </div>
