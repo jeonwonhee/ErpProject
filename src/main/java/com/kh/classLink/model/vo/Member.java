@@ -26,6 +26,7 @@ public class Member {
     private LocalDate birthDate;
     private int vacCnt;
 
+    private Integer attendRate;
     private Integer classNo;
     private String className;
 
