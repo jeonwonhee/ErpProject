@@ -124,4 +124,11 @@ public interface AttendMapper {
      */
     int insertAttendFile(AttendUpdatefile attendUpdateFile);
 
+    /**
+     * 알람 발행용 멤버 넘버 조회
+     * @param attendUpdateNo
+     * @return
+     */
+    int selectAttendOrderMemberNo(int attendUpdateNo);
+
 }

@@ -252,7 +252,17 @@ public class AttendServiceImpl implements AttendService {
         param.put("refusal", refusal);
         param.put("approverNo", approverNo);
 
-        return attendMapper.updateAttendCorrect(param);
+        int result = attendMapper.updateAttendCorrect(param);
+        int orderMmemberNo = attendMapper.selectAttendOrderMemberNo(attendUpdateNo);
+        if (result > 0) {
+            Notification no = new Notification();
+            no.setNotificationTitle("출석 정정 신청 처리");
+            no.setNotificationContents("출석 정정 처리가 완료되었습니다.");
+            no.setMemberNo(orderMmemberNo);
+            result = notificationMapper.insertNoti(no);
+        }
+
+        return result;
     }
 
     /**

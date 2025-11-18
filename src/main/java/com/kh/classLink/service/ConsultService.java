@@ -15,7 +15,7 @@ public interface ConsultService {
 
     ConsultApplication getConsultApplicationById(int consultNo);
 
-    int updateConsultStatus(int consultAppNo, String status, String refusal);
+    int updateConsultStatus(int consultAppNo, String status, String refusal,int memberNo);
 
     int insertConsultation(int consultAppNo, String consultContent);
     int updateConsultInsertStatus(int consultAppNo);

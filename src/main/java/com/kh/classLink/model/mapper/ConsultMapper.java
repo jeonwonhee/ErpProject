@@ -18,8 +18,15 @@ public interface ConsultMapper {
     List<ConsultApplication> selectAllConsultApplications();
     int selectBoardListCount();
     ConsultApplication selectConsultApplicationById(int consultNo);
-    int updateConsultStatus(int consultAppNo, String status, String refusal);
+    int updateConsultStatus(int consultAppNo, String status, String refusal, int memberNo);
     int insertConsultation(Map<String, Object> param);
     int updateConsultInsertStatus(int consultAppNo);
+
+    /**
+     * 알람 발행용 상담신청자
+     * @param consultAppNo
+     * @return
+     */
+    int selectConsultMemberNo(int consultAppNo);
 
 }

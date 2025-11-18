@@ -51,7 +51,6 @@
         COUNSEL_APPLICATION_NO,
         COUNSEL_CONTENT,
         COUNSEL_DATE,
-        COUNSELOR_NO,
         COUNSEL_MEMBER_NO,
         STATUS
         )
@@ -59,7 +58,6 @@
         SEQ_CANO.NEXTVAL,
         #{consultAppContent},
         #{consultTime},
-        #{consultMemberNo},
         #{consultAppMemberNo},
         #{status}
         )
@@ -97,7 +95,8 @@
     <update id="updateConsultStatus">
         UPDATE COUNSEL_APPLICATION
         SET STATUS = #{status},
-        REFUSAL = #{refusal}
+        REFUSAL = #{refusal},
+        COUNSELOR_NO = #{memberNo}
         WHERE COUNSEL_APPLICATION_NO = #{consultAppNo}
     </update>
 
@@ -121,5 +120,11 @@
     </insert>
 
 
+    <!--알람 발행용 상담 신청자-->
+    <select id="selectConsultMemberNo" parameterType="int" resultType="int">
+        SELECT COUNSEL_MEMBER_NO
+        FROM COUNSEL_APPLICATION
+        WHERE COUNSEL_APPLICATION_NO = #{consultAppNo}
+    </select>
 
 </mapper>

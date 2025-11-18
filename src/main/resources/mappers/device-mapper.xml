@@ -288,7 +288,7 @@
         WHERE dra.RENT_ATT_NO = #{deviceRentAttId}
     </update>
     <select id="getDeviceRentAttById" resultMap="getDeviceRentAttById">
-        SELECT ATTEND_COUNT, DEVICE_ID
+        SELECT ATTEND_COUNT, DEVICE_ID, MEMBER_NO
         FROM DEVICE_RENT_ATT
         WHERE RENT_ATT_NO = #{deviceRentAttId}
     </select>
