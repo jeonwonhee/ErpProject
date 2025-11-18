@@ -59,6 +59,13 @@
         });
     });
 </script>
+<!--  로그아웃/회원가입/탈퇴/비밀번호 변경 등 알림 메시지 표시 -->
+<c:if test="${not empty alertMsg}">
+    <script>
+        alert("${alertMsg}");
+    </script>
+    <c:remove var="alertMsg"/>
+</c:if>
 
 </body>
 </html>

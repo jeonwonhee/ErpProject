@@ -513,7 +513,7 @@ button {
     border-radius: 999px;
     cursor: pointer;
     transition: 0.2s;
-    display: flex;              /* ✅ 플렉스박스로 변경 */
+    display: flex;              /*  플렉스박스로 변경 */
     justify-content: center;    /* 가로 중앙 */
     align-items: center;        /* 세로 중앙 */
     font-size: 16px;            /* 필요시 조정 */
@@ -529,4 +529,21 @@ line-height: 1;
   background: #6b5bff;
   color: #fff;
   border-color: #6b5bff;
+}
+
+/* ===== 로그아웃바 ===== */
+
+.logout-btn {
+    background: #ff6b6b;
+    color: white;
+    font-size: 13px;
+    padding: 6px 14px;
+    border-radius: 6px;
+    border: none;
+    margin-left: 12px;
+    cursor: pointer;
+}
+
+.logout-btn:hover {
+    background: #e05252;
 }

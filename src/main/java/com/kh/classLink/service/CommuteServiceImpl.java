@@ -1,6 +1,7 @@
 package com.kh.classLink.service;
 
 import com.kh.classLink.model.mapper.CommuteMapper;
+import com.kh.classLink.model.vo.Commute;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalTime;
@@ -31,5 +32,32 @@ public class CommuteServiceImpl implements CommuteService {
         String status = now.isAfter(standardTime) ? "LATE" : "IN";
 
         commuteMapper.insertCommuteIn(memberNo, status);
+    }
+
+    //  로그아웃 시 퇴근 처리
+    @Override
+    public void processLogoutCommute(int memberNo) {
+        System.out.println("=== 🚩 LOGOUT COMMUTE START ===");
+        System.out.println("memberNo = " + memberNo);
+
+        Commute latest = commuteMapper.selectLatestCommute(memberNo);
+
+        System.out.println("조회 결과 = " + latest);
+
+        if (latest != null) {
+            System.out.println("commuteNo to update = " + latest.getCommuteNo());
+        }
+
+        // 기존 처리
+        if (latest != null &&
+                ("IN".equals(latest.getCommuteStatus()) || "LATE".equals(latest.getCommuteStatus()))) {
+
+            int result = commuteMapper.updateCommuteOut(latest.getCommuteNo());
+            System.out.println("업데이트 결과 = " + result);
+        } else {
+            System.out.println("⚠ 퇴근 업데이트 불가 (조건 불일치 또는 조회 실패)");
+        }
+
+        System.out.println("=== 🚩 LOGOUT COMMUTE END ===");
     }
 }
