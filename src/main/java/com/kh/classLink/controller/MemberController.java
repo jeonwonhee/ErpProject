@@ -225,12 +225,12 @@ public class MemberController {
 
     //비밀번호 변경
    @GetMapping("/changePassword.co")
-   public String changePasswordPage(HttpServletRequest request, Model model) {
+   public String changePasswordPage(HttpServletRequest request, Model model,HttpSession session) {
         String token = request.getParameter("token");
         if (token != null && !token.equals("")) {
             int result = memberService.selectTokenInfo(token);
             if (result == 0) {
-                model.addAttribute("errMeg","토큰이 만료되었습니다. 재 발급 바랍니다.");
+                session.setAttribute("alertMsg","토큰이 만료되었습니다. 재 발급 바랍니다.");
                 return "redirect:/login.co";
             }
         }

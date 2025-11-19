@@ -168,12 +168,9 @@
             M.PHONE,
             NVL(
                 ROUND(
-                    (SUM(CASE
-                        WHEN C.COMMUTE_STATUS IN ('출근', '퇴근', '지각', '반차') THEN 1
-                        ELSE 0
-                        END) / NULLIF(COUNT(C.COMMUTE_NO), 0)) * 100,
-                    2),
-                0) AS COMMUTE_RATE,
+                (SUM(CASE WHEN C.COMMUTE_STATUS IN ('IN', 'LATE', 'HALF') THEN 1 ELSE 0 END)    / COUNT(*)) * 100,
+                1), 0
+            ) AS COMMUTE_RATE,
             CASE WHEN M.ROLE = 'ADMIN' THEN '관리자' ELSE '강사' END AS ROLE,
             CASE WHEN M.STATUS = 'Y' THEN '재직' ELSE '퇴사' END AS STATUS,
             TO_CHAR(SYSDATE, 'YYYY-MM') AS COMMUTE_MONTH
