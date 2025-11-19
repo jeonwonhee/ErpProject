@@ -14,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 
+import java.io.File;
 import java.sql.Date;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
@@ -274,6 +275,11 @@ public class AttendServiceImpl implements AttendService {
     @Transactional
     public int insertAttendOrder(AttendUpdate attendUpdate, MultipartFile upfile) {
         String filePath ="C:/workspace/ErpProject/src/main/webapp/resources/attendFile/";
+
+        File folder = new File(filePath);
+        if (!folder.exists()) {
+            folder.mkdirs();
+        }
         System.out.println("::::::::::::::::"+attendUpdate);
         AttendUpdate orderAttendInfo = attendMapper.selectOrderAttendInfo(attendUpdate);
         if (orderAttendInfo == null) {

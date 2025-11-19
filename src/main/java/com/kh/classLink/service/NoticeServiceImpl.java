@@ -42,6 +42,7 @@ public class NoticeServiceImpl implements NoticeService {
         Notice notice = new Notice();
         notice.setMemberNo(memberNo);
         notice.setRole(role);
+        notice.setNoticeType(noticeType);
         int noticeCount = noticeMapper.selectNoticeCnt(notice);
         System.out.println(noticeCount);
         PageInfo pi = new PageInfo(currentPage, noticeCount, 5, 5);
@@ -80,6 +81,12 @@ public class NoticeServiceImpl implements NoticeService {
         String noticeType = notice.getNoticeType();
         System.out.println("noticeType:"+noticeType);
         String filePath ="C:/workspace/ErpProject/src/main/webapp/resources/noticeFile/";
+
+        File folder = new File(filePath);
+        if (!folder.exists()) {
+            folder.mkdirs();
+        }
+
         if (noticeType.equals("CLASS")) {
             String savedFileName = null;
             //UI에서 선택한 반의 갯수 만큼 반복

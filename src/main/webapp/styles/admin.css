@@ -696,3 +696,12 @@ body.admin.admin-calendar-manage {
     display: flex;
     justify-content: space-between;
 }
+
+.admin-class-enroll .class-name-div {
+    display: flex;
+    justify-content: space-between;
+}
+
+.admin-class-enroll .class-name-input {
+    width: 90%;
+}
