@@ -219,6 +219,7 @@
                 LEFT JOIN LECTURE_DATE_APPROVAL A
                     ON L.LECTURE_DATE_NO = A.LECTURE_DATE_NO
                 WHERE CLASS_LECTURE_NO = #{classLectureNo}
+                AND L.END_DATE >= TRUNC(SYSDATE)
                 ORDER BY START_DATE ASC
             ) T
             WHERE ROWNUM &lt;= #{endRow}

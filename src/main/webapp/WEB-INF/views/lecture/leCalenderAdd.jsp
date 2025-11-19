@@ -49,11 +49,11 @@
                         <div class="form-row">
                             <div class="form-group">
                                 <label>제목</label>
-                                <input type="text" name="title" class="form-input" placeholder="제목을 입력하세요">
+                                <input type="text" name="title" class="form-input" placeholder="제목을 입력하세요" required>
                             </div>
                             <div class="form-group">
                                 <label>일정유형</label>
-                                <select name="dateType" class="form-select">
+                                <select name="dateType" class="form-select" required>
                                     <option value="" disabled selected hidden>수업일정 / 휴강 중 선택</option>
                                     <option value="CLASS">수업</option>
                                     <option value="OFF">휴강</option>
@@ -64,11 +64,11 @@
                         <div class="form-row">
                             <div class="form-group">
                                 <label>희망 날짜 시작일</label>
-                                <input type="date" name="startDate" class="form-input">
+                                <input type="date" name="startDate" class="form-input" required>
                             </div>
                             <div class="form-group">
                                 <label>희망 날짜 종료일</label>
-                                <input type="date" name="endDate" class="form-input">
+                                <input type="date" name="endDate" class="form-input" required>
                             </div>
                         </div>
 
@@ -82,11 +82,5 @@
                 </form>
             </section>
         </main>
-        <script>
-            $(window).load(function() {
-              console.log("페이지 전체 로드 후 실행");
-            });
-
-        </script>
     </body>
 </html>
