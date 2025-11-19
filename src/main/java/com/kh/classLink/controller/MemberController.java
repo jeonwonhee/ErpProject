@@ -58,6 +58,15 @@ public class MemberController {
                               HttpSession session,
                               ModelAndView mv) {
 
+        // ⭐ 0. 빈 값 체크 추가!
+        if (memberId == null || memberId.trim().isEmpty() ||
+                memberPassword == null || memberPassword.trim().isEmpty()) {
+
+            mv.addObject("errorMsg", "아이디와 비밀번호를 입력해주세요.");
+            mv.setViewName("common/login");
+            return mv;
+        }
+
         // 1. ID와 역할로 회원 조회
 
         Member loginMember = memberService.getMemberByIdAndRole(memberId, role);
@@ -70,8 +79,8 @@ public class MemberController {
 
         // 2. 비밀번호 검증
 
-            if (!bCryptPasswordEncoder.matches(memberPassword, loginMember.getMemberPassword())) {
-            mv.addObject("errorMsg", "비밀번호를 확인해 주세요.");
+        if (!bCryptPasswordEncoder.matches(memberPassword, loginMember.getMemberPassword())) {
+            mv.addObject("errorMsg", "비밀번호가 일치하지 않습니다.");
             mv.setViewName("common/login");
             return mv;
         }
