@@ -36,13 +36,13 @@
                             <!-- 제목 -->
                             <div class="form-group">
                                 <label for="title">제목</label>
-                                <input type="text" id="title" name="questionTitle" maxlength="50" placeholder="제목을 입력하세요." />
+                                <input type="text" id="title" name="questionTitle" maxlength="50" placeholder="제목을 입력하세요." required />
                             </div>
 
                             <!-- 내용 -->
                             <div class="form-group">
                                 <label for="content">내용</label>
-                                <textarea id="content" name="questionContent" maxlength="150" placeholder="문의 내용을 남겨주세요."></textarea>
+                                <textarea id="content" name="questionContent" maxlength="150" placeholder="문의 내용을 남겨주세요." required></textarea>
                             </div>
 
                             <!-- 버튼 -->

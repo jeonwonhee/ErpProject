@@ -51,6 +51,7 @@
     <resultMap id="getDeviceRentAttById" type="DeviceRentAtt">
         <result property="attendAmount" column="ATTEND_COUNT"/>
         <result property="deviceId" column="DEVICE_ID"/>
+        <result property="memberNo" column="MEMBER_NO"/>
     </resultMap>
 
     <resultMap id="getDeviceById" type="Device">

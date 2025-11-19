@@ -111,4 +111,20 @@ public class ClassController {
             return "redirect:/adminClassManage.co";
         }
     }
+
+    /**
+     * 반 이름 중복 체크
+     * @param className
+     * @param model
+     * @return
+     */
+    @GetMapping("/classNameDupiCheck.co")
+    @ResponseBody
+    public String classNameDupiCheck(@RequestParam(value = "className") String className,Model model) {
+
+        int result = classService.classNameDupiCheck(className);
+
+        return result > 0 ? "NNNNN" : "NNNNY";
+
+    }
 }

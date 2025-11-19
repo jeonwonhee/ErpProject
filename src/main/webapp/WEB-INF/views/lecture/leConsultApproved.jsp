@@ -1,5 +1,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html lang="ko">
     <head>
@@ -39,7 +40,7 @@
 
                         <div class="form-group">
                             <label>상담 내용</label>
-                            <input type="text" class="form-input" name="content">
+                            <input type="text" class="form-input" name="content" required>
                         </div>
 
                         <button type="submit" class="btn-submit">등록하기</button>

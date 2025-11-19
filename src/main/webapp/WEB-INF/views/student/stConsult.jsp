@@ -37,17 +37,17 @@
                         <div class="form-row">
                             <div class="form-col">
                                 <label>희망 날짜</label>
-                                <input type="date" name="date" />
+                                <input type="date" name="date" required min="2025-01-01" max="2099-12-31"/>
                             </div>
                             <div class="form-col">
                                 <label>희망 시간</label>
-                                <input type="time" name="time" />
+                                <input type="time" name="time" required min="09:00" max="18:00"/>
                             </div>
                         </div>
 
                         <div class="form-group">
                             <label>상세 내용</label>
-                            <textarea name="content" placeholder="상담 요청 내용을 입력하세요"></textarea>
+                            <textarea name="content" placeholder="상담 요청 내용을 입력하세요"  maxlength="150"></textarea>
                         </div>
 
                         <div class="form-submit">

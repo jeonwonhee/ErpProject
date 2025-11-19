@@ -26,7 +26,7 @@
                     <form enctype="multipart/form-data" action="${pageContext.request.contextPath}/insertAttendOrder.at" method="post">
                         <div class="form-group">
                             <label>정정 사유</label>
-                            <textarea placeholder="사유를 입력하세요." name="attendUpdateContent"></textarea>
+                            <textarea placeholder="사유를 입력하세요." maxlength="150" name="attendUpdateContent"></textarea>
                         </div>
 
                         <div class="form-row">

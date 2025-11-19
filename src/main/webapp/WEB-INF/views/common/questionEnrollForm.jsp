@@ -42,7 +42,7 @@
                       <input type="hidden" value="${question.questionNo}" name="questionNo">
                       <div class="form-group">
                           <label for="content">답변 내용</label>
-                          <textarea id="content" name="answer" placeholder="내용을 입력하세요"></textarea>
+                          <textarea id="content" name="answer" maxlength="150" required placeholder="내용을 입력하세요"></textarea>
                       </div>
 
                       <!-- 하단 -->

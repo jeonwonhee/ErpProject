@@ -55,4 +55,11 @@ public interface ClassService {
      */
     int updateClass(Class classInfo, ClassLecture classLecture);
 
+    /**
+     * 반 이름 중복 체크
+     * @param className
+     * @return
+     */
+    int classNameDupiCheck(String className);
+
 }

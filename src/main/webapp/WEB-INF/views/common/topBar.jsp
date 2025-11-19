@@ -27,10 +27,12 @@
                 ? '강사'
                 : '관리자'}"/>
 
-        ${roleName} › ${pageName} <b>강사 페이지</b></div>
-    <div class="user-info"><a class="noti-btn" onclick="notiPage();">알림(<span class="noti-count"> </span>)</a><a onclick="location.href='${pageContext.request.contextPath}/stMyPage.co'">김강사(강사)</a></div>
+        ${roleName} › ${pageName} <b>${roleName} 페이지</b></div>
+        <div class = "member-role-right">
+        <div class="user-info"><a class="noti-btn" onclick="notiPage();">알림(<span class="noti-count"> </span>)</a><a onclick="location.href='${pageContext.request.contextPath}/stMyPage.co'">${loginMember.memberName}(${roleName})</a></div>
 
-    <button type="button" class="logout-btn" onclick="logoutFn()">로그아웃</button>
+            <button type="button" class="logout-btn" onclick="logoutFn()">로그아웃</button>
+        </div>
 </header>
 <aside class="noti-page" style="display: none" id="notiPage">
     <div>

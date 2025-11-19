@@ -71,7 +71,7 @@
                                 <td>${lecList.memberName}</td>
                                 <td class="start-date">${lecList.planStartDate}</td>
                                 <td class="end-date">${lecList.planEndDate}</td>
-                                <td><input type="text" name="classDesc" value="${lecList.classDesc}"></input></td>
+                                <td><input type="text" name="classDesc" required value="${lecList.classDesc}"></input></td>
                             </tr>
                         </c:forEach>
                     </tbody>

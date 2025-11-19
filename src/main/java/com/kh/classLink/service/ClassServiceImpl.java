@@ -75,6 +75,12 @@ public class ClassServiceImpl implements ClassService {
         return map;
     }
 
+    /**
+     * 반정보 등록
+     * @param classInfo
+     * @param classLecture
+     * @return
+     */
     @Override
     public int insertClass(Class classInfo, ClassLecture classLecture) {
         int result = 0;
@@ -83,17 +89,21 @@ public class ClassServiceImpl implements ClassService {
             classLecture.setClassNo(classInfo.getClassNo());
             int lectureNo = 0;
             String classDesc = "";
-            String [] lectureNolist = classLecture.getLectureNoList().split(",");
-            String [] lectureDescList = classLecture.getClassDesc().split(",");
-            for (int i=0;i<lectureNolist.length;i++) {
-                lectureNo = Integer.parseInt(lectureNolist[i]);
-                classDesc =  lectureDescList[i];
-                classLecture.setLectureNo(lectureNo);
-                classLecture.setClassDesc(classDesc);
-                classLecture.setPlanStartDate(classInfo.getStartDate());
-                classLecture.setPlanEndDate(classInfo.getEndDate());
-                result += classMapper.insertClassLecture(classLecture);
+            System.out.println(classLecture.getLectureNoList());
+            if (classLecture.getLectureNoList() != null) {
+                String [] lectureNolist = classLecture.getLectureNoList().split(",");
+                String [] lectureDescList = classLecture.getClassDesc().split(",");
+                for (int i=0;i<lectureNolist.length;i++) {
+                    lectureNo = Integer.parseInt(lectureNolist[i]);
+                    classDesc =  lectureDescList[i];
+                    classLecture.setLectureNo(lectureNo);
+                    classLecture.setClassDesc(classDesc);
+                    classLecture.setPlanStartDate(classInfo.getStartDate());
+                    classLecture.setPlanEndDate(classInfo.getEndDate());
+                    result += classMapper.insertClassLecture(classLecture);
+                }
             }
+
 
         }
 
@@ -141,19 +151,33 @@ public class ClassServiceImpl implements ClassService {
             classLecture.setClassNo(classInfo.getClassNo());
             int lectureNo = 0;
             String classDesc = "";
-            String [] lectureNolist = classLecture.getLectureNoList().split(",");
-            String [] lectureDescList = classLecture.getClassDesc().split(",");
-            for (int i=0;i<lectureNolist.length;i++) {
-                lectureNo = Integer.parseInt(lectureNolist[i]);
-                classDesc =  lectureDescList[i];
-                classLecture.setLectureNo(lectureNo);
-                classLecture.setClassDesc(classDesc);
-                classLecture.setPlanStartDate(classInfo.getStartDate());
-                classLecture.setPlanEndDate(classInfo.getEndDate());
-                result += classMapper.insertClassLecture(classLecture);
+            if (classLecture.getLectureNoList() != null) {
+                String [] lectureNolist = classLecture.getLectureNoList().split(",");
+                String [] lectureDescList = classLecture.getClassDesc().split(",");
+                for (int i=0;i<lectureNolist.length;i++) {
+                    lectureNo = Integer.parseInt(lectureNolist[i]);
+                    classDesc =  lectureDescList[i];
+                    classLecture.setLectureNo(lectureNo);
+                    classLecture.setClassDesc(classDesc);
+                    classLecture.setPlanStartDate(classInfo.getStartDate());
+                    classLecture.setPlanEndDate(classInfo.getEndDate());
+                    result += classMapper.insertClassLecture(classLecture);
+                }
             }
 
+
         }
+        return result;
+    }
+
+    /**
+     * 반 이름 중복 체크
+     * @param className
+     * @return
+     */
+    @Override
+    public int classNameDupiCheck(String className) {
+        int result = classMapper.classNameDupiCheck(className);
         return result;
     }
 }

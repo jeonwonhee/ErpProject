@@ -1,12 +1,10 @@
 package com.kh.classLink.controller;
 
-import com.kh.classLink.model.vo.Attend;
-import com.kh.classLink.model.vo.AttendUpdate;
+import com.kh.classLink.model.vo.*;
 import com.kh.classLink.model.vo.Class;
 import com.kh.classLink.model.vo.Member;
-import com.kh.classLink.model.vo.Member;
-import com.kh.classLink.model.vo.PageInfo;
 import com.kh.classLink.service.AttendService;
+import com.kh.classLink.service.StudentDashboardService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -25,11 +23,14 @@ import java.util.Map;
 public class AttendanceController {
 
     private AttendService attendService;
+    private StudentDashboardService studentDashboardService;
 
-    public AttendanceController(AttendService attendService) {
+    public AttendanceController(AttendService attendService,
+                                StudentDashboardService studentDashboardService) {
+
         this.attendService = attendService;
+        this.studentDashboardService = studentDashboardService;
     }
-
 
     /**
      * 관리자 출결현황
@@ -71,6 +72,18 @@ public class AttendanceController {
 
         // 3) 페이징된 학생 목록 조회
         List<Member> studentList = attendService.findAllStudentsForAdmin(pi);
+
+        for (Member m : studentList) {
+
+            AttendanceStats stats = studentDashboardService.getMonthlyAttendance(m.getMemberNo());
+
+            int rate = 0;
+            if (stats != null) {
+                rate = stats.getRate();   // 출석률 %
+            }
+
+            m.setAttendRate(rate);  // ⭐ 여기서 Member에 저장!
+        }
 
         // JSP로 값 전달
         model.addAttribute("studentList", studentList);
@@ -265,7 +278,7 @@ public class AttendanceController {
         if (result > 0) {
             session.setAttribute("alertMsg", "정정 신청에 성공하였습니다.");
         } else {
-            model.addAttribute("errorMsg", "해당 날짜에 출석 정보가 없습니다. 확인 바랍니다.");
+            session.setAttribute("alertMsg", "해당 날짜에 출석 정보가 없습니다. 확인 바랍니다.");
         }
         return "redirect:/stAtt.co";
     }
