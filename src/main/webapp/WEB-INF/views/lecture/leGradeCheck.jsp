@@ -115,8 +115,7 @@
                             </table>
 
                             <div class="btn-area">
-                                <button type="button" class="btn-save"
-                                        onclick="alert('시험 성적이 저장되었습니다.'); this.form.submit();">
+                                <button type="submit" class="btn-save">
                                     저장
                                 </button>
                             </div>
@@ -210,8 +209,7 @@
                                     <input type="hidden" name="classSelect" value="${selectedClassNo}" />
                                     <input type="hidden" name="keyword" value="${keyword}" />
 
-                                    <button type="button" class="btn-save"
-                                            onclick="alert('시험 성적이 수정되었습니다.'); this.form.submit();">
+                                    <button type="submit" class="btn-save">
                                         저장
                                     </button>
                                 </td>
@@ -249,6 +247,7 @@
                 document.getElementById("tab-" + target).style.display = "block";
             });
         });
+
 
         // 성적 입력 탭: 시험 이름 입력해야 학생 리스트 보이기
         const testNameInput = document.getElementById("inputTestName");

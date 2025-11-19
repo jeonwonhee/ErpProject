@@ -56,7 +56,7 @@ public class AttendanceController {
      */
     @GetMapping("/adminStudentList.co")
     public String adminStudentList(@RequestParam(value = "currentPage", defaultValue = "1") int currentPage,
-                                   HttpSession session,Model model){
+                                   HttpSession session, Model model){
 
         // 로그인 체크
         if (session.getAttribute("loginMember") == null) {
@@ -67,7 +67,7 @@ public class AttendanceController {
         // 1) 전체 학생 수 조회
         int listCount = attendService.getStudentCount();
 
-        // 2) PageInfo 생성 (한 페이지 10명, 페이징바 5개 예시)
+        // 2) PageInfo 생성 (한 페이지 5명, 페이징바 5개 예시)
         PageInfo pi = new PageInfo(currentPage, listCount, 5, 5);
 
         // 3) 페이징된 학생 목록 조회
@@ -91,6 +91,7 @@ public class AttendanceController {
 
         return "admin/adminStudentList";
     }
+
 
     /**
      * 관리자 직원관리

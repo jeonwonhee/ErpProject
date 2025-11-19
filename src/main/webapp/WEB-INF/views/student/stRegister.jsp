@@ -192,6 +192,7 @@
                 alert("중복확인 중 오류가 발생했습니다.");
                 isIdChecked = false;
                 if (submitBtn) submitBtn.disabled = true;
+
             }
         });
     }

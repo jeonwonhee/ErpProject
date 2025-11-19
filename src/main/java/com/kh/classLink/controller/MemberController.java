@@ -61,8 +61,6 @@ public class MemberController {
         // ⭐ 0. 빈 값 체크 추가!
         if (memberId == null || memberId.trim().isEmpty() ||
                 memberPassword == null || memberPassword.trim().isEmpty()) {
-
-            mv.addObject("errorMsg", "아이디와 비밀번호를 입력해주세요.");
             mv.setViewName("common/login");
             return mv;
         }
