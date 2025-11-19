@@ -116,19 +116,18 @@
             c.CLASS_NAME  AS className,
             m.PHONE       AS phone,
 
-            /* 🔥 출석률 계산 */
-            CASE
-            WHEN COUNT(a.ATTEND_NO) = 0 THEN NULL
-            ELSE ROUND(
+            /* 🔥 출석률 (없으면 0%) */
+            NVL(
+            ROUND(
             SUM(
             CASE
             WHEN a.ATTEND_STATUS = '출석' THEN 1
             ELSE 0
             END
             ) * 100.0
-            / COUNT(a.ATTEND_NO)
-            )
-            END AS attendRate,
+            / CASE WHEN COUNT(a.ATTEND_NO) = 0 THEN 1 ELSE COUNT(a.ATTEND_NO) END
+            ),
+            0) AS attendRate,
 
             m.STATUS AS status
 
@@ -151,6 +150,7 @@
             ) t
             )
             WHERE rnum BETWEEN #{startRow} AND #{endRow}
+
 
         </select>
 
