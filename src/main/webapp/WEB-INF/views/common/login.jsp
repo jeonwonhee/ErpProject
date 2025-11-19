@@ -16,6 +16,18 @@
 
 <div class="login-card">
 
+    <!-- 로그인 오류 메시지 -->
+    <c:if test="${not empty errorMsg}">
+        <div class="error-box" style="
+            color: #e53935;
+            font-size: 14px;
+            margin-bottom: 15px;
+            text-align: center;
+            font-weight: 600;">
+                ${errorMsg}
+        </div>
+    </c:if>
+
     <!-- 로그인 폼 시작 -->
     <form action="${pageContext.request.contextPath}/login.co" method="post">
         <div class="role-tabs">
