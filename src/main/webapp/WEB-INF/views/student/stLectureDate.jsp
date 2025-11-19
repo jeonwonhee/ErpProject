@@ -39,7 +39,6 @@
 
                     <div class="legend">
                         <span><span class="dot blue"></span>수업</span>
-                        <span><span class="dot orange"></span>시험</span>
                         <span><span class="dot red"></span>휴일/행사</span>
                     </div>
                 </div>
@@ -151,7 +150,6 @@
 
                             if (matchEvent.type === "CLASS") dot.classList.add("blue");
                             else if (matchEvent.type === "OFF") dot.classList.add("red");
-                            else if (matchEvent.type === "EXAM") dot.classList.add("orange");
 
                             var content = document.createElement("div");
                             content.classList.add("event-content");
@@ -214,9 +212,6 @@
                         } else if (matchEvent.type === "OFF") {
                             typeLabel = "휴일/행사";
                             dotColor = "red";
-                        } else if (matchEvent.type === "EXAM") {
-                            typeLabel = "시험";
-                            dotColor = "orange";
                         }
 
                         modalBody.innerHTML =

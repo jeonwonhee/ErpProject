@@ -361,7 +361,6 @@ button {
 }
 
 .calender .dot.blue { background: #4b5dff; }
-.calender .dot.orange { background: #ff9f43; }
 .calender .dot.red { background: #ff6b6b; }
 
 .event-content {
@@ -450,7 +449,6 @@ button {
 }
 
 .calender .event-dot.blue { background: #4b5dff; }
-.calender .event-dot.orange { background: #ff9f43; }
 .calender .event-dot.red { background: #ff6b6b; }
 
 /* ===== 하단 안내문 ===== */
