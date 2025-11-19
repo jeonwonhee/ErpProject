@@ -21,10 +21,7 @@
 
         <main class="main">
             <c:set var="pageName" value="일정관리" scope="request"></c:set>
-            <header class="topbar">
-                <div class="path">강사 › 일정관리 <b>강사 페이지</b></div>
-                <div class="user-info">알림(<span>2</span>) 김강사(강사)</div>
-            </header>
+            <jsp:include page="/WEB-INF/views/common/topBar.jsp" />
 
             <section class="content">
                 <form action="/insertLectureDate.bo" method="post">
@@ -49,7 +46,7 @@
                         <div class="form-row">
                             <div class="form-group">
                                 <label>제목</label>
-                                <input type="text" name="title" class="form-input" placeholder="제목을 입력하세요" required>
+                                <input type="text" name="title" class="form-input" placeholder="제목을 입력하세요" maxlength="50" required>
                             </div>
                             <div class="form-group">
                                 <label>일정유형</label>
@@ -74,7 +71,7 @@
 
                         <div class="form-group">
                             <label>상세 내용</label>
-                            <textarea class="form-textarea" name="content" placeholder="내용을 입력하세요"></textarea>
+                            <textarea class="form-textarea" name="content" placeholder="내용을 입력하세요" maxlength="500"></textarea>
                         </div>
                         <br><br>
                         <button type="submit" class="btn-submit">추가</button>

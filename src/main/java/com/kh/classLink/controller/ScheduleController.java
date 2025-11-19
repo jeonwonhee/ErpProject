@@ -92,10 +92,17 @@ public class ScheduleController {
     public String updateApprovalStatus(@RequestParam("lectureDateNo") int lectureDateNo,
                                        @RequestParam("status") String status,
                                        @RequestParam(value = "reason", required = false) String reason,
+                                       @ModelAttribute LectureDateApproval lectureDateApproval,
                                        HttpSession session) {
 
         Member admin = (Member) session.getAttribute("loginMember");
         int adminNo = admin != null ? admin.getMemberNo() : 0;
+
+        // ===== 반려 내용 검증 =====
+        if (lectureDateApproval.getApprovalReject() != null && lectureDateApproval.getApprovalReject().length() > 200) {
+            session.setAttribute("alertMsg", "반려 내용은 최대 200자까지 입력 가능합니다.");
+            return "redirect:/leCalenderPlus.co";
+        }
 
         lectureDateService.updateApprovalStatus(lectureDateNo, status, reason, adminNo);
 
@@ -127,10 +134,6 @@ public class ScheduleController {
         List<LectureDate> events = lectureDateService.selectLectureDateList(classLectureNo);
         model.addAttribute("events", events);
         model.addAttribute("selectedClassLectureNo", classLectureNo);
-
-        System.out.println("🟦 classLectureNo = " + classLectureNo);
-
-        System.out.println("🟦 events = " + events);
 
         // =====================
         //      페이징 처리
@@ -198,8 +201,8 @@ public class ScheduleController {
         }
 
         // ===== 상세 내용 검증 =====
-        if (lectureDate.getContent() != null && lectureDate.getContent().length() > 2000) {
-            session.setAttribute("alertMsg", "상세 내용은 최대 2000자까지 입력 가능합니다.");
+        if (lectureDate.getContent() != null && lectureDate.getContent().length() > 500) {
+            session.setAttribute("alertMsg", "상세 내용은 최대 500자까지 입력 가능합니다.");
             return "redirect:/leCalenderPlus.co";
         }
 
@@ -208,6 +211,13 @@ public class ScheduleController {
                 lectureDate.getStartDate().isEmpty() || lectureDate.getEndDate().isEmpty()) {
 
             session.setAttribute("alertMsg", "시작일과 종료일을 선택하세요.");
+            return "redirect:/leCalenderPlus.co";
+        }
+
+        // ===== 일정 중복 조회 =====
+        int overlap = lectureDateService.checkDateOverlap(lectureDate);
+        if (overlap > 0) {
+            session.setAttribute("alertMsg", "해당 기간에 이미 일정이 존재합니다.");
             return "redirect:/leCalenderPlus.co";
         }
 

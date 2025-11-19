@@ -264,4 +264,14 @@
         WHERE CS.MEMBER_NO = #{memberNo}
     </select>
 
+    <!-- 일정 중복 조회 -->
+    <select id="checkDateOverlap" parameterType="LectureDate" resultType="int">
+        SELECT COUNT(*)
+        FROM LECTURE_DATE
+        WHERE CLASS_LECTURE_NO = #{classLectureNo}
+        AND (
+        (START_DATE &lt;= #{endDate})
+        AND (END_DATE >= #{startDate})
+        )
+    </select>
 </mapper>

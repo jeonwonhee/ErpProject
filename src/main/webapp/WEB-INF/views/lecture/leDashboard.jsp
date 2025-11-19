@@ -15,10 +15,7 @@
 
         <main class="main">
             <c:set var="pageName" value="대시보드" scope="request"></c:set>
-            <header class="topbar">
-                <div class="path">강사 › 대시보드 <b>강사 페이지</b></div>
-                <div class="user-info">알림(<span>2</span>) ${loginMember.memberName}(강사)</div>
-            </header>
+            <jsp:include page="/WEB-INF/views/common/topBar.jsp" />
 
             <section class="dashboard-grid">
 

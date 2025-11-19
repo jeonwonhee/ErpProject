@@ -18,15 +18,7 @@
 
         <main class="main">
             <c:set var="pageName" value="강의별 만족도" scope="request"></c:set>
-            <header class="topbar">
-                <div class="path">강사 > 만족도 결과 <b>강사 페이지</b></div>
-                <div class="user-info">
-                    <div class="kh-user-info">
-                        <span class="alert">알림(2)</span>
-                        <span class="user">김강사(강사)</span>
-                    </div>
-                </div>
-            </header>
+            <jsp:include page="/WEB-INF/views/common/topBar.jsp" />
 
             <section class="content">
                 <div class="card">
