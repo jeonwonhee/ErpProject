@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.math.BigDecimal;
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -119,7 +120,9 @@ public class SatisficationController {
     }
 
     @GetMapping("/stSatisfication.co")
-    public String stSatisfication(HttpSession session, Model model) {
+    public String stSatisfication(HttpSession session,
+                                  @RequestParam(value = "lec", required = false) Integer selectedLectureNo,
+                                  Model model) {
         //강의 만족도
         Member login = (Member) session.getAttribute("loginMember");
 
@@ -131,34 +134,39 @@ public class SatisficationController {
         int studentNo = satisfactionService.getStudentNo(memberNo);
 
         // 🔹 학생이 들을 수 있는 수업 목록 (CLASS_LECTURE_NO 리스트)
-        List<Integer> lectureList = satisfactionService.getStudentLectureList(studentNo);
+        List<Map<String, Object>> lectureList = satisfactionService.getStudentLectureList(studentNo);
 
-        Map<Integer, String> lectureNameMap = new HashMap<>();
-        Map<Integer, Boolean> submitCheckMap = new HashMap<>();
-        for (int lecNo : lectureList) {
-            String lectureName = satisfactionService.getLectureName(lecNo);
-            boolean submitCheck = satisfactionService.checkSatisfactionSubmit(studentNo, lecNo) > 0;
+        if (lectureList == null || lectureList.isEmpty()) {
+            model.addAttribute("lectureList", List.of());
+            model.addAttribute("message", "현재 수강 중인 강의가 없습니다.");
 
-            lectureNameMap.put(lecNo, lectureName);
-            submitCheckMap.put(lecNo, submitCheck);
+            return "student/stSatisfication";
         }
 
-        int classLectureNo = lectureList.get(0);
+        Map<Integer, Boolean> submitCheckMap = new HashMap<>();
+        for (Map<String, Object> row : lectureList) {
+            int lecNo = ((BigDecimal) row.get("CLASS_LECTURE_NO")).intValue(); // Oracle 숫자는 BigDecimal
+            boolean submitted = satisfactionService.checkSatisfactionSubmit(studentNo, lecNo) > 0;
+            submitCheckMap.put(lecNo, submitted);
+        }
+
+        if (selectedLectureNo == null) { // 변경
+            selectedLectureNo = ((BigDecimal) lectureList.get(0).get("CLASS_LECTURE_NO")).intValue();
+        }
+
+        boolean submitCheck = satisfactionService.checkSatisfactionSubmit(studentNo, selectedLectureNo) > 0;
 
         model.addAttribute("lectureList", lectureList);
-        model.addAttribute("lectureNameMap", lectureNameMap);
         model.addAttribute("submitCheckMap", submitCheckMap);
-        model.addAttribute("selectedLectureNo", classLectureNo);
-
-        boolean submitCheck = satisfactionService.checkSatisfactionSubmit(studentNo, classLectureNo) > 0;
+        model.addAttribute("selectedLectureNo", selectedLectureNo);
         model.addAttribute("submitCheck", submitCheck);
 
         String className = satisfactionService.getClassName(studentNo);
         model.addAttribute("className", className);
 
         // 제출 인원 수/전체 인원 수도 필요하면 추가
-        int submitted = satisfactionService.countSatisfactionClass(classLectureNo);
-        int total = satisfactionService.countTotalSatisfactionClass(classLectureNo);
+        int submitted = satisfactionService.countSatisfactionClass(selectedLectureNo);
+        int total = satisfactionService.countTotalSatisfactionClass(selectedLectureNo);
 
         model.addAttribute("submittedCount", submitted);
         model.addAttribute("totalCount", total);

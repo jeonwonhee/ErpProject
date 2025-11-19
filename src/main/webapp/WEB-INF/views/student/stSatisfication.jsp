@@ -28,11 +28,11 @@
                     <form action="/stSatisfactionInsert.co" method="post">
                         <div class="form-group">
                             <label>• 수업 선택</label>
-                            <select name="classLectureNo">
+                            <select name="classLectureNo" onchange="location.href='/stSatisfication.co?lec=' + this.value;">
                                 <c:forEach var="lec" items="${lectureList}">
-                                    <option value="${lec}"
-                                        ${lec == selectedLectureNo ? 'selected' : ''}>
-                                         ${lectureNameMap[lec]}
+                                    <option value="${lec.CLASS_LECTURE_NO}"
+                                        ${lec.CLASS_LECTURE_NO == selectedLectureNo ? 'selected' : ''}>
+                                        ${lec.LECTURE_NAME}
                                     </option>
                                 </c:forEach>
                             </select>

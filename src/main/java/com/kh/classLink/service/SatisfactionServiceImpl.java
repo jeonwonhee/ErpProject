@@ -32,7 +32,7 @@ public class SatisfactionServiceImpl implements SatisfactionService {
     }
 
     @Override
-    public List<Integer> getStudentLectureList(int studentNo) {
+    public List<Map<String, Object>> getStudentLectureList(int studentNo) {
         return mapper.selectStudentLectureList(studentNo);
     }
 
