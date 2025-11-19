@@ -15,6 +15,7 @@ public interface LectureDateService {
     int updateApprovalStatus(int lectureDateNo, String status, String reason, int approvedBy);
     LectureDateApprovalList selectLectureDateApprovalDetail(int lectureDateNo);
     int getLectureDateListCount();
+    int getLectureDateListCount(String keyword);
     List<LectureDateApprovalList> selectLectureDateListPaged(Map<String, Object> map);
     int getLectureDateCount(int classLectureNo);
     List<LectureDate> selectLectureDatePaged(Map<String, Object> map);

@@ -68,6 +68,11 @@ public class LectureDateServiceImpl implements LectureDateService {
     }
 
     @Override
+    public int getLectureDateListCount(String keyword) {
+        return lectureDateMapper.getLectureDateListCount(keyword);
+    }
+
+    @Override
     public int getLectureDateCount(int classLectureNo) {
         return lectureDateMapper.getLectureDateCount(classLectureNo);
     }

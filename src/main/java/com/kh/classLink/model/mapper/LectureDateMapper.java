@@ -36,6 +36,8 @@ public interface LectureDateMapper {
 
     int getLectureDateListCount();
 
+    int getLectureDateListCount(@Param("keyword") String keyword);
+
     List<LectureDateApprovalList> selectLectureDateListPaged(Map<String, Object> map);
 
     int getLectureDateCount(int classLectureNo);
