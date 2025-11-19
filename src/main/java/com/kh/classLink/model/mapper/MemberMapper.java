@@ -21,6 +21,7 @@ public interface MemberMapper {
     Member getMemberByIdAndRole(@Param("memberId") String memberId,
                                 @Param("role") String role);
 
+
     /**
      * 아이디 중복 체크
      * @param memberId
