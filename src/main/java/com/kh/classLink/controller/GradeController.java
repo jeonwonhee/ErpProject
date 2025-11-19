@@ -35,9 +35,7 @@ public class GradeController {
         this.lectureService = lectureService;
     }
 
-    /** 강사 성적입력 페이지
-     * @return
-     */
+    /** 강사 성적입력/수정 페이지 */
     @GetMapping("/leGrade.co")
     public String lectureGradeCheck(
             @RequestParam(value = "tab", defaultValue = "input") String tab,
@@ -55,8 +53,7 @@ public class GradeController {
         int memberNo = loginMember.getMemberNo();
         int lectureNo = lectureService.getLectureNoByMemberNo(memberNo);
 
-
-        // 강사가 담당하는 반들 (특정 lectureNo 기준)
+        // 강사가 담당하는 반들
         List<Class> selectClassByLecture = classService.selectClassByLecture(memberNo, lectureNo);
         model.addAttribute("classList", selectClassByLecture);
 
@@ -68,6 +65,7 @@ public class GradeController {
         if ("input".equals(tab)) {
 
             if (classNo != null) {
+                // 이 함수는 네가 쓰던 그대로 유지
                 List<Class> studentList = classService.selectStudentsByClassNo(classNo);
                 model.addAttribute("studentList", studentList);
                 model.addAttribute("selectedClassNo", classNo);
@@ -98,6 +96,8 @@ public class GradeController {
 
         return "lecture/leGradeCheck";
     }
+
+
 
     @PostMapping("/leGradeSave.co")
     public String saveGradeCheck(@RequestParam("classNo") int classNo,
