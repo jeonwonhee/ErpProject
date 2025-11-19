@@ -87,6 +87,3 @@ project/
 | 박혜정 | 일정관리자 | --- |
 | 전원희 | 형상관리자 | --- |
 
-| 최지삼 | FE | a1@gmail.com |
-| 최지사 | FE | a1@gmail.com |
-| 최지오 | FE | a1@gmail.com |
