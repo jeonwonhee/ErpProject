@@ -1,5 +1,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html lang="ko">
     <head>
@@ -42,22 +43,24 @@
                             <div class="radio-group">
                                 <label>
                                     <input type="radio" name="status" value="APPROVED"
-                                    ${consultApplication.status == 'APPROVED' ? 'checked' : ''}>
+                                        ${consultApplication.status == 'REJECTED' ? 'disabled' : ''} required>
                                     승인
                                 </label>
                                 <label>
                                     <input type="radio" name="status" value="REJECTED"
-                                    ${consultApplication.status == 'REJECTED' ? 'checked' : ''}>
+                                        ${consultApplication.status == 'REJECTED' ? 'checked disabled' : ''} required>
                                     반려
                                 </label>
                             </div>
                         </div>
                           <div class="form-group">
                               <label>반려 사유</label>
-                              <input type="text" class="form-input" name="refusal" value="${consultApplication.refusal}">
+                              <input type="text" class="form-input" name="refusal" value="${consultApplication.refusal}" required maxlength="200">
                           </div>
 
-                        <button type="submit" class="btn-submit">등록하기</button>
+                        <c:if test="${consultApplication.status != 'REJECTED'}">
+                           <button type="submit" class="btn-submit">등록하기</button>
+                        </c:if>
                     </form>
 
                 </div>

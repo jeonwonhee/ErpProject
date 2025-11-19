@@ -590,9 +590,7 @@ body.admin.admin-calendar-manage {
    =================================== */
 
 /* ===== 카드 컨테이너 ===== */
-.admin-facility-detail .card {
-    width: 640px;
-}
+
 
 .admin-facility-detail .card h2 {
     font-size: 26px;

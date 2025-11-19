@@ -26,7 +26,7 @@
                         <form action="${pageContext.request.contextPath}/device.in" method="post">
                             <div class="form-group">
                                 <label for="deviceType">기자재 종류</label>
-                                <select id="deviceType" name="deviceId">
+                                <select id="deviceType" name="deviceId" required>
                                     <option value="">선택하세요</option>
                                     <c:forEach var="device" items="${device}">
                                         <option value="${device.deviceId}">${device.deviceKind}</option>
@@ -36,7 +36,7 @@
 
                             <div class="form-group">
                                 <label for="deviceCount">신청 수량</label>
-                                <input type="number" id="deviceCount" name="attendAmount" min="0" max="100" placeholder="1" />
+                                <input type="number" id="deviceCount" name="attendAmount" min="0" max="100" placeholder="1" required/>
                             </div>
 
                             <div class="form-group">
