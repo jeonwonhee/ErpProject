@@ -135,8 +135,10 @@
             ON L.LECTURE_DATE_NO = A.LECTURE_DATE_NO
         JOIN CLASS_LECTURE CL
             ON L.CLASS_LECTURE_NO = CL.CLASS_LECTURE_NO
+        JOIN LECTURE LC
+            ON CL.LECTURE_NO = LC.LECTURE_NO
         JOIN MEMBER M
-            ON CL.LECTURE_NO = M.MEMBER_NO
+            ON LC.MEMBER_NO = M.MEMBER_NO
         ORDER BY A.APPROVAL_DATE DESC
     </select>
 
@@ -160,6 +162,11 @@
                     ON CL.LECTURE_NO = LC.LECTURE_NO
                 JOIN MEMBER M
                     ON LC.MEMBER_NO = M.MEMBER_NO
+                <where>
+                    <if test="keyword != null and keyword != ''">
+                        AND M.MEMBER_NAME LIKE '%' || #{keyword} || '%'
+                    </if>
+                </where>
                 ORDER BY L.LECTURE_DATE_NO DESC
             ) A
             WHERE ROWNUM &lt;= #{endRow}
@@ -170,6 +177,24 @@
     <select id="getLectureDateListCount" resultType="int">
         SELECT COUNT(*)
         FROM LECTURE_DATE_APPROVAL
+    </select>
+
+    <select id="getLectureDateListCountKeyword" resultType="int">
+        SELECT COUNT(*)
+        FROM LECTURE_DATE_APPROVAL A
+        JOIN LECTURE_DATE L
+            ON A.LECTURE_DATE_NO = L.LECTURE_DATE_NO
+        JOIN CLASS_LECTURE CL
+            ON L.CLASS_LECTURE_NO = CL.CLASS_LECTURE_NO
+        JOIN LECTURE LC
+            ON CL.LECTURE_NO = LC.LECTURE_NO
+        JOIN MEMBER M
+            ON LC.MEMBER_NO = M.MEMBER_NO
+        <where>
+            <if test="keyword != null and keyword != ''">
+                AND M.MEMBER_NAME LIKE '%' || #{keyword} || '%'
+            </if>
+        </where>
     </select>
 
     <select id="selectLectureDateApprovalDetail" parameterType="int" resultType="LectureDateApprovalList">

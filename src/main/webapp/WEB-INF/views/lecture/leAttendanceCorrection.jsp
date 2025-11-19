@@ -64,7 +64,7 @@
                                     <input type="text" class="form-input rejected-input" name="refusal" readonly>
                                 </c:when>
                                 <c:otherwise>
-                                    <input type="text" class="form-input rejected-input" name="refusal" readonly value="${detail.refusal}">
+                                    <input type="text" class="form-input rejected-input" name="refusal" readonly value="${detail.refusal}" maxlength="500" required>
                                 </c:otherwise>
                             </c:choose>
 
@@ -86,9 +86,11 @@
                if (data.checked) {
                    if (data.value === 'REJECTED') {
                        inputReject.removeAttribute("readonly");
+                       inputReject.required = true;
                    } else {
                        inputReject.value = "";
                        inputReject.readOnly = true;
+                       inputReject.required = false;
                    }
                }
 

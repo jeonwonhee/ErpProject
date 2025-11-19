@@ -44,14 +44,20 @@
                         <div class="form-group">
                             <label>승인 여부</label>
                             <div class="radio-group">
-                                <label><input type="radio" name="status" value="APPROVED" required ${detail.status eq 'APPROVED' ? 'checked="checked"' : ''}>승인</label>
-                                <label><input type="radio" name="status" value="REJECTED" ${detail.status eq 'REJECTED' ? 'checked="checked"' : ''}>반려</label>
+                                <label><input class="input-status" type="radio" name="status" onchange="changeStatus()" value="APPROVED" required ${detail.status eq 'APPROVED' ? 'checked="checked"' : ''}>승인</label>
+                                <label><input class="input-status" type="radio" name="status" onchange="changeStatus()" value="REJECTED" ${detail.status eq 'REJECTED' ? 'checked="checked"' : ''}>반려</label>
                             </div>
                         </div>
 
                         <div class="form-group approval-reject">
                             <label>반려 사유</label>
-                            <input type="text" class="form-input" name="reason" value="${detail.rejectReason}" placeholder="반려 시 사유를 입력하세요" maxlength="500">
+
+                            <c:choose>
+                                <c:when test="${detail.status eq 'REQUESTED'}">
+                                    <input type="text" class="form-input rejected-input" name="refusal" readonly value="${detail.rejectReason}" placeholder="반려 시 사유를 입력하세요" maxlength="500">
+                                </c:when>
+
+                            </c:choose>
                         </div>
 
                         <button class="btn-submit" type="submit">등록하기</button>
@@ -59,5 +65,24 @@
                 </div>
             </section>
         </main>
+        <script>
+            function changeStatus() {
+                let inputStatus = document.querySelectorAll(".input-status");
+                let inputReject = document.querySelector(".rejected-input");
+                inputStatus.forEach(function(data,index) {
+                   console.log(data.checked);
+                   if (data.checked) {
+                       if (data.value === 'REJECTED') {
+                           inputReject.removeAttribute("readonly");
+                           inputReject.required = true;
+                       } else {
+                           inputReject.value = "";
+                           inputReject.readOnly = true;
+                           inputReject.required = false;
+                       }
+                   }
+                });
+            }
+        </script>
     </body>
 </html>

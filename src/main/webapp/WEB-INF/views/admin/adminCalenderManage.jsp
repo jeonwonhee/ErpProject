@@ -28,7 +28,7 @@
                     <!-- 검색창 -->
                     <div class="search-box">
                         <input type="text" placeholder="검색" />
-                        <button class="btn-submit">검색</button>
+                        <button class="btn-submit" onclick="searchApproval()">검색</button>
                     </div>
 
                     <!-- 일정 테이블 -->
@@ -59,13 +59,21 @@
         </main>
 
         <script>
-            function loadApproval(page) {
 
-                fetch('/ajax/adminCalender?page=' + page)
+            /* 검색 버튼 클릭 */
+            function searchApproval() {
+                const keyword = document.querySelector(".search-box input").value;
+                loadApproval(1, keyword);
+            }
+
+            function loadApproval(page, keyword = "") {
+
+                let url = '/ajax/adminCalender?page=' + page + '&keyword=' + encodeURIComponent(keyword);
+
+                fetch(url)
                 .then(resp => resp.json())
                 .then(data => {
 
-                    /* ----- 1) 테이블 렌더링 ----- */
                     const area = document.getElementById("approvalArea");
                     area.innerHTML = "";
 
@@ -106,35 +114,34 @@
                     }
 
 
-                    /* ----- 2) 페이징 렌더링 ----- */
+                    /* -----  페이징 렌더링 ----- */
                     const pageArea = document.getElementById("approvalPage");
                     pageArea.innerHTML = "";
 
-                    // ◀ 이전
                     if (page > 1) {
                         pageArea.innerHTML +=
-                            '<a href="javascript:void(0)" class="page-btn" onclick="loadApproval(' + (page - 1) + ')">◀</a>';
+                            '<a href="javascript:void(0)" class="page-btn" onclick="loadApproval(' + (page - 1) + ', \'' + keyword + '\')">◀</a>';
                     }
 
-                    // 페이지 번호들
                     for (let p = data.startPage; p <= data.endPage; p++) {
                         pageArea.innerHTML +=
                             '<a href="javascript:void(0)" ' +
                             'class="page-btn' + (p === page ? ' active' : '') + '" ' +
-                            'onclick="loadApproval(' + p + ')">' +
+                            'onclick="loadApproval(' + p + ', \'' + keyword + '\')">' +
                             p +
                             '</a>';
                     }
 
-                    // ▶ 다음
                     if (page < data.maxPage) {
                         pageArea.innerHTML +=
-                            '<a href="javascript:void(0)" class="page-btn" onclick="loadApproval(' + (page + 1) + ')">▶</a>';
+                            '<a href="javascript:void(0)" class="page-btn" onclick="loadApproval(' + (page + 1) + ', \'' + keyword + '\')">▶</a>';
                     }
                 });
             }
 
-            loadApproval(1);
+            // 최초 페이지 로딩
+            loadApproval(1, "");
+
         </script>
     </body>
 </html>

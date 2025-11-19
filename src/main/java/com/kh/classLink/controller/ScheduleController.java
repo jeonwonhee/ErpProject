@@ -256,34 +256,31 @@ public class ScheduleController {
     @GetMapping("/ajax/adminCalender")
     @ResponseBody
     public Map<String, Object> ajaxAdminCalender(
-            @RequestParam(defaultValue="1") int page) {
+            @RequestParam(defaultValue="1") int page,
+            @RequestParam(required = false) String keyword) {
 
-        int listCount = lectureDateService.getLectureDateListCount();
+        if (keyword == null) keyword = "";
+
+        int listCount = lectureDateService.getLectureDateListCount(keyword);
+
         int boardLimit = 10; // 한 페이지 당 10개
         int pageLimit = 5;   // 페이징 바 5개
 
-        // ------------------------
-        // ▼ 페이지 계산 (정상)
-        // ------------------------
+        //  페이지 계산
         int maxPage = (int) Math.ceil((double) listCount / boardLimit);
 
         int startPage = ((page - 1) / pageLimit) * pageLimit + 1;
         int endPage = startPage + pageLimit - 1;
         if (endPage > maxPage) endPage = maxPage;
 
-        // ------------------------
-        // ▼ rownum 계산 (Oracle 방식)
-        // ------------------------
-        int startRow = (page - 1) * boardLimit + 1; // 1, 11, 21 ...
-        int endRow = page * boardLimit;             // 10, 20, 30 ...
-
-        System.out.println("📌 maxPage = " + maxPage);
-        System.out.println("📌 listCount = " + listCount);
-        System.out.println("📌 startRow = " + startRow + ", endRow = " + endRow);
+        //  rownum 계산
+        int startRow = (page - 1) * boardLimit + 1;
+        int endRow = page * boardLimit;
 
         Map<String, Object> paramMap = new HashMap<>();
         paramMap.put("startRow", startRow);
         paramMap.put("endRow", endRow);
+        paramMap.put("keyword", keyword);
 
         List<LectureDateApprovalList> approvalList =
                 lectureDateService.selectLectureDateListPaged(paramMap);
