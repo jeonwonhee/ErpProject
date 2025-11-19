@@ -165,6 +165,11 @@ body {
   font-weight: 600;
 }
 
+.member-role-right{
+     display: flex;
+     align-items : center;
+ }
+
 /* ===== Main / Content ===== */
 .main {
   margin-left: 230px;
