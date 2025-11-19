@@ -354,9 +354,6 @@ public class MemberController {
         // DB에서 수강반 목록 조회
         List<Class> classList = classService.selectClassList();
 
-        System.out.println("🚀 classList size = " + classList.size());
-        System.out.println("🚀 classList = " + classList);
-
         model.addAttribute("classList", classList);
 
         return "student/stRegister";
@@ -385,6 +382,7 @@ public class MemberController {
         member.setMemberPassword(pwd);
 
         int result = memberService.insertMember(member);
+
         if(result > 0) {
             session.setAttribute("alertMsg","회원가입에 성공하였습니다.");
             return "redirect:/login.co";

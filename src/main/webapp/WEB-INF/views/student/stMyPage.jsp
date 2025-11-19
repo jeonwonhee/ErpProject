@@ -67,13 +67,13 @@
                         <!-- 전화번호 (수정 가능) -->
                         <div class="form-group">
                             <label>전화번호</label>
-                            <input type="tel" name="phone" value="${loginMember.phone}" placeholder="010-1234-5678" />
+                            <input type="tel" name="phone"  maxlength="11" value="${loginMember.phone}" placeholder="010-1234-5678" />
                         </div>
 
                         <!-- 이메일 (수정 가능) -->
                         <div class="form-group">
                             <label>이메일</label>
-                            <input type="email" name="email" value="${loginMember.email}" placeholder="example@naver.com" />
+                            <input type="email" name="email"  maxlength="30" value="${loginMember.email}" placeholder="example@naver.com" />
                         </div>
 
                         <!-- 수강반 / 강의명 출력 영역 -->
