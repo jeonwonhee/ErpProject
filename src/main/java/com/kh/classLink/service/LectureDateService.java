@@ -22,4 +22,6 @@ public interface LectureDateService {
     List<LectureDate> selectLectureDateListStudent(int memberNo);
     String getClassNameByStudent(int memberNo);
 
+    int checkDateOverlap(LectureDate lectureDate);
+
 }

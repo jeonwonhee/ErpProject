@@ -47,4 +47,7 @@ public interface LectureDateMapper {
 
     // 학생 반 이름 조회
     String selectClassNameByStudent(int memberNo);
+
+    // 일정 중복 조회
+    int checkDateOverlap(LectureDate lectureDate);
 }

@@ -20,13 +20,7 @@
 
             <main class="main">
                 <c:set var="pageName" value="출결정정 처리" scope="request"></c:set>
-                <header class="topbar">
-                    <div class="path">강사 &gt; 출결정정 처리 <b>강사 페이지</b></div>
-                        <div class="user-info">
-                            <span class="alert">알림(2)</span>
-                            <span class="user">김강사(강사)</span>
-                        </div>
-                </header>
+                <jsp:include page="/WEB-INF/views/common/topBar.jsp" />
 
                 <section class="content">
                     <div class="card">

@@ -89,4 +89,10 @@ public class LectureDateServiceImpl implements LectureDateService {
     public String getClassNameByStudent(int memberNo) {
         return lectureDateMapper.selectClassNameByStudent(memberNo);
     }
+
+    // 일정 중복 조회
+    @Override
+    public int checkDateOverlap(LectureDate lectureDate) {
+        return lectureDateMapper.checkDateOverlap(lectureDate);
+    }
 }

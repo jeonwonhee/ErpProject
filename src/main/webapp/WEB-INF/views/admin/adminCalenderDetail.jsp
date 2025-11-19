@@ -44,14 +44,14 @@
                         <div class="form-group">
                             <label>승인 여부</label>
                             <div class="radio-group">
-                                <label><input type="radio" name="status" value="APPROVED" ${detail.status eq 'APPROVED' ? 'checked="checked"' : ''}>승인</label>
+                                <label><input type="radio" name="status" value="APPROVED" required ${detail.status eq 'APPROVED' ? 'checked="checked"' : ''}>승인</label>
                                 <label><input type="radio" name="status" value="REJECTED" ${detail.status eq 'REJECTED' ? 'checked="checked"' : ''}>반려</label>
                             </div>
                         </div>
 
                         <div class="form-group approval-reject">
                             <label>반려 사유</label>
-                            <input type="text" class="form-input" name="reason" value="${detail.rejectReason}" placeholder="반려 시 사유를 입력하세요">
+                            <input type="text" class="form-input" name="reason" value="${detail.rejectReason}" placeholder="반려 시 사유를 입력하세요" maxlength="500">
                         </div>
 
                         <button class="btn-submit" type="submit">등록하기</button>

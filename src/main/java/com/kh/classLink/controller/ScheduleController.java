@@ -8,6 +8,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -90,10 +92,17 @@ public class ScheduleController {
     public String updateApprovalStatus(@RequestParam("lectureDateNo") int lectureDateNo,
                                        @RequestParam("status") String status,
                                        @RequestParam(value = "reason", required = false) String reason,
+                                       @ModelAttribute LectureDateApproval lectureDateApproval,
                                        HttpSession session) {
 
         Member admin = (Member) session.getAttribute("loginMember");
         int adminNo = admin != null ? admin.getMemberNo() : 0;
+
+        // ===== 반려 내용 검증 =====
+        if (lectureDateApproval.getApprovalReject() != null && lectureDateApproval.getApprovalReject().length() > 200) {
+            session.setAttribute("alertMsg", "반려 내용은 최대 200자까지 입력 가능합니다.");
+            return "redirect:/leCalenderPlus.co";
+        }
 
         lectureDateService.updateApprovalStatus(lectureDateNo, status, reason, adminNo);
 
@@ -125,10 +134,6 @@ public class ScheduleController {
         List<LectureDate> events = lectureDateService.selectLectureDateList(classLectureNo);
         model.addAttribute("events", events);
         model.addAttribute("selectedClassLectureNo", classLectureNo);
-
-        System.out.println("🟦 classLectureNo = " + classLectureNo);
-
-        System.out.println("🟦 events = " + events);
 
         // =====================
         //      페이징 처리
@@ -184,10 +189,56 @@ public class ScheduleController {
     public String lectureDateAdd(@ModelAttribute LectureDate lectureDate,
                                  HttpSession session) {
 
-        System.out.println("▶ insert 요청 classLectureNo = " + lectureDate.getClassLectureNo());
-        System.out.println("▶ insert 요청 title = " + lectureDate.getTitle());
-        System.out.println("▶ insert 요청 startDate = " + lectureDate.getStartDate());
-        System.out.println("▶ insert 요청 endDate = " + lectureDate.getEndDate());
+        // ===== 제목 검증 =====
+        if (lectureDate.getTitle() == null || lectureDate.getTitle().trim().isEmpty()) {
+            session.setAttribute("alertMsg", "제목을 입력하세요.");
+            return "redirect:/leCalenderPlus.co";
+        }
+
+        if (lectureDate.getTitle().length() > 50) {
+            session.setAttribute("alertMsg", "제목은 최대 50자까지 입력 가능합니다.");
+            return "redirect:/leCalenderPlus.co";
+        }
+
+        // ===== 상세 내용 검증 =====
+        if (lectureDate.getContent() != null && lectureDate.getContent().length() > 500) {
+            session.setAttribute("alertMsg", "상세 내용은 최대 500자까지 입력 가능합니다.");
+            return "redirect:/leCalenderPlus.co";
+        }
+
+        // ===== 날짜 존재 여부 검증 =====
+        if (lectureDate.getStartDate() == null || lectureDate.getEndDate() == null ||
+                lectureDate.getStartDate().isEmpty() || lectureDate.getEndDate().isEmpty()) {
+
+            session.setAttribute("alertMsg", "시작일과 종료일을 선택하세요.");
+            return "redirect:/leCalenderPlus.co";
+        }
+
+        // ===== 일정 중복 조회 =====
+        int overlap = lectureDateService.checkDateOverlap(lectureDate);
+        if (overlap > 0) {
+            session.setAttribute("alertMsg", "해당 기간에 이미 일정이 존재합니다.");
+            return "redirect:/leCalenderPlus.co";
+        }
+
+        // ===== 날짜 형식 검증 및 비교 =====
+        try {
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+            sdf.setLenient(false); // 잘못된 날짜(ex: 2025-13-50) 거부
+
+            Date start = sdf.parse(lectureDate.getStartDate());
+            Date end   = sdf.parse(lectureDate.getEndDate());
+
+            if (end.before(start)) {
+                session.setAttribute("alertMsg", "종료일은 시작일보다 빠를 수 없습니다.");
+                return "redirect:/leCalenderPlus.co";
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            session.setAttribute("alertMsg", "날짜 형식이 올바르지 않습니다.");
+            return "redirect:/leCalenderPlus.co";
+        }
 
         int result = lectureDateService.insertLectureDate(lectureDate);
 
