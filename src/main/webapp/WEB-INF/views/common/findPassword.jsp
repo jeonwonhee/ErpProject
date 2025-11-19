@@ -22,12 +22,12 @@
 
                 <label class="field-label">아이디</label>
                 <div class="input-group">
-                    <input type="text" name="memberId" class="input-box member-id" placeholder="아이디를 입력하세요">
+                    <input type="text" name="memberId" required class="input-box member-id" placeholder="아이디를 입력하세요">
                 </div>
 
                 <label class="field-label">이메일</label>
                 <div class="input-password-change">
-                    <input type="email" name="email" class="input-password-email" placeholder="이메일을 입력하세요">
+                    <input type="email" name="email" required maxlength="20" class="input-password-email" placeholder="이메일을 입력하세요">
                     <button class="btn-email" onclick="emailOrder()">인증번호 요청</button>
                 </div>
 
@@ -66,6 +66,7 @@
                         memberIdDiv.innerHTML = "";
                         memberEmailDiv.innerHTML = "";
                     } else {
+                        alert("이메일이 일치하지 않습니다.")
                         console.log("비밀번호 찾기 호출 에러.");
                     }
                 },

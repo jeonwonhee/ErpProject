@@ -65,6 +65,7 @@ public class NoticeController {
         int memberNo = loginMember.getMemberNo();
         String role = loginMember.getRole();
         Map<String,Object> map = noticeService.selectNoticeList(currentPage,selectNoticeType,memberNo,role);
+
         model.addAttribute("noticeList",map.get("noticeList"));
         model.addAttribute("pi",map.get("pi"));
         model.addAttribute("selectNoticeType",selectNoticeType);

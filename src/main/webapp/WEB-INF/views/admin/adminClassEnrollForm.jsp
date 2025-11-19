@@ -27,7 +27,11 @@
 
                 <div class="form-group">
                     <label>반 이름</label>
-                    <input type="text" name="className"/>
+                    <div class="class-name-div">
+                        <input class="class-name-input" type="text" maxlength="20" required name="className"/>
+                        <button type="button" onclick="classNameDupiChk()">중복 체크</button>
+                    </div>
+
                 </div>
 
                 <div class="form-row">
@@ -71,7 +75,7 @@
                     <button type="button" onclick="location.href='${pageContext.request.contextPath}/adminClassManage.co'">목록</button>
                     <div class="form-submit">
                         <button class="btn-delete" type="button" onclick="deleteLecture()">제거</button>
-                        <button class="btn-submit" type="submit">등록</button>
+                        <button class="btn-submit" disabled type="submit">등록</button>
                     </div>
                 </div>
 
@@ -168,7 +172,7 @@
                                     +'<td>'+data.memberName+'</td>'
                                     +'<td class="start-date"></td>'
                                     +'<td class="end-date"></td>'
-                                    +'<td><input type="text" name="classDesc"></input></td>'
+                                    +'<td><input type="text" maxlength="50" required name="classDesc"></input></td>'
                                 +'</tr>';
 
                 lectureTable.appendChild(tr);
@@ -197,6 +201,42 @@
         }
 
 
+    }
+
+
+    function classNameDupiChk() {
+
+        let className = document.querySelector(".class-name-input");
+        if (className.value.length == 0) {
+            alert("반명을 입력해주세요.");
+            return;
+        }
+        $.ajax({
+            url : "classNameDupiCheck.co",
+            type : "get",
+            data : {
+                className : className.value
+            },
+            success: function(result){
+                console.log("TEST",result);
+                if(result === "NNNNN") { //존재한다면
+                    alert("이미 존재하는 반이름입니다.");
+                    idInput.focus();
+                } else { //존재하지 않는다면
+                    if(confirm("사용가능한 반이름입니다. 사용하시겠습니까?")){
+                        className.setAttribute("readonly", true);
+
+                        const submitBtn = document.querySelector(".btn-submit");
+                        submitBtn.removeAttribute("disabled");
+                    } else{
+                        className.focus();
+                    }
+                }
+            },
+            error: function(err){
+                console.log("아이디 체크 요청 실패 : ", err);
+            }
+        })
     }
 
 

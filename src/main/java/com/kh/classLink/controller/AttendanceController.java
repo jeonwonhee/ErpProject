@@ -278,7 +278,7 @@ public class AttendanceController {
         if (result > 0) {
             session.setAttribute("alertMsg", "정정 신청에 성공하였습니다.");
         } else {
-            model.addAttribute("errorMsg", "해당 날짜에 출석 정보가 없습니다. 확인 바랍니다.");
+            session.setAttribute("alertMsg", "해당 날짜에 출석 정보가 없습니다. 확인 바랍니다.");
         }
         return "redirect:/stAtt.co";
     }

@@ -175,4 +175,11 @@
         DELETE CLASS_LECTURE
         WHERE CLASS_NO = #{classNo}
     </delete>
+
+    <!--반명 중복 체크-->
+    <select id="classNameDupiCheck" parameterType="string" resultType="int">
+        SELECT COUNT(*)
+        FROM CLASS
+        WHERE CLASS_NAME = #{className}
+    </select>
 </mapper>

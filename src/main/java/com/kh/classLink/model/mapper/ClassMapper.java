@@ -73,4 +73,11 @@ public interface ClassMapper {
      */
     int deleteClassLecture(int classNo);
 
+    /**
+     * 반 이름 중복 체크
+     * @param className
+     * @return
+     */
+    int classNameDupiCheck(String className);
+
 }
