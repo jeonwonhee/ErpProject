@@ -53,6 +53,23 @@ project/
  │   ├── resources/                  # CSS, JS, 이미지
  └── README.md
 
+
+ project/
+ ├── src/
+ │   ├── com/kh/classLink/config/    
+ │   ├── com/kh/classLink/controller/     # Servlet 컨트롤러
+ │   ├── com/kh/classLink/model/dao/      # 데이터 접근 로직 (DAO)
+ │   ├── com/kh/classLink/model/vo/       # VO (Value Object)
+ │   ├── com/kh/classLink/service/        # 비즈니스 로직
+ │   └── com/kh/classLink/utils/         # 공용 유틸 (JDBCTemplate 등)
+ ├── webapp/
+ │   ├── WEB-INF/
+ │   │   ├── views/                  # JSP 뷰 페이지
+ │   │   └── web.xml                 # 배포 서술자
+ │   ├── resources/                  # CSS, JS, 이미지
+ │   └── index.jsp                   # 메인 페이지
+ └── README.md
+
 ## 🌟 주요 기능 (Key Features)
 ✅ 회원가입 / 로그인 / 로그아웃 기능
 ✅ 게시글 등록, 조회, 수정, 삭제 (CRUD)
