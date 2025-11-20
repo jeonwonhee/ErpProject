@@ -674,26 +674,25 @@
 
 /* ===== 페이지네이션 ===== */
 .student-inquiry .pagination {
-  display: flex;
-  justify-content: center;
-  gap: 8px;
-  margin: 20px 0 28px;
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 22px;
 }
 
 .student-inquiry .pagination button {
-  border: 1px solid #ccc;
-  background: #fff;
-  border-radius: 50%;
-  width: 32px;
-  height: 32px;
-  font-size: 13px;
-  cursor: pointer;
-  transition: 0.15s;
+    width: 32px;
+    height: 32px;
+    border: 1px solid #ccc;
+    background: #fff;
+    border-radius: 999px;
+    cursor: pointer;
+    transition: 0.2s;
 }
 
 .student-inquiry .pagination button:hover {
-  background: #f3f4ff;
-  border-color: #bfc4ff;
+    background: #eef1ff;
+    border-color: #6b5bff;
 }
 
 /* ===== 글쓰기 버튼 ===== */
