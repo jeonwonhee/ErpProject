@@ -19,7 +19,7 @@ Intellij 환경에서 실행 가능합니다.
 
 ## 🛠️ 설치 및 실행 (Installation & Run)
 # 1. 프로젝트 클론
-git clone https://github.com/username/project.git
+git clon(https://github.com/jeonwonhee/ErpProject.git)
 
 # 2. Intellij에서 Import
 - 파일 > 새로 만들기 > 기존 소스에 있는 프로젝트
