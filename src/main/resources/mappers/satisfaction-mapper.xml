@@ -68,11 +68,17 @@
         WHERE CL.CLASS_LECTURE_NO = #{classLectureNo}
     </select>
 
-    <select id="selectStudentLectureList" parameterType="int" resultType="int">
-        SELECT CL.CLASS_LECTURE_NO
+    <select id="selectStudentLectureList" parameterType="int" resultType="hashmap">
+        SELECT
+            CL.CLASS_LECTURE_NO AS CLASS_LECTURE_NO,
+            L.LECTURE_NAME AS LECTURE_NAME
         FROM CLASS_STUDENT CS
-        JOIN CLASS_LECTURE CL ON CS.CLASS_NO = CL.CLASS_NO
+        JOIN CLASS_LECTURE CL
+            ON CS.CLASS_NO = CL.CLASS_NO
+        JOIN LECTURE L
+            ON CL.LECTURE_NO = L.LECTURE_NO
         WHERE CS.STUDENT_NO = #{studentNo}
+        ORDER BY CL.CLASS_LECTURE_NO
     </select>
 
     <select id="selectClassName" parameterType="int" resultType="string">

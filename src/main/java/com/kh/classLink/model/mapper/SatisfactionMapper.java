@@ -21,7 +21,7 @@ public interface SatisfactionMapper {
 
     String selectClassName(int studentNo);
 
-    List<Integer> selectStudentLectureList(int studentNo);
+    List<Map<String, Object>> selectStudentLectureList(int studentNo);
 
     int checkSatisfactionSubmit(Map<String, Object> map);
 

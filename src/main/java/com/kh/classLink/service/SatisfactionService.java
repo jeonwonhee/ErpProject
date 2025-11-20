@@ -4,6 +4,7 @@ import com.kh.classLink.model.vo.LectureSatisfaction;
 import com.kh.classLink.model.vo.Satisfaction;
 
 import java.util.List;
+import java.util.Map;
 
 public interface SatisfactionService {
 
@@ -13,7 +14,7 @@ public interface SatisfactionService {
 
     int countTotalSatisfactionClass(int classLectureNo);
 
-    List<Integer> getStudentLectureList(int studentNo);
+    List<Map<String, Object>> getStudentLectureList(int studentNo);
 
     String getClassName(int studentNo);
 
