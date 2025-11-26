@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.kh.classLink.model.mapper.StudentDashboardMapper">
+
+    <!-- ==========================
+         이번달 출석 통계
+    =========================== -->
+    <select id="getMonthlyAttendance"
+            resultType="com.kh.classLink.model.vo.AttendanceStats">
+        SELECT
+            SUM(CASE WHEN A.ATTEND_STATUS = 'ATTEND' THEN 1 ELSE 0 END) AS attendCount,
+            SUM(CASE WHEN A.ATTEND_STATUS = 'LATE' THEN 1 ELSE 0 END) AS lateCount,
+            SUM(CASE WHEN A.ATTEND_STATUS = 'ABSENT' THEN 1 ELSE 0 END) AS absentCount
+        FROM ATTEND A
+                 JOIN CLASS_STUDENT CS ON A.STUDENT_NO = CS.STUDENT_NO
+        WHERE CS.MEMBER_NO = #{memberNo}
+          AND TO_CHAR(A.ATTEND_DATE, 'YYYYMM') = TO_CHAR(SYSDATE, 'YYYYMM')
+    </select>
+
+
+    <!-- ==========================
+         주간 출석 상세 조회
+    =========================== -->
+    <select id="getWeeklyAttendance"
+            resultType="com.kh.classLink.model.vo.Attend">
+        SELECT
+            A.ATTEND_NO AS attendNo,
+            A.ATTEND_STATUS AS attendStatus,
+            A.ATTEND_DATE AS attendDate,
+            A.CREATE_DATE AS createDate,
+            A.UPDATE_DATE AS updateDate,
+            A.SESSION_NO AS sessionNo,
+            A.STUDENT_NO AS studentNo
+        FROM ATTEND A
+                 JOIN CLASS_STUDENT CS ON A.STUDENT_NO = CS.STUDENT_NO
+        WHERE CS.MEMBER_NO = #{memberNo}
+          AND A.ATTEND_DATE BETWEEN
+            TRUNC(SYSDATE, 'IW') - (7 * #{weekOffset})
+            AND TRUNC(SYSDATE, 'IW') - (7 * #{weekOffset}) + 6
+        ORDER BY A.ATTEND_DATE ASC
+    </select>
+
+
+    <!-- ==========================
+         이전 주 데이터 존재 여부
+    =========================== -->
+    <select id="countPrevWeekAttendance" resultType="int">
+        SELECT COUNT(*)
+        FROM ATTEND A
+                 JOIN CLASS_STUDENT CS ON A.STUDENT_NO = CS.STUDENT_NO
+        WHERE CS.MEMBER_NO = #{memberNo}
+          AND A.ATTEND_DATE BETWEEN
+            TRUNC(SYSDATE, 'IW') - (7 * (#{weekOffset} + 1))
+            AND TRUNC(SYSDATE, 'IW') - (7 * (#{weekOffset} + 1)) + 6
+    </select>
+
+    <!-- ==========================
+         오늘 일정
+    =========================== -->
+    <select id="getTodaySchedule"
+            resultType="com.kh.classLink.model.vo.LectureDate">
+        SELECT
+            LD.LECTURE_DATE_NO AS lectureDateNo,
+            LD.START_DATE AS startDate,
+            LD.END_DATE AS endDate,
+            LD.TITLE AS title,
+            LD.CONTENT AS content,
+            LD.CLASS_LECTURE_NO AS classLectureNo,
+            LD.DATE_TYPE AS dateType
+        FROM LECTURE_DATE LD
+                 JOIN CLASS_LECTURE CL ON LD.CLASS_LECTURE_NO = CL.CLASS_LECTURE_NO
+                 JOIN CLASS CS ON CL.CLASS_NO = CS.CLASS_NO
+                 JOIN CLASS_STUDENT CST ON CS.CLASS_NO = CST.CLASS_NO
+        WHERE CST.MEMBER_NO = #{memberNo}
+          AND TRUNC(LD.START_DATE) = TRUNC(SYSDATE)
+        ORDER BY LD.START_DATE
+    </select>
+
+</mapper>

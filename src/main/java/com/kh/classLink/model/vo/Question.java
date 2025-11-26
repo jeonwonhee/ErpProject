@@ -25,4 +25,5 @@ public class Question {
     private String answerMemberName;
 
     private String listType;
+    private String role;
 }

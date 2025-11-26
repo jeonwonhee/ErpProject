@@ -1,6 +1,7 @@
 package com.kh.classLink.controller;
 
 import com.kh.classLink.model.vo.Class;
+import com.kh.classLink.model.vo.Member;
 import com.kh.classLink.model.vo.Notice;
 import com.kh.classLink.service.NoticeService;
 import jakarta.servlet.http.HttpSession;
@@ -31,10 +32,13 @@ public class NoticeController {
      * @return
      */
     @GetMapping("/notice.co")
-    public String notice(@RequestParam(value="currentPage", defaultValue = "1") int currentPage, Model model) {
+    public String notice(@RequestParam(value="currentPage", defaultValue = "1") int currentPage, Model model,HttpSession session) {
         //리스트 조회 필요
         String selectNoticeType = "";
-        Map<String,Object> map = noticeService.selectNoticeList(currentPage,selectNoticeType);
+        Member loginMember = (Member)session.getAttribute("loginMember");
+        int memberNo = loginMember.getMemberNo();
+        String role = loginMember.getRole();
+        Map<String,Object> map = noticeService.selectNoticeList(currentPage,selectNoticeType,memberNo,role);
 
 
         model.addAttribute("noticeList",map.get("noticeList"));
@@ -54,9 +58,14 @@ public class NoticeController {
     @GetMapping("/searchNotice.co")
     public String searchNotice(@RequestParam(value="currentPage", defaultValue = "1") int currentPage,
                                Model model,
-                               @RequestParam(value = "selectNoticeType", defaultValue = "") String selectNoticeType) {
+                               @RequestParam(value = "selectNoticeType", defaultValue = "") String selectNoticeType,
+                               HttpSession session) {
         //리스트 조회 필요
-        Map<String,Object> map = noticeService.selectNoticeList(currentPage,selectNoticeType);
+        Member loginMember = (Member)session.getAttribute("loginMember");
+        int memberNo = loginMember.getMemberNo();
+        String role = loginMember.getRole();
+        Map<String,Object> map = noticeService.selectNoticeList(currentPage,selectNoticeType,memberNo,role);
+
         model.addAttribute("noticeList",map.get("noticeList"));
         model.addAttribute("pi",map.get("pi"));
         model.addAttribute("selectNoticeType",selectNoticeType);
@@ -126,8 +135,8 @@ public class NoticeController {
                                @RequestParam(value="upFile" , required = false) MultipartFile upfile,
                                @RequestParam(value = "classNoList" ,required = false) String[] classNoList) {
         //멤버 번호 호출 필요 로그인되면
-        session.getAttribute("loginMember");
-        notice.setMemberNo(6);
+        Member loginMember = (Member) session.getAttribute("loginMember");
+        notice.setMemberNo(loginMember.getMemberNo());
         int result = noticeService.insertNotice(notice,upfile,classNoList);
 
         if (result > 0) {
@@ -175,7 +184,8 @@ public class NoticeController {
         System.out.println(":::::::updateNotice::::::::::::");
         System.out.println("notice:::::::"+notice);
         System.out.println("classNoList:::::::"+classNoList);
-        notice.setMemberNo(6);
+        Member loginMember = (Member) session.getAttribute("loginMember");
+        notice.setMemberNo(loginMember.getMemberNo());
         int result = noticeService.updateNotice(notice,upFile,classNoList);
 
         if (result > 0) {

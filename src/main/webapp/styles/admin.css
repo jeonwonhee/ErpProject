@@ -7,61 +7,61 @@
    통계 요약 (Stats Row)
    =================================== */
 .admin .stats-row {
-  display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  gap: 16px;
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 16px;
 }
 
 .admin .stat-box {
-  background: #fff;
-  border: 1px solid #ddd;
-  border-radius: 14px;
-  text-align: center;
-  padding: 20px 10px;
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 14px;
+    text-align: center;
+    padding: 20px 10px;
 }
 
 .admin .stat-box h4 {
-  font-size: 14px;
-  color: #666;
-  margin-bottom: 8px;
+    font-size: 14px;
+    color: #666;
+    margin-bottom: 8px;
 }
 
 .admin .stat-box p {
-  font-size: 24px;
-  font-weight: 700;
-  color: #222;
+    font-size: 24px;
+    font-weight: 700;
+    color: #222;
 }
 
 /* ===================================
    하단 영역 (Chart + Alerts)
    =================================== */
 .admin .bottom-section {
-  display: flex;
-  gap: 20px;
+    display: flex;
+    gap: 20px;
 }
 
 .admin .card h3 {
-  font-size: 16px;
-  margin-bottom: 12px;
+    font-size: 16px;
+    margin-bottom: 12px;
 }
 
 /* ===== 알림 목록 ===== */
 .admin .alert-list {
-  font-size: 14px;
-  color: #555;
-  line-height: 1.8;
+    font-size: 14px;
+    color: #555;
+    line-height: 1.8;
 }
 
 .admin .alert-list li {
-  list-style: disc;
-  margin-left: 20px;
+    list-style: disc;
+    margin-left: 20px;
 }
 
 /* ===== 그래프 (차트 자리 표시용) ===== */
 .admin .chart-placeholder img {
-  width: 100%;
-  height: auto;
-  border-radius: 12px;
+    width: 100%;
+    height: auto;
+    border-radius: 12px;
 }
 
 /* ===============================
@@ -70,21 +70,21 @@
 
 .admin-student-list h2,
 .admin-lecture-list h2 {
-  font-size: 18px;
-  font-weight: 700;
-  margin-bottom: 24px;
+    font-size: 18px;
+    font-weight: 700;
+    margin-bottom: 24px;
 }
 
 /* 테이블 공통 스타일 */
 .admin-student-list .student-table,
 .admin-lecture-list .lecture-table {
-  width: 100%;
-  border-collapse: collapse;
-  border-radius: 12px;
-  overflow: hidden;
-  box-shadow: 0 1px 6px rgba(0, 0, 0, 0.05);
-  font-size: 14px;
-  background: #fff;
+    width: 100%;
+    border-collapse: collapse;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 1px 6px rgba(0, 0, 0, 0.05);
+    font-size: 14px;
+    background: #fff;
 }
 
 /* 헤더 */
@@ -93,7 +93,7 @@
 
 .admin-student-list .student-table tr:last-child td,
 .admin-lecture-list .lecture-table tr:last-child td {
-  border-bottom: none;
+    border-bottom: none;
 }
 
 /* 행 hover 효과 */
@@ -101,8 +101,8 @@
 /* 상태 컬러 */
 .admin-student-list td:nth-child(5),
 .admin-lecture-list td:nth-child(5) {
-  font-weight: 600;
-  color: #2c6e49;
+    font-weight: 600;
+    color: #2c6e49;
 }
 /* 강사/관리자 추가 버튼 */
 .create-btn {
@@ -143,59 +143,47 @@
 
 /* 검색창 */
 .admin-calendar-manage .search-box {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 20px;
 }
 
 .admin-calendar-manage .search-box input {
-  width: 200px;
-  padding: 8px 12px;
-  border: 1px solid #ccc;
-  border-radius: 8px;
+    width: 200px;
+    padding: 8px 12px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
 }
 
 /* 테이블 */
 .admin-calendar-manage .calendar-table {
-  width: 100%;
-  border-collapse: collapse;
-  font-size: 14px;
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
 }
-
-
-
-
-
-
 
 /* 상태 배지 */
 .admin-calendar-manage .status {
-  display: inline-block;
-  border-radius: 12px;
-  padding: 4px 10px;
-  font-size: 13px;
-  font-weight: 600;
-  color: #fff;
+    display: inline-block;
+    border-radius: 12px;
+    padding: 4px 10px;
+    font-size: 13px;
+    font-weight: 600;
+    color: #fff;
 }
 
-.admin-calendar-manage .status.received {
-  background: #4b5dff;
+.admin-calendar-manage .status.approved {
+    background: #4b5dff;
 }
 
-.admin-calendar-manage .status.processing {
-  background: #d9f365;
-  color: #333;
+.admin-calendar-manage .status.rejected {
+    background: #e53935;
 }
 
-/* 승인여부 컬러 */
-.admin-calendar-manage td.approved {
-  color: #2c6e49;
-  font-weight: 600;
-}
-.admin-calendar-manage td.rejected {
-  color: #e53935;
-  font-weight: 600;
+.admin-calendar-manage .status.pending {
+    background: #d9f365;
+    color: #333;
 }
 
 /* ===============================
@@ -303,51 +291,51 @@ body.admin.admin-calendar-manage {
    =============================== */
 
 .admin-notice-write .notice-write-container {
-  background: #fff;
-  border: 1px solid #ddd;
-  border-radius: 12px;
-  padding: 40px 60px;
-  margin-top: 30px;
-  width: 90%;
-  max-width: 900px;
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 12px;
+    padding: 40px 60px;
+    margin-top: 30px;
+    width: 90%;
+    max-width: 900px;
 }
 
 .admin-notice-write h2 {
-  font-size: 20px;
-  font-weight: 700;
-  margin-bottom: 30px;
+    font-size: 20px;
+    font-weight: 700;
+    margin-bottom: 30px;
 }
 
 .admin-notice-write .form-group {
-  display: flex;
-  flex-direction: column;
-  margin-bottom: 20px;
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 20px;
 }
 
 .admin-notice-write label {
-  font-weight: 600;
-  margin-bottom: 6px;
-  font-size: 15px;
+    font-weight: 600;
+    margin-bottom: 6px;
+    font-size: 15px;
 }
 
 .admin-notice-write input[type="text"],
 .admin-notice-write input[type="file"],
 .admin-notice-write textarea {
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  padding: 10px 14px;
-  font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 10px 14px;
+    font-size: 14px;
 }
 
 .admin-notice-write textarea {
-  min-height: 200px;
-  resize: none;
+    min-height: 200px;
+    resize: none;
 }
 
 .admin-notice-write .form-actions {
-  display: flex;
-  justify-content: center;
-  margin-top: 30px;
+    display: flex;
+    justify-content: center;
+    margin-top: 30px;
 }
 
 /* ===============================
@@ -355,56 +343,56 @@ body.admin.admin-calendar-manage {
    =============================== */
 
 .admin-attendance .attendance-container {
-  display: flex;
-  flex-direction: column;
-  gap: 30px;
-  margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    margin-top: 20px;
 }
 
 .admin-attendance .filter-bar {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
 .admin-attendance .filter-bar select {
-  padding: 8px 14px;
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  font-size: 14px;
+    padding: 8px 14px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 14px;
 }
 
 .admin-attendance .chart-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 20px;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
 }
 
 .admin-attendance .chart-card {
-  background: #fff;
-  border: 1px solid #ddd;
-  border-radius: 16px;
-  padding: 24px;
-  box-shadow: 0 3px 8px rgba(0,0,0,0.05);
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 16px;
+    padding: 24px;
+    box-shadow: 0 3px 8px rgba(0,0,0,0.05);
 }
 
 .admin-attendance .chart-card.wide {
-  grid-column: span 2;
+    grid-column: span 2;
 }
 
 .admin-attendance .chart-card h3 {
-  font-size: 16px;
-  font-weight: 700;
-  margin-bottom: 16px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+    font-size: 16px;
+    font-weight: 700;
+    margin-bottom: 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
 .admin-attendance .summary {
-  font-size: 13px;
-  color: #666;
-  font-weight: 500;
+    font-size: 13px;
+    color: #666;
+    font-weight: 500;
 }
 
 /* ===============================
@@ -416,182 +404,184 @@ body.admin.admin-calendar-manage {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
   gap: 16px;
+  height: 200px ;
+
 }
 
 .admin-facility .facility-card {
-  background: #f9f9ff;
-  position: relative;
-  overflow: hidden;
-  transition: transform 0.25s ease, box-shadow 0.25s ease, height 0.25s ease;
-  cursor: pointer;
+    background: #f9f9ff;
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.25s ease, box-shadow 0.25s ease, height 0.25s ease;
+    cursor: pointer;
 }
 
 .admin-facility .facility-card:hover {
-  background: #eef0ff;
-  transform: scaleY(1.1);
-  transform-origin: top;
-  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
-  z-index: 2;
+    background: #eef0ff;
+    transform: scaleY(1.1);
+    transform-origin: top;
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+    z-index: 2;
 }
 
 .admin-facility .facility-card.expanded {
-  background: #eef0ff;
-  transform: scaleY(1.15);
-  transform-origin: top;
-  height: 200px;
-  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
-  z-index: 2;
+    background: #eef0ff;
+    transform: scaleY(1.15);
+    transform-origin: top;
+    height: 200px;
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+    z-index: 2;
 }
 
 /* ===== 기자재 카드 타이틀 / 정보 ===== */
 .admin-facility .facility-title {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 8px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
 }
 
 .admin-facility .facility-title h3 {
-  font-size: 15px;
-  font-weight: 600;
-  color: #222;
+    font-size: 15px;
+    font-weight: 600;
+    color: #222;
 }
 
 .admin-facility .facility-meta {
-  font-size: 13px;
-  color: #555;
-  margin-bottom: 6px;
+    font-size: 13px;
+    color: #555;
+    margin-bottom: 6px;
 }
 
 .admin-facility .facility-meta strong {
-  color: #4b45ff;
+    color: #4b45ff;
 }
 
 .admin-facility .location-pill {
-  display: inline-block;
-  background: #fff;
-  border: 1px solid #dbe0ff;
-  border-radius: 999px;
-  padding: 3px 11px 4px;
-  font-size: 12px;
-  color: #4b45ff;
-  margin-top: 4px;
-  width: fit-content;
+    display: inline-block;
+    background: #fff;
+    border: 1px solid #dbe0ff;
+    border-radius: 999px;
+    padding: 3px 11px 4px;
+    font-size: 12px;
+    color: #4b45ff;
+    margin-top: 4px;
+    width: fit-content;
 }
 
 /* ===== 상태 배지 (Badge) ===== */
 .admin-facility .badge {
-  padding: 3px 10px 4px;
-  border-radius: 999px;
-  font-size: 12px;
-  font-weight: 600;
-  color: #fff;
+    padding: 3px 10px 4px;
+    border-radius: 999px;
+    font-size: 12px;
+    font-weight: 600;
+    color: #fff;
 }
 
 .admin-facility .badge.ok {
-  background: #1ba94c;
+    background: #1ba94c;
 }
 
 .admin-facility .badge.repair {
-  background: #ffe66d;
-  color: #654c00;
+    background: #ffe66d;
+    color: #654c00;
 }
 
 .admin-facility .badge.lost {
-  background: #ccc;
-  color: #333;
+    background: #ccc;
+    color: #333;
 }
 
 /* ===== 카드 내 버튼 그룹 (수정/삭제) ===== */
 .admin-facility .action-buttons {
-  position: absolute;
-  bottom: 10px;
-  left: 0;
-  width: 100%;
-  display: flex;
-  justify-content: space-between;
-  opacity: 0;
-  transform: translateY(10px);
-  transition: all 0.25s ease;
-  padding: 0 12px;
+    position: absolute;
+    bottom: 10px;
+    left: 0;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    opacity: 0;
+    transform: translateY(10px);
+    transition: all 0.25s ease;
+    padding: 0 12px;
 }
 
 .admin-facility .facility-card:hover .action-buttons {
-  opacity: 1;
-  transform: translateY(0);
+    opacity: 1;
+    transform: translateY(0);
 }
 
 
 /* ===== 기자재 추가 버튼 ===== */
 .section-title {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
 }
 
 .section-title .add-btn {
-  background: #4b45ff;
-  color: #fff;
-  border: none;
-  padding: 8px 16px;
-  border-radius: 10px;
-  font-size: 14px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: 0.2s;
+    background: #4b45ff;
+    color: #fff;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 10px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.2s;
 }
 
 .section-title .add-btn:hover {
-  background: #3730d9;
+    background: #3730d9;
 }
 
 /* ===== 기자재 상태 테이블 ===== */
 .admin-facility .filter-bar {
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
-  margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    margin-bottom: 10px;
 }
 
 .admin-facility .filter-bar label {
-  margin-right: 8px;
-  font-size: 14px;
-  color: #333;
-  font-weight: 500;
+    margin-right: 8px;
+    font-size: 14px;
+    color: #333;
+    font-weight: 500;
 }
 
 .admin-facility .filter-bar select {
-  padding: 6px 10px;
-  border-radius: 8px;
-  border: 1px solid #ccc;
-  font-size: 14px;
+    padding: 6px 10px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    font-size: 14px;
 }
 
 .admin-facility table {
-  width: 100%;
-  border-collapse: collapse;
-  margin-top: 10px;
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
 }
 
 .admin-facility thead {
-  background: #f3f3ff;
+    background: #f3f3ff;
 }
 
 /* ===== 상태 텍스트 컬러 ===== */
 .admin-facility .status-ok {
-  color: #1ba94c;
-  font-weight: 600;
+    color: #1ba94c;
+    font-weight: 600;
 }
 
 .admin-facility .status-repair {
-  color: #b38b00;
-  font-weight: 600;
+    color: #b38b00;
+    font-weight: 600;
 }
 
 .admin-facility .status-lost {
-  color: #666;
-  font-weight: 600;
+    color: #666;
+    font-weight: 600;
 }
 
 /* ===================================
@@ -600,51 +590,118 @@ body.admin.admin-calendar-manage {
    =================================== */
 
 /* ===== 카드 컨테이너 ===== */
-.admin-facility-detail .card {
-  width: 640px;
-}
+
 
 .admin-facility-detail .card h2 {
-  font-size: 26px;
-  margin-bottom: 32px;
-  color: #111;
+    font-size: 26px;
+    margin-bottom: 32px;
+    color: #111;
 }
 
 /* ===== 폼 ===== */
 .admin-facility-detail form {
-  display: flex;
-  flex-direction: column;
-  gap: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
 }
 
 .admin-facility-detail label {
-  font-weight: 600;
-  font-size: 15px;
-  margin-bottom: 8px;
-  color: #222;
-  display: block;
+    font-weight: 600;
+    font-size: 15px;
+    margin-bottom: 8px;
+    color: #222;
+    display: block;
 }
 
 .admin-facility-detail input {
-  width: 100%;
-  border: 1px solid #ccc;
-  border-radius: 10px;
-  padding: 12px 14px;
-  font-size: 14px;
-  transition: 0.2s;
-  background: #fff;
+    width: 100%;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    padding: 12px 14px;
+    font-size: 14px;
+    transition: 0.2s;
+    background: #fff;
 }
 
 .admin-facility-detail input:focus {
-  border-color: #4b5dff;
-  box-shadow: 0 0 0 3px rgba(75, 93, 255, 0.15);
-  outline: none;
+    border-color: #4b5dff;
+    box-shadow: 0 0 0 3px rgba(75, 93, 255, 0.15);
+    outline: none;
 }
 
 /* ===== 버튼 ===== */
 .admin-facility-detail .form-submit {
-  text-align: right;
-  margin-top: 10px;
+    text-align: right;
+    margin-top: 10px;
 }
 
+/* ==== 반 관리 ==== */
+.admin-class-manage table,
+.admin-class-enroll table{
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+}
 
+.admin-class-manage thead,
+.admin-class-enroll thead{
+    background: #f3f3ff;
+}
+
+.admin-class-enroll .attendance-container {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    margin-top: 20px;
+}
+
+.admin-class-enroll .form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-bottom: 18px;
+}
+
+.admin-class-enroll .form-row {
+    display: flex;
+    gap: 16px;
+    margin-bottom: 18px;
+}
+
+.admin-class-enroll .form-col {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.admin-class-enroll input,
+.admin-class-enroll select{
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 10px 12px;
+    font-size: 14px;
+    background: #fff;
+}
+
+.admin-class-enroll .form-submit {
+    text-align: right;
+}
+
+.admin-class-enroll .lecture-no {
+    display : none;
+}
+
+.lecture-btn {
+    display: flex;
+    justify-content: space-between;
+}
+
+.admin-class-enroll .class-name-div {
+    display: flex;
+    justify-content: space-between;
+}
+
+.admin-class-enroll .class-name-input {
+    width: 90%;
+}

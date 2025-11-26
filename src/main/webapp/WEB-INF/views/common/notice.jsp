@@ -16,6 +16,7 @@
 
   <!-- 메인 -->
   <main class="main">
+  <c:set var="pageName" value="공지사항" scope="request"></c:set>
   <jsp:include page="/WEB-INF/views/common/topBar.jsp" />
 
     <section class="content">
@@ -125,9 +126,12 @@
         </div>
 
         <!-- 글쓰기 버튼 -->
-        <div class="notice-footer">
-          <button class="btn-write" onclick="location.href='${pageContext.request.contextPath}/noticeEnrollForm.co'">글쓰기</button>
-        </div>
+          <c:if test="${loginMember.role != 'STUDENT'}">
+              <div class="notice-footer">
+                  <button class="btn-write" onclick="location.href='${pageContext.request.contextPath}/noticeEnrollForm.co'">글쓰기</button>
+              </div>
+          </c:if>
+
       </div>
     </section>
   </main>
@@ -157,7 +161,7 @@
     <%--    })--%>
     <%--}--%>
 
-    <%--function reloadNotice(data) {--%>
+        <%--function reloadNotice(data) {--%>
     <%--    let table = document.querySelector(".notice-table tbody");--%>
     <%--    let page = document.querySelector(".pagination");--%>
     <%--    const contextPath = "${pageContext.request.contextPath}";--%>

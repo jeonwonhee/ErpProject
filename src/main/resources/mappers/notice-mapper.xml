@@ -36,12 +36,35 @@
         <result column="END_DATE" property="endDate"/>
     </resultMap>
 <!--공지사항 갯수-->
-    <select id="selectNoticeCnt" resultType="int">
+    <select id="selectNoticeCnt" resultType="int" parameterType="Notice">
         SELECT COUNT(*)
         FROM NOTICE
-        <if test="noticeType != '' and noticeType != null">
-            WHERE NOTICE_TYPE = #{noticeType}
-        </if>
+        WHERE 1=1
+        <choose>
+            <when test="role == 'STUDENT'">
+                <choose>
+                    <when test="noticeType == '' or noticeType == null">
+                        AND (
+                            (NOTICE_TYPE = 'CLASS'
+                            AND CLASS_NO IN (SELECT CLASS_NO FROM CLASS_STUDENT WHERE MEMBER_NO = #{memberNo}))
+                            OR NOTICE_TYPE IN ('ALL', 'EVENT', 'ETC')
+                        )
+                    </when>
+                    <when test="noticeType == 'CLASS'">
+                        AND NOTICE_TYPE = 'CLASS'
+                        AND CLASS_NO IN (SELECT CLASS_NO FROM CLASS_STUDENT WHERE MEMBER_NO = #{memberNo})
+                    </when>
+                    <otherwise>
+                        AND NOTICE_TYPE = #{noticeType}
+                    </otherwise>
+                </choose>
+            </when>
+            <otherwise>
+                <if test="noticeType != '' and noticeType != null">
+                    AND NOTICE_TYPE = #{noticeType}
+                </if>
+            </otherwise>
+        </choose>
     </select>
 <!--공지 사항 조회-->
     <select id="selectNoticeList" parameterType="Notice" resultMap="noticeResultMap">
@@ -62,9 +85,32 @@
         ON N.MEMBER_NO = M.MEMBER_NO
         LEFT OUTER JOIN CLASS C
         ON N.CLASS_NO = C.CLASS_NO
-        <if test="noticeType != '' and noticeType != null">
-            WHERE NOTICE_TYPE = #{noticeType}
-        </if>
+        WHERE 1=1
+        <choose>
+            <when test="role == 'STUDENT'">
+                <choose>
+                    <when test="noticeType == '' or noticeType == null">
+                        AND (
+                            (N.NOTICE_TYPE = 'CLASS'
+                            AND N.CLASS_NO IN (SELECT CLASS_NO FROM CLASS_STUDENT WHERE MEMBER_NO = #{memberNo}))
+                            OR N.NOTICE_TYPE IN ('ALL', 'EVENT', 'ETC')
+                        )
+                    </when>
+                    <when test="noticeType == 'CLASS'">
+                        AND N.NOTICE_TYPE = 'CLASS'
+                        AND N.CLASS_NO IN (SELECT CLASS_NO FROM CLASS_STUDENT WHERE MEMBER_NO = #{memberNo})
+                    </when>
+                    <otherwise>
+                        AND N.NOTICE_TYPE = #{noticeType}
+                    </otherwise>
+                </choose>
+            </when>
+            <otherwise>
+                <if test="noticeType != '' and noticeType != null">
+                    AND N.NOTICE_TYPE = #{noticeType}
+                </if>
+            </otherwise>
+        </choose>
         ORDER BY N.NOTICE_NO DESC
     </select>
 

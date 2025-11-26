@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kh.classLink.model.mapper.LectureMapper">
+
+        <!-- 강사 번호로 lectureNo 조회 -->
+<select id="selectLectureNoByMemberNo" parameterType="int" resultType="int">
+SELECT LECTURE_NO
+FROM LECTURE
+WHERE MEMBER_NO = #{memberNo}
+</select>
+</mapper>

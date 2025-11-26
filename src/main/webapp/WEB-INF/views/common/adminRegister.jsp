@@ -47,14 +47,14 @@
 
                     <div class="form-group">
                         <label for="name">이름</label>
-                        <input id="name" type="text" maxlength="30" name="memberName" placeholder="이름을 입력하세요">
+                        <input id="name" type="text" maxlength="30" required name="memberName" placeholder="이름을 입력하세요">
                     </div>
 
 
                 <div class="form-group">
                     <label for="memberId">아이디</label>
                     <div class="input-with-btn">
-                        <input id="memberId" name ="memberId" maxlength="20" type="text" placeholder="아이디 입력 (6~20자)">
+                        <input id="memberId" name ="memberId" maxlength="20" required type="text" placeholder="아이디 입력 (6~20자)">
                         <span class="check-icon success">✅</span>
                         <span class="check-icon fail">❌</span>
                         <button class="btn-submit" type="button" onclick="idDupiCheck()">중복확인</button>
@@ -62,7 +62,7 @@
 
                     <div class="form-group">
                         <label for="userPwd">비밀번호</label>
-                        <input id="userPwd" type="password" maxlength="20" name="memberPassword" placeholder="문자, 특수문자, 숫자 포함 8~20자">
+                        <input id="userPwd" type="password" maxlength="20" required name="memberPassword" placeholder="문자, 특수문자, 숫자 포함 8~20자">
                         <div id="pwdChkDiv"></div>
                     </div>
 
@@ -73,20 +73,23 @@
 
                     <div class="form-group">
                         <label for="phone">전화번호</label>
-                        <input id="phone" type="tel" name="phone" maxlength="11" placeholder="휴대폰 번호 입력 ('-'제외 11자리)">
+                        <input id="phone" type="tel" name="phone" required maxlength="11" placeholder="휴대폰 번호 입력 ('-'제외 11자리)">
                     </div>
 
                     <div class="form-group">
                         <label for="email">이메일</label>
-                        <input id="email" type="email" name="email" maxlength="20" placeholder="이메일 입력">
+                        <input id="email" type="email" name="email" required maxlength="20" placeholder="이메일 입력">
                     </div>
 
                     <div class="form-group">
                         <label>생년월일</label>
-                        <div class="birth-selects" name="birthDate">
-                            <select><option>년도</option></select>
-                            <select><option>월</option></select>
-                            <select><option>일</option></select>
+                        <div class="form-group">
+                            <input
+                                    type="date"
+                                    id="birthDate"
+                                    name="birthDate"
+                                    required
+                            />
                         </div>
                     </div>
                 </div>
@@ -106,8 +109,10 @@
                     if (roleRadio[i].checked) {
                         if (roleRadio[i].defaultValue === 'TEACHER') {
                             lectureName.style.display = 'block';
+                            lectureName.querySelector("input").setAttribute('required','');
                         } else {
                             lectureName.style.display = 'none';
+                            lectureName.querySelector("input").removeAttribute('required');
                         }
                     }
                 }

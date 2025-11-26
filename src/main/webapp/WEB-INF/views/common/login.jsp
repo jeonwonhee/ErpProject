@@ -1,4 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -15,6 +17,18 @@
 <p>학생, 강사, 관리자가 한 곳에서 연결되는 스마트 학원 통합 시스템.<br>출결부터 휴가, 공지사항까지 한 번에 관리하세요.</p>
 
 <div class="login-card">
+
+    <!-- 로그인 오류 메시지 -->
+    <c:if test="${not empty errorMsg}">
+        <div class="error-box" style="
+            color: #e53935;
+            font-size: 14px;
+            margin-bottom: 15px;
+            text-align: center;
+            font-weight: 600;">
+                ${errorMsg}
+        </div>
+    </c:if>
 
     <!-- 로그인 폼 시작 -->
     <form action="${pageContext.request.contextPath}/login.co" method="post">
@@ -59,6 +73,13 @@
         });
     });
 </script>
+<!--  로그아웃/회원가입/탈퇴/비밀번호 변경 등 알림 메시지 표시 -->
+<c:if test="${not empty alertMsg}">
+    <script>
+        alert("${alertMsg}");
+    </script>
+    <c:remove var="alertMsg"/>
+</c:if>
 
 </body>
 </html>

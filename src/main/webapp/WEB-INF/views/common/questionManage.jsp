@@ -16,24 +16,28 @@
 
     <!-- 메인 -->
     <main class="main">
+        <c:set var="pageName" value="문의" scope="request"></c:set>
         <jsp:include page="/WEB-INF/views/common/topBar.jsp" />
 
         <section class="content inquiry-container">
             <div class="card">
                 <!-- 검색창 -->
                 <%--관리자는 불필요--%>
-                <form action="${pageContext.request.contextPath}/questionManage.co" method="get">
-                    <div class="search-box">
+                <c:if test="${loginMember.role eq 'TEACHER'}">
+                    <form action="${pageContext.request.contextPath}/questionManage.co" method="get">
+                        <div class="search-box">
 
-                        <select name="listType" id="listType" class="question-select">
-                            <option value="QUESTION" ${listType eq 'QUESTION' ? 'selected' : ''}>내 질문</option>
-                            <option value="ANSWER" ${listType eq 'ANSWER' ? 'selected' : ''}>답변</option>
-                        </select>
-                        <button class="btn-search">검색</button>
+                            <select name="listType" id="listType" class="question-select">
+                                <option value="QUESTION" ${listType eq 'QUESTION' ? 'selected' : ''}>내 질문</option>
+                                <option value="ANSWER" ${listType eq 'ANSWER' ? 'selected' : ''}>답변</option>
+                            </select>
+                            <button class="btn-search">검색</button>
 
 
-                    </div>
-                </form>
+                        </div>
+                    </form>
+                </c:if>
+
                 <!-- 문의 테이블 -->
                 <div class="inquiry-table-section">
                     <table class="inquiry-table">
@@ -59,7 +63,7 @@
                                 </c:choose>
                                     <td>${question.questionNo}</td>
                                     <td>${question.questionTitle}</td>
-                                    <td>${question.questionMember}</td>
+                                    <td>${question.questionMemberName}</td>
                                     <td>${question.createDate}</td>
                                     <c:choose>
                                         <c:when test="${question.questionStatus eq '대기'}">
@@ -75,7 +79,42 @@
                             <%--관리자--%> <%--문의 답변만 가능.--%>
                         </tbody>
                     </table>
+
+                    <c:if test="${pi.currentPage > 1}">
+                        <button class="btn btn-primary"
+                                onclick="location.href='${pageContext.request.contextPath}/questionManage.co?currentPage=${pi.currentPage - 1}&listType=${listType}'">
+                            &lt; 이전
+                        </button>
+                    </c:if>
+                    <c:forEach var="i" begin="${pi.startPage}" end="${pi.endPage}">
+                        <c:choose>
+                            <c:when test="${i == pi.currentPage}">
+                                <button class="page-btn" disabled>
+                                        ${i}
+                                </button>
+                            </c:when>
+                            <c:otherwise>
+                                <button class="page-btn"
+                                        onclick="location.href='${pageContext.request.contextPath}/questionManage.co?currentPage=${i}&listType=${listType}'">
+                                        ${i}
+                                </button>
+                            </c:otherwise>
+                        </c:choose>
+                    </c:forEach>
+                    <c:if test="${pi.currentPage < pi.maxPage}">
+                        <button class="btn btn-primary"
+                                onclick="location.href='${pageContext.request.contextPath}/questionManage.co?currentPage=${pi.currentPage + 1}&listType=${listType}'">
+                            다음 &gt;
+                        </button>
+                    </c:if>
+
                 </div>
+                <!-- 글쓰기 버튼 -->
+                <c:if test="${loginMember.role eq 'TEACHER'}">
+                    <div class="inquiry-write">
+                        <button class="btn-write" onclick="location.href='${pageContext.request.contextPath}/stQuestionWrite.co'">글쓰기</button>
+                    </div>
+                </c:if>
             </section>
         </main>
     </body>

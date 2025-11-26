@@ -16,6 +16,7 @@
 
   <!-- 메인 -->
   <main class="main">
+      <c:set var="pageName" value="공지사항" scope="request"></c:set>
   <jsp:include page="/WEB-INF/views/common/topBar.jsp" />
 
       <form action="${pageContext.request.contextPath}/deleteNotice.no?noticeNo=${noticeDetail.noticeNo}" method="get">
