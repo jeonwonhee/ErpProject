@@ -640,3 +640,9 @@ question-detail .question-header .align-right,
   display: flex;
   justify-content: space-between;
 }
+
+.question-manage .inquiry-write {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 28px;
+}

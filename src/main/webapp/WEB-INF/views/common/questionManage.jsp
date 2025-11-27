@@ -79,34 +79,36 @@
                             <%--관리자--%> <%--문의 답변만 가능.--%>
                         </tbody>
                     </table>
+                    <div class="pagination">
+                        <c:if test="${pi.currentPage > 1}">
+                            <button class="btn btn-primary"
+                                    onclick="location.href='${pageContext.request.contextPath}/questionManage.co?currentPage=${pi.currentPage - 1}&listType=${listType}'">
+                                &lt; 이전
+                            </button>
+                        </c:if>
+                        <c:forEach var="i" begin="${pi.startPage}" end="${pi.endPage}">
+                            <c:choose>
+                                <c:when test="${i == pi.currentPage}">
+                                    <button class="page-btn" disabled>
+                                            ${i}
+                                    </button>
+                                </c:when>
+                                <c:otherwise>
+                                    <button class="page-btn"
+                                            onclick="location.href='${pageContext.request.contextPath}/questionManage.co?currentPage=${i}&listType=${listType}'">
+                                            ${i}
+                                    </button>
+                                </c:otherwise>
+                            </c:choose>
+                        </c:forEach>
+                        <c:if test="${pi.currentPage < pi.maxPage}">
+                            <button class="btn btn-primary"
+                                    onclick="location.href='${pageContext.request.contextPath}/questionManage.co?currentPage=${pi.currentPage + 1}&listType=${listType}'">
+                                다음 &gt;
+                            </button>
+                        </c:if>
+                    </div>
 
-                    <c:if test="${pi.currentPage > 1}">
-                        <button class="btn btn-primary"
-                                onclick="location.href='${pageContext.request.contextPath}/questionManage.co?currentPage=${pi.currentPage - 1}&listType=${listType}'">
-                            &lt; 이전
-                        </button>
-                    </c:if>
-                    <c:forEach var="i" begin="${pi.startPage}" end="${pi.endPage}">
-                        <c:choose>
-                            <c:when test="${i == pi.currentPage}">
-                                <button class="page-btn" disabled>
-                                        ${i}
-                                </button>
-                            </c:when>
-                            <c:otherwise>
-                                <button class="page-btn"
-                                        onclick="location.href='${pageContext.request.contextPath}/questionManage.co?currentPage=${i}&listType=${listType}'">
-                                        ${i}
-                                </button>
-                            </c:otherwise>
-                        </c:choose>
-                    </c:forEach>
-                    <c:if test="${pi.currentPage < pi.maxPage}">
-                        <button class="btn btn-primary"
-                                onclick="location.href='${pageContext.request.contextPath}/questionManage.co?currentPage=${pi.currentPage + 1}&listType=${listType}'">
-                            다음 &gt;
-                        </button>
-                    </c:if>
 
                 </div>
                 <!-- 글쓰기 버튼 -->
