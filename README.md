@@ -38,6 +38,7 @@ git clon(https://github.com/jeonwonhee/ErpProject.git)
 http://localhost:8005/login.co
 
 ## 📂 프로젝트 구조 (Directory Structure)
+```
 project/
  ├── src/
  │   ├── com/kh/classLink/config/    
@@ -52,7 +53,7 @@ project/
  │   │   └── web.xml                 # 배포 서술자
  │   ├── resources/                  # CSS, JS, 이미지
  └── README.md
-
+```
 
 ## 🌟 주요 기능 (Key Features)
 ✅ 회원가입 / 로그인 / 로그아웃 기능
@@ -80,11 +81,11 @@ project/
 
 
 ## 팀원 소개(협업시 추가)
-
+```
 | 이름 | 포지션 | Contact |
 | 전수환 | 조장 | --- |
 | 김정훈 | DB관리자 | --- |
 | 임성훈 | 이슈관리자 | --- |
 | 박혜정 | 일정관리자 | --- |
 | 전원희 | 형상관리자 | --- |
-
+```
