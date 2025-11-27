@@ -1,8 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<!DOCTYPE mapper
-        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
-
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.kh.classLink.model.mapper.MemberMapper">
 
     <!-- Member ResultMap -->
@@ -19,27 +16,70 @@
         <result column="ROLE" property="role"/>
         <result column="BIRTH_DATE" property="birthDate"/>
         <result column="VAC_CNT" property="vacCnt"/>
+        <result column="CLASS_NO" property="classNo"/>
+        <result column="CLASS_NAME" property="className"/>
     </resultMap>
 
-    <!-- ID로 회원 조회 -->
-    <select id="getMemberById" parameterType="string" resultMap="memberResultMap">
+    <!--PasswordToken ResultMap-->
+    <resultMap id="passwordTokenResultMap" type="PasswordToken">
+        <result column="PASSWORD_TOKEN_NO" property="passwordTokenNo"/>
+        <result column="MEMBER_NO" property="memberNo"/>
+        <result column="TOKEN" property="token"/>
+        <result column="END_DATE" property="endDate"/>
+        <result column="STATUS" property="status"/>
+        <result column="CREATE_DATE" property="createDate"/>
+        <result column="UPDATE_DATE" property="updateDate"/>
+    </resultMap>
+
+    <!-- ID로 회원 조회 (수강반 포함 단일 조회) -->
+    <select id="getMemberById" parameterType="string" resultType="Member">
         SELECT
-        MEMBER_NO,
-        MEMBER_ID,
-        MEMBER_NAME,
-        MEMBER_PASSWORD,
-        CREATE_DATE,
-        UPDATE_DATE,
-        STATUS,
-        EMAIL,
-        PHONE,
-        ROLE,
-        BIRTH_DATE,
-        VAC_CNT
-        FROM MEMBER
-        WHERE MEMBER_ID = #{memberId}
-        AND STATUS = 'Y'
+        m.MEMBER_NO AS memberNo,
+        m.MEMBER_ID AS memberId,
+        m.MEMBER_NAME AS memberName,
+        m.MEMBER_PASSWORD AS memberPassword,
+        m.CREATE_DATE AS createDate,
+        m.UPDATE_DATE AS updateDate,
+        m.STATUS AS status,
+        m.EMAIL AS email,
+        m.PHONE AS phone,
+        m.ROLE AS role,
+        m.BIRTH_DATE AS birthDate,
+        m.VAC_CNT AS vacCnt,
+        cs.CLASS_NO AS classNo,
+        c.CLASS_NAME AS className
+        FROM MEMBER m
+        LEFT JOIN CLASS_STUDENT cs ON cs.MEMBER_NO = m.MEMBER_NO
+        LEFT JOIN CLASS c ON c.CLASS_NO = cs.CLASS_NO
+        WHERE m.MEMBER_ID = #{memberId} AND
+        m.STATUS = 'Y'
     </select>
+
+    <!-- 수강반 정보까지 포함해서 로그인 회원 조회 -->
+    <select id="selectLoginMember"
+            parameterType="string"
+            resultType="com.kh.classLink.model.vo.Member">
+
+        SELECT
+        m.MEMBER_NO      AS memberNo,
+        m.MEMBER_ID      AS memberId,
+        m.MEMBER_NAME    AS memberName,
+        m.ROLE           AS role,
+        m.EMAIL          AS email,
+        m.PHONE          AS phone,
+        m.BIRTH_DATE     AS birthDate,
+        cs.CLASS_NO      AS classNo,
+        c.CLASS_NAME     AS className
+        FROM MEMBER m
+        LEFT JOIN CLASS_STUDENT cs
+        ON m.MEMBER_NO = cs.MEMBER_NO
+        LEFT JOIN CLASS c
+        ON cs.CLASS_NO = c.CLASS_NO
+        WHERE m.MEMBER_ID = #{memberId}
+
+    </select>
+
+
 
     <!-- ID와 역할로 회원 조회 (로그인용) -->
     <select id="getMemberByIdAndRole" resultMap="memberResultMap">
@@ -64,26 +104,25 @@
 
     <!-- 아이디 중복 체크 -->
     <select id="getMemberCountById" parameterType="string" resultType="int">
-        SELECT COUNT(*)
-        FROM MEMBER
+        SELECT COUNT(*) FROM MEMBER
         WHERE MEMBER_ID = #{memberId}
     </select>
 
     <!--회원가입-->
-    <insert id="insertMember" parameterType="Member">
+    <insert id="insertMember" parameterType="com.kh.classLink.model.vo.Member">
         <selectKey keyProperty="memberNo" resultType="int" order="BEFORE">
             SELECT SEQ_MNO.NEXTVAL FROM DUAL
         </selectKey>
-        INSERT INTO MEMBER (
-        MEMBER_NO,
+        INSERT INTO MEMBER
+        ( MEMBER_NO,
         MEMBER_ID,
         MEMBER_NAME,
         MEMBER_PASSWORD,
         EMAIL,
         PHONE,
         ROLE,
-        BIRTH_DATE
-        ) VALUES (
+        BIRTH_DATE )
+        VALUES (
         #{memberNo},
         #{memberId},
         #{memberName},
@@ -91,21 +130,151 @@
         #{email},
         #{phone},
         UPPER(#{role}),
-        #{birthDate}
-        )
+        #{birthDate} )
     </insert>
 
-    <!-- 강사 수업 등록 -->
-    <insert id="insertLecture" parameterType="Member">
-        INSERT INTO LECTURE (
-        LECTURE_NO,
-        LECTURE_NAME,
+    <!-- 학생 ↔ 수강반 매핑 INSERT (CLASS_STUDENT) -->
+    <insert id="insertClass"
+            parameterType="com.kh.classLink.model.vo.Member">
+
+        INSERT INTO CLASS_STUDENT (
+        STUDENT_NO,
+        CLASS_NO,
         MEMBER_NO
         ) VALUES (
-        SEQ_LNO.NEXTVAL,
-        #{lectureName},
+        SEQ_CSNO.NEXTVAL,
+        #{classNo},
         #{memberNo}
         )
     </insert>
 
+    <select id="selectClassNoByMemberNo"
+            parameterType="long"
+            resultType="int">
+        SELECT cs.CLASS_NO
+        FROM CLASS_STUDENT cs
+        WHERE cs.MEMBER_NO = #{memberNo}
+    </select>
+
+    <!-- CLASS 테이블의 MEMBER_COUNT 재계산 -->
+    <update id="updateClassMemberCount" parameterType="int">
+        UPDATE CLASS c
+        SET c.MEMBER_COUNT = (
+        SELECT COUNT(*)
+        FROM CLASS_STUDENT cs
+        WHERE cs.CLASS_NO = c.CLASS_NO
+        )
+        WHERE c.CLASS_NO = #{classNo}
+    </update>
+
+    <!--count +1-->
+    <update id="increaseClassMemberCount" parameterType="int">
+        UPDATE CLASS
+        SET MEMBER_COUNT = NVL(MEMBER_COUNT, 0) + 1
+        WHERE CLASS_NO = #{classNo}
+    </update>
+
+    <!--count -1-->
+    <update id="decreaseClassMemberCount" parameterType="int">
+        UPDATE CLASS
+        SET MEMBER_COUNT =
+        CASE
+        WHEN MEMBER_COUNT > 0 THEN MEMBER_COUNT - 1
+        ELSE 0
+        END
+        WHERE CLASS_NO = #{classNo}
+    </update>
+
+
+    <!-- 강사 아이디로 강의명 조회 -->
+    <select id="selectLectureNameByMemberNo"
+            parameterType="int"
+            resultType="string">
+        SELECT LECTURE_NAME
+        FROM LECTURE
+        WHERE MEMBER_NO = #{memberNo}
+    </select>
+
+
+
+    <!-- 강사 수업 등록 -->
+    <insert id="insertLecture" parameterType="com.kh.classLink.model.vo.Member">
+        INSERT INTO LECTURE (
+        LECTURE_NO,
+        LECTURE_NAME,
+        MEMBER_NO )
+        VALUES (
+        SEQ_LNO.NEXTVAL,
+        #{lectureName}, #{memberNo} )
+    </insert>
+
+    <!-- 비밀번호 변경-->
+    <update id="updatePassword">
+        UPDATE MEMBER
+        SET MEMBER_PASSWORD = #{encodedPassword}
+        WHERE MEMBER_NO = #{memberNo}
+    </update>
+
+    <!-- 회원 탈퇴 -->
+    <delete id="deleteMember" parameterType="long">
+        UPDATE MEMBER
+        SET STATUS = 'N'
+        WHERE MEMBER_NO = #{memberNo}
+    </delete>
+
+    <!-- 마이페이지 정보 수정-->
+    <update id="updateInfo" parameterType="map">
+        UPDATE MEMBER
+        SET EMAIL = #{email},
+        PHONE = #{phone}
+        WHERE MEMBER_NO = #{memberNo}
+    </update>
+
+    <!--유저 이메일 체크-->
+    <select id="memberEmailCheck" parameterType="Member" resultType="int">
+        SELECT COUNT(*)
+        FROM MEMBER
+        WHERE MEMBER_ID = #{memberId}
+        AND EMAIL = #{email}
+    </select>
+
+    <!--비밀번호 토큰 생성-->
+    <insert id="insertPasswordToken" parameterType="PasswordToken">
+        INSERT INTO PASSWORD_TOKEN(
+                PASSWORD_TOKEN_NO,
+                MEMBER_NO,
+                TOKEN,
+                STATUS
+        ) VALUES (
+                SEQ_PTNO.NEXTVAL,
+                #{memberNo},
+                #{token},
+                'ORDER'
+        )
+    </insert>
+
+    <select id="selectMemberByNo" parameterType="int" resultMap="memberResultMap">
+        SELECT *
+        FROM MEMBER
+        WHERE MEMBER_NO = #{memberNo}
+    </select>
+
+    <select id="checkToken" parameterType="string" resultMap="passwordTokenResultMap">
+        SELECT PASSWORD_TOKEN_NO,
+                MEMBER_NO,
+                TOKEN,
+                END_DATE,
+                STATUS
+        FROM PASSWORD_TOKEN
+        WHERE TOKEN = #{token}
+        AND STATUS = 'ORDER'
+        AND END_DATE > SYSDATE
+    </select>
+
+    <update id="updateToken" parameterType="string">
+        UPDATE PASSWORD_TOKEN
+        SET
+            STATUS = 'USED'
+        WHERE TOKEN = #{token}
+    </update>
 </mapper>

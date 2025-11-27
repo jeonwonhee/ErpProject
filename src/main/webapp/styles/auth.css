@@ -2,7 +2,6 @@
    auth.css
    로그인 / 회원가입 / 비밀번호 찾기 / 비밀번호 변경 공통 스타일
 ================================ */
-
 /* 기본 설정 */
 body {
     background: #f8f9fc;
@@ -198,90 +197,117 @@ select:focus {
   flex: 1;
 }
 
-/* ===== 비밀번호 찾기 | 비밀번호 수정 ===== */
-.find-pw .pw-wrapper,
-.change-pw .pw-wrapper {
-  width: min(970px, 100% - 40px);
-  background: #f3f4fb;
-  border: 1px solid #d3d3da;
-  border-radius: 18px;
-  padding: 44px 0 110px;
-  position: relative;
-}
-.find-pw .pw-card,
-.change-pw .pw-card {
-  width: 520px;
-  margin: 0 auto;
-  background: #fff;
-  border: 1px solid #161616;
-  border-radius: 14px;
-  padding: 32px 34px 48px;
-}
-.find-pw .form-input,
-.change-pw .form-input {
-  height: 50px;
-  border-radius: 12px;
-}
-.btn-inline {
-  position: absolute;
-  right: 8px;
-  top: 50%;
-  transform: translateY(-50%);
-  background: #fff;
-  border: 1px solid #bbb;
-  border-radius: 10px;
-  padding: 6px 12px;
-  font-size: 13px;
-  cursor: pointer;
-  color: #444;
-  transition: 0.15s;
-}
-.btn-inline:hover {
-  border-color: #5b55ff;
-  color: #5b55ff;
+/* ===== 공통 레이아웃 ===== */
+.find-pw,
+.change-pw {
+    background: #f5f6fb;
+    display: flex;
+    justify-content: center;
+    padding-top: 80px;
+    font-family: "Pretendard", sans-serif;
 }
 
-/* 입력 박스 1 (placeholder만 있는) */
-.change-pw .input-line {
-  width: 100%;
-  height: 50px;
-  border: 1px solid #ddd;
-  border-radius: 12px;
-  padding: 0 14px;
-  display: flex;
-  align-items: center;
-  font-size: 13px;
-  color: #999;
-  margin-bottom: 24px;
+.pw-wrapper {
+    width: min(960px, 100% - 40px);
+    background: #f3f4fb;
+    border: 1px solid #e0e3f0;
+    border-radius: 20px;
+    padding: 60px 80px 100px;
+    margin: 40px auto;
+    text-align: center;
 }
 
-/* 비밀번호 확인 레이블 */
-.change-pw .field-label {
-  font-weight: 600;
-  margin-bottom: 8px;
-  font-size: 14px;
-  color: #222;
+/* ===== 제목 ===== */
+.pw-wrapper .title {
+    font-size: 28px;
+    font-weight: 700;
+    margin-bottom: 40px;
+    color: #222;
 }
 
-/* 입력 박스 2 (아래 있는 긴 거) */
-.change-pw .input-line.confirm {
-  position: relative; /* 버튼 기준점 */
+/* ===== 카드 영역 ===== */
+.card {
+    max-width: 900px;
+    margin: 0 auto 40px;
+    background: #fff;
+    border: 1px solid #e0e3f0;
+    border-radius: 18px;
+    padding: 36px 40px;
+    text-align: left;
 }
 
-.change-pw .confirm-button {
-  position: absolute;
-  right: 10px;
-  top: 50%;
-  transform: translateY(-50%);
-  background: #fff;
-  border: 1px solid #bbb;
-  border-radius: 10px;
-  padding: 6px 12px;
-  font-size: 13px;
-  cursor: pointer;
-  color: #444;
-  transition: 0.15s;
+/* ===== 라벨 ===== */
+.field-label {
+    display: block;
+    margin-bottom: 6px;
+    font-size: 14px;
+    font-weight: 600;
+    color: #333;
 }
+/* 공통 화면 정렬 */
+.find-pw,
+.change-pw {
+    background: #f5f6fb;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;  /* 원래 center면 너무 위로 올라감 */
+    padding-top: 40px;        /* 기존 80px → 40px */
+}
+
+/* 박스 컨테이너 */
+.pw-wrapper {
+    width: min(960px, 100% - 40px);
+    background: #f3f4fb;
+    border: 1px solid #e0e3f0;
+    border-radius: 20px;
+    padding: 60px 80px 100px;
+    margin-top: 0;            /* 기존 40px → 0 */
+}
+
+/* ===== 인풋 통일 ===== */
+.input-group,
+.input-line {
+    margin-bottom: 20px;
+}
+
+.input-group input,
+.input-line input {
+    width: 100%;
+    padding: 13px 16px;
+    border: 1px solid #ccc;
+    border-radius: 12px;
+    font-size: 15px;
+    outline: none;
+    transition: 0.15s;
+}
+
+.input-group input:focus,
+.input-line input:focus {
+    border-color: #5058ff;
+}
+
+/* ===== 변경 버튼 ===== */
+.pw-submit {
+    display: block;
+    align-items: center;
+    margin-bottom:100px ;
+    /* 위에 여백 40px, 아래는 0 */
+    width: 140px;
+    height: 45px;
+    background: #5b55ff;
+    color: #fff;
+    border: none;
+    border-radius: 10px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: 0.15s;
+}
+
+.pw-submit:hover {
+    background: #3c42e6;
+}
+
 
 /* ===== 하단 버튼 ===== */
 .pw-submit {
@@ -306,55 +332,55 @@ select:focus {
 =============================== */
 
 .register .card {
-  width: 520px;
-  border-radius: 16px;
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
-  padding: 40px 50px 50px;
-  text-align: center;
+    width: 500px;
+    border-radius: 16px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
+    padding: 40px 50px 50px;
+    text-align: center;
 }
 
 /* 제목 및 설명 */
 .register .title {
-  font-size: 24px;
-  font-weight: 700;
-  color: #4b45ff;
-  margin-bottom: 8px;
+    font-size: 24px;
+    font-weight: 700;
+    color: #4b45ff;
+    margin-bottom: 8px;
 }
 
 .register .desc {
-  font-size: 14px;
-  color: #555;
-  margin-bottom: 28px;
+    font-size: 14px;
+    color: #555;
+    margin-bottom: 28px;
 }
 
 /* 회원 유형 선택 */
 .user-type {
-  display: flex;
-  justify-content: space-between;
-  gap: 16px;
-  margin-bottom: 25px;
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+    margin-bottom: 25px;
 }
 .user-type input[type="radio"] { display: none; }
 .user-type label {
-  flex: 1;
-  background: #f4f4ff;
-  border-radius: 12px;
-  padding: 20px 0;
-  text-align: center;
-  cursor: pointer;
-  transition: all 0.25s ease;
-  height: 110px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+    flex: 1;
+    background: #f4f4ff;
+    border-radius: 12px;
+    padding: 20px 0;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.25s ease;
+    height: 110px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 .user-type label:hover { background: #ececff; }
 .user-type label:has(input[type="radio"]:checked) {
-  background: linear-gradient(145deg, #4540e6, #5f58ff);
-  border: 2px solid #4b45ff;
-  color: #fff;
-  box-shadow: inset 0 6px 10px rgba(0,0,0,0.3), 0 4px 8px rgba(0,0,0,0.2);
+    background: linear-gradient(145deg, #4540e6, #5f58ff);
+    border: 2px solid #4b45ff;
+    color: #fff;
+    box-shadow: inset 0 6px 10px rgba(0,0,0,0.3), 0 4px 8px rgba(0,0,0,0.2);
 }
 
 /* 카드 내 내용 */
@@ -363,43 +389,43 @@ select:focus {
 
 /* 입력 필드 그룹 */
 .form-group {
-  margin-bottom: 18px;
-  text-align: left;
+    margin-bottom: 18px;
+    text-align: left;
 }
 .form-group label {
-  display: block;
-  font-weight: 600;
-  font-size: 14px;
-  margin-bottom: 6px;
-  color: #222;
+    display: block;
+    font-weight: 600;
+    font-size: 14px;
+    margin-bottom: 6px;
+    color: #222;
 }
 
 /* 아이디 입력 + 중복확인 버튼 */
 .input-with-btn {
-  display: flex;
-  align-items: center;
-  gap: 10px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
 }
 .input-with-btn input { flex: 1; }
 .input-with-btn .button {
-  padding: 10px 14px;
-  font-size: 13px;
-  width: auto;
+    padding: 10px 14px;
+    font-size: 13px;
+    width: auto;
 }
 
 /* 생년월일 선택 */
 .birth-selects {
-  display: flex;
-  justify-content: space-between;
-  gap: 10px;
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
 }
 .birth-selects select { flex: 1; }
 
 /* 회원가입 버튼 */
 .register-page .button {
-  width: 100%;
-  margin-top: 28px;
-  padding: 12px;
-  font-size: 15px;
-  font-weight: 600;
+    width: 100%;
+    margin-top: 28px;
+    padding: 12px;
+    font-size: 15px;
+    font-weight: 600;
 }

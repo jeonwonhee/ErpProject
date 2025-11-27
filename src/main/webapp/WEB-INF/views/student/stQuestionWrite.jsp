@@ -1,72 +1,73 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!DOCTYPE html>
 <html lang="ko">
-<head>
-  <meta charset="UTF-8" />
-  <title>KH EduERP | 문의 작성</title>
-  <link rel="stylesheet" href="/styles/default.css" />
-  <link rel="stylesheet" href="/styles/style.css" />
-  <link rel="stylesheet" href="/styles/student.css" />
-</head>
+    <head>
+        <meta charset="UTF-8" />
+        <title>KH EduERP | 문의 작성</title>
+        <link rel="stylesheet" href="/styles/default.css" />
+        <link rel="stylesheet" href="/styles/style.css" />
+        <link rel="stylesheet" href="/styles/student.css" />
+    </head>
 
-<body class="student student-inquiry-write">
-  <!-- 사이드바 -->
-  <jsp:include page="/WEB-INF/views/common/sidBar.jsp" />
+        <body class="student student-inquiry-write">
+            <!-- 사이드바 -->
+            <jsp:include page="/WEB-INF/views/common/sidBar.jsp" />
 
-  <!-- 메인 -->
-  <main class="main">
-      <jsp:include page="/WEB-INF/views/common/topBar.jsp" />
+            <!-- 메인 -->
+            <main class="main">
+                <c:set var="pageName" value="문의 작성" scope="request"></c:set>
+                <jsp:include page="/WEB-INF/views/common/topBar.jsp" />
 
-    <section class="content inquiry-write">
-      <div class="card">
-        <h2>문의하기</h2>
+                <section class="content inquiry-write">
+                    <div class="card">
+                        <h2>문의하기</h2>
 
-        <form class="inquiry-form" action="${pageContext.request.contextPath}/insertQuestion.qu" method="post">
-          <!-- 분류 -->
-          <div class="form-group">
-            <label for="category">분류</label>
-            <select id="category" name="questionType">
-              <option value="SYSTEM">시스템관련</option>
-              <option value="COURSE">수업관련</option>
-              <option value="ETC">기타문의</option>
-            </select>
-          </div>
+                        <form class="inquiry-form" action="${pageContext.request.contextPath}/insertQuestion.qu" method="post">
+                            <!-- 분류 -->
+                            <div class="form-group">
+                                <label for="category">분류</label>
+                                <select id="category" name="questionType">
+                                    <option value="SYSTEM">시스템관련</option>
+                                    <option value="COURSE">수업관련</option>
+                                    <option value="ETC">기타문의</option>
+                                </select>
+                            </div>
 
-          <!-- 제목 -->
-          <div class="form-group">
-            <label for="title">제목</label>
-            <input type="text" id="title" name="questionTitle" maxlength="50" placeholder="제목을 입력하세요." />
-          </div>
+                            <!-- 제목 -->
+                            <div class="form-group">
+                                <label for="title">제목</label>
+                                <input type="text" id="title" name="questionTitle" maxlength="50" placeholder="제목을 입력하세요." required />
+                            </div>
 
-          <!-- 내용 -->
-          <div class="form-group">
-            <label for="content">내용</label>
-            <textarea id="content" name="questionContent" maxlength="150" placeholder="문의 내용을 남겨주세요."></textarea>
-          </div>
+                            <!-- 내용 -->
+                            <div class="form-group">
+                                <label for="content">내용</label>
+                                <textarea id="content" name="questionContent" maxlength="150" placeholder="문의 내용을 남겨주세요." required></textarea>
+                            </div>
 
-          <!-- 버튼 -->
-          <div class="btn-area">
-            <button type="submit" class="btn-submit">등록</button>
-          </div>
-        </form>
-      </div>
-    </section>
-  </main>
+                            <!-- 버튼 -->
+                            <div class="btn-area">
+                                <button type="submit" class="btn-submit">등록</button>
+                            </div>
+                        </form>
+                    </div>
+                </section>
+            </main>
 
-  <script>
-    function submitInquiry() {
-      const category = document.getElementById("category").value.trim();
-      const title = document.getElementById("title").value.trim();
-      const content = document.getElementById("content").value.trim();
+          <script>
+            function submitInquiry() {
+              const category = document.getElementById("category").value.trim();
+              const title = document.getElementById("title").value.trim();
+              const content = document.getElementById("content").value.trim();
 
-      if (!title || !content) {
-        alert("제목과 내용을 모두 입력해주세요.");
-        return;
-      }
+              if (!title || !content) {
+                alert("제목과 내용을 모두 입력해주세요.");
+                return;
+              }
 
-      alert("문의가 등록되었습니다.");
-      window.location.href = "student-inquiry.html"; // 문의 목록으로 이동
-    }
-  </script>
-</body>
+              alert("문의가 등록되었습니다.");
+              window.location.href = "student-inquiry.html"; // 문의 목록으로 이동
+            }
+        </script>
+    </body>
 </html>

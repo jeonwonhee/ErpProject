@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.kh.classLink.model.mapper.ConsultMapper">
+
+    <resultMap id="consultResultMap" type="ConsultApplication">
+        <result column="COUNSEL_APPLICATION_NO" property="consultAppNo"/>
+        <result column="COUNSEL_CONTENT"        property="consultAppContent"/>
+        <result column="COUNSEL_DATE"           property="consultTime"/>
+        <result column="STATUS"                 property="status"/>
+        <result column="REFUSAL"                property="refusal"/>
+        <result column="CREATE_DATE"            property="createTime"/>
+        <result column="UPDATE_DATE"            property="updateTime"/>
+        <result column="COUNSEL_MEMBER_NO"      property="consultAppMemberNo"/>
+        <result column="COUNSELOR_NO"           property="consultMemberNo"/>
+        <result column="MEMBER_NAME"            property="memberName"/>
+    </resultMap>
+
+    <resultMap id="consulResultMap" type="Consult">
+        <result property="consultNo" column="CONSULTATION_NO"/>
+        <result property="consultContent" column="CONSULTATION_CONTENT"/>
+        <result property="startTime" column="CREATE_DATE"/>
+        <result property="updateTime" column="UPDATE_DATE"/>
+        <result property="consultAppNo" column="COUNSEL_APPLICATION_NO"/>
+    </resultMap>
+
+
+    <select id="selectAllConsultApplications" resultMap="consultResultMap">
+        SELECT
+        CA.COUNSEL_APPLICATION_NO,
+        CA.COUNSEL_CONTENT,
+        CA.COUNSEL_DATE,
+        CA.STATUS,
+        CA.REFUSAL,
+        CA.CREATE_DATE,
+        CA.UPDATE_DATE,
+        CA.COUNSEL_MEMBER_NO,
+        CA.COUNSELOR_NO,
+        M.MEMBER_NAME AS MEMBER_NAME
+        FROM COUNSEL_APPLICATION CA
+        JOIN MEMBER M
+        ON CA.COUNSEL_MEMBER_NO = M.MEMBER_NO
+        ORDER BY CA.CREATE_DATE DESC
+    </select>
+
+
+    <insert id="insertConsult" parameterType="ConsultApplication">
+        INSERT INTO COUNSEL_APPLICATION (
+        COUNSEL_APPLICATION_NO,
+        COUNSEL_CONTENT,
+        COUNSEL_DATE,
+        COUNSEL_MEMBER_NO,
+        STATUS
+        )
+        VALUES (
+        SEQ_CANO.NEXTVAL,
+        #{consultAppContent},
+        #{consultTime},
+        #{consultAppMemberNo},
+        #{status}
+        )
+    </insert>
+
+    <select id="selectBoardListCount" resultType="_int">
+        SELECT COUNT(*)
+        FROM COUNSEL_APPLICATION
+    </select>
+
+    <select id="selectBoardList" resultMap="consultResultMap">
+        SELECT
+        CA.COUNSEL_APPLICATION_NO,
+        CA.COUNSEL_CONTENT,
+        CA.COUNSEL_DATE,
+        CA.STATUS,
+        CA.REFUSAL,
+        CA.CREATE_DATE,
+        CA.UPDATE_DATE,
+        CA.COUNSEL_MEMBER_NO,
+        CA.COUNSELOR_NO,
+        M.MEMBER_NAME AS MEMBER_NAME
+        FROM COUNSEL_APPLICATION CA
+        JOIN MEMBER M
+        ON CA.COUNSEL_MEMBER_NO = M.MEMBER_NO
+        ORDER BY CA.CREATE_DATE DESC
+    </select>
+
+    <select id="selectConsultApplicationById" resultMap="consultResultMap" parameterType="int">
+        SELECT *
+        FROM COUNSEL_APPLICATION
+        WHERE COUNSEL_APPLICATION_NO = #{consultAppNo}
+    </select>
+
+    <update id="updateConsultStatus">
+        UPDATE COUNSEL_APPLICATION
+        SET STATUS = #{status},
+        REFUSAL = #{refusal},
+        COUNSELOR_NO = #{memberNo}
+        WHERE COUNSEL_APPLICATION_NO = #{consultAppNo}
+    </update>
+
+    <update id="updateConsultInsertStatus">
+        UPDATE COUNSEL_APPLICATION
+        SET STATUS = 'DONE'
+        WHERE COUNSEL_APPLICATION_NO = #{consultAppNo}
+    </update>
+
+    <insert id="insertConsultation" parameterType="map">
+        INSERT INTO CONSULTATION (
+        CONSULTATION_NO,
+        CONSULTATION_CONTENT,
+        COUNSEL_APPLICATION_NO
+        )
+        VALUES (
+        SEQ_CNO.NEXTVAL,
+        #{consultContent},
+        #{consultAppNo}
+        )
+    </insert>
+
+
+    <!--알람 발행용 상담 신청자-->
+    <select id="selectConsultMemberNo" parameterType="int" resultType="int">
+        SELECT COUNSEL_MEMBER_NO
+        FROM COUNSEL_APPLICATION
+        WHERE COUNSEL_APPLICATION_NO = #{consultAppNo}
+    </select>
+
+</mapper>

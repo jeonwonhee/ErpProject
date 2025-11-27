@@ -18,6 +18,7 @@
 
   <!-- 메인 -->
   <main class="main">
+      <c:set var="pageName" value="공지사항" scope="request"></c:set>
   <jsp:include page="/WEB-INF/views/common/topBar.jsp" />
 
     <section class="content notice-write">
@@ -27,7 +28,7 @@
         <form class="notice-form" enctype="multipart/form-data" action="${pageContext.request.contextPath}/insertNotice.co" method="post">
           <div class="form-group">
             <label for="noticeTitle">제목</label>
-            <input type="text" id="noticeTitle" name="noticeTitle" placeholder="제목을 입력하세요">
+            <input type="text" id="noticeTitle" maxlength="30" required name="noticeTitle" placeholder="제목을 입력하세요">
           </div>
             <div class="subject-select">
                 <label for="noticeType">공지 타입</label>
@@ -58,7 +59,7 @@
 
           <div class="form-group">
             <label for="noticeContents">작성 내용</label>
-            <textarea id="noticeContents" name="noticeContents" placeholder="내용을 입력하세요"></textarea>
+            <textarea id="noticeContents" maxlength="300" required name="noticeContents" placeholder="내용을 입력하세요"></textarea>
           </div>
 
           <button type="submit" class="btn-submit">등록하기</button>

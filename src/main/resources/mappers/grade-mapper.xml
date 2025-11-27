@@ -19,8 +19,69 @@
         <result column="CREATE_DATE"   property="createDate"/>
     </resultMap>
 
+
     <!-- ============================
-         (1) 학생이 수강 중인 강의 목록
+         강사가 담당하는 수강반 목록
+         기준: CLASS_STUDENT → CLASS_LECTURE → LECTURE
+         파라미터: memberNo (세션의 loginMember.memberNo)
+    ============================= -->
+    <select id="findClassesByLecture"
+            parameterType="int"
+            resultType="com.kh.classLink.model.vo.Lecture">
+        SELECT DISTINCT
+        c.CLASS_NO     AS classNo,
+        c.CLASS_NAME   AS className,
+        c.MEMBER_COUNT AS memberCount,
+        c.START_DATE   AS startDate,
+        c.END_DATE     AS endDate
+        FROM CLASS c
+        JOIN CLASS_LECTURE cl ON c.CLASS_NO = cl.CLASS_NO
+        JOIN LECTURE l ON cl.LECTURE_NO = l.LECTURE_NO
+        WHERE l.MEMBER_NO = #{memberNo}
+        ORDER BY c.CLASS_NAME
+    </select>
+
+    <!-- ============================
+         선택된 반의 학생 목록
+         기준: CLASS_STUDENT → CLASS_LECTURE → LECTURE
+         파라미터: memberNo (세션의 loginMember.memberNo)
+    ============================= -->
+    <select id="findStudentsByClass"
+            parameterType="int"
+            resultType="com.kh.classLink.model.vo.GradeDto">
+        SELECT
+        cs.STUDENT_NO            AS studentNo,
+        m.MEMBER_NAME            AS studentName,
+        cl.CLASS_LECTURE_NO      AS classLectureNo,
+        l.LECTURE_NAME           AS lectureName,
+        c.CLASS_NAME             AS className
+        FROM CLASS_STUDENT cs
+        JOIN MEMBER m        ON cs.MEMBER_NO = m.MEMBER_NO
+        JOIN CLASS c         ON cs.CLASS_NO = c.CLASS_NO
+        JOIN CLASS_LECTURE cl ON c.CLASS_NO = cl.CLASS_NO
+        JOIN LECTURE l       ON cl.LECTURE_NO = l.LECTURE_NO
+        WHERE cs.CLASS_NO = #{classNo}
+        ORDER BY m.MEMBER_NAME
+    </select>
+
+    <!--학생이 수강중인 강의 중에서 시험 이름 가져오기-->
+    <select id="findTestNamesByStudent"
+            parameterType="int"
+            resultType="string">
+
+        SELECT DISTINCT
+        G.TEST_NAME
+        FROM CLASS_STUDENT CS
+        JOIN CLASS_LECTURE CL ON CL.CLASS_NO = CS.CLASS_NO
+        JOIN GRADE G          ON G.CLASS_LECTURE_NO = CL.CLASS_LECTURE_NO
+        WHERE CS.MEMBER_NO = #{memberNo}
+        AND G.TEST_NAME IS NOT NULL
+        ORDER BY G.TEST_NAME
+
+    </select>
+
+    <!-- ============================
+         (1) 학생이 수강 중인 강의 목록 (학생 성적조회용)
          기준: CLASS_STUDENT → CLASS_LECTURE → LECTURE
          파라미터: memberNo (세션의 loginMember.memberNo)
     ============================= -->
@@ -38,53 +99,84 @@
         ORDER BY L.LECTURE_NAME
     </select>
 
-    <!-- ============================
-         (2) 선택한 강의의 최신 성적 N개
-         GRADE → CLASS_STUDENT(학생) → CLASS_LECTURE → LECTURE
-         파라미터: memberNo, lectureNo, limit
-    ============================= -->
-    <select id="findLatestGrades"
+    <!-- =========================================
+        2) 학생 + 과목 기준 성적 목록 조회
+        - Ajax(/student/getScore)에서 사용
+        ========================================= -->
+    <select id="findGradesByStudentAndLecture"
             parameterType="map"
-            resultMap="gradeResultMap">
+            resultType="com.kh.classLink.model.vo.GradeDto">
+
         SELECT
-        L.LECTURE_NAME      AS lectureName,
-        M.MEMBER_NAME       AS studentName,
-        G.GRADE             AS grade
-        FROM GRADE             G
-        JOIN CLASS_STUDENT     CS ON CS.STUDENT_NO       = G.STUDENT_NO
-        JOIN MEMBER            M  ON M.MEMBER_NO         = CS.MEMBER_NO
-        JOIN CLASS_LECTURE     CL ON CL.CLASS_LECTURE_NO = G.CLASS_LECTURE_NO
-        JOIN LECTURE           L  ON L.LECTURE_NO        = CL.LECTURE_NO
-        WHERE CS.MEMBER_NO = #{memberNo}
-        AND L.LECTURE_NO = #{lectureNo}
-        ORDER BY G.CREATE_DATE DESC
-        FETCH FIRST #{limit} ROWS ONLY
+        g.GRADE_NO    AS gradeNo,
+        g.TEST_NAME   AS testName,
+        g.GRADE       AS grade,
+        g.CREATE_DATE AS createDate
+        FROM MEMBER m
+        JOIN CLASS_STUDENT cs
+        ON m.MEMBER_NO = cs.MEMBER_NO        -- 회원번호 → 학생번호 매핑
+        JOIN GRADE g
+        ON g.STUDENT_NO = cs.STUDENT_NO      -- 학생번호 → 성적 찾기
+        JOIN CLASS_LECTURE cl
+        ON g.CLASS_LECTURE_NO = cl.CLASS_LECTURE_NO
+        WHERE m.MEMBER_NO = #{studentNo}          -- 여기 studentNo는 사실 memberNo
+        AND cl.LECTURE_NO = #{lectureNo}
+        ORDER BY g.CREATE_DATE DESC
+
     </select>
 
-    <!-- ============================
-         (3) 새 성적 등록
-         DTO에 classLectureNo 필드가 있어야 함!
-    ============================= -->
-    <insert id="insertGrade" parameterType="com.kh.classLink.model.vo.GradeDto">
-        <selectKey keyProperty="gradeNo" resultType="int" order="BEFORE">
-            SELECT SEQ_GNO.NEXTVAL FROM DUAL
-        </selectKey>
-        INSERT INTO GRADE (
-        GRADE_NO,
-        GRADE,
-        CLASS_LECTURE_NO,
-        STUDENT_NO,
-        TEST_NAME,
-        CREATE_DATE
-        ) VALUES (
-        #{gradeNo},
-        #{grade},
-        #{classLectureNo},
-        #{studentNo},
-        #{testName},
-        SYSDATE
-        )
-    </insert>
+    <select id="searchGradesForEdit"
+            parameterType="map"
+            resultType="com.kh.classLink.model.vo.GradeDto">
+        SELECT
+        g.GRADE_NO   AS gradeNo,
+        g.TEST_NAME  AS testName,
+        g.GRADE      AS grade,
+        m.MEMBER_NAME AS studentName
+        FROM GRADE g
+        JOIN CLASS_LECTURE cl ON g.CLASS_LECTURE_NO = cl.CLASS_LECTURE_NO
+        JOIN CLASS_STUDENT cs ON g.STUDENT_NO = cs.STUDENT_NO
+        JOIN MEMBER m ON cs.MEMBER_NO = m.MEMBER_NO
+        WHERE cs.CLASS_NO = #{classNo}
+        AND cl.LECTURE_NO = #{lectureNo}
+        AND LOWER(g.TEST_NAME) LIKE '%' || LOWER(#{keyword}) || '%'
+        ORDER BY g.CREATE_DATE DESC
+    </select>
+
+        <!-- CLASS_NO + LECTURE_NO 로 CLASS_LECTURE_NO 조회 -->
+        <select id="selectClassLectureNo"
+                parameterType="map"
+                resultType="int">
+            SELECT CLASS_LECTURE_NO
+            FROM CLASS_LECTURE
+            WHERE CLASS_NO = #{classNo}
+            AND LECTURE_NO = #{lectureNo}
+        </select>
+
+        <!-- 성적 1건 INSERT -->
+        <insert id="insertGrade"
+                parameterType="com.kh.classLink.model.vo.GradeDto">
+            INSERT INTO GRADE (
+            GRADE_NO,
+            GRADE,
+            CLASS_LECTURE_NO,
+            STUDENT_NO,
+            TEST_NAME,
+            CREATE_DATE
+            )
+            SELECT
+            SEQ_GNO.NEXTVAL,
+            #{grade},
+            #{classLectureNo},
+            cs.STUDENT_NO,
+            #{testName},
+            SYSDATE
+            FROM CLASS_STUDENT cs
+            JOIN CLASS_LECTURE cl
+            ON cs.CLASS_NO = cl.CLASS_NO
+            WHERE cs.MEMBER_NO = #{studentNo}
+            AND cl.CLASS_LECTURE_NO = #{classLectureNo}
+        </insert>
 
     <!-- ============================
          (4) 성적 수정
@@ -96,14 +188,6 @@
         CREATE_DATE = SYSDATE
         WHERE GRADE_NO    = #{gradeNo}
     </update>
-
-    <!-- ============================
-         (5) 성적 삭제
-    ============================= -->
-    <delete id="deleteGrade" parameterType="int">
-        DELETE FROM GRADE
-        WHERE GRADE_NO = #{gradeNo}
-    </delete>
 
 </mapper>
 

@@ -53,20 +53,19 @@ public class QuestionServiceImpl implements QuestionService {
     /**
      * 관리자/강사 문의
      * @param currentPage
-     * @param questionMember
-     * @param listType
+     * @param question
      * @return
      */
     @Override
-    public Map<String, Object> selectAnswerList(int currentPage,int questionMember,String listType) {
-        int answerCount = questionMapper.selectAnswerCount(questionMember,listType);
+    public Map<String, Object> selectAnswerList(int currentPage,Question question) {
+        int answerCount = questionMapper.selectAnswerCount(question);
 
         PageInfo pi = new PageInfo(currentPage, answerCount, 5, 5);
         int offset = (currentPage - 1) * pi.getBoardLimit();
 
         RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
 
-        ArrayList<Question> list = questionMapper.selectAnswerList(rowBounds,questionMember,listType);
+        ArrayList<Question> list = questionMapper.selectAnswerList(rowBounds,question);
 
         Map<String,Object > map = new HashMap<>();
         map.put("list",list);
