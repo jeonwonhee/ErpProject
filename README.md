@@ -27,7 +27,7 @@ git clon(https://github.com/jeonwonhee/ErpProject.git)
 
 # 3. 데이터베이스(Oracle) 설정
 - Oracle 실행 후 데이터베이스 및 테이블 생성
-- src/main/webapp/WEB-INF/classes/sql 폴더 내 SQL 스크립트 실행
+- 폴더 내 SQL 스크립트 실행
 - JDBC 연결 정보(application.properties 또는 JDBCTemplate.java) 수정
 
 # 4. Spring boot 설정
